@@ -1,0 +1,9 @@
+<!-- No Play to Display -->
+@if (isNullish(play)) {
+  <span>No content to display.</span>
+}
+
+<!-- Play Display -->
+@if (!isNullish(play)) {
+  <tiq-background-football></tiq-background-football>
+}

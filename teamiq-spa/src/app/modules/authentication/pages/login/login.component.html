@@ -1,0 +1,40 @@
+<div class="flex flex-col h-full">
+  <!-- Background -->
+  <div class="login-page-background"></div>
+  <!-- Navbar -->
+  <div class="flex flex-row w-full h-10 justify-between align-middle items-center pl-3 pr-3 pt-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left cursor-pointer" viewBox="0 0 16 16" (click)="location.back()">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+    </svg>
+    <div class="login-page-topbar-homeicon cursor-pointer" routerLink="/"><img src="assets/Logo-text-only.svg" width="24" height="24"/></div>
+  </div>
+
+  <div class="flex flex-col justify-center items-center">
+    <!-- Title -->
+    <div class="flex flex-col justify-center items-center align-middle p-10">
+      <span class="login-page-title-text text-center text-2xl pt-2 pb-2 mt-6 fade-in">Login to your Account</span>
+    </div>
+
+    <!-- Form Questions -->
+    <div class="flex flex-col justify-center items-center w-64">
+      <!-- Email Address -->
+      <input-question-component title="Email Address" placeholder="Enter your Email Address" class="w-full appear-first"/>
+      <!-- Password -->
+      <input-question-component title="Password" placeholder="Choose your Password" [secured]="true" class="w-full appear-second"/>
+    </div>
+
+    <div class="flex flex-col justify-center items-center mt-5 appear-third">
+      <div class="flex justify-center items-center rounded-full w-48 h-7 bg-red-600 cursor-pointer hover-shadow hover:bg-black hover:text-white hover:transition-colors hover:duration-1000">
+        <div class="text-white text-xxs">Login</div>
+      </div>
+
+      <div class="h-2 w-full divider w-52"></div>
+
+      <div class="flex justify-center items-center rounded-full w-48 h-7 border-black border-2 cursor-pointer hover-shadow hover:bg-red-600 hover:border-0 hover:text-white" routerLink="/register">
+        <div class="text-xxs">Don't have an account yet?</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

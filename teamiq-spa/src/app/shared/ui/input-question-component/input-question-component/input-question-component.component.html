@@ -1,0 +1,6 @@
+<div class="input-question-container w-full">
+  <div class="input-question-title"><span class="input-question-title-text">{{title}}</span></div>
+  <div class="input-question-response-container h-6" [ngClass]='{"input-question-response-container-focused": inputFocused}'>
+    <input class="input-question-response-text" autocomplete="none" [placeholder]="placeholder" (focusin)="onGainFocus()" (focusout)="onLoseFocus()" type="{{secured ? 'password' : 'text'}}" [formControl]="formControl" [name]="name" [id]="id" ngDefaultControl/>
+  </div>
+</div>

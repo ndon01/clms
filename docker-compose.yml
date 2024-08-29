@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  teamiq-database:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=teamiq
+    ports:
+      - "5001:5432"
+    volumes:
+      - teamiq-database-volume:/var/lib/postgresql/data
+
+volumes:
+  teamiq-database-volume:

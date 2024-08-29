@@ -1,0 +1,124 @@
+:root {
+  --navbar-text-height: .85rem;
+}
+.navbar-container {
+  width: 100vw;
+  height: 60px;
+  padding-inline: 200px;
+
+  position: absolute;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  height: 24px;
+}
+
+.navbar-logo-title {
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: 12px;
+  color: grey;
+  margin-inline: 10px;
+}
+
+.navbar-page-nav-text {
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: var(--navbar-text-height);
+  color: grey;
+
+  cursor: pointer;
+}
+
+.navbar-right-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: var(--navbar-text-height);
+  color: black;
+
+  cursor: pointer;
+
+}
+
+.navbar-waitlist-container {
+  position: relative;
+  transition: all 1s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-inline: 10px;
+  border-radius: 3px;
+
+  font-family: "Inter";
+  font-weight: 200;
+  font-size: var(--navbar-text-height);
+  padding-block: 2px;
+  margin-left: 4px;
+  color: white;
+
+  cursor: pointer;
+
+  background-color: black;
+}
+
+.navbar-waitlist-container:hover {
+  transition: all .25s;
+  box-shadow: 0px 4px 5px rgba(0,0,0,.25);
+}
+
+
+.navbar-vertical-divider {
+  width: 0.5px;
+  height: 20px;
+  background-color: black;
+}
+
+.section-1-container {
+  width: 100vw;
+  height: 100vh;
+  padding-block: 40px;
+  padding-inline: 100px;
+
+  background: rgb(255,211,211);
+  background: linear-gradient(0deg, rgba(255,211,211,1) 0%, rgba(245,245,245,1) 100%);
+}
+
+.hover-appear-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-appear-underline::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: black;
+  visibility: hidden;
+  transition: all 1s ease-in-out;
+}
+
+.hover-appear-underline:hover::after {
+  transition: all 0.3s ease-in-out;
+  visibility: visible;
+  width: 100%;
+}

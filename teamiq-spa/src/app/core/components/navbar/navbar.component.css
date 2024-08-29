@@ -1,0 +1,80 @@
+.navbar-container {
+  position: absolute;
+  height: 40px;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+}
+
+.navbar-left {
+  padding-inline: 15px;
+}
+
+.logo {
+  height: 18px
+}
+
+.navbar-center {
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  gap: 10px;
+  flex:1;
+}
+
+.nav-link {
+  font-size: 10px;
+  font-family: "Inter";
+  font-weight: 200;
+  letter-spacing: .25px;
+
+  color: white;
+}
+
+.navbar-right {
+  padding-inline: 15px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.join-waitlist-btn {
+  font-size: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  letter-spacing: .25px;
+  cursor: pointer;
+  background: transparent;
+  position: relative;
+  color: white;
+  border: .5px solid white;
+  border-radius: 5px;
+
+  padding-inline: 10px;
+  padding-block: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
