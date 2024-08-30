@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeService } from '../../../core/services/theme.service';
+import {ThemeService} from "@core/services/theme/theme.service";
 
 @Component({
   selector: 'app-button',
@@ -17,6 +17,6 @@ export class ButtonComponent implements OnInit{
   isDark: boolean = false;
 
   ngOnInit() {
-    this.isDark = this.themeService.isDarkThemeActive()
+    this.isDark = this.themeService.getTheme() == 'dark';
   }
 }

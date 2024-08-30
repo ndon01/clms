@@ -12,11 +12,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./modules/authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
-  {
-    path: '',
-    loadChildren: () =>
-      import('./modules/playmaker/playmaker.module').then((m) => m.PlaymakerModule),
-  },
 ];
 
 
