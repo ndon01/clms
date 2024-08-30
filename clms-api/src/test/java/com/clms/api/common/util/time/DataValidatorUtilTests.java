@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.time;
+package com.clms.api.common.util.time;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

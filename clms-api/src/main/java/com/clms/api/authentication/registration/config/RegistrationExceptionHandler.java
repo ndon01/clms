@@ -1,7 +1,7 @@
-package com.teamiq.api.authentication.registration.config;
+package com.clms.api.authentication.registration.config;
 
-import com.teamiq.api.authentication.registration.domain.exceptions.InvalidRegistrationRequestException;
-import com.teamiq.api.authentication.registration.domain.exceptions.UserAlreadyExistsException;
+import com.clms.api.authentication.registration.domain.exceptions.InvalidRegistrationRequestException;
+import com.clms.api.authentication.registration.domain.exceptions.UserAlreadyExistsException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;

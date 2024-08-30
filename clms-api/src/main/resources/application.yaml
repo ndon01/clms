@@ -1,10 +1,10 @@
 spring:
   application:
-    name: teamiq-api
+    name: clms-api
 
   datasource:
-    url: jdbc:postgresql://localhost:5001/teamiq
-    username: root
+    url: jdbc:postgresql://localhost:5001/clms
+    username: admin
     password: changeme
 
   jpa:
@@ -20,6 +20,6 @@ spring:
         - file:src/main/resources/static/
         - classpath:/static/
 
-teamiq:
+clms:
   password:
     strength: 10

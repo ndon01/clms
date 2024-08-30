@@ -1,14 +1,14 @@
-package com.teamiq.api.authentication.registration.service;
+package com.clms.api.authentication.registration.service;
 
-import com.teamiq.api.authentication.passwords.service.PlainTextPasswordToHashedPasswordService;
-import com.teamiq.api.authentication.registration.domain.dtos.RegistrationDTO;
-import com.teamiq.api.authentication.registration.domain.exceptions.InvalidRegistrationRequestException;
-import com.teamiq.api.authentication.registration.domain.exceptions.UserAlreadyExistsException;
-import com.teamiq.api.authentication.registration.domain.projections.RegistrationProjection;
-import com.teamiq.api.common.util.emails.EmailValidatorUtil;
-import com.teamiq.api.common.util.passwords.PasswordValidatorUtil;
-import com.teamiq.api.users.User;
-import com.teamiq.api.users.UserRepository;
+import com.clms.api.authentication.passwords.service.PlainTextPasswordToHashedPasswordService;
+import com.clms.api.authentication.registration.domain.dtos.RegistrationDTO;
+import com.clms.api.authentication.registration.domain.exceptions.InvalidRegistrationRequestException;
+import com.clms.api.authentication.registration.domain.exceptions.UserAlreadyExistsException;
+import com.clms.api.authentication.registration.domain.projections.RegistrationProjection;
+import com.clms.api.common.util.emails.EmailValidatorUtil;
+import com.clms.api.common.util.passwords.PasswordValidatorUtil;
+import com.clms.api.users.User;
+import com.clms.api.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

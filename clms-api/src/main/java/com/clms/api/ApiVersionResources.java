@@ -1,4 +1,4 @@
-package com.teamiq.api;
+package com.clms.api;
 
 public class ApiVersionResources {
 

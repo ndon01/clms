@@ -1,4 +1,4 @@
-package com.teamiq.api.authentication.registration.domain.enums;
+package com.clms.api.authentication.registration.domain.enums;
 
 public enum RegistrationResponseStatusEnum {
     SUCCESS("success"),

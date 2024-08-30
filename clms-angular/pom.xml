@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.teamiq</groupId>
+    <groupId>com.clms</groupId>
     <artifactId>app</artifactId>
     <version>0.0.1</version>
   </parent>
 
-  <artifactId>spa</artifactId>
+  <artifactId>angular</artifactId>
   <version>0.0.1</version>
 </project>

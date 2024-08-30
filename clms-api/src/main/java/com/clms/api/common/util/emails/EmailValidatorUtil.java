@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.emails;
+package com.clms.api.common.util.emails;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

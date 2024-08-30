@@ -1,4 +1,4 @@
-package com.teamiq.api;
+package com.clms.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

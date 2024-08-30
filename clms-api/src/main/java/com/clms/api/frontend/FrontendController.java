@@ -1,4 +1,4 @@
-package com.teamiq.api.frontend;
+package com.clms.api.frontend;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

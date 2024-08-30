@@ -1,10 +1,9 @@
-package com.teamiq.api.authentication.registration.controller;
+package com.clms.api.authentication.registration.controller;
 
-import com.teamiq.api.ApiVersionResources;
-import com.teamiq.api.authentication.registration.domain.dtos.RegistrationDTO;
-import com.teamiq.api.authentication.registration.domain.projections.RegistrationProjection;
-import com.teamiq.api.authentication.registration.service.RegistrationService;
-import jakarta.validation.Valid;
+import com.clms.api.ApiVersionResources;
+import com.clms.api.authentication.registration.domain.dtos.RegistrationDTO;
+import com.clms.api.authentication.registration.domain.projections.RegistrationProjection;
+import com.clms.api.authentication.registration.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,7 @@
-package com.teamiq.api.users;
+package com.clms.api.users;
 
-import com.teamiq.api.ApiVersionResources;
-import com.teamiq.api.common.domain.UserRegisteredEvent;
+import com.clms.api.ApiVersionResources;
+import com.clms.api.common.domain.UserRegisteredEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

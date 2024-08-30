@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.passwords;
+package com.clms.api.common.util.passwords;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

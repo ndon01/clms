@@ -1,6 +1,6 @@
-package com.teamiq.api.authentication.passwords.components;
+package com.clms.api.authentication.passwords.components;
 
-import com.teamiq.api.authentication.passwords.config.PasswordConfiguration;
+import com.clms.api.authentication.passwords.config.PasswordConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;

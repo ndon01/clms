@@ -10,14 +10,14 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.teamiq</groupId>
+    <groupId>com.clms</groupId>
     <artifactId>app</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1</version>
 
     <modules>
-        <module>teamiq-api</module>
-        <module>teamiq-spa</module>
+        <module>clms-api</module>
+        <module>clms-angular</module>
     </modules>
 
     <properties>

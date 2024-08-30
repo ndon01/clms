@@ -1,4 +1,4 @@
-package com.teamiq.api.users;
+package com.clms.api.users;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

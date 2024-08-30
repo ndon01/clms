@@ -1,3 +1,3 @@
-package com.teamiq.api.common.domain;
+package com.clms.api.common.domain;
 
 public record UserRegisteredEvent (int userId) {}

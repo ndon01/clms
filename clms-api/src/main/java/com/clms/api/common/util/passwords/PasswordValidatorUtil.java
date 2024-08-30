@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.passwords;
+package com.clms.api.common.util.passwords;
 
 public class PasswordValidatorUtil {
     public static String AllowedSpecialCharacters = "!@#$%^&*";

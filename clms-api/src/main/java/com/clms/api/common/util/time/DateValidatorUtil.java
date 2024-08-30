@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.time;
+package com.clms.api.common.util.time;
 
 public class DateValidatorUtil {
     // We expect the date to be in the format of "YYYY-MM-DD"

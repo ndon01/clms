@@ -7,10 +7,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.modulith.moments.HourHasPassed;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
-public class TeamIqApiApplication {
+public class ClmsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TeamIqApiApplication.class, args);
+        SpringApplication.run(ClmsApplication.class, args);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.teamiq.api.users;
+package com.clms.api.users;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

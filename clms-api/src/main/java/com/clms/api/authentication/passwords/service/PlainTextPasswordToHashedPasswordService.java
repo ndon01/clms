@@ -1,6 +1,6 @@
-package com.teamiq.api.authentication.passwords.service;
+package com.clms.api.authentication.passwords.service;
 
-import com.teamiq.api.authentication.passwords.components.PasswordHashingComponent;
+import com.clms.api.authentication.passwords.components.PasswordHashingComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

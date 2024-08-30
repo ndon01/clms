@@ -3,7 +3,7 @@
 target
 *.class
 *-local.yaml
-/teamiq-api/src/main/resources/static
+/clms-api/src/main/resources/static
 /node_modules
 .gitconfig
 *.css.map
