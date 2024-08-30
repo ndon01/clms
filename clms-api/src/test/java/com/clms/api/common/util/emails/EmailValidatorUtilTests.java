@@ -1,4 +1,4 @@
-package com.teamiq.api.common.util.emails;
+package com.clms.api.common.util.emails;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

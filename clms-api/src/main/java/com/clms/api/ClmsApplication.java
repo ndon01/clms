@@ -1,4 +1,4 @@
-package com.teamiq.api;
+package com.clms.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
