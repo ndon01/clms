@@ -1,27 +1,69 @@
-# TeamiqAngular
+# CLMS
+# Local Installation
+Follow these steps to set up on your local machine.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.8.
+## Prerequisites
+- Node 20^
+- Java 17
+  - Mac Homebrew Installation:
+    ```bash
+    brew install openjdk@21
+    ```
+  - Maven Configuration:
+    ``` bash 
+    export JAVA_HOME=/path/to/java21
+                            
+    export PATH=$JAVA_HOME/bin:$PATH
+    ```
+- Docker
 
-## Development server
+## Backend Setup
+#### Clone the repository:
+```bash
+git clone https://github.com/ndon01/clms.git
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+cd clms
+```
 
-## Code scaffolding
+#### Run the docker contianers
+```bash
+docker-compose up -d
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### Build the java app for the first time
+```bash
+./mvnw clean install
+```
 
-## Build
+Now you are ready to run the server.  Ways to run:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Ways to run the Backend
 
-## Running unit tests
+#### Recommendation for Development
+Using IntelliJ, or your IDE of choice.  Run the Springboot Application in Debug Mode .
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### Maven Springboot Target Option
+```
+./mvnw spring-boot:run
+```
 
-## Running end-to-end tests
+## Frontend Setup
+If you just need to work on the backend API you don't need to do this, but if you want to work on the frontend while running the backend follow these steps.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+#### Install node dependencies
+```bash
+cd clms-angular
+npm install
+```
 
-## Further help
+#### Start npm watch target
+```bash
+npm run watch
+```
+this will start a program to watch when changes are made in the angular app, and will automatically build the app into the src/main/resources/static folder.  If springboot is running, it will automatically redeploy the updated static files.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+#### Start npm start target
+```bash
+npm start
+```
+This will serve the application, won't have access to the API
