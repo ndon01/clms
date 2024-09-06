@@ -21,5 +21,9 @@ spring:
         - classpath:/static/
 
 clms:
+  security:
+    access-token:
+      expiration-time: 86400000
+      secret: changeme
   password:
     strength: 10
