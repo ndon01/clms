@@ -20,7 +20,7 @@ cd clms
 ### With IntelliJ
 1. Clone the repository
 ```bash
-git clone ...
+git clone https://github.com/ndon01/clms.git
 cd clms
 ```
 
