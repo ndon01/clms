@@ -1,10 +1,10 @@
 package com.clms.api.users;
 
-import com.clms.api.authentication.core.authentication_profiles.AuthenticationProfile;
+import com.clms.api.common.domain.User;
+import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service

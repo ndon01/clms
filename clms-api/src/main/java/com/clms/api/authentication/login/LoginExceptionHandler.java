@@ -1,13 +1,14 @@
 package com.clms.api.authentication.login;
 
-import com.clms.api.authentication.registration.domain.exceptions.InvalidRegistrationRequestException;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.Instant;
 
+@RestControllerAdvice
 public class LoginExceptionHandler extends ResponseEntityExceptionHandler
 {
     @ExceptionHandler(InvalidCredentialsException.class)

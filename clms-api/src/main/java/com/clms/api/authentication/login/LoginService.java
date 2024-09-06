@@ -1,8 +1,8 @@
 package com.clms.api.authentication.login;
 
-import com.clms.api.authentication.core.authentication_profiles.AuthenticationProfile;
-import com.clms.api.authentication.core.authentication_profiles.AuthenticationProfileRepository;
-import com.clms.api.authentication.passwords.service.PlainTextAndHashedPasswordMatchingService;
+import com.clms.api.authentication.domain.AuthenticationProfile;
+import com.clms.api.authentication.domain.AuthenticationProfileRepository;
+import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
 import com.clms.api.authentication.tokens.AuthenticationProfileToAccessTokenConverterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

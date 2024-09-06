@@ -1,6 +1,6 @@
 package com.clms.api.common.security;
 
-import com.clms.api.users.User;
+import com.clms.api.common.domain.User;
 
 public class CurrentUserContextHolder {
     public static ThreadLocal<User> currentUser = new ThreadLocal<>();

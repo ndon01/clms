@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS users (
     first_name VARCHAR(100) DEFAULT NULL,
     last_name VARCHAR(100) DEFAULT NULL,
     date_of_birth Date DEFAULT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL
-)
+    email_address VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL
+);
