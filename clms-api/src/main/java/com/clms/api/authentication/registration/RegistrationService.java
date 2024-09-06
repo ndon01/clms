@@ -6,7 +6,6 @@ import com.clms.api.authentication.passwords.PlainTextPasswordToHashedPasswordSe
 import com.clms.api.authentication.registration.exceptions.InvalidRegistrationRequestException;
 import com.clms.api.authentication.registration.services.RegisteredUserEventPublicationService;
 import com.clms.api.common.util.passwords.PasswordValidatorUtil;
-import com.clms.api.users.core.UserRepository;
 import com.clms.api.users.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RegistrationService {
 
-    private final UserRepository userRepository;
     private final UserService userService;
     private final PlainTextPasswordToHashedPasswordService plainTextPasswordToHashedPasswordService;
     private final RegisteredUserEventPublicationService registeredUserEventPublicationService;
