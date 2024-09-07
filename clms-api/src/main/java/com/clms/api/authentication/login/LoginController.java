@@ -7,14 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1/authentication/login")
 @RequiredArgsConstructor
 public class LoginController {
-    private final String ResourcePath = "/authentication";
-    private final String V1ResourcePath = ApiVersionResources.V1 + ResourcePath;
 
     private final LoginService loginService;
 
-    @PostMapping(V1ResourcePath + "/login")
+    @PostMapping
     public ResponseEntity<?> LoginUserV1(@RequestBody LoginDTO loginDTO) {
         String token = loginService.loginForToken(loginDTO.getUsername(), loginDTO.getPassword());
         HttpHeaders headers = new HttpHeaders();
