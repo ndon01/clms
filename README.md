@@ -1,19 +1,11 @@
 # Table of Contents
 1. [Dependencies](#dependencies)
-2. [Installation](#installation)
 3. [Setup](#setup)
     1. [With IntelliJ](#with-intellij)
 
 # DEPENDENCIES
 - Java 21
 - Node 20+
-
-# Installation
-1. Clone the repository
-```bash
-git clone ...
-cd clms
-```
 
 # SETUP
 

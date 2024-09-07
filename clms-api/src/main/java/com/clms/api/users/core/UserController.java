@@ -11,20 +11,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1/users/me")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
-    private final String ResourcePath = "/users";
-    private final String V1ResourcePath = ApiVersionResources.V1 + ResourcePath;
-
     private final UserService userService;
 
-    @GetMapping(V1ResourcePath + "/me")
+    @GetMapping
     @RequiresUser
-    public User getUser(@CurrentUser User user) {
+    public User getMeV1(@CurrentUser User user) {
         return user;
     }
 }
