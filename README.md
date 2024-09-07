@@ -1,3 +1,4 @@
+# Capstone Learning Management System
 # Table of Contents
 1. [Dependencies](#dependencies)
 3. [Setup](#setup)
@@ -15,11 +16,15 @@
 git clone https://github.com/ndon01/clms.git
 cd clms
 ```
-
-2. Open the project with ***IntelliJ***
-3. Through the ***Project Structure*** in IntelliJ, set the following:
+2. Install node dependencies
+```bash
+cd clms-angular
+npm install
+```
+3. Open the project with ***IntelliJ***
+4. Through the ***Project Structure*** in IntelliJ, set the following:
 - Project > SDK: 21
-4. Through the run configurations run:
+5. Through the run configurations run:
 - `Containers`, or in the terminal at `/clms` run:
 ```bash
 docker-compose up -d
