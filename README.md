@@ -1,8 +1,13 @@
 # Table of Contents
 1. [Dependencies](#dependencies)
-3. [Setup](#setup)
+2. [Setup](#setup)
     1. [With IntelliJ](#with-intellij)
-
+3. [API Documentation](#api-documentation)
+    1. [Authentication](#authentication)
+        1. [POST /api/v1/authentication/register](#post-apiv1authenticationregister)
+        2. [POST /api/v1/authentication/login](#post-apiv1authenticationlogin)
+   1. [Users](#users)
+      1. [GET /api/v1/users/me](#get-apiv1usersme)
 # DEPENDENCIES
 - Java 21
 - Node 20+
@@ -31,3 +36,49 @@ npm run watch
 - `API`
 
 The application should now be running on `localhost:8080`
+
+# API Documentation
+## Authentication
+### POST /api/v1/authentication/register
+#### Request
+```yaml
+Body:
+    username: string
+    password: string
+```
+
+#### Response
+```yaml
+Status: 201 Created
+```
+
+### POST /api/v1/authentication/login
+#### Request
+```yaml
+Body:
+    username: string
+    password: string
+```
+
+#### Response
+```yaml
+Status: 201 Created
+Headers:
+    Authorization: Bearer <token>
+```
+
+## Users
+### GET /api/v1/users/me
+#### Request
+```yaml
+Headers:
+    Authorization: Bearer <token
+```
+
+#### Response
+```yaml
+Status: 200 OK
+Body:
+    id: string
+    username: string
+```
