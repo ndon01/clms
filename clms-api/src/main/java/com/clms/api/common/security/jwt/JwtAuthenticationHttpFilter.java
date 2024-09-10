@@ -13,6 +13,7 @@ import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -30,17 +31,23 @@ public class JwtAuthenticationHttpFilter implements Filter {
     private final SecurityApplicationProperties securityApplicationProperties;
     private final UserService userService;
 
-    @Override
+       @Override
     public void doFilter(jakarta.servlet.ServletRequest servletRequest, jakarta.servlet.ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        String authorizationHeader = request.getHeader("Authorization");
+        // Try to get the token from the Authorization header
+        String token = extractTokenFromHeader(request);
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            String token = authorizationHeader.substring(7);
+        // If token is not in the Authorization header, check the cookies
+        if (token == null) {
+            token = extractTokenFromCookies(request);
+        }
+
+        // If a token was found, try to verify it and set the user context
+        if (token != null) {
             try {
                 // Verify and decode the JWT token
                 Algorithm algorithm = Algorithm.HMAC256(securityApplicationProperties.getAccessToken().getSecret());
@@ -56,21 +63,41 @@ public class JwtAuthenticationHttpFilter implements Filter {
                 if (userOptional.isPresent()) {
                     User user = userOptional.get();
                     CurrentUserContextHolder.setCurrentUser(user);
-                    log.info("{}", user);
+                    log.info("User authenticated: {}", user);
                 }
             } catch (JWTVerificationException e) {
                 log.error("JWT verification failed: {}", e.getMessage());
-                // CURRENTLY: this will just continue and the CurrentUserContextHolder will be empty
-                // todo: consider returning a 401 Unauthorized response and have the client re-authenticate
+                // Optionally, you can return a 401 Unauthorized response here if verification fails
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         } else {
-            log.warn("Authorization header missing or invalid");
+            log.warn("Authorization token missing in header or cookies");
         }
 
         // Continue with the filter chain
         chain.doFilter(request, response);
     }
 
+    private String extractTokenFromHeader(HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7); // Extract token from "Bearer <token>"
+        }
+        return null;
+    }
+
+    private String extractTokenFromCookies(HttpServletRequest request) {
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if ("Authorization".equals(cookie.getName())) {
+                    return cookie.getValue(); // Return the token from the Authorization cookie
+                }
+            }
+        }
+        return null;
+    }
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // No initialization required for this filter
