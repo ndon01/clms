@@ -3,35 +3,47 @@
   <div class="login-page-background"></div>
   <!-- Navbar -->
   <div class="flex flex-row w-full h-10 justify-between align-middle items-center pl-3 pr-3 pt-2">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left cursor-pointer" viewBox="0 0 16 16" (click)="location.back()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left cursor-pointer" viewBox="0 0 16 16" (click)="location.back()" >
       <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
     </svg>
     <div class="login-page-topbar-homeicon cursor-pointer" routerLink="/"><img src="assets/Logo-text-only.svg" width="24" height="24"/></div>
   </div>
 
-  <div class="flex flex-col justify-center items-center">
+
+  <div class="flex flex-col justify-center items-center mt-5 mb-10">
     <!-- Title -->
     <div class="flex flex-col justify-center items-center align-middle p-10">
-      <span class="login-page-title-text text-center text-2xl pt-2 pb-2 mt-6 fade-in">Login to your Account</span>
+      <span class="login-page-title-text text-center text-2xl pt-2 pb-2 mt-6 fade-in">Login an Account</span>
     </div>
-
     <!-- Form Questions -->
-    <div class="flex flex-col justify-center items-center w-64">
-      <!-- Email Address -->
-      <input-question-component title="Email Address" placeholder="Enter your Email Address" class="w-full appear-first"/>
+    <div class="flex flex-col justify-center items-center w-64 appear-second pt-5 pb-5 gap-3">
+      <!-- Username -->
+
+      <div class="flex flex-col gap-1 w-full">
+        <label for="username" class="text-xs" style="font-family: 'Inter'">Username</label>
+        <input id="username" name="username" type="username"
+               placeholder="Enter your Username"
+               [formControl]="username"
+               class="w-full h-7 rounded border border-gray-300 ps-1 pe-1 pt-0.5 pb-0.5 transition-all duration-700 outline-0 text-xs hover:shadow hover:shadow-accent hover:shadow-gray-500 hover:transition-all hover:duration-150 focus:shadow focus:shadow-accent focus:shadow-gray-500 focus:transition-all focus:duration-150"
+               style="font-family: 'Inter'"/>
+      </div>
+
+
       <!-- Password -->
-      <input-question-component title="Password" placeholder="Choose your Password" [secured]="true" class="w-full appear-second"/>
+      <div class="w-full">
+        <password-input-field [control]="password" identifier="password" class="w-full" title="Password" placeholder="Enter your Password"/>
+      </div>
     </div>
 
-    <div class="flex flex-col justify-center items-center mt-5 appear-third">
-      <div class="flex justify-center items-center rounded-full w-48 h-7 bg-red-600 cursor-pointer hover-shadow hover:bg-black hover:text-white hover:transition-colors hover:duration-1000">
+    <div class="flex flex-col justify-center items-center mt-2 mb-5">
+      <div class="flex justify-center items-center rounded-full w-48 h-7 bg-red-600 cursor-pointer appear-third hover-shadow hover:bg-black hover:text-white hover:transition-colors hover:duration-1000 duration-1000 transition-all appear-second" (click)="onSubmit()">
         <div class="text-white text-xxs">Login</div>
       </div>
 
-      <div class="h-2 w-full divider w-52"></div>
+      <div class="h-2 w-full divider w-52 appear-third"></div>
 
-      <div class="flex justify-center items-center rounded-full w-48 h-7 border-black border-2 cursor-pointer hover-shadow hover:bg-red-600 hover:border-0 hover:text-white" routerLink="/register">
-        <div class="text-xxs">Don't have an account yet?</div>
+      <div class="flex justify-center items-center rounded-full w-48 h-7 border-black border-2 cursor-pointer appear-third hover-shadow hover:bg-red-600 hover:border-0 hover:text-white appear-third" routerLink="/login">
+        <div class="text-xxs">Don't have an account?</div>
       </div>
     </div>
 

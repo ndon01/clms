@@ -72,12 +72,11 @@ function passwordValidator(control: AbstractControl): ValidationErrors | null {
 })
 export class RegistrationComponent {
 
-  emailAddress = new FormControl<String>("");
-
+  username = new FormControl<String>("");
   password = new FormControl<String>("", [passwordValidator]);
   confirmPassword = new FormControl<String>("");
 
-  constructor(private router: Router, public location: Location, private rS: RegistrationService, private lS: LoadingAmbianceService) {
+  constructor(private router: Router, public location: Location, private registrationService: RegistrationService, private loadingAmbianceService: LoadingAmbianceService) {
     const passwordCharacterLimiter = map((newString: String | null) => {
       if (newString == null) return null;
       return newString.substring(0, 64);
@@ -115,21 +114,19 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    // Implement authentication logic here
     if (this.password.value !== this.confirmPassword.value) alert("Passwords must match");
+    
     // TODO: validate form before HTTP request
-    this.lS.loadingAmbianceState = LoadingAmbianceState.LOADING
-    this.rS.register(this.emailAddress.value || "", this.password.value || "").subscribe((response) => {
-      this.lS.loadingAmbianceState = LoadingAmbianceState.NONE
-      if (response.status == 201) {
-        this.router.navigate(["/login"])
-        alert("Successfully registered!")
-      } else if (response.status == 400) {
-        alert("Invalid information submitted")
-      } else if (response.status == 409) {
-        alert("User already exists")
-      }
-    })
 
+    this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.LOADING
+    this.registrationService.register(this.username.value || "", this.password.value || "")
+      .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
+      .pipe(catchError(async () => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
+      .subscribe((response) => {
+        this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
+        if (response.status == 201) {
+          this.router.navigate(["/login"])
+        }
+      });
   }
 }

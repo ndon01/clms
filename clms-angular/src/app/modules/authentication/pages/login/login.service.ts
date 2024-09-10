@@ -4,12 +4,12 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class RegistrationService {
+export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  register(username: String, password: String) {
-    return this.http.post<HttpResponse<any>>("/api/v1/authentication/register", {
+  login(username: String, password: String) {
+    return this.http.post<HttpResponse<any>>("/api/v1/authentication/login", {
       username: username,
       password: password
     }, {
