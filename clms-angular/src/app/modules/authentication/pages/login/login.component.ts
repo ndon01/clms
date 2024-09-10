@@ -71,10 +71,9 @@ export class LoginComponent {
     this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.LOADING
     this.loginService.login(this.username.value || "", this.password.value || "")
       .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
-      .pipe(catchError(async () => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
       .subscribe((response) => {
       this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
-
+        window.location.href = '/api/v1/users/me'
     })
 
   }
