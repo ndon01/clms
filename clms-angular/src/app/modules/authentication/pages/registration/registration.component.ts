@@ -114,16 +114,19 @@ export class RegistrationComponent {
   }
 
   onSubmit() {
-    // Implement authentication logic here
     if (this.password.value !== this.confirmPassword.value) alert("Passwords must match");
+    
     // TODO: validate form before HTTP request
-    this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.LOADING
-    this.registrationService.register(this.username.value || "", this.password.value || "").subscribe((response) => {
-      this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
-      if (response.status == 201) {
-        this.router.navigate(["/login"])
-      }
-    })
 
+    this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.LOADING
+    this.registrationService.register(this.username.value || "", this.password.value || "")
+      .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
+      .pipe(catchError(async () => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
+      .subscribe((response) => {
+        this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
+        if (response.status == 201) {
+          this.router.navigate(["/login"])
+        }
+      });
   }
 }
