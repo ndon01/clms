@@ -9,7 +9,7 @@ import { AsyncPipe, Location, NgClass } from '@angular/common';
 import { RegistrationService } from '@modules/authentication/pages/registration/registration.service';
 import { LoadingAmbianceService, LoadingAmbianceState } from '@core/services/loading-ambiance/loading-ambiance.service';
 import { PasswordInputFieldComponent } from '@shared/ui/password-input-field/password-input-field.component';
-import { map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 
 enum ValidationStateEnum {
   VALID,
@@ -115,13 +115,12 @@ export class RegistrationComponent {
 
   onSubmit() {
     if (this.password.value !== this.confirmPassword.value) alert("Passwords must match");
-    
+
     // TODO: validate form before HTTP request
 
     this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.LOADING
     this.registrationService.register(this.username.value || "", this.password.value || "")
       .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
-      .pipe(catchError(async () => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
       .subscribe((response) => {
         this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
         if (response.status == 201) {
