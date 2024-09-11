@@ -1,10 +1,12 @@
 package com.clms.api.users;
 
 import com.clms.api.common.domain.User;
+import com.clms.api.common.security.CurrentUserContextHolder;
 import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,5 +38,9 @@ public class UserService {
 
     public Optional<User> getUserById(int id) {
         return userRepository.findById(id);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.getUsers();
     }
 }

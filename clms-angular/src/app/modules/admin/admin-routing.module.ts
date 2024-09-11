@@ -5,7 +5,7 @@ import {LandingPageComponent} from "@modules/public/landing-page/landing-page.co
 import {UserManagementComponent} from "@modules/admin/pages/user-management/user-management.component";
 
 const routes: Routes = [
-  { path: 'user-management', component: UserManagementComponent },
+  { path: 'users', component: UserManagementComponent },
 ];
 
 
@@ -14,3 +14,4 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class AdminRoutingModule { }
+
