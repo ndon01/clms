@@ -8,6 +8,7 @@ import com.clms.api.common.security.CurrentUserContextHolder;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import com.clms.api.users.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -27,6 +28,7 @@ public class UserController {
 
     @GetMapping("/me")
     @RequiresUser
+    @Transactional
     public User getMeV1(@CurrentUser User user) {
         return user;
     }
