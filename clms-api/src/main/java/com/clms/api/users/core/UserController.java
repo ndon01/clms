@@ -1,6 +1,7 @@
 package com.clms.api.users.core;
 
 import com.clms.api.ApiVersionResources;
+import com.clms.api.common.domain.UserProjection;
 import com.clms.api.common.events.AuthenticationProfileRegisteredEvent;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.events.UserRegisteredEvent;
@@ -29,8 +30,12 @@ public class UserController {
     @GetMapping("/me")
     @RequiresUser
     @Transactional
-    public User getMeV1(@CurrentUser User user) {
-        return user;
+    public UserProjection getMeV1(@CurrentUser User user) {
+        if (user == null) {
+            return null;
+        }
+
+        return userService.convertToUserProjection(user);
     }
 
     @GetMapping

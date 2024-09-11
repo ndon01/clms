@@ -1,5 +1,15 @@
 export type User = {
   id: number;
-  authenticationProfileId: number;
   username: string;
+  roles: Role[];
+  permissions: string[];
+}
+
+
+export type Role = {
+
+}
+
+export type Permission = {
+
 }

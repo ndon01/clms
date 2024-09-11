@@ -3,6 +3,7 @@ package com.clms.api.users;
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.Role;
 import com.clms.api.common.domain.User;
+import com.clms.api.common.domain.UserProjection;
 import com.clms.api.common.security.CurrentUserContextHolder;
 import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,22 @@ public class UserService {
 
     public List<User> getUsers() {
         return userRepository.getUsers();
+    }
+
+    public UserProjection convertToUserProjection(User user) {
+        UserProjection userProjection = new UserProjection();
+        userProjection.setId(user.getId());
+        userProjection.setUsername(user.getUsername());
+        userProjection.setPermissions(user.getPermissions());
+        Set<Role> roles = user.getRoles();
+        roles.forEach(role -> {
+            role.getPermissions().forEach(permission -> {
+                userProjection.getPermissions().add(permission);
+            });
+            role.setPermissions(null);
+        });
+        userProjection.setRoles(roles);
+        return userProjection;
     }
 
 
