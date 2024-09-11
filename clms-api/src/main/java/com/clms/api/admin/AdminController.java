@@ -1,5 +1,6 @@
 package com.clms.api.admin;
 
+import com.clms.api.authorization.Role;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.requireUserGroup.RequiresUserGroup;
 import com.clms.api.common.security.requiresUser.RequiresUser;
@@ -24,5 +25,7 @@ public class AdminController {
         return userService.getUsers();
 
     }
+
+
 
 }
