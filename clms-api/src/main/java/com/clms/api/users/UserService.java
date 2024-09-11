@@ -1,13 +1,16 @@
 package com.clms.api.users;
 
+import com.clms.api.authorization.Permission;
+import com.clms.api.authorization.Role;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.CurrentUserContextHolder;
 import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -43,4 +46,6 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.getUsers();
     }
+
+
 }
