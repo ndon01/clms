@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {LandingPageComponent} from "@modules/public/landing-page/landing-page.component";
-import {UserManagementComponent} from "@modules/admin/users/user-management/user-management.component";
-import {DashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
+import {DashboardComponent} from "@modules/admin/dashboard/dashboard.component";
+import {UserManagementComponent} from "@modules/admin/users/views/user-management/user-management.component";
+
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
