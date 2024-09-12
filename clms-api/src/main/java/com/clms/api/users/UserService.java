@@ -55,18 +55,8 @@ public class UserService {
         UserProjection userProjection = new UserProjection();
         userProjection.setId(user.getId());
         userProjection.setUsername(user.getUsername());
-
-        Set<String> totalPermissions = new HashSet<>();
-        Set<String> totalRoles = new HashSet<>();
-
-        user.getRoles().forEach(role -> {
-            totalRoles.add(role.getName());
-            role.getPermissions().forEach(permission -> totalPermissions.add(permission.getName()));
-        });
-
-        user.getPermissions().forEach(permission -> totalPermissions.add(permission.getName()));
-        userProjection.setPermissions(totalPermissions);
-        userProjection.setRoles(totalRoles);
+        userProjection.setRoles(user.getRoles());
+        userProjection.setPermissions(user.getPermissions());
         return userProjection;
     }
 

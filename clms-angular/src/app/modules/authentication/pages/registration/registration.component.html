@@ -53,13 +53,11 @@
 
       <div class="w-full">
         <password-input-field [control]="confirmPassword" identifier="confirmPassword" class="w-full" title="Confirm Password" placeholder="Re-enter your Password"/>
-        @if((confirmPassword.dirty && confirmPassword.value != "") && (password.dirty && password.value != "") && confirmPassword.value != password.value) {
-          <div class="flex flex-col text-xxs mt-3 ml-2 font-thin">
+        <div class="flex flex-col text-xxs mt-3 ml-2 font-thin" *ngIf='(confirmPassword.dirty && confirmPassword.value != "") && (password.dirty && password.value != "") && confirmPassword.value != password.value'>
             <span [ngClass]="confirmPassword.value != password.value ? 'text-red-600' : 'text-green-600'">
               {{confirmPassword.value != password.value ? "Password's must match" : "Password's match"}}
             </span>
-          </div>
-        }
+        </div>
       </div>
     </div>
 

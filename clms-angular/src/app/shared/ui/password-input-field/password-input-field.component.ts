@@ -3,10 +3,6 @@ import { Form, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angu
 
 @Component({
   selector: 'password-input-field',
-  standalone: true,
-    imports: [
-        ReactiveFormsModule
-    ],
   templateUrl: './password-input-field.component.html',
   styleUrl: './password-input-field.component.css',
   providers: [
@@ -18,7 +14,7 @@ import { Form, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angu
   ]
 })
 export class PasswordInputFieldComponent {
-  @Input() control: any;
+  @Input() control: FormControl = new FormControl("");
   @Input() identifier: string | undefined;
   @Input() placeholder: string | undefined;
   @Input() title: string | undefined;

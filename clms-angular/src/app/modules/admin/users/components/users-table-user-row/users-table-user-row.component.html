@@ -1,0 +1,17 @@
+<td>{{ user.id }}</td>
+<td>{{ user.username }}</td>
+<td>
+  <ng-container *ngFor="let role of user.roles">
+    <p-tag [value]="role.name" class="mr-2"></p-tag>
+  </ng-container>
+</td>
+<td>
+  <ng-container *ngFor="let permission of user.permissions">
+    <p-tag [value]="permission.name" class="mr-2"></p-tag>
+  </ng-container>
+</td>
+<td class="flex justify-end align-middle" *ngIf="displayEditButton">
+  <div class="flex flex-row gap-2 pl-4 pr-4 pt-1 pb-1 cursor-pointer" (click)="EditButtonClicked(user)">
+    <i class="pi-pen-to-square pi" style="font-size: 1.2rem"></i>
+  </div>
+</td>

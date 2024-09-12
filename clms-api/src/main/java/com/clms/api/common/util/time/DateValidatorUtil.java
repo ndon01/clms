@@ -28,10 +28,6 @@ public class DateValidatorUtil {
             return false;
         }
 
-        if (dateParts[2].length() != 2) {
-            return false;
-        }
-
-        return true;
+        return dateParts[2].length() == 2;
     }
 }
