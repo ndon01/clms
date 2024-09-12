@@ -29,12 +29,15 @@ import {
 import {
   CreateUserModalLauncherService
 } from "@modules/admin/users/modals/create-user-modal/launcher/create-user-modal-launcher.service";
+import {
+  QuestionBankQuestionDashboardComponent
+} from "@modules/admin/question-bank/question-bank-question-dashboard/question-bank-question-dashboard.component";
 
 @NgModule({
   declarations: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent],
   exports: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent],
   imports: [
-    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule
+    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, QuestionBankQuestionDashboardComponent
   ],
   providers: [EditUserModalLauncherService, CreateUserModalLauncherService]
 })
