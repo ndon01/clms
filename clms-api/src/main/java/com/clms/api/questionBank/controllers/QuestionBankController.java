@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionBankController {
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
-    @GetMapping("/questons")//gets all questions
+    @GetMapping("/questions")//gets all questions
     public List<QuestionBankQuestion> getQuestions() {
         return questionBankQuestionRepository.findAll();
     }

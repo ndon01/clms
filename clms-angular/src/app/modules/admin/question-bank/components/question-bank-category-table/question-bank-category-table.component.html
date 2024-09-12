@@ -1,0 +1,23 @@
+<p-table [value]="categories" styleClass="p-datatable-striped"
+         [tableStyle]="{'min-width': '50rem'}">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Subcategories</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-category>
+    <tr>
+      <td>{{category.id}}</td>
+      <td>{{category.categoryName}}</td>
+      <td>
+        <ul>
+          <li *ngFor="let subcategory of category.categories">
+            {{subcategory.categoryName}}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
