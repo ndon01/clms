@@ -10,6 +10,6 @@ import java.util.Set;
 public class UserProjection {
     private int id;
     private String username;
-    private Set<Role> roles;
-    private Set<Permission> permissions;
+    private Set<String> roles;
+    private Set<String> permissions;
 }

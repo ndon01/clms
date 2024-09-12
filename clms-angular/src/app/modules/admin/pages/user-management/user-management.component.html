@@ -5,10 +5,10 @@
     </div>
     <div style="display: flex; flex-direction: row; padding-block: 20px; gap: 10px;">
       <app-button label="Add User" (click)="startCreateUserWorkflow()"></app-button>
+      <p-dialog [(visible)]="addUserDialogVisible"><app-edit-user/></p-dialog>
     </div>
-    <app-users-table [users]="users"></app-users-table>
+    <admin-users-table-view [users]="users"></admin-users-table-view>
   </div>
 </p-card>
 
-<app-add-user-modal />
 

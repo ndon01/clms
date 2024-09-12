@@ -2,6 +2,7 @@ package com.clms.api.admin;
 
 import com.clms.api.authorization.Role;
 import com.clms.api.common.domain.User;
+import com.clms.api.common.domain.UserProjection;
 import com.clms.api.common.security.requireUserGroup.RequiresUserGroup;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import com.clms.api.users.UserService;
@@ -21,8 +22,8 @@ public class AdminController {
     private final UserService userService;
 
     @GetMapping("/users")
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public List<UserProjection> getUsers() {
+        return userService.getUsers().stream().map(userService::convertToUserProjection).toList();
 
     }
 

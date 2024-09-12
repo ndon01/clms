@@ -8,6 +8,8 @@
       <th *ngIf="enableRadioButtons"></th>
       <th>ID</th>
       <th>Username</th>
+      <th>Roles</th>
+      <th>Permissions</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-user>
@@ -20,6 +22,16 @@
       </td>
       <td>{{ user.id }}</td>
       <td>{{ user.username }}</td>
+      <td>
+        <ng-container *ngFor="let role of user.roles">
+          <p-tag [value]="role" class="mr-2"></p-tag>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngFor="let permission of user.permissions">
+          <p-tag [value]="permission" class="mr-2"></p-tag>
+        </ng-container>
+      </td>
     </tr>
   </ng-template>
 </p-table>

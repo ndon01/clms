@@ -4,6 +4,9 @@ import {User} from "@core/model/User.model";
 import {TableComponent} from "@core/components/table/table.component";
 import {TableModule} from "primeng/table";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {TagModule} from "primeng/tag";
+import {Role} from "@modules/admin/roles/role.model";
+import {Permission} from "@modules/admin/permissions/permission.model";
 
 @Component({
   selector: 'app-users-table',
@@ -13,13 +16,14 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
     NgIf,
     TableComponent,
     TableModule,
-    FormsModule
+    FormsModule,
+    TagModule
   ],
-  templateUrl: './users-table.component.html',
-  styleUrls: ['./users-table.component.css'],
+  templateUrl: './permissions-table.component.html',
+  styleUrls: ['./permissions-table.component.css'],
 })
-export class UsersTableComponent {
-  @Input() users: User[] = [];
+export class PermissionsTableComponent {
+  @Input() permissions: Permission[] = [];
 
   @Input() enableRadioButtons: boolean = false;
   @Input() radioSelection: User | null = null;

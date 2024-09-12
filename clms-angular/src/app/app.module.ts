@@ -7,11 +7,14 @@ import { CoreModule } from './core/core.module';
 import { ThemeService } from './core/services/theme/theme.service';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {DialogService} from "primeng/dynamicdialog";
+import {DialogModule} from "primeng/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule],
-  providers: [ThemeService, provideHttpClient()],
+  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule],
+  providers: [ThemeService, provideHttpClient(), DialogService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -9,9 +9,12 @@ import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,15 +55,18 @@ public class UserService {
         UserProjection userProjection = new UserProjection();
         userProjection.setId(user.getId());
         userProjection.setUsername(user.getUsername());
-        userProjection.setPermissions(user.getPermissions());
-        Set<Role> roles = user.getRoles();
-        roles.forEach(role -> {
-            role.getPermissions().forEach(permission -> {
-                userProjection.getPermissions().add(permission);
-            });
-            role.setPermissions(null);
+
+        Set<String> totalPermissions = new HashSet<>();
+        Set<String> totalRoles = new HashSet<>();
+
+        user.getRoles().forEach(role -> {
+            totalRoles.add(role.getName());
+            role.getPermissions().forEach(permission -> totalPermissions.add(permission.getName()));
         });
-        userProjection.setRoles(roles);
+
+        user.getPermissions().forEach(permission -> totalPermissions.add(permission.getName()));
+        userProjection.setPermissions(totalPermissions);
+        userProjection.setRoles(totalRoles);
         return userProjection;
     }
 

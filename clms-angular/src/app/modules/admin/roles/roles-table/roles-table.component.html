@@ -1,0 +1,29 @@
+<p-table [value]="users" styleClass="p-datatable-striped"
+         [tableStyle]="{'min-width': '50rem'}">
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngIf="enableCheckboxes">
+        <input type="checkbox" style="width: 20px; height: 20px; border-radius: 10px">
+      </th>
+      <th *ngIf="enableRadioButtons"></th>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Roles</th>
+      <th>Permissions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+    <tr>
+      <td *ngIf="enableCheckboxes" class="w-10 h-full" style="display: flex; justify-content: center; align-items: center;">
+        <input type="checkbox" style="width: 20px; height: 20px; border-radius: 10px">
+      </td>
+      <td *ngIf="enableRadioButtons" class="w-10 h-full" style="display: flex; justify-content: center; align-items: center;">
+        <input type="radio" style="width: 20px; height: 20px; border-radius: 10px">
+      </td>
+      <td>{{ user.id }}</td>
+      <td>{{ user.username }}</td>
+      <td><p-tag ></p-tag></td>
+      <td>{{ user.permissions }}</td>
+    </tr>
+  </ng-template>
+</p-table>
