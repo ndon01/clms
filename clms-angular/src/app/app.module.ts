@@ -10,11 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DialogService} from "primeng/dynamicdialog";
 import {DialogModule} from "primeng/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ClientService} from "@core/services/client/client.service";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule],
-  providers: [ThemeService, provideHttpClient(), DialogService],
+  providers: [ThemeService, provideHttpClient(), DialogService, ClientService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
