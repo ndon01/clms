@@ -5,6 +5,12 @@ import {NgForOf} from "@angular/common";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {UsersTableComponent} from "@modules/admin/users/users-table/users-table.component";
 import {DialogModule} from "primeng/dialog";
+import {
+  EditUserModalLauncherService
+} from "@modules/admin/users/edit-user-modal/launcher/edit-user-modal-launcher.service";
+import {
+  CreateUserModalLauncherService
+} from "@modules/admin/users/create-user-modal/launcher/create-user-modal-launcher.service";
 
 @Component({
   selector: 'app-user-management',
@@ -24,8 +30,7 @@ export class UserManagementComponent implements OnInit, OnChanges {
   selectedUsers: User[] = [];
   addUserDialogVisible: boolean = false;
 
-
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private editUserModalLauncher: EditUserModalLauncherService, private createUserModalLauncher: CreateUserModalLauncherService) {
   }
 
   ngOnInit() {
@@ -39,6 +44,10 @@ export class UserManagementComponent implements OnInit, OnChanges {
   }
 
   startCreateUserWorkflow() {
-    this.addUserDialogVisible = true;
+    this.createUserModalLauncher.launch()
+  }
+
+  startEditUserWorkflow(user: User) {
+    this.editUserModalLauncher.launch(user)
   }
 }

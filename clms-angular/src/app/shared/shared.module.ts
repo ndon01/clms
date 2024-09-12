@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {PasswordInputFieldComponent} from "@shared/ui/password-input-field/password-input-field.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
-  declarations: [],
-  exports: [],
+  declarations: [PasswordInputFieldComponent],
+  exports: [PasswordInputFieldComponent],
   providers: [],
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
 })
 export class SharedModule {}

@@ -24,7 +24,6 @@ public class AdminController {
     @GetMapping("/users")
     public List<UserProjection> getUsers() {
         return userService.getUsers().stream().map(userService::convertToUserProjection).toList();
-
     }
 
 

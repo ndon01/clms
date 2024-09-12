@@ -13,7 +13,7 @@ export const routes: Routes = [
       import('./modules/authentication/authentication.module').then((m) => m.AuthenticationModule),
   },
   {
-    path: '',
+    path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
   },
   {

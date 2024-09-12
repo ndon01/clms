@@ -55,18 +55,7 @@ function passwordValidator(control: AbstractControl): ValidationErrors | null {
 
 
 @Component({
-  selector: 'app-registration',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NavbarComponent,
-    ReactiveFormsModule,
-    InputQuestionComponentComponent,
-    RouterLink,
-    NgClass,
-    PasswordInputFieldComponent,
-    AsyncPipe
-  ],
+  selector: 'authentication-registration-page',
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })

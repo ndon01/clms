@@ -14,18 +14,7 @@ import { AbstractControl } from '@angular/forms';
 import {LoginService} from "@modules/authentication/pages/login/login.service";
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NavbarComponent,
-    ReactiveFormsModule,
-    InputQuestionComponentComponent,
-    RouterLink,
-    NgClass,
-    PasswordInputFieldComponent,
-    AsyncPipe
-  ],
+  selector: 'authentication-login-page',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

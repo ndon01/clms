@@ -16,13 +16,10 @@ import {Button} from "primeng/button";
 export class UsersTableComponent {
   @Input() users: User[] = [];
 
-  @Input() enableRadioButtons: boolean = false;
-  @Input() radioSelection: User | null = null;
-  @Output() radioSelectionChange: EventEmitter<User | null> = new EventEmitter<User | null>();
+  @Input() displayEditButton: boolean = false;
+  @Output() editButtonClick: EventEmitter<User> = new EventEmitter<User>();
 
-
-  @Input() enableCheckboxes: boolean = false;
-  @Input() checkboxSelection: User[] = [];
-  @Output() checkboxSelectionChange: EventEmitter<User[]> = new EventEmitter<User[]>();
-
+  EditButtonClicked(user: User) {
+    this.editButtonClick.emit(user);
+  }
 }
