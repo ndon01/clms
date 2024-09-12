@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {User} from "@core/model/User.model";
 import {NgForOf} from "@angular/common";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {UsersTableComponent} from "@modules/admin/pages/user-management/users-table/users-table.component";
+import {UsersTableComponent} from "@modules/admin/users/users-table/users-table.component";
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-user-management',
@@ -15,13 +16,14 @@ import {UsersTableComponent} from "@modules/admin/pages/user-management/users-ta
       useExisting: forwardRef(() => UsersTableComponent),  // replace name as appropriate
       multi: true
     }
-  ]
+  ],
 })
 export class UserManagementComponent implements OnInit, OnChanges {
 
   users: User[] = [];
-
   selectedUsers: User[] = [];
+  addUserDialogVisible: boolean = false;
+
 
   constructor(private http: HttpClient) {
   }
@@ -37,6 +39,6 @@ export class UserManagementComponent implements OnInit, OnChanges {
   }
 
   startCreateUserWorkflow() {
-
+    this.addUserDialogVisible = true;
   }
 }

@@ -40,8 +40,8 @@ public class UserController {
 
     @GetMapping
     @RequiresUser
-    public List<User> getUsersV1(@CurrentUser User user) {
-        return userService.getUsers();
+    public List<UserProjection> getUsersV1(@CurrentUser User user) {
+        return userService.getUsers().stream().map(userService::convertToUserProjection).toList();
     }
 
     @GetMapping("/{id}")

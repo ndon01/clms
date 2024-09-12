@@ -1,15 +1,9 @@
+import {Role} from "@modules/admin/roles/role.model";
+import {Permission} from "@modules/admin/permissions/permission.model";
+
 export type User = {
   id: number;
   username: string;
   roles: Role[];
-  permissions: string[];
-}
-
-
-export type Role = {
-
-}
-
-export type Permission = {
-
+  permissions: Permission[];
 }
