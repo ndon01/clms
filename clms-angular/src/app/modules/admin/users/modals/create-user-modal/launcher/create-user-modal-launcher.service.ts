@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {DialogService} from "primeng/dynamicdialog";
-import {EditUserModalComponent} from "@modules/admin/users/edit-user-modal/modal/edit-user-modal.component";
-import {User} from "@core/model/User.model";
-import {CreateUserModalComponent} from "@modules/admin/users/create-user-modal/modal/create-user-modal.component";
 import {AdminModule} from "@modules/admin/admin.module";
-import {FooterComponent} from "@modules/admin/users/create-user-modal/footer/footer.component";
-
+import {User} from "@core/model/User.model";
+import {
+  CreateUserModalComponent
+} from "@modules/admin/users/modals/create-user-modal/modal/create-user-modal.component";
+import {FooterComponent} from "@modules/admin/users/modals/create-user-modal/footer/footer.component";
 @Injectable({
   providedIn: AdminModule,
   useFactory: (dialogService: DialogService) => new CreateUserModalLauncherService(dialogService),

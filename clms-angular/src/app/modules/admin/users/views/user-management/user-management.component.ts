@@ -1,16 +1,14 @@
 import {Component, forwardRef, OnChanges, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {User} from "@core/model/User.model";
-import {NgForOf} from "@angular/common";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {UsersTableComponent} from "@modules/admin/users/users-table/users-table.component";
-import {DialogModule} from "primeng/dialog";
+import {UsersTableComponent} from "@modules/admin/users/components/users-table/users-table.component";
 import {
   EditUserModalLauncherService
-} from "@modules/admin/users/edit-user-modal/launcher/edit-user-modal-launcher.service";
+} from "@modules/admin/users/modals/edit-user-modal/launcher/edit-user-modal-launcher.service";
 import {
   CreateUserModalLauncherService
-} from "@modules/admin/users/create-user-modal/launcher/create-user-modal-launcher.service";
+} from "@modules/admin/users/modals/create-user-modal/launcher/create-user-modal-launcher.service";
 
 @Component({
   selector: 'app-user-management',
