@@ -15,7 +15,11 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
-  }
+  },
+  {
+    path: '',
+    loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
 ];
 
 

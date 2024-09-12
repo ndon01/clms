@@ -14,10 +14,8 @@ export type IAppClient = {
 export class ClientService implements OnInit {
   private user: User | null = null;
   private authenticated: boolean = false;
+  constructor(private httpClient: HttpClient) {
 
-  private httpClient: HttpClient;
-  constructor(httpClient: HttpClient) {
-    this.httpClient = httpClient;
   }
 
   ngOnInit() {

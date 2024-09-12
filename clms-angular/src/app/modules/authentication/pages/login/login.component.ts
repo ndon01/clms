@@ -73,7 +73,7 @@ export class LoginComponent {
       .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
       .subscribe((response) => {
       this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
-        window.location.href = '/api/v1/users/me'
+        this.router.navigate(["/dashboard"])
     })
 
   }
