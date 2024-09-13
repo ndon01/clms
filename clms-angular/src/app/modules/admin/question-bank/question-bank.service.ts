@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {QuestionBankQuestion} from "@modules/admin/question-bank/model/question-bank-question.model";
+import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,12 @@ export class QuestionBankService {
       observe: 'body',
     })
 
+  }
+
+  getCategories() {
+    return this.httpClient.get<QuestionBankCategory[]>("/api/questionBank/categories", {
+      observe: 'body',
+    })
   }
 
 

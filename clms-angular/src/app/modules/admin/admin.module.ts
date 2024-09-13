@@ -32,13 +32,20 @@ import {
 import {
   QuestionBankQuestionDashboardComponent
 } from "@modules/admin/question-bank/question-bank-question-dashboard/question-bank-question-dashboard.component";
+import {MultiSelectModule} from "primeng/multiselect";
+import {
+  CreateQuestionModalComponent
+} from "@modules/admin/question-bank/modals/create-question-modal/modal/create-question-modal.component";
+import {
+  CreateQuestionModalLauncherService
+} from "@modules/admin/question-bank/modals/create-question-modal/launcher/create-question-modal-launcher.service";
 
 @NgModule({
-  declarations: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent],
-  exports: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent],
-  imports: [
-    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, QuestionBankQuestionDashboardComponent
-  ],
-  providers: [EditUserModalLauncherService, CreateUserModalLauncherService]
+  declarations: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent],
+  exports: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent],
+    imports: [
+        CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, QuestionBankQuestionDashboardComponent, MultiSelectModule
+    ],
+  providers: [EditUserModalLauncherService, CreateUserModalLauncherService, CreateQuestionModalLauncherService]
 })
 export class AdminModule { }

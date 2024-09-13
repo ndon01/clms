@@ -7,6 +7,10 @@ import {
 } from "@modules/admin/question-bank/components/question-bank-question-table/question-bank-question-table.component";
 import {QuestionBankService} from "@modules/admin/question-bank/question-bank.service";
 import {QuestionBankQuestion} from "@modules/admin/question-bank/model/question-bank-question.model";
+import {
+  CreateQuestionModalLauncherService
+} from "@modules/admin/question-bank/modals/create-question-modal/launcher/create-question-modal-launcher.service";
+import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
 
 @Component({
   selector: 'app-question-bank-question-dashboard',
@@ -21,10 +25,18 @@ import {QuestionBankQuestion} from "@modules/admin/question-bank/model/question-
 })
 export class QuestionBankQuestionDashboardComponent implements  OnInit {
   questions : QuestionBankQuestion[] = [];
-  constructor(private questionBankService: QuestionBankService){
+  categories: QuestionBankCategory[] = [];
 
+  constructor(private questionBankService: QuestionBankService, private createQuestionModalLauncherService: CreateQuestionModalLauncherService){
   }
+
+
  ngOnInit() {
     this.questionBankService.getQuestions().pipe().subscribe(questions => this.questions = questions);
+    this.questionBankService.getCategories().pipe().subscribe(categories => this.categories = categories);
+ }
+
+ clickCreateQuestion() {
+    this.createQuestionModalLauncherService.launch();
  }
 }
