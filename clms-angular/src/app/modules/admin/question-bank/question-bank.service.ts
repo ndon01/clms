@@ -28,5 +28,11 @@ export class QuestionBankService {
     })
   }
 
+  saveCategory(category: QuestionBankCategory) {
+    return this.httpClient.post<QuestionBankCategory>("/api/questionBank/categories", category, {
+      observe: 'body',
+    })
+  }
+
 }
 

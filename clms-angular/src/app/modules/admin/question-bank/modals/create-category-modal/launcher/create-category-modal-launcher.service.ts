@@ -12,25 +12,28 @@ import {
   CreateQuestionModalComponent, CreateQuestionModalFooterComponent
 } from "@modules/admin/question-bank/modals/create-question-modal/modal/create-question-modal.component";
 import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
+import {
+  CreateCategoryModalComponent, CreateCategoryModalFooterComponent
+} from "@modules/admin/question-bank/modals/create-category-modal/modal/create-category-modal.component";
 @Injectable({
   providedIn: AdminModule,
-  useFactory: (dialogService: DialogService) => new CreateQuestionModalLauncherService(dialogService),
+  useFactory: (dialogService: DialogService) => new CreateCategoryModalLauncherService(dialogService),
 })
-export class CreateQuestionModalLauncherService {
+export class CreateCategoryModalLauncherService {
 
   constructor(private dialogService: DialogService) { }
 
-  launch(question: QuestionBankQuestion = {
+  launch(category: QuestionBankCategory = {
     id: -1,
-    questionName: '',
+    categoryName: '',
     categories: []
   }, categories: QuestionBankCategory[] = []) {
-      return this.dialogService.open(CreateQuestionModalComponent, {
+      return this.dialogService.open(CreateCategoryModalComponent, {
         data: {
-          question: question,
+          category: category,
           categories: categories
         },
-        header: "Create Question",
+        header: "Create Category",
         width: '50vw',
         contentStyle: { overflow: 'auto' },
         breakpoints: {
@@ -38,7 +41,7 @@ export class CreateQuestionModalLauncherService {
           '640px': '90vw'
         },
         templates: {
-          footer: CreateQuestionModalFooterComponent
+          footer: CreateCategoryModalFooterComponent
         }
       })
     }

@@ -10,16 +10,6 @@ import {TagModule} from "primeng/tag";
 
 @Component({
   selector: 'app-question-bank-question-table',
-  standalone: true,
-  imports: [
-    NgIf,
-    PrimeTemplate,
-    TableModule,
-    NgForOf,
-    FormsModule,
-    CheckboxModule,
-    TagModule
-  ],
   templateUrl: './question-bank-question-table.component.html',
   styleUrl: './question-bank-question-table.component.css'
 })

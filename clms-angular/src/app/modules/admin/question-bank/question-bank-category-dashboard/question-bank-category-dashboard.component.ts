@@ -11,40 +11,40 @@ import {
   CreateQuestionModalLauncherService
 } from "@modules/admin/question-bank/modals/create-question-modal/launcher/create-question-modal-launcher.service";
 import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
+import {
+  QuestionBankCategoryTableComponent
+} from "@modules/admin/question-bank/components/question-bank-category-table/question-bank-category-table.component";
+import {
+  CreateCategoryModalLauncherService
+} from "@modules/admin/question-bank/modals/create-category-modal/launcher/create-category-modal-launcher.service";
 
 @Component({
-  selector: 'app-question-bank-question-dashboard',
-  templateUrl: './question-bank-question-dashboard.component.html',
-  styleUrl: './question-bank-question-dashboard.component.css'
+  selector: 'app-question-bank-category-dashboard',
+  templateUrl: './question-bank-category-dashboard.component.html',
+  styleUrl: './question-bank-category-dashboard.component.css'
 })
-export class QuestionBankQuestionDashboardComponent implements  OnInit {
-  questions : QuestionBankQuestion[] = [];
+export class QuestionBankCategoryDashboardComponent implements  OnInit {
   categories: QuestionBankCategory[] = [];
 
-  constructor(private questionBankService: QuestionBankService, private createQuestionModalLauncherService: CreateQuestionModalLauncherService){
+  constructor(private questionBankService: QuestionBankService, private createCategoryModalLauncherService: CreateCategoryModalLauncherService){
   }
 
 
  ngOnInit() {
-    this.fetchQuestions();
     this.fetchCategories();
- }
-
- fetchQuestions() {
-   this.questionBankService.getQuestions().pipe().subscribe(questions => this.questions = questions);
  }
 
  fetchCategories() {
    this.questionBankService.getCategories().pipe().subscribe(categories => this.categories = categories);
  }
 
- clickCreateQuestion() {
-    this.createQuestionModalLauncherService.launch(undefined, this.categories).onClose.subscribe((question: QuestionBankQuestion) => {
-      console.log("question")
-      console.log(question)
-      this.questionBankService.saveQuestion(question).pipe().subscribe((question) => {
-        this.fetchQuestions()
-      });
+  onCreateCategory() {
+    this.createCategoryModalLauncherService.launch(undefined, this.categories).onClose.subscribe((category: QuestionBankCategory) => {
+      console.log("category")
+      console.log(category)
+      this.questionBankService.saveCategory(category).subscribe(() => {
+        this.fetchCategories();
+      })
     })
- }
+  }
 }

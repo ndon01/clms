@@ -39,13 +39,31 @@ import {
 import {
   CreateQuestionModalLauncherService
 } from "@modules/admin/question-bank/modals/create-question-modal/launcher/create-question-modal-launcher.service";
+import {
+  QuestionBankDashboardComponent
+} from "@modules/admin/question-bank/question-bank-dashboard/question-bank-dashboard.component";
+import {
+  QuestionBankQuestionTableComponent
+} from "@modules/admin/question-bank/components/question-bank-question-table/question-bank-question-table.component";
+import {
+  QuestionBankCategoryTableComponent
+} from "@modules/admin/question-bank/components/question-bank-category-table/question-bank-category-table.component";
+import {
+  QuestionBankCategoryDashboardComponent
+} from "@modules/admin/question-bank/question-bank-category-dashboard/question-bank-category-dashboard.component";
+import {
+  CreateCategoryModalComponent
+} from "@modules/admin/question-bank/modals/create-category-modal/modal/create-category-modal.component";
+import {
+  CreateCategoryModalLauncherService
+} from "@modules/admin/question-bank/modals/create-category-modal/launcher/create-category-modal-launcher.service";
 
 @NgModule({
-  declarations: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent],
-  exports: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent],
-    imports: [
-        CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, QuestionBankQuestionDashboardComponent, MultiSelectModule
-    ],
-  providers: [EditUserModalLauncherService, CreateUserModalLauncherService, CreateQuestionModalLauncherService]
+  declarations: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent, QuestionBankQuestionTableComponent, QuestionBankCategoryTableComponent, QuestionBankQuestionDashboardComponent, QuestionBankCategoryDashboardComponent, QuestionBankDashboardComponent, CreateCategoryModalComponent],
+  exports: [UserManagementComponent, UsersTableComponent, DashboardComponent, EditUserModalComponent, CreateUserModalComponent, UserFormComponent, UsersTableUserRowComponent, CreateQuestionModalComponent,  QuestionBankQuestionTableComponent, QuestionBankCategoryTableComponent, QuestionBankQuestionDashboardComponent, QuestionBankCategoryDashboardComponent, QuestionBankDashboardComponent, CreateCategoryModalComponent],
+  imports: [
+    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, MultiSelectModule
+  ],
+  providers: [EditUserModalLauncherService, CreateUserModalLauncherService, CreateQuestionModalLauncherService, CreateCategoryModalLauncherService]
 })
 export class AdminModule { }
