@@ -1,5 +1,6 @@
 package com.clms.api.users;
 
+import com.clms.api.authentication.registration.exceptions.UserAlreadyExistsException;
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.Role;
 import com.clms.api.common.domain.User;
@@ -30,7 +31,7 @@ public class UserService {
     public int createUserWithUsername(String username) {
         User user = userRepository.getByUsername(username).orElse(null);
         if (user != null) {
-            throw new RuntimeException("User already exists with username: " + username);
+            throw new UserAlreadyExistsException("User with username " + username + " already exists.");
         }
         user = new User();
         user.setUsername(username);
