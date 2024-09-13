@@ -24,6 +24,10 @@ public class QuestionBankController {
     public List<QuestionBankCategory> getCategories() {
         return questionBankCategoryRepository.findAll();
     }
+    @RequestMapping(value = "/questions", method = {RequestMethod.POST, RequestMethod.PUT})
+    public QuestionBankQuestion addQuestion(@RequestBody QuestionBankQuestion question) {
+        return questionBankQuestionRepository.save(question);
+    }
     @RequestMapping(value = "/categories", method = {RequestMethod.POST, RequestMethod.PUT})
     public QuestionBankCategory addCategory(@RequestBody QuestionBankCategory category) {
         return questionBankCategoryRepository.save(category);
