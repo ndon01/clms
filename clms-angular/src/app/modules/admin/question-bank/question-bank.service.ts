@@ -22,6 +22,11 @@ export class QuestionBankService {
     })
   }
 
+  saveQuestion(question: QuestionBankQuestion) {
+    return this.httpClient.post<QuestionBankQuestion>("/api/questionBank/questions", question, {
+      observe: 'body',
+    })
+  }
 
 }
 

@@ -32,11 +32,23 @@ export class QuestionBankQuestionDashboardComponent implements  OnInit {
 
 
  ngOnInit() {
-    this.questionBankService.getQuestions().pipe().subscribe(questions => this.questions = questions);
-    this.questionBankService.getCategories().pipe().subscribe(categories => this.categories = categories);
+    this.fetchQuestions();
+    this.fetchCategories();
+ }
+
+ fetchQuestions() {
+   this.questionBankService.getQuestions().pipe().subscribe(questions => this.questions = questions);
+ }
+
+ fetchCategories() {
+   this.questionBankService.getCategories().pipe().subscribe(categories => this.categories = categories);
  }
 
  clickCreateQuestion() {
-    this.createQuestionModalLauncherService.launch();
+    this.createQuestionModalLauncherService.launch().onClose.subscribe((question: QuestionBankQuestion) => {
+      this.questionBankService.saveQuestion(question).pipe().subscribe((question) => {
+        this.fetchQuestions()
+      });
+    })
  }
 }
