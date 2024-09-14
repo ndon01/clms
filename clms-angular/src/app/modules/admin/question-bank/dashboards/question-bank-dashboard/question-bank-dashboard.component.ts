@@ -13,13 +13,13 @@ import {
 import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
 import {
   QuestionBankCategoryDashboardComponent
-} from "@modules/admin/question-bank/question-bank-category-dashboard/question-bank-category-dashboard.component";
+} from "@modules/admin/question-bank/dashboards/question-bank-category-dashboard/question-bank-category-dashboard.component";
 import {
   QuestionBankQuestionDashboardComponent
-} from "@modules/admin/question-bank/question-bank-question-dashboard/question-bank-question-dashboard.component";
+} from "@modules/admin/question-bank/dashboards/question-bank-question-dashboard/question-bank-question-dashboard.component";
 
 @Component({
-  selector: 'app-question-bank-dashboard',
+  selector: 'admin-question-bank-dashboard',
   templateUrl: './question-bank-dashboard.component.html',
   styleUrl: './question-bank-dashboard.component.css'
 })

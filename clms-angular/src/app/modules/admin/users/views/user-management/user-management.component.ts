@@ -11,7 +11,7 @@ import {
 } from "@modules/admin/users/modals/create-user-modal/launcher/create-user-modal-launcher.service";
 
 @Component({
-  selector: 'app-user-management',
+  selector: 'admin-user-management-dashboard',
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css',
   providers: [
