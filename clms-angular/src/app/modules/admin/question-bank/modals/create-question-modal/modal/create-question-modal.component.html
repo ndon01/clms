@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-6">
+  <div class="flex flex-col gap-1 w-full">
+    <label for="name" class="text-xs" style="font-family: 'Inter'">Question Name</label>
+    <input id="name" name="name" type="text"
+           placeholder="Enter your Username"
+           class="w-full h-7 rounded border border-gray-300 ps-1 pe-1 pt-0.5 pb-0.5 transition-all duration-700 outline-0 text-xs hover:shadow hover:shadow-accent hover:shadow-gray-500 hover:transition-all hover:duration-150 focus:shadow focus:shadow-accent focus:shadow-gray-500 focus:transition-all focus:duration-150"
+           style="font-family: 'Inter'"
+           [(ngModel)]="question.questionName"
+    />
+  </div>
+
+  <div class="flex flex-col gap-1 w-full">
+    <label for="permissions" class="text-xs" style="font-family: 'Inter'">Categories</label>
+    <p-multiSelect
+      appendTo="body"
+      [options]="categories"
+      optionLabel="categoryName"
+      [(ngModel)]="question.categories"
+      id="permissions"
+    />
+  </div>
+  <div class="h-16"></div>
+</div>

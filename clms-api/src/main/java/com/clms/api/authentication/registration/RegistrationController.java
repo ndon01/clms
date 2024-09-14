@@ -1,6 +1,6 @@
 package com.clms.api.authentication.registration;
 
-import com.clms.api.ApiVersionResources;
+import com.clms.api.authentication.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

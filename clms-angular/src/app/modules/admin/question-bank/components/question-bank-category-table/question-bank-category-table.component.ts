@@ -8,13 +8,6 @@ import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-
 
 @Component({
   selector: 'app-question-bank-category-table',
-  standalone: true,
-  imports: [
-    AdminModule,
-    NgIf,
-    PrimeTemplate,
-    TableModule
-  ],
   templateUrl: './question-bank-category-table.component.html',
   styleUrl: './question-bank-category-table.component.css'
 })

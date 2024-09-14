@@ -1,0 +1,11 @@
+<p-card>
+  <div>
+    <div>
+      <h1 style="font-size: 1.5rem;">Question Categories Management</h1>
+    </div>
+    <button pButton type="button" label="Add Category" (click)="onCreateCategory()" class="p-button-raised p-button-rounded"></button>
+    <app-question-bank-category-table [categories]="categories"></app-question-bank-category-table>
+  </div>
+</p-card>
+
+

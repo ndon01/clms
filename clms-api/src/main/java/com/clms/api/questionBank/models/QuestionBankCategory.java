@@ -11,15 +11,7 @@ import java.util.List;
 public class QuestionBankCategory{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String categoryName;
-    @Column
-@OneToMany(fetch = FetchType.EAGER) // change to lazy for performance later; eager for testing
-    @JoinTable(
-            name = "question_bank_category_children",
-            joinColumns = @JoinColumn(name = "parent_id"),
-            inverseJoinColumns = @JoinColumn(name = "child_id")
-    )
-    private List<QuestionBankCategory> categories;
 }

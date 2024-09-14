@@ -46,6 +46,11 @@ export class UserManagementComponent implements OnInit, OnChanges {
   }
 
   startEditUserWorkflow(user: User) {
-    this.editUserModalLauncher.launch(user)
+    this.editUserModalLauncher.launch(user).onClose.subscribe((data) => {
+      const updatedUser = data as User;
+      console.log(updatedUser);
+      alert(`User ${updatedUser} updated!`);
+      // TODO: update user in database
+    })
   }
 }
