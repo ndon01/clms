@@ -5,3 +5,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* PrimeNG checkbox component for question-bank-table*/
+.p-checkbox .p-checkbox-box {
+  border: 1px solid black; /* Customize the border style as needed */
+}

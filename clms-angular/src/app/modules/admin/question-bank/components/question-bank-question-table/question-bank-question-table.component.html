@@ -1,22 +1,44 @@
-<p-table [value]="questions" styleClass="p-datatable-striped"
-         [tableStyle]="{'min-width': '50rem'}">
+<p-table [value]="questions"
+         [(selection)]="checkBoxValues"
+         dataKey = "id"
+         styleClass="p-datatable-striped"
+         [tableStyle]="{'min-width': '50rem'}"
+>
+
   <ng-template pTemplate="header">
     <tr>
+        <th *ngIf="useCheckBoxes">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
       <th>ID</th>
       <th>Name</th>
-      <th>Subcategories</th>
+      <th>Categories</th>
     </tr>
+      <tr>
+          <th></th>
+          <th></th>
+          <th style="width:30%">
+              <p-columnFilter type="text"
+                              field="questionName"
+                              placeholder = "Search By Name"
+                              ariaLabel="Filter Name"
+              />
+          </th>
+          <th>
+          </th>
+      </tr>
   </ng-template>
   <ng-template pTemplate="body" let-category>
     <tr>
+        <td *ngIf="useCheckBoxes">
+            <p-tableCheckbox [value]="category" ></p-tableCheckbox>
+        </td>
       <td>{{category.id}}</td>
       <td>{{category.questionName}}</td>
       <td>
-        <ul>
-          <li *ngFor="let subcategory of category.categories">
-            {{subcategory.categoryName}}
-          </li>
-        </ul>
+          <ng-container *ngFor="let subcategory of category.categories">
+              <p-tag [value]="subcategory.categoryName" class = "mr-2" [style]="{background: 'black'}"/>
+          </ng-container>
       </td>
     </tr>
   </ng-template>

@@ -1,8 +1,9 @@
-package com.clms.api.authentication.registration;
+package com.clms.api.authentication;
 
 import com.clms.api.authentication.domain.AuthenticationProfile;
 import com.clms.api.authentication.domain.AuthenticationProfileRepository;
 import com.clms.api.authentication.passwords.PlainTextPasswordToHashedPasswordService;
+import com.clms.api.authentication.registration.RegistrationDTO;
 import com.clms.api.authentication.registration.exceptions.InvalidRegistrationRequestException;
 import com.clms.api.authentication.registration.services.RegisteredUserEventPublicationService;
 import com.clms.api.common.util.passwords.PasswordValidatorUtil;

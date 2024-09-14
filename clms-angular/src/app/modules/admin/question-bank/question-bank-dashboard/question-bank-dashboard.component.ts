@@ -11,13 +11,19 @@ import {
   CreateQuestionModalLauncherService
 } from "@modules/admin/question-bank/modals/create-question-modal/launcher/create-question-modal-launcher.service";
 import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-bank-category.model";
+import {
+  QuestionBankCategoryDashboardComponent
+} from "@modules/admin/question-bank/question-bank-category-dashboard/question-bank-category-dashboard.component";
+import {
+  QuestionBankQuestionDashboardComponent
+} from "@modules/admin/question-bank/question-bank-question-dashboard/question-bank-question-dashboard.component";
 
 @Component({
-  selector: 'app-question-bank-question-dashboard',
-  templateUrl: './question-bank-question-dashboard.component.html',
-  styleUrl: './question-bank-question-dashboard.component.css'
+  selector: 'app-question-bank-dashboard',
+  templateUrl: './question-bank-dashboard.component.html',
+  styleUrl: './question-bank-dashboard.component.css'
 })
-export class QuestionBankQuestionDashboardComponent implements  OnInit {
+export class QuestionBankDashboardComponent implements  OnInit {
   questions : QuestionBankQuestion[] = [];
   categories: QuestionBankCategory[] = [];
 
