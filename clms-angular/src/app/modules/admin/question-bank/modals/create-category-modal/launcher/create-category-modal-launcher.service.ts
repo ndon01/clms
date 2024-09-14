@@ -15,8 +15,9 @@ import {QuestionBankCategory} from "@modules/admin/question-bank/model/question-
 import {
   CreateCategoryModalComponent, CreateCategoryModalFooterComponent
 } from "@modules/admin/question-bank/modals/create-category-modal/modal/create-category-modal.component";
+import {AdminQuestionBankModule} from "@modules/admin/question-bank/admin-question-bank.module";
 @Injectable({
-  providedIn: AdminModule,
+  providedIn: AdminQuestionBankModule,
   useFactory: (dialogService: DialogService) => new CreateCategoryModalLauncherService(dialogService),
 })
 export class CreateCategoryModalLauncherService {

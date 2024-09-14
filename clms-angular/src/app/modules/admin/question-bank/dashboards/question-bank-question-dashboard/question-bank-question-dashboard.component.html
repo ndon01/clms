@@ -1,8 +1,10 @@
 <p-card>
-  <div>
-    <div>
-      <h1 style="font-size: 1.5rem;">Question Bank Question Management</h1>
+  <ng-template pTemplate="header">
+    <div class="w-full flex justify-center items-center" style="padding-left: 1.25rem;padding-top: 1.25rem;">
+      <h1 style="font-size: 1.5rem;">Questions</h1>
     </div>
+  </ng-template>
+  <div>
     <button pButton type="button" label="Create Question" class="p-button-raised p-button-rounded" (click)="clickCreateQuestion()"></button>
     <app-question-bank-question-table [questions]="questions" />
   </div>
