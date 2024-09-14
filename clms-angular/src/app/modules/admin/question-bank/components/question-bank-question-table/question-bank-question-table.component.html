@@ -2,7 +2,8 @@
          [(selection)]="checkBoxValues"
          dataKey = "id"
          styleClass="p-datatable-striped"
-         [tableStyle]="{'min-width': '50rem'}">
+         [tableStyle]="{'min-width': '50rem'}"
+>
 
   <ng-template pTemplate="header">
     <tr>
@@ -13,6 +14,19 @@
       <th>Name</th>
       <th>Categories</th>
     </tr>
+      <tr>
+          <th></th>
+          <th></th>
+          <th style="width:30%">
+              <p-columnFilter type="text"
+                              field="questionName"
+                              placeholder = "Search By Name"
+                              ariaLabel="Filter Name"
+              />
+          </th>
+          <th>
+          </th>
+      </tr>
   </ng-template>
   <ng-template pTemplate="body" let-category>
     <tr>
