@@ -64,14 +64,62 @@ public class AuthorizationController
         if (permissionRepository.findByNameEqualsIgnoreCase(permission.getName()).orElse(null) != null) {
             return ResponseEntity.status(400).build();
         }
-        //decode DTO
-        //see if permission exists
-        // if yes then return user error + "This permission already exits"
-        //if no save permission
-        return null;
+
+
+        if (permissionRepository.findByNameEqualsIgnoreCase(permission.getName()).isPresent() &&
+                !currentPermission.getName().equalsIgnoreCase(permission.getName())) {
+            return ResponseEntity.status(400).body("Permission with this name already exists.");
+        }
+
+        currentPermission.setName(permission.getName());
+        currentPermission.setDescription(permission.getDescription());
+        permissionRepository.save(currentPermission);
+
+        return ResponseEntity.ok(currentPermission);
     }
 
-    //updateRole
+    @PostMapping("/roles/{roleId}")
+    public ResponseEntity<?> updateRole(@RequestBody RoleCreationDto roleDto, @PathVariable int roleId) {
+        Role currentRole = roleRepository.findById(roleId).orElse(null);
+        if (currentRole == null) {
+            return ResponseEntity.status(404).body("Role not found.");
+        }
+
+        if (roleRepository.findByNameEqualsIgnoreCase(roleDto.getName()).isPresent() &&
+                !currentRole.getName().equalsIgnoreCase(roleDto.getName())) {
+            return ResponseEntity.status(400).body("Role with this name already exists.");
+        }
+
+        currentRole.setName(roleDto.getName());
+        currentRole.setDescription(roleDto.getDescription());
+        roleRepository.save(currentRole);
+
+        return ResponseEntity.ok(currentRole);
+    }
+
+    // DELETE endpoint for permissions
+    @DeleteMapping("/permissions/{permissionId}")
+    public ResponseEntity<?> deletePermission(@PathVariable int permissionId) {
+        Permission currentPermission = permissionRepository.findById(permissionId).orElse(null);
+        if (currentPermission == null) {
+            return ResponseEntity.status(404).body("Permission not found.");
+        }
+
+        permissionRepository.deleteById(permissionId);
+        return ResponseEntity.status(204).build(); // No Content
+    }
+
+    // DELETE endpoint for roles
+    @DeleteMapping("/roles/{roleId}")
+    public ResponseEntity<?> deleteRole(@PathVariable int roleId) {
+        Role currentRole = roleRepository.findById(roleId).orElse(null);
+        if (currentRole == null) {
+            return ResponseEntity.status(404).body("Role not found.");
+        }
+
+        roleRepository.deleteById(roleId);
+        return ResponseEntity.status(204).build(); // No Content
+    }
 
 }
 
