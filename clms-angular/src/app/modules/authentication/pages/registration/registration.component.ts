@@ -18,6 +18,7 @@ enum ValidationStateEnum {
 }
 
 import { AbstractControl } from '@angular/forms';
+import {MessageService} from "primeng/api";
 
 function passwordValidator(control: AbstractControl): ValidationErrors | null {
   const password = control.value;
@@ -65,7 +66,7 @@ export class RegistrationComponent {
   password = new FormControl<String>("", [passwordValidator]);
   confirmPassword = new FormControl<String>("");
 
-  constructor(private router: Router, public location: Location, private registrationService: RegistrationService, private loadingAmbianceService: LoadingAmbianceService) {
+  constructor(private router: Router, public location: Location, private registrationService: RegistrationService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService) {
     const passwordCharacterLimiter = map((newString: String | null) => {
       if (newString == null) return null;
       return newString.substring(0, 64);
@@ -113,6 +114,7 @@ export class RegistrationComponent {
       .subscribe((response) => {
         this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
         if (response.status == 201) {
+          this.messageService.add({severity: 'success', summary: 'Registration Successful', detail: 'You have successfully registered. Please login to continue.'});
           this.router.navigate(["/login"])
         }
       });

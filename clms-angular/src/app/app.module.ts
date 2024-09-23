@@ -12,11 +12,13 @@ import {DialogModule} from "primeng/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ClientService} from "@core/services/client/client.service";
 import {SharedModule} from "@shared/shared.module";
+import {MessageService} from "primeng/api";
+import {ToastModule} from "primeng/toast";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule, SharedModule],
-  providers: [ThemeService, provideHttpClient(), DialogService, ClientService],
+  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule, SharedModule, ToastModule],
+  providers: [ThemeService, provideHttpClient(), DialogService, MessageService, ClientService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
