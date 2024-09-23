@@ -11,7 +11,6 @@ import {Button} from "primeng/button";
 @Component({
   selector: 'admin-users-table-view',
   templateUrl: './users-table.component.html',
-  styleUrls: ['./users-table.component.css'],
 })
 export class UsersTableComponent {
   @Input() users: User[] = [];

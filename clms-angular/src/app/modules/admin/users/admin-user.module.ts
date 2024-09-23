@@ -38,13 +38,9 @@ import {UsersTableComponent} from "@modules/admin/users/components/users-table/u
 import {
   CreateUserModalComponent
 } from "@modules/admin/users/modals/create-user-modal/modal/create-user-modal.component";
-import {EditUserModalComponent} from "@modules/admin/users/modals/edit-user-modal/modal/edit-user-modal.component";
 import {
   CreateUserModalLauncherService
 } from "@modules/admin/users/modals/create-user-modal/launcher/create-user-modal-launcher.service";
-import {
-  EditUserModalLauncherService
-} from "@modules/admin/users/modals/edit-user-modal/launcher/edit-user-modal-launcher.service";
 import {UserFormComponent} from "@modules/admin/users/components/user-form/user-form.component";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {NgForOf, NgIf} from "@angular/common";
@@ -55,8 +51,8 @@ import {DialogModule} from "primeng/dialog";
 import {Ripple} from "primeng/ripple";
 
 @NgModule({
-  declarations: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent, EditUserModalComponent, UserFormComponent],
-  exports: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent, EditUserModalComponent],
+  declarations: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent, UserFormComponent],
+  exports: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent],
   imports: [
     CardModule,
     FormsModule,
@@ -73,6 +69,6 @@ import {Ripple} from "primeng/ripple";
     Ripple,
     NgIf
   ],
-  providers: [CreateUserModalLauncherService, EditUserModalLauncherService]
+  providers: [CreateUserModalLauncherService]
 })
 export class AdminUserModule { }

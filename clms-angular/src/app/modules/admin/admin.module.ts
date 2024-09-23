@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {DashboardComponent} from "@modules/admin/dashboard/dashboard.component";
 import {CommonModule} from "@angular/common";
 import {AdminRoutingModule} from "@modules/admin/admin-routing.module";
 import {CardModule} from "primeng/card";
@@ -19,6 +18,7 @@ import {PanelMenuModule} from "primeng/panelmenu";
 import {AdminAuthorizationModule} from "@modules/admin/authorization/admin-authorization.module";
 import {ButtonComponent} from "@core/components/button/button.component";
 import {AdminUserModule} from "@modules/admin/users/admin-user.module";
+import {DashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
 
 @NgModule({
   declarations: [DashboardComponent],

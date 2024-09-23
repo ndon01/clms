@@ -125,7 +125,7 @@
         </div>
       </ng-template>
       <div class="flex flex-col gap-3">
-        <p-menubar [model]="items" [style]="{'width':'100%'}"></p-menubar>
+        <p-menubar [model]="roleMenuItems" [style]="{'width':'100%'}"></p-menubar>
         <p-table [value]="rolesList" styleClass="p-datatable-striped"
                  [tableStyle]="{'min-width': '50rem'}"
                  dataKey="id" editMode="row">
@@ -137,6 +137,8 @@
               <th>Actions</th>
             </tr>
           </ng-template>
+
+
           <ng-template pTemplate="body" let-role let-editing="editing" let-ri="rowIndex">
             <tr [pEditableRow]="role">
               <td>
@@ -214,4 +216,121 @@
   </div>
 </div>
 
-<admin-create-user-modal [(enabled)]="isUserCreationModalVisible" ></admin-create-user-modal>
+<p-dialog [modal]="true" [(visible)]="isNewRoleCreationRowVisible" (onHide)="onNewRoleEditCancel()">
+  <ng-template pTemplate="content">
+    <p-table
+      [value]="[newRole]"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{'min-width': '50rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Permissions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-role>
+        <tr>
+          <td>
+            <!-- Display the role ID here (you can modify based on your needs) -->
+            {{ role.id || 'N/A' }}
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="role.name"
+              placeholder="Enter Role Name"
+            />
+          </td>
+          <td>
+            <p-multiSelect
+              [options]="permissionsList"
+              [(ngModel)]="role.permissions"
+              optionLabel="name"
+              placeholder="Select Permissions"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="onNewRoleEditCancel()"></button>
+      <button pButton type="button" label="Create" (click)="onNewRoleEditCreate()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="isNewUserCreationRowVisible" (onHide)="onNewUserEditCancel()">
+  <ng-template pTemplate="content">
+    <p-table
+      [value]="[newUser]"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{'min-width': '50rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Roles</th>
+          <th>Permissions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>
+            <!-- Display the user ID here (you can modify based on your needs) -->
+            {{ user.id || 'N/A' }}
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="user.username"
+              placeholder="Enter Username"
+            />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="password"
+              [(ngModel)]="user.password"
+              placeholder="Enter Password"
+            />
+          <td>
+            <p-multiSelect
+              [options]="rolesList"
+              [(ngModel)]="user.roles"
+              optionLabel="name"
+              placeholder="Select Roles"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+          <td>
+            <p-multiSelect
+              [options]="permissionsList"
+              [(ngModel)]="user.permissions"
+              optionLabel="name"
+              placeholder="Select Permissions"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="onNewUserEditCancel()"></button>
+      <button pButton type="button" label="Create" (click)="onNewUserEditCreate()"></button>
+    </div>
+  </ng-template>

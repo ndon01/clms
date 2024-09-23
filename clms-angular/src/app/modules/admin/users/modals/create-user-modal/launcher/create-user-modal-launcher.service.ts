@@ -5,7 +5,6 @@ import {User} from "@core/model/User.model";
 import {
   CreateUserModalComponent
 } from "@modules/admin/users/modals/create-user-modal/modal/create-user-modal.component";
-import {FooterComponent} from "@modules/admin/users/modals/create-user-modal/footer/footer.component";
 import {AdminUserModule} from "@modules/admin/users/admin-user.module";
 @Injectable({
   providedIn: AdminUserModule,
