@@ -19,13 +19,12 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> LoginUserV1(@RequestBody LoginDTO loginDTO) {
         String token = loginService.loginForToken(loginDTO.getUsername(), loginDTO.getPassword());
-        long expirationInSeconds = 3600;
+        long expirationInSeconds = 36000;
 
         ResponseCookie cookie = ResponseCookie.from("Authorization", token)
                 .httpOnly(true)
-                .secure(true)
-                .path("/")
                 .maxAge(expirationInSeconds)
+                .path("/")
                 .sameSite("Strict")
                 .build();
 

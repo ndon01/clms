@@ -41,7 +41,6 @@ import {
 import {
   CreateUserModalLauncherService
 } from "@modules/admin/users/modals/create-user-modal/launcher/create-user-modal-launcher.service";
-import {UserFormComponent} from "@modules/admin/users/components/user-form/user-form.component";
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {NgForOf, NgIf} from "@angular/common";
 import {InputTextModule} from "primeng/inputtext";
@@ -52,7 +51,7 @@ import {Ripple} from "primeng/ripple";
 import {PaginatorModule} from "primeng/paginator";
 
 @NgModule({
-  declarations: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent, UserFormComponent],
+  declarations: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent],
   exports: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent],
   imports: [
     CardModule,

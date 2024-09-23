@@ -1,0 +1,27 @@
+<div class="flex flex-row w-screen h-screen">
+  <div class="h-full flex flex-col"> <!-- sidebar -->
+    {{hasAdminPageAccess}}
+    <div class="flex flex-row justify-between items-center p-1" style="width: 250px" routerLink="/admin" *ngIf="hasAdminPageAccess">
+      <!-- user information -->
+      <div>
+        Administration
+      </div>
+
+      <span class="pi pi-arrow-right"></span>
+    </div>
+    <!-- user tab -->
+    <div class="flex flex-row justify-between items-center p-3" style="width: 250px">
+      <!-- user information -->
+      <div>
+        {{Client?.username}}
+      </div>
+      <!-- actions -->
+      <div class="flex flex-row">
+        <span class="pi pi-cog"></span>
+      </div>
+    </div>
+  </div>
+  <main> <!-- main -->
+    <ng-content/>
+  </main>
+</div>
