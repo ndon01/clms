@@ -8,3 +8,5 @@ export type User = {
   roles: Role[];
   permissions: Permission[];
 }
+
+export type UserProjection = Partial<User>;

@@ -1,11 +1,8 @@
-import { Component } from '@angular/core';
-import {AdminModule} from "@modules/admin/admin.module";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'admin-dashboard',
+  selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class AdminDashboardComponent {
-
-}
+export class DashboardComponent {}

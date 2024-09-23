@@ -1,11 +1,9 @@
 package com.clms.api.questionBank.models;
 
-import com.clms.api.authorization.Permission;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "question_bank_questions")

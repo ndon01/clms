@@ -9,21 +9,328 @@
           <h1 style="font-size: 1.5rem;">Users</h1>
         </div>
       </ng-template>
-      <p-table [value]="users" styleClass="p-datatable-striped" dataKey="id">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user>
-          <td>{{ user.id }}</td>
-          <td>{{ user.username }}</td>
-        </ng-template>
-      </p-table>
+      <div class="flex flex-col gap-3">
+        <p-menubar [model]="items" [style]="{'width':'100%'}"></p-menubar>
+        <p-table [value]="users" styleClass="p-datatable-striped"
+                 [tableStyle]="{'min-width': '50rem'}"
+                 dataKey="id" editMode="row">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Roles</th>
+              <th>Permissions</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="user">
+            <td>
+              {{ user.id }}
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input
+                    pInputText
+                    type="text"
+                    [(ngModel)]="user.username" />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{user.username}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-multiSelect
+                      [options]="rolesList"
+                      [(ngModel)]="user.roles"
+                      optionLabel="name"
+                      placeholder="Select Roles"
+                      appendTo="body"
 
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <ng-container *ngFor="let role of user.roles">
+                      <p-tag [value]="role.name" class="mr-2"></p-tag>
+                    </ng-container>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <p-multiSelect
+                    [options]="permissionsList"
+                    [(ngModel)]="user.permissions"
+                    optionLabel="name"
+                    placeholder="Select Permissions"
+                    appendTo="body"
+
+                  />
+                </ng-template>
+                <ng-template pTemplate="output">
+                  <ng-container *ngFor="let permission of user.permissions">
+                    <p-tag [value]="permission.name" class="mr-2"></p-tag>
+                  </ng-container>
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <div class="flex align-items-center justify-content-center gap-2">
+                <button
+                  *ngIf="!editing"
+                  pButton
+                  pRipple
+                  type="button"
+                  pInitEditableRow
+                  icon="pi pi-pencil"
+                  (click)="onUserRowEditInit(user)"
+                  class="p-button-rounded p-button-text">
+                </button>
+                <button
+                  *ngIf="editing"
+                  pButton
+                  pRipple
+                  type="button"
+                  pSaveEditableRow
+                  icon="pi pi-check"
+                  (click)="onUserRowEditSave(user)"
+                  class="p-button-rounded p-button-text p-button-success mr-2">
+                </button>
+                <button
+                  *ngIf="editing"
+                  pButton pRipple
+                  type="button"
+                  pCancelEditableRow
+                  icon="pi pi-times"
+                  (click)="onUserRowEditCancel(user, ri)"
+                  class="p-button-rounded p-button-text p-button-danger">
+                </button>
+              </div>
+            </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </p-card>
 
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="w-full flex justify-center items-center" style="padding-left: 1.25rem;padding-top: 1.25rem;">
+          <h1 style="font-size: 1.5rem;">Roles</h1>
+        </div>
+      </ng-template>
+      <div class="flex flex-col gap-3">
+        <p-menubar [model]="roleMenuItems" [style]="{'width':'100%'}"></p-menubar>
+        <p-table [value]="rolesList" styleClass="p-datatable-striped"
+                 [tableStyle]="{'min-width': '50rem'}"
+                 dataKey="id" editMode="row">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Permissions</th>
+              <th>Actions</th>
+            </tr>
+          </ng-template>
+
+
+          <ng-template pTemplate="body" let-role let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="role">
+              <td>
+                {{ role.id }}
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <input
+                      pInputText
+                      type="text"
+                      [(ngModel)]="role.name" />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    {{role.name}}
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <p-cellEditor>
+                  <ng-template pTemplate="input">
+                    <p-multiSelect
+                      [options]="permissionsList"
+                      [(ngModel)]="role.permissions"
+                      optionLabel="name"
+                      placeholder="Select Permissions"
+                      appendTo="body"
+                    />
+                  </ng-template>
+                  <ng-template pTemplate="output">
+                    <ng-container *ngFor="let permission of role.permissions">
+                      <p-tag [value]="permission.name" class="mr-2"></p-tag>
+                    </ng-container>
+                  </ng-template>
+                </p-cellEditor>
+              </td>
+              <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                  <button
+                    *ngIf="!editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pInitEditableRow
+                    icon="pi pi-pencil"
+                    (click)="onRoleRowEditInit(role)"
+                    class="p-button-rounded p-button-text">
+                  </button>
+                  <button
+                    *ngIf="editing"
+                    pButton
+                    pRipple
+                    type="button"
+                    pSaveEditableRow
+                    icon="pi pi-check"
+                    (click)="onRoleRowEditSave(role)"
+                    class="p-button-rounded p-button-text p-button-success mr-2">
+                  </button>
+                  <button
+                    *ngIf="editing"
+                    pButton pRipple
+                    type="button"
+                    pCancelEditableRow
+                    icon="pi pi-times"
+                    (click)="onRoleRowEditCancel(role, ri)"
+                    class="p-button-rounded p-button-text p-button-danger">
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </p-card>
   </div>
 </div>
 
+<p-dialog [modal]="true" [(visible)]="isNewRoleCreationRowVisible" (onHide)="onNewRoleEditCancel()">
+  <ng-template pTemplate="content">
+    <p-table
+      [value]="[newRole]"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{'min-width': '50rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Permissions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-role>
+        <tr>
+          <td>
+            <!-- Display the role ID here (you can modify based on your needs) -->
+            {{ role.id || 'N/A' }}
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="role.name"
+              placeholder="Enter Role Name"
+            />
+          </td>
+          <td>
+            <p-multiSelect
+              [options]="permissionsList"
+              [(ngModel)]="role.permissions"
+              optionLabel="name"
+              placeholder="Select Permissions"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="onNewRoleEditCancel()"></button>
+      <button pButton type="button" label="Create" (click)="onNewRoleEditCreate()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="isNewUserCreationRowVisible" (onHide)="onNewUserEditCancel()">
+  <ng-template pTemplate="content">
+    <p-table
+      [value]="[newUser]"
+      styleClass="p-datatable-striped"
+      [tableStyle]="{'min-width': '50rem'}"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Password</th>
+          <th>Roles</th>
+          <th>Permissions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>
+            <!-- Display the user ID here (you can modify based on your needs) -->
+            {{ user.id || 'N/A' }}
+          </td>
+          <td>
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="user.username"
+              placeholder="Enter Username"
+            />
+          </td>
+          <td>
+            <input
+              pInputText
+              type="password"
+              [(ngModel)]="user.password"
+              placeholder="Enter Password"
+            />
+          <td>
+            <p-multiSelect
+              [options]="rolesList"
+              [(ngModel)]="user.roles"
+              optionLabel="name"
+              placeholder="Select Roles"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+          <td>
+            <p-multiSelect
+              [options]="permissionsList"
+              [(ngModel)]="user.permissions"
+              optionLabel="name"
+              placeholder="Select Permissions"
+              appendTo="body"
+            ></p-multiSelect>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="onNewUserEditCancel()"></button>
+      <button pButton type="button" label="Create" (click)="onNewUserEditCreate()"></button>
+    </div>
+  </ng-template>
