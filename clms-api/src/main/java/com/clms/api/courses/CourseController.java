@@ -1,15 +1,11 @@
 package com.clms.api.courses;
 
-import com.clms.api.authorization.Permission;
-import com.clms.api.authorization.PermissionCreationDto;
 import jakarta.transaction.Transactional;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
