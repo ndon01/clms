@@ -12,6 +12,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {PermissionProjection} from "@modules/admin/authorization/model/PermissionProjection.model";
 import {RoleProjection} from "@modules/admin/authorization/model/RoleProjection.model";
 import {RolesDataSourceService} from "@modules/admin/authorization/service/roles-data-source.service";
+import {PaginatorState} from "primeng/paginator";
 
 @Component({
   selector: 'admin-user-dashboard',
@@ -187,6 +188,10 @@ export class UserDashboardComponent implements OnInit {
       description: '',
       permissions: []
     }
+  }
+
+  onUserPageChange(event: PaginatorState) {
+    console.log(event)
   }
 
 }

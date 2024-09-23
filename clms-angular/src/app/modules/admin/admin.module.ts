@@ -19,12 +19,14 @@ import {AdminAuthorizationModule} from "@modules/admin/authorization/admin-autho
 import {ButtonComponent} from "@core/components/button/button.component";
 import {AdminUserModule} from "@modules/admin/users/admin-user.module";
 import {DashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
+import {ListboxModule} from "primeng/listbox";
+import {MenubarModule} from "primeng/menubar";
 
 @NgModule({
   declarations: [DashboardComponent],
   exports: [DashboardComponent],
   imports: [
-    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, MultiSelectModule, AdminQuestionBankModule, SplitterModule, PanelMenuModule, AdminAuthorizationModule, ButtonComponent, AdminUserModule
+    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, MultiSelectModule, AdminQuestionBankModule, SplitterModule, PanelMenuModule, AdminAuthorizationModule, ButtonComponent, AdminUserModule, ListboxModule, MenubarModule
   ],
   providers: []
 })
