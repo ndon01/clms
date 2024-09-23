@@ -49,6 +49,7 @@ import {AdminQuestionBankModule} from "@modules/admin/question-bank/admin-questi
 import {MenubarModule} from "primeng/menubar";
 import {DialogModule} from "primeng/dialog";
 import {Ripple} from "primeng/ripple";
+import {PaginatorModule} from "primeng/paginator";
 
 @NgModule({
   declarations: [UserDashboardComponent, UsersTableComponent, CreateUserModalComponent, UserFormComponent],
@@ -67,7 +68,8 @@ import {Ripple} from "primeng/ripple";
     ButtonDirective,
     DialogModule,
     Ripple,
-    NgIf
+    NgIf,
+    PaginatorModule
   ],
   providers: [CreateUserModalLauncherService]
 })
