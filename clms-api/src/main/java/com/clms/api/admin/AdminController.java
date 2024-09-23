@@ -20,7 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-@RequiresRole(value = "ADMIN")
 public class AdminController {
 
     private final UserService userService;
@@ -28,7 +27,6 @@ public class AdminController {
     private final AuthenticationService authenticationService;
 
     @GetMapping("/users")
-    @RequiresPermission("GET_ALL_USERS")
     public List<UserProjection> getUsers() {
         return userService.getUsers().stream().map(userService::convertToUserProjection).toList();
     }

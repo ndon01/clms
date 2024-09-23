@@ -1,6 +1,8 @@
 import {Injectable, OnInit, WritableSignal} from '@angular/core';
-import {User} from "@core/model/User.model";
+import {User, UserProjection} from "@core/model/User.model";
 import {HttpClient} from "@angular/common/http";
+import {ClientDataSourceService} from "@core/services/client-data-source.service";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 export type INullish = undefined | null
 
@@ -12,35 +14,62 @@ export type IAppClient = {
   providedIn: 'root'
 })
 export class ClientService implements OnInit {
-  private user: User | null = null;
+  private user: UserProjection | null = null;
   private authenticated: boolean = false;
-  constructor(private httpClient: HttpClient) {
 
+  private clientPermissions: Map<string, boolean> = new Map();
+
+  constructor(private httpClient: HttpClient, private clientDataSourceService: ClientDataSourceService){
   }
 
   ngOnInit() {
-    var localUser = localStorage.getItem('user');
-    if (localUser) {
-      this.user = JSON.parse(localUser);
-    }
-    if (this.user) {
+    this.clientDataSourceService.get().subscribe(data => {
+      if(data == null) {
+        this.authenticated = false;
+        this.user = null;
+        return;
+      }
+
       this.authenticated = true;
-    } else {
-      this.httpClient.get<User>('/api/user/me', {
-        observe: 'body'
-      }).subscribe((user: User) => {
-        this.user = user;
-        this.authenticated = true;
-        localStorage.setItem('user', JSON.stringify(user));
-      })
-    }
+      this.user = data;
+      this.buildPermissionList();
+    })
   }
 
-  public getUser(): User | null {
+  public getUser(): UserProjection | null {
     return this.user;
   }
 
   public isAuthenticated(): boolean {
     return this.authenticated;
+  }
+
+  public hasPermission(permissionName: string) {
+    if (!this.authenticated) {
+      return false;
+    }
+
+    return this.clientPermissions.get(permissionName) || false;
+  }
+
+  private buildPermissionList() {
+    // from permissions
+    this.user?.permissions?.forEach(permission => {
+      if (permission == null || permission.name == null) {
+        return;
+      }
+      this.clientPermissions.set(permission.name, true)
+    })
+    // from roles
+    this.user?.roles?.forEach(role => {
+      role.permissions?.forEach(permission => {
+        if (permission == null || permission.name == null) {
+          return;
+        }
+
+        this.clientPermissions.set(permission.name, true)
+      })
+    })
+
   }
 }
