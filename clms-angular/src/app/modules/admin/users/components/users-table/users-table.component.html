@@ -1,0 +1,65 @@
+<p-table [value]="users" styleClass="p-datatable-striped"
+         [tableStyle]="{'min-width': '50rem'}"
+         dataKey="id" editMode="row">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Permissions</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
+    <td>{{ user.id }}</td>
+    <td>
+      <p-cellEditor>
+        <ng-template pTemplate="input">
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="user.username" />
+        </ng-template>
+        <ng-template pTemplate="output">
+          {{user.username}}
+        </ng-template>
+      </p-cellEditor>
+    </td>
+    <td>
+      <ng-container *ngFor="let permission of user.permissions">
+        <p-tag [value]="permission.name" class="mr-2"></p-tag>
+      </ng-container>
+    </td>
+    <td>
+      <button
+        *ngIf="!editing"
+        pButton
+        pRipple
+        type="button"
+        pInitEditableRow
+        icon="pi pi-pencil"
+        (click)="onRowEditInit(user)"
+        class="p-button-rounded p-button-text">
+      </button>
+      <button
+        *ngIf="editing"
+        pButton
+        pRipple
+        type="button"
+        pSaveEditableRow
+        icon="pi pi-check"
+        (click)="onRowEditSave(user)"
+        class="p-button-rounded p-button-text p-button-success mr-2">
+      </button>
+      <button
+        *ngIf="editing"
+        pButton pRipple
+        type="button"
+        pCancelEditableRow
+        icon="pi pi-times"
+        (click)="onRowEditCancel(user, ri)"
+        class="p-button-rounded p-button-text p-button-danger">
+      </button>
+
+    </td>
+  </ng-template>
+</p-table>

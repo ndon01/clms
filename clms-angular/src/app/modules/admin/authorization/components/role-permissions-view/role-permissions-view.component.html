@@ -1,0 +1,14 @@
+<div class="w-full h-full" style="padding-left: 20px">
+  <ng-container *ngFor="let permission of allPermissions">
+    <div class="flex flex-row justify-between w-full">
+      <div class="flex flex-col">
+        <span>{{permission.name}}</span>
+        <span>{{permission.description}}</span>
+      </div>
+      <div>
+        <p-selectButton [options]="permissionOptions" optionLabel="name"
+                        optionValue="value" />
+      </div>
+    </div>
+  </ng-container>
+</div>

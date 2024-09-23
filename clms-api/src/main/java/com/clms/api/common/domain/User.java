@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.Set;
 
 @EqualsAndHashCode

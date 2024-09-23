@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {AdminDashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
-
+import {
+  QuestionBankDashboardComponent
+} from "@modules/admin/question-bank/dashboards/question-bank-dashboard/question-bank-dashboard.component";
+import {DashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: AdminDashboardComponent }
+  { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
 ];
 
 

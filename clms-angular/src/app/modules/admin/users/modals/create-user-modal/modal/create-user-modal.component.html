@@ -1,0 +1,33 @@
+<p-dialog [modal]="true" [(visible)]="enabled">
+  <ng-template pTemplate="Header">
+    <div class="inline-flex align-items-center justify-content-center gap-2">
+      <span>User Creation</span>
+    </div>
+  </ng-template>
+
+  <div class="flex flex-col gap-6">
+    <div class="flex flex-col gap-1 w-full">
+      <label for="username" class="text-xs" style="font-family: 'Inter'">Username</label>
+      <input id="username" name="username" type="username"
+             placeholder="Enter your Username"
+             class="w-full h-7 rounded border border-gray-300 ps-1 pe-1 pt-0.5 pb-0.5 transition-all duration-700 outline-0 text-xs hover:shadow hover:shadow-accent hover:shadow-gray-500 hover:transition-all hover:duration-150 focus:shadow focus:shadow-accent focus:shadow-gray-500 focus:transition-all focus:duration-150"
+             style="font-family: 'Inter'"
+             [(ngModel)]="username"
+      />
+    </div>
+
+    <div class="flex flex-col gap-1 w-full">
+      <label for="password" class="text-xs" style="font-family: 'Inter'">Password</label>
+      <input id="password" name="password" type="password"
+             placeholder="Enter your Password"
+             class="w-full h-7 rounded border border-gray-300 ps-1 pe-1 pt-0.5 pb-0.5 transition-all duration-700 outline-0 text-xs hover:shadow hover:shadow-accent hover:shadow-gray-500 hover:transition-all hover:duration-150 focus:shadow focus:shadow-accent focus:shadow-gray-500 focus:transition-all focus:duration-150"
+             style="font-family: 'Inter'"
+             [(ngModel)]="password"
+      />
+    </div>
+  </div>
+
+  <ng-template pTemplate="Footer">
+    <button pButton type="button" label="{{isUserCreated ? 'Update' : 'Create'}}" class="w-full h-7 text-xs" style="font-family: 'Inter'" (click)="save()"></button>
+  </ng-template>
+</p-dialog>

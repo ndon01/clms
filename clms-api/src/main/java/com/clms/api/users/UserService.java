@@ -15,7 +15,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
     public boolean doesUserExistByUsername(String username) {
         return userRepository.existsByUsername(username);
     }
