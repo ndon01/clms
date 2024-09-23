@@ -4,8 +4,9 @@ import {User} from "@core/model/User.model";
 import {AdminModule} from "@modules/admin/admin.module";
 import {EditUserModalComponent} from "@modules/admin/users/modals/edit-user-modal/modal/edit-user-modal.component";
 import {FooterComponent} from "@modules/admin/users/modals/edit-user-modal/footer/footer.component";
+import {AdminUserModule} from "@modules/admin/users/admin-user.module";
 @Injectable({
-  providedIn: AdminModule,
+  providedIn: AdminUserModule,
   useFactory: (dialogService: DialogService) => new EditUserModalLauncherService(dialogService),
 })
 export class EditUserModalLauncherService {

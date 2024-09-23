@@ -17,16 +17,6 @@
   </div>
 
   <div class="flex flex-col gap-1 w-full">
-    <label for="roles" class="text-xs" style="font-family: 'Inter'">Roles</label>
-    <p-multiSelect
-      [options]="allRoles"
-      optionLabel="name"
-      [(ngModel)]="user.roles"
-      id="roles"
-      />
-  </div>
-
-  <div class="flex flex-col gap-1 w-full">
     <label for="permissions" class="text-xs" style="font-family: 'Inter'">Permissions</label>
     <p-multiSelect
       [options]="allPermissions"

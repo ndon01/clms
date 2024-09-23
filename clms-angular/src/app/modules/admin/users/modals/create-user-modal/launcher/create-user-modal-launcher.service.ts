@@ -6,8 +6,9 @@ import {
   CreateUserModalComponent
 } from "@modules/admin/users/modals/create-user-modal/modal/create-user-modal.component";
 import {FooterComponent} from "@modules/admin/users/modals/create-user-modal/footer/footer.component";
+import {AdminUserModule} from "@modules/admin/users/admin-user.module";
 @Injectable({
-  providedIn: AdminModule,
+  providedIn: AdminUserModule,
   useFactory: (dialogService: DialogService) => new CreateUserModalLauncherService(dialogService),
 })
 export class CreateUserModalLauncherService {
@@ -16,17 +17,14 @@ export class CreateUserModalLauncherService {
 
   launch(user?: User) {
       return this.dialogService.open(CreateUserModalComponent, {
+
         data: user,
-        header: "Create User",
         width: '50vw',
         contentStyle: { overflow: 'auto' },
         breakpoints: {
           '960px': '75vw',
           '640px': '90vw'
         },
-        templates: {
-          footer: FooterComponent
-        }
       })
     }
 }

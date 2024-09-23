@@ -1,5 +1,6 @@
-package com.clms.api.authorization;
+package com.clms.api.authorization.roles;
 
+import com.clms.api.authorization.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

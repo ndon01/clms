@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {DialogModule} from "primeng/dialog";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {User} from "@core/model/User.model";
@@ -13,29 +13,30 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './create-user-modal.component.html',
 })
 export class CreateUserModalComponent implements OnInit {
-  user: User = {
-    id: -1,
-    username: "",
-    roles: [],
-    permissions: [],
-    password: ""
-  };
+  @Input() enabled: boolean = false;
+  @Output() enabledChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  allRoles: Role[] = [];
-  allPermissions: Permission[] = [];
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig<User>, private http: HttpClient) {
-    if (config.data !== undefined) {
-      this.user = config.data;
-    }
+  // STATE
+  isUserCreated: boolean = false;
+
+  // USER
+  username: string = "";
+  password: string = "";
+
+  constructor(private httpClient: HttpClient) {
   }
 
   ngOnInit(): void {
-    this.http.get<Role[]>('/api/authorization/roles', {observe: 'body'}).subscribe(response => {
-      this.allRoles = response;
-    });
-
-    this.http.get<Permission[]>('/api/authorization/permissions', {observe: 'body'}).subscribe(response => {
-      this.allPermissions = response;
-    });
   }
+
+  save() {
+    this.isUserCreated = true;
+    this.httpClient.post('/api/admin/users/createUser', {
+      username: this.username,
+      password: this.password
+    }).subscribe(() => {
+      this.enabledChange.emit(false);
+    })
+  }
+
 }

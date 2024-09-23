@@ -1,0 +1,24 @@
+<div>
+  <div style="padding-bottom: 1.25rem">
+    <h1 style="font-size: 2rem;">Authorization Management</h1>
+  </div>
+  <div class="flex flex-col gap-5">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="w-full flex justify-center items-center" style="padding-left: 1.25rem;padding-top: 1.25rem;">
+          <h1 style="font-size: 1.5rem;">Roles</h1>
+        </div>
+      </ng-template>
+      <p-splitter [style]="{height: '300px'}">
+        <ng-template pTemplate>
+
+            <p-listbox [options]="allRoles" [(ngModel)]="selectedRole" optionLabel="name" class="w-full" [style]="{'padding-right': '20px'}">
+            </p-listbox>
+        </ng-template>
+        <ng-template pTemplate>
+          <admin-authorization-role-permissions-view [role]="selectedRole" class="w-full" />
+        </ng-template>
+      </p-splitter>
+    </p-card>
+  </div>
+</div>

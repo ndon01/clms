@@ -16,10 +16,15 @@ import {Button} from "primeng/button";
 export class UsersTableComponent {
   @Input() users: User[] = [];
 
-  @Input() displayEditButton: boolean = false;
-  @Output() editButtonClick: EventEmitter<User> = new EventEmitter<User>();
+  onRowEditInit(user: User) {
+    console.log(user)
+  }
 
-  EditButtonClicked(user: User) {
-    this.editButtonClick.emit(user);
+  onRowEditSave(user: User) {
+    console.log(user)
+  }
+
+  onRowEditCancel(user: User, index: number) {
+    console.log(user, index)
   }
 }
