@@ -1,23 +1,17 @@
-<p-menubar>
-  <div class="p-menubar-start">
-    <span class="p-menubar-item">Admin Dashboard</span>
-  </div>
-  <div class="p-menubar-end">
-    <button pButton label="Logout" icon="pi pi-sign-out"></button>
-  </div>
-</p-menubar>
-
-<div class="flex flex-row">
+<div class="m-3">
+  <span class="pi pi-arrow-left cursor-pointer" (click)="router.navigate(['dashboard'])"></span>
+</div>
+<div class="flex flex-row h-screen w-screen">
   <div style="width: 250px;">
-    <p-listbox [options]="tabs" [(ngModel)]="selectedTab" optionLabel="label" (onChange)="onTabChange($event)">
+    <p-listbox
+      [options]="tabs"
+      [(ngModel)]="selectedTab"
+      optionLabel="label"
+      (onChange)="onTabChange($event)"
+    >
     </p-listbox>
   </div>
-  <div class="w-full pl-10 pr-10 pt-5 pb-5">
-    <div *ngIf="selectedTab.value === 'users'">
-      <admin-user-dashboard></admin-user-dashboard>
-    </div>
-    <div *ngIf="selectedTab.value === 'questionBank'">
-      <admin-question-bank-dashboard></admin-question-bank-dashboard>
-    </div>
+  <div class="w-full pl-10 pr-10 pt-5 pb-5 overflow-scroll ">
+    <router-outlet></router-outlet>
   </div>
 </div>

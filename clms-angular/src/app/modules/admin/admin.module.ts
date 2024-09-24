@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {AdminRoutingModule} from "@modules/admin/admin-routing.module";
 import {CardModule} from "primeng/card";
 import {Button, ButtonDirective} from "primeng/button";
@@ -21,13 +21,24 @@ import {AdminUserModule} from "@modules/admin/users/admin-user.module";
 import {DashboardComponent} from "@modules/admin/pages/dashboard/dashboard.component";
 import {ListboxModule} from "primeng/listbox";
 import {MenubarModule} from "primeng/menubar";
+import {CoreModule} from "@core/core.module";
+import {UsersComponent} from "@modules/admin/pages/dashboard/users/users.component";
+import {QuestionBankComponent} from "@modules/admin/pages/dashboard/question-bank/question-bank.component";
+import {FormsModule} from "@angular/forms";
+import {RouterOutlet} from "@angular/router";
 
 @NgModule({
-  declarations: [DashboardComponent],
-  exports: [DashboardComponent],
+  declarations: [DashboardComponent, UsersComponent, QuestionBankComponent],
+  exports: [DashboardComponent, UsersComponent, QuestionBankComponent],
   imports: [
-    CommonModule, AdminRoutingModule, CardModule, ButtonDirective, Button, ToolbarModule, PaginatorModule, ButtonComponent, DialogModule, TagModule, TableModule, SharedModule, ChipsModule, AutoCompleteModule, MultiSelectModule, AdminQuestionBankModule, SplitterModule, PanelMenuModule, AdminAuthorizationModule, ButtonComponent, AdminUserModule, ListboxModule, MenubarModule
+    AdminUserModule,
+    ListboxModule,
+    FormsModule,
+    AdminQuestionBankModule,
+    NgIf,
+    RouterOutlet,
+    AdminRoutingModule
   ],
-  providers: []
+  providers: [],
 })
 export class AdminModule { }

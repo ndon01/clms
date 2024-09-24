@@ -67,9 +67,7 @@ public class JwtAuthenticationHttpFilter implements Filter {
                 }
             } catch (JWTVerificationException e) {
                 log.error("JWT verification failed: {}", e.getMessage());
-                // Optionally, you can return a 401 Unauthorized response here if verification fails
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+
             }
         } else {
             log.warn("Authorization token missing in header or cookies");

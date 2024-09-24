@@ -6,10 +6,6 @@ import {SidebarPageWrapperComponent} from "@core/components/sidebar-page-wrapper
 
 @Component({
   selector: 'app-dashboard-page',
-  standalone: true,
-  imports: [
-    SidebarPageWrapperComponent
-  ],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.css'
 })
