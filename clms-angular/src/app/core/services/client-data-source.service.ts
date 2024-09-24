@@ -17,6 +17,10 @@ export class ClientDataSourceService {
   private source: BehaviorSubject<UserProjection | null> = new BehaviorSubject<UserProjection | null>(null);
 
   constructor(private httpClient: HttpClient) {
+    let save = localStorage.getItem('client_data')
+    if (save) {
+      this.source.next(JSON.parse(save));
+    }
     this.refresh();
   }
 
@@ -29,6 +33,7 @@ export class ClientDataSourceService {
       observe: 'response',
     }).subscribe(data =>{
       if (data.status === 200) {
+        localStorage.setItem('client_data', JSON.stringify(data.body));
         this.source.next(data.body || null);
       }
     })

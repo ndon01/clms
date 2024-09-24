@@ -3,6 +3,7 @@ import {User, UserProjection} from "@core/model/User.model";
 import {HttpClient} from "@angular/common/http";
 import {ClientDataSourceService} from "@core/services/client-data-source.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Router} from "@angular/router";
 
 export type INullish = undefined | null
 
@@ -19,7 +20,7 @@ export class ClientService implements OnInit {
 
   private clientPermissions: Map<string, boolean> = new Map();
 
-  constructor(private httpClient: HttpClient, private clientDataSourceService: ClientDataSourceService){
+  constructor(private httpClient: HttpClient, private clientDataSourceService: ClientDataSourceService, private router: Router){
   }
 
   ngOnInit() {
@@ -44,12 +45,19 @@ export class ClientService implements OnInit {
     return this.authenticated;
   }
 
-  public hasPermission(permissionName: string) {
-    if (!this.authenticated) {
-      return false;
-    }
+  public logout() {
+    this.httpClient.post('/api/auth/logout', {}).subscribe(() => {
+      this.clientDataSourceService.refresh();
+      this.router.navigate(['/login'])
+    })
 
-    return this.clientPermissions.get(permissionName) || false;
+
+  }
+
+  public hasPermission(permissionName: string) {
+    console.log(this.clientPermissions)
+
+    return this.clientPermissions.has(permissionName.toLowerCase());
   }
 
   private buildPermissionList() {
