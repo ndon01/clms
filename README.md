@@ -74,23 +74,6 @@ Headers:
 ```
 
 ## Users
-### 
-#### Request
-```yaml
-Headers:
-    Authorization: Bearer <token
-```
-
-#### Response
-```yaml
-Status: 200 OK
-Body:
-    id: integer
-    username: string
-    email: string
-    roles: 
-      - name: string
-```
 
 ### GET /api/v1/users/me
 #### Request
