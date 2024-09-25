@@ -1,4 +1,4 @@
-# Capstone Learning Management Syste
+# Capstone Learning Management System
 # Table of Contents
 1. [Dependencies](#dependencies)
 2. [Setup](#setup)
@@ -74,6 +74,24 @@ Headers:
 ```
 
 ## Users
+### 
+#### Request
+```yaml
+Headers:
+    Authorization: Bearer <token
+```
+
+#### Response
+```yaml
+Status: 200 OK
+Body:
+    id: integer
+    username: string
+    email: string
+    roles: 
+      - name: string
+```
+
 ### GET /api/v1/users/me
 #### Request
 ```yaml
@@ -87,4 +105,145 @@ Status: 200 OK
 Body:
     id: string
     username: string
+```
+## Admin
+
+### GET /api/admin/users
+#### Request
+```yaml
+Headers:
+    Authorization: Bearer <token>
+```
+
+#### Response
+```yaml
+Status: 200 OK
+Body:
+    - id: integer
+      username: string
+      email: string
+      roles: 
+        - name: string
+```
+
+### POST /api/admin/users/createUser
+#### Request
+```yaml
+Body:
+    username: string
+    password: string
+```
+
+#### Response
+```yaml
+Status: 201 Created
+```
+
+### POST /api/admin/users/updateUser/{id}
+#### Request
+```yaml
+Body:
+    username: string
+    email: string
+    roles: 
+      - name: string
+```
+
+#### Response
+```yaml
+Status: 200 OK
+```
+
+### POST /api/admin/authorization/roles/createRole
+#### Request
+```yaml
+Body:
+    name: string
+    description: string
+    permissions:
+      - id: integer
+        name: string
+        description: string
+```
+
+#### Response
+```yaml
+Status: 201 Created
+Body:
+    id: integer
+    name: string
+    description: string
+    permissions:
+      - id: integer
+        name: string
+        description: string
+```
+
+### POST /api/admin/authorization/roles/updateRole/{id}
+#### Request
+```yaml
+Body:
+    name: string
+    description: string
+    permissions:
+      - id: integer
+        name: string
+        description: string
+```
+
+#### Response
+```yaml
+Status: 200 OK
+Body:
+    id: integer
+    name: string
+    description: string
+    permissions:
+      - id: integer
+        name: string
+        description: string
+```
+
+
+## Courses
+### PUT /api/courses
+#### Request
+```yaml
+Body:
+    courseName: string
+    description: string
+
+```
+
+#### Response 
+```yaml
+Status: 201 Created
+```
+
+
+### POST /api/courses/courses/{courseId}
+#### Request
+```yaml
+Body:
+Parameters:
+    courseId: integer (path)
+Body (optional):
+    courseName: string (Only if you want to update the course name)
+```
+
+#### Response
+```yaml
+Status: 200 OK
+```
+
+### DELETE /api/courses/courses/{courseId}
+#### Request
+```yaml
+Parameters:
+    courseId: integer (path)
+```
+
+#### Response
+```yaml
+Status: 200 OK
 ```
