@@ -1,5 +1,6 @@
 package com.clms.api.courses;
 
+import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import java.util.List;
 public class CourseController
 {
     private final CourseRepository courseRepository;
+    private final PlainTextAndHashedPasswordMatchingService plainTextAndHashedPasswordMatchingService;
 
 
     @GetMapping()
