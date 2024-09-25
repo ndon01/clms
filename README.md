@@ -1,4 +1,6 @@
 # Capstone Learning Management System
+The Capstone Learning Management System is a user-friendly platform designed to help manage courses, users, and roles efficiently. It offers a range of RESTful API endpoints for handling tasks like user authentication, role assignments, and course management, making it easy to create, update, and organize educational content. CLMS is built to provide a smooth experience for both administrators and users, keeping everything organized and accessible.
+
 # Table of Contents
 1. [Dependencies](#dependencies)
 2. [Setup](#setup)
@@ -7,8 +9,20 @@
     1. [Authentication](#authentication)
         1. [POST /api/v1/authentication/register](#post-apiv1authenticationregister)
         2. [POST /api/v1/authentication/login](#post-apiv1authenticationlogin)
-   1. [Users](#users)
-      1. [GET /api/v1/users/me](#get-apiv1usersme)
+    2. [Users](#users)
+        1. [GET /api/v1/users/me](#get-apiv1usersme)
+    3. [Admin](#admin)
+        1. [GET /api/admin/users](#get-apiadminusers)
+        2. [POST /api/admin/users/createUser](#post-apiadminuserscreateuser)
+        3. [POST /api/admin/users/updateUser/{id}](#post-apiadminusersupdateuserid)
+        4. [POST /api/admin/authorization/roles/createRole](#post-apiadminauthorizationrolescreaterole)
+        5. [POST /api/admin/authorization/roles/updateRole/{id}](#post-apiadminauthorizationrolesupdateroleid)
+    4. [Courses](#courses)
+        1. [PUT /api/courses](#put-apicourses)
+        2. [POST /api/courses/courses/{courseId}](#post-apicoursescoursescourseid)
+        3. [DELETE /api/courses/courses/{courseId}](#delete-apicoursescoursescourseid)
+
+     
 # DEPENDENCIES
 - Java 21
 - Node 20+
