@@ -1,8 +1,8 @@
-<div class="m-3">
-  <span class="pi pi-arrow-left cursor-pointer" (click)="router.navigate(['dashboard'])"></span>
-</div>
 <div class="flex flex-row h-screen w-screen">
-  <div style="width: 250px;">
+  <div style="width: 250px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);">
+    <div class="m-3">
+      <span class="pi pi-arrow-left cursor-pointer" (click)="router.navigate(['dashboard'])"></span>
+    </div>
     <p-listbox
       [options]="tabs"
       [(ngModel)]="selectedTab"
