@@ -1,4 +1,4 @@
-# Capstone Learning Management System
+# Capstone Learning Management Syste
 # Table of Contents
 1. [Dependencies](#dependencies)
 2. [Setup](#setup)
