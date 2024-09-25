@@ -45,7 +45,9 @@ nd-LMS-8-user-authentication-work
 
 # API Documentation
 ## Authentication
+
 ### POST /api/v1/authentication/register
+Registers a new user with a provided username and password.
 #### Request
 ```yaml
 Body:
@@ -59,6 +61,7 @@ Status: 201 Created
 ```
 
 ### POST /api/v1/authentication/login
+Authenticates a user and provides a token for future requests.
 #### Request
 ```yaml
 Body:
@@ -76,6 +79,7 @@ Headers:
 ## Users
 
 ### GET /api/v1/users/me
+Retrieves the profile of the authenticated user.
 #### Request
 ```yaml
 Headers:
@@ -92,6 +96,7 @@ Body:
 ## Admin
 
 ### GET /api/admin/users
+Retrieves a list of all users in the system.
 #### Request
 ```yaml
 Headers:
@@ -110,6 +115,7 @@ Body:
 ```
 
 ### POST /api/admin/users/createUser
+Creates a new user with a specified username and password.
 #### Request
 ```yaml
 Body:
@@ -123,6 +129,7 @@ Status: 201 Created
 ```
 
 ### POST /api/admin/users/updateUser/{id}
+Updates an existing user's details, such as username, email, or roles.
 #### Request
 ```yaml
 Body:
@@ -138,6 +145,7 @@ Status: 200 OK
 ```
 
 ### POST /api/admin/authorization/roles/createRole
+Creates a new role with specified permissions.
 #### Request
 ```yaml
 Body:
@@ -163,6 +171,7 @@ Body:
 ```
 
 ### POST /api/admin/authorization/roles/updateRole/{id}
+Updates an existing role's name, description, or permissions.
 #### Request
 ```yaml
 Body:
@@ -190,6 +199,7 @@ Body:
 
 ## Courses
 ### PUT /api/courses
+Retrieves a list of all courses availabvle in the system.
 #### Request
 ```yaml
 Body:
@@ -205,6 +215,7 @@ Status: 201 Created
 
 
 ### POST /api/courses/courses/{courseId}
+Updates the course name for an existing course based on the provided course ID.
 #### Request
 ```yaml
 Body:
@@ -220,6 +231,7 @@ Status: 200 OK
 ```
 
 ### DELETE /api/courses/courses/{courseId}
+Deletes an existing course based on the provided course ID.
 #### Request
 ```yaml
 Parameters:
