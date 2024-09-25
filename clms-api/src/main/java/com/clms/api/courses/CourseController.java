@@ -14,8 +14,6 @@ import java.util.List;
 public class CourseController
 {
     private final CourseRepository courseRepository;
-    private final PlainTextAndHashedPasswordMatchingService plainTextAndHashedPasswordMatchingService;
-
 
     @GetMapping()
     public List<Course> getCourses()
