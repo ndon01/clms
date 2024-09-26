@@ -11,7 +11,8 @@ import {filter} from "rxjs";
 export class DashboardComponent {
   tabs = [
     { label: 'Users', value: 'users' },
-    { label: 'Question Bank', value: 'question-bank' }
+    { label: 'Question Bank', value: 'question-bank' },
+    { label: 'Courses', value: 'courses' }
   ];
 
   selectedTab = this.tabs[0]; // Default selection

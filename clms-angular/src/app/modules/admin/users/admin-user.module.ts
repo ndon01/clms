@@ -70,6 +70,6 @@ import {PaginatorModule} from "primeng/paginator";
     NgIf,
     PaginatorModule
   ],
-  providers: [CreateUserModalLauncherService]
+  providers: []
 })
 export class AdminUserModule { }

@@ -8,5 +8,5 @@ import java.util.Optional;
 @Repository
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
-    Optional<Course> findByCourseNameEqualsIgnoreCase(String courseName);
+    Optional<Course> findByNameEqualsIgnoreCase(String courseName);
 }
