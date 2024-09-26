@@ -26,10 +26,12 @@ import {UsersComponent} from "@modules/admin/pages/dashboard/users/users.compone
 import {QuestionBankComponent} from "@modules/admin/pages/dashboard/question-bank/question-bank.component";
 import {FormsModule} from "@angular/forms";
 import {RouterOutlet} from "@angular/router";
+import {CoursesDashboardComponent} from "@modules/admin/courses/courses-dashboard/courses-dashboard.component";
+import {InputTextModule} from "primeng/inputtext";
 
 @NgModule({
-  declarations: [DashboardComponent, UsersComponent, QuestionBankComponent],
-  exports: [DashboardComponent, UsersComponent, QuestionBankComponent],
+  declarations: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent],
+  exports: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent],
   imports: [
     AdminUserModule,
     ListboxModule,
@@ -37,8 +39,13 @@ import {RouterOutlet} from "@angular/router";
     AdminQuestionBankModule,
     NgIf,
     RouterOutlet,
-    AdminRoutingModule
+    AdminRoutingModule,
+    MenubarModule,
+    TableModule,
+    CardModule,
+    DialogModule,
+    InputTextModule,
+    ButtonDirective
   ],
-  providers: [],
 })
 export class AdminModule { }

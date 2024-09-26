@@ -39,6 +39,8 @@ routes = [
         path: 'admin',
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
       },
+
+
     ]
   },
 
@@ -50,6 +52,11 @@ routes = [
   {
     path: 'register',
     redirectTo: 'auth/register',
+  },
+
+  {
+    path: 'landing',
+    redirectTo: 'public/landing'
   },
 
   {

@@ -21,18 +21,23 @@ public class CourseController
         return courseRepository.findAll();
     }
 
-    @PutMapping()
-    public ResponseEntity<?> createCouse(@RequestBody CourseCreationDto courseDto)
-    {
+    @PostMapping()
+    public ResponseEntity<?> createCouse(@RequestBody CourseCreationDto courseDto) {
         Course newCourse = new Course();
-        newCourse.setCourseName(courseDto.getCourseName());
+        newCourse.setName(courseDto.getCourseName());
         newCourse.setDescription(courseDto.getDescription());
 
-        courseRepository.saveAndFlush(newCourse);
+        // ...
+
+        courseRepository.save(newCourse);
+
+
+
+        //*
         return ResponseEntity.status(201).build();
     }
 
-    @PostMapping("/courses/{courseId}")
+    @PutMapping("/courses/{courseId}")
     public ResponseEntity<?> updateCourse(@PathVariable int courseId, @RequestParam(value = "courseName", required = false) String updatedCourseName)
     {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
@@ -41,7 +46,7 @@ public class CourseController
         }
 
         if (updatedCourseName != null) {
-            currentCourse.setCourseName(updatedCourseName);
+            currentCourse.setName(updatedCourseName);
         }
 
         return ResponseEntity.ok().build();
