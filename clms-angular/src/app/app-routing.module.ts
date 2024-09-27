@@ -40,6 +40,10 @@ routes = [
         loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
       },
 
+      {
+        path: 'courses',
+        loadChildren: () => import('./modules/courses/courses.module').then(m => m.CoursesModule)
+      }
 
     ]
   },
