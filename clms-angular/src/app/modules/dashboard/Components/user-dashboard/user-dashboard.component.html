@@ -1,0 +1,99 @@
+<div class="flex h-screen bg-gray-900 text-gray-100">
+  <main class="flex-1 p-6 overflow-auto" [class.mr-80]="isSidebarOpen">
+
+    <h1 class="text-3xl font-bold mb-2">Hello, Josh</h1>
+    <h2 class="text-xl text-gray-400 mb-6">June 2024 Math Prep Course</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+      <p-card class="bg-gray-800 border-red-800">
+        <p-header>
+          <i class="pi pi-graduation-cap mr-2 text-red-500"></i> Overall Progress
+        </p-header>
+        <p> <span class="text-4xl font-bold text-red-500">78%</span></p>
+        <p class="text-gray-400">Keep up the good work!</p>
+      </p-card>
+
+      <p-card class="bg-gray-800 border-red-800">
+        <p-header>
+          <i class="pi pi-book mr-2 text-red-500"></i> Study Time
+        </p-header>
+        <p> <span class="text-4xl font-bold text-red-500">12.5 hrs</span></p>
+        <p class="text-gray-400">This week</p>
+      </p-card>
+
+      <p-card class="bg-gray-800 border-red-800">
+        <p-header>
+          <i class="pi pi-pencil mr-2 text-red-500"></i> Practice Tests
+        </p-header>
+        <p> <span class="text-4xl font-bold text-red-500">3 / 5</span></p>
+        <p class="text-gray-400">Completed</p>
+      </p-card>
+    </div>
+
+    <h3 class="text-2xl font-bold mb-4">Assignments for {{ date | date: 'MMMM yyyy' }}</h3>
+    <div *ngFor="let group of groupedAssignments | keyvalue">
+      <h4 class="text-xl font-semibold mb-2">Week of {{ group.key | date: 'longDate' }}</h4>
+      <div class="flex overflow-x-auto pb-4 space-x-4">
+        <p-card *ngFor="let assignment of group.value" class="bg-gray-800 border-red-800 flex-shrink-0 w-64">
+          <p-header>
+            <span class="text-sm">{{ assignment.title }}</span>
+          </p-header>
+          <p>Due: {{ assignment.dueDate | date: 'longDate' }}</p>
+          <div class="flex items-center mt-2">
+            <p-checkbox
+              [binary]="true"
+              [(ngModel)]="assignment.completed"
+              (onChange)="toggleAssignmentCompletion(assignment.id)"
+            ></p-checkbox>
+            <label class="ml-2 text-sm font-medium">Mark as complete</label>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </main>
+
+  <aside class="fixed top-0 right-0 w-80 h-screen bg-gray-800 p-6 flex flex-col overflow-hidden transition-all duration-300"
+    [ngClass]="{ 'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen }">
+    <button pButton class="absolute top-1/2 -left-8" (click)="toggleSidebar()">
+      <i class="pi" [ngClass]="isSidebarOpen ? 'pi-chevron-right' : 'pi-chevron-left'"></i>
+    </button>
+
+    <div class="flex items-center mb-6">
+      <p-avatar size="large">
+        <img src="/assets/images/placeholder.svg" alt="User"/>
+      </p-avatar>
+      <div class="ml-3">
+        <p class="font-medium">Sarah Adams</p>
+        <p class="text-sm text-gray-400">Student</p>
+      </div>
+    </div>
+
+    <p-card class="bg-gray-700 border-red-800 mb-6">
+      <p-header>
+        <i class="pi pi-calendar mr-2 text-red-500"></i> Calendar
+      </p-header>
+      <p-calendar [(ngModel)]="date" (onSelect)="onDateSelect($event)" inline="true"></p-calendar>
+    </p-card>
+
+    <p-card class="bg-gray-700 border-red-800 flex-1 overflow-hidden">
+      <p-header>
+        <span class="text-sm">Upcoming Assignments</span>
+      </p-header>
+      <div class="p-0">
+        <p-scrollPanel styleClass="h-[calc(100%-3rem)] pr-4">
+          <div *ngFor="let assignment of filteredAssignments" class="flex items-center space-x-2 mb-4 px-4">
+            <p-checkbox
+              [binary]="true"
+              [(ngModel)]="assignment.completed"
+              (onChange)="toggleAssignmentCompletion(assignment.id)"
+            ></p-checkbox>
+            <label class="text-sm font-medium leading-none">
+              <p>{{ assignment.title }}</p>
+              <p class="text-xs text-gray-400">Due: {{ assignment.dueDate | date: 'longDate' }}</p>
+            </label>
+          </div>
+        </p-scrollPanel>
+      </div>
+    </p-card>
+  </aside>
+</div>
