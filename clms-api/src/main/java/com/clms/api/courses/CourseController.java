@@ -11,18 +11,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
-public class CourseController
-{
+public class CourseController {
     private final CourseRepository courseRepository;
 
     @GetMapping()
-    public List<Course> getCourses()
-    {
+    public List<Course> getCourses() {
         return courseRepository.findAll();
     }
 
     @PostMapping()
-    public ResponseEntity<?> createCouse(@RequestBody CourseCreationDto courseDto) {
+    public ResponseEntity<?> createCourse(@RequestBody CourseCreationDto courseDto) {
         Course newCourse = new Course();
         newCourse.setName(courseDto.getCourseName());
         newCourse.setDescription(courseDto.getDescription());
@@ -32,14 +30,12 @@ public class CourseController
         courseRepository.save(newCourse);
 
 
-
         //*
         return ResponseEntity.status(201).build();
     }
 
-    @PutMapping("/courses/{courseId}")
-    public ResponseEntity<?> updateCourse(@PathVariable int courseId, @RequestParam(value = "courseName", required = false) String updatedCourseName)
-    {
+    @PutMapping("/{courseId}")
+    public ResponseEntity<?> updateCourse(@PathVariable int courseId, @RequestParam(value = "courseName", required = false) String updatedCourseName) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -52,10 +48,9 @@ public class CourseController
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/courses/{courseId}")
+    @DeleteMapping("/{courseId}")
     @Transactional
-    public ResponseEntity<?> deleteCourse(@PathVariable int courseId)
-    {
+    public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -64,6 +59,15 @@ public class CourseController
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/{courseId}/addMembers")
+    public ResponseEntity<?> addMembers(@PathVariable int courseId, @RequestBody List<Integer> memberIds) {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
 
+        // ...
+        return ResponseEntity.ok().build();
+    }
 }
 
