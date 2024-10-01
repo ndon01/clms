@@ -12,14 +12,18 @@ import {CourseSideBarComponent} from "@modules/courses/components/course-side-ba
 import {
   IndividualCourseHomepageComponent
 } from "@modules/courses/pages/individual-course-homepage/individual-course-homepage.component";
+import {CourseSettingsPageComponent} from "@modules/courses/pages/course-settings-page/course-settings-page.component";
+import {TableModule} from "primeng/table";
+import {DialogModule} from "primeng/dialog";
+import {Ripple} from "primeng/ripple";
 
 
 
 @NgModule({
-  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent],
-  exports: [CoursesDashboardPageComponent,CourseSideBarComponent,IndividualCourseHomepageComponent],
+  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent],
+  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple
   ]
 })
 export class CoursesModule { }
