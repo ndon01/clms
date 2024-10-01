@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import {DashboardPageComponent} from "@modules/dashboard/pages/dashboard-page/dashboard-page.component";
 import {CoreModule} from "@core/core.module";
 import {DashboardRoutingModule} from "@modules/dashboard/dashboard-routing.module";
-import {
-  UserDashboardComponent
-} from "@modules/dashboard/Components/user-dashboard/user-dashboard.component";
 import {Header} from "primeng/api";
 import {CardModule} from "primeng/card";
 import {CalendarModule} from "primeng/calendar";
@@ -18,8 +15,8 @@ import {AvatarModule} from "primeng/avatar";
 
 
 @NgModule({
-  declarations: [DashboardPageComponent,UserDashboardComponent],
-  exports: [DashboardPageComponent,UserDashboardComponent],
+  declarations: [DashboardPageComponent],
+  exports: [DashboardPageComponent],
   imports: [
     CommonModule,
     CoreModule,
