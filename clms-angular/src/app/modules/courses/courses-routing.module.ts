@@ -5,13 +5,25 @@ import {LandingPageComponent} from "@modules/public/landing-page/landing-page.co
 import {
   CoursesDashboardPageComponent
 } from "@modules/courses/pages/courses-dashboard-page/courses-dashboard-page.component";
+import {CourseHomePageComponent} from "@modules/courses/pages/course-home-page/course-home-page.component";
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full'},
-      { path: 'home', component: CoursesDashboardPageComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: 'dashboard', component: CoursesDashboardPageComponent },
+
+      // Individual Courses
+      {
+        path: ':id',
+        children: [
+          { path: '', redirectTo: 'home', pathMatch: 'full'},
+          { path: 'home', component: CourseHomePageComponent },
+          { path: '**', redirectTo: 'home' }
+        ]
+      },
+
       { path: '**', redirectTo: 'home' }
     ]
   }
