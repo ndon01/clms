@@ -1,7 +1,7 @@
 <div class="flex flex-row w-svw h-svh">
   <div class="h-full flex flex-col sidebar-container"> <!-- sidebar -->
-    <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px">
-      <div class="flex flex-row justify-center items-center gap-3" routerLink="/dashboard">
+    <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px" routerLink="/dashboard">
+      <div class="flex flex-row justify-center items-center gap-3">
         <span class="pi pi-arrow-left"></span>
       </div>
     </div>
@@ -12,6 +12,14 @@
         </div>
         <span class="pi pi-arrow-right"></span>
       </div>
+
+      <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px" routerLink="/courses/{{courseId}}/assignments">
+        <div>
+          Assignments
+        </div>
+        <span class="pi pi-arrow-right"></span>
+      </div>
+
       <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px" routerLink="/courses/{{courseId}}/settings">
         <div>
           Settings
