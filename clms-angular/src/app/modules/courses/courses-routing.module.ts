@@ -5,7 +5,6 @@ import {LandingPageComponent} from "@modules/public/landing-page/landing-page.co
 import {
   CoursesDashboardPageComponent
 } from "@modules/courses/pages/courses-dashboard-page/courses-dashboard-page.component";
-import {CourseHomePageComponent} from "@modules/courses/pages/course-home-page/course-home-page.component";
 
 const routes: Routes = [
   {
@@ -19,7 +18,7 @@ const routes: Routes = [
         path: ':id',
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full'},
-          { path: 'home', component: CourseHomePageComponent },
+          { path: 'home', component: CoursesDashboardPageComponent},
           { path: '**', redirectTo: 'home' }
         ]
       },
