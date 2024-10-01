@@ -22,7 +22,7 @@ import {
 import {PermissionsDataSourceService} from "@modules/admin/authorization/service/permissions-data-source.service";
 import {RolesDataSourceService} from "@modules/admin/authorization/service/roles-data-source.service";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import {Course, CourseProjection} from "@modules/admin/courses/course.model";
+import {Course, CourseProjection} from "@modules/courses/model/course.model";
 
 @Component({
   selector: 'admin-courses-dashboard',

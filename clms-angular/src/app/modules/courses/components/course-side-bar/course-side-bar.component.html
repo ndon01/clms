@@ -1,0 +1,43 @@
+<div class="flex flex-row w-svw h-svh">
+  <div class="h-full flex flex-col sidebar-container"> <!-- sidebar -->
+    <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px">
+      <div class="flex flex-row justify-center items-center gap-3" routerLink="/dashboard">
+        <span class="pi pi-arrow-left"></span>
+      </div>
+    </div>
+    <div class="h-full">
+      <div class="flex flex-row justify-between items-center p-3 hover:bg-gray-200 cursor-pointer" style="width: 250px" routerLink="/courses/{{courseId}}/home">
+        <div>
+          Home
+        </div>
+        <span class="pi pi-arrow-right"></span>
+      </div>
+    </div>
+    <!-- user tab -->
+    <div class="flex flex-row justify-between items-center p-3" style="width: 250px">
+      <!-- user information -->
+      <div class="flex flex-row gap-3 justify-center items-center">
+        <div class="w-10 h-10 flex justify-center items-center bg-black">
+          <span class="text-white">{{usernameToInitials(Client?.username || "")}}</span>
+        </div>
+        <div class="flex flex-col justify-center">
+          <span>{{Client?.username}}</span>
+        </div>
+      </div>
+      <!-- actions -->
+      <div class="flex flex-row">
+        <span class="pi pi-ellipsis-h" (click)="op.toggle($event)">
+          <p-overlayPanel #op>
+            <div>
+              <button class="p-button p-button-text hover:bg-gray-200" (click)="logout()">Logout</button>
+            </div>
+          </p-overlayPanel>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-full h-full overflow-scroll"> <!-- main -->
+    <ng-content />
+  </div>
+</div>

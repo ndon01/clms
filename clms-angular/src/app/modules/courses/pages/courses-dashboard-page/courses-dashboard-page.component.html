@@ -1,3 +1,16 @@
 <app-sidebar-page-wrapper>
-<p>courses-dashboard-page works!</p>
+
+  <div>
+    <ng-container *ngFor="let course of allCourses">
+      <p-card>
+        <ng-template pTemplate="header">
+          <h2>{{ course.name }}</h2>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <button pButton type="button" label="View" [routerLink]="['/courses', course.id]"></button>
+        </ng-template>
+      </p-card>
+    </ng-container>
+  </div>
+
 </app-sidebar-page-wrapper>
