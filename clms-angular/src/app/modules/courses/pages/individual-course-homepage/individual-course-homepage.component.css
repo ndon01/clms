@@ -1,0 +1,22 @@
+/* Styling the PrimeNG Card component */
+:host ::ng-deep .p-card {
+  background-color: #2d3748; /* Equivalent to bg-gray-800 */
+  border: 1px solid #822727; /* Equivalent to border-red-800 */
+  color: #f7fafc; /* Equivalent to text-gray-100 */
+}
+
+.p-card-header {
+  font-weight: bold;
+  color: #f56565; /* Equivalent to text-red-500 */
+  padding: 1rem;
+}
+
+.p-card-body {
+  padding: 1rem;
+}
+
+.p-card-footer {
+  text-align: right;
+  padding: 0.5rem;
+  border-top: 1px solid #4a5568; /* Add top border to separate footer */
+}
