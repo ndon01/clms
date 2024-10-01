@@ -35,7 +35,7 @@ public class CourseController {
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<?> updateCourse(@PathVariable int courseId, @RequestParam(value = "courseName", required = false) String updatedCourseName) {
+    public ResponseEntity<?> updateCourse(@PathVariable int courseId, @RequestParam(value = "name", required = false) String updatedCourseName) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -44,6 +44,8 @@ public class CourseController {
         if (updatedCourseName != null) {
             currentCourse.setName(updatedCourseName);
         }
+
+        courseRepository.save(currentCourse);
 
         return ResponseEntity.ok().build();
     }
