@@ -5,6 +5,11 @@ import {LandingPageComponent} from "@modules/public/landing-page/landing-page.co
 import {
   CoursesDashboardPageComponent
 } from "@modules/courses/pages/courses-dashboard-page/courses-dashboard-page.component";
+import {IndividualCourseHomepageComponent} from "@modules/courses/pages/individual-course-homepage/individual-course-homepage.component";
+import {CourseSettingsPageComponent} from "@modules/courses/pages/course-settings-page/course-settings-page.component";
+import {
+  CourseAssignmentsPageComponent
+} from "@modules/courses/pages/course-assignments-page/course-assignments-page.component";
 
 const routes: Routes = [
   {
@@ -18,7 +23,9 @@ const routes: Routes = [
         path: ':id',
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full'},
-          { path: 'home', component: CoursesDashboardPageComponent},
+          { path: 'home', component: IndividualCourseHomepageComponent},
+          { path: 'assignments', component: CourseAssignmentsPageComponent },
+          { path: 'settings', component: CourseSettingsPageComponent },
           { path: '**', redirectTo: 'home' }
         ]
       },
