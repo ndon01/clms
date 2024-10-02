@@ -19,16 +19,21 @@ import {Ripple} from "primeng/ripple";
 import {
   CourseAssignmentsPageComponent
 } from "@modules/courses/pages/course-assignments-page/course-assignments-page.component";
-import {CalendarModule} from "primeng/calendar";
+import {PickListModule} from "primeng/picklist";
+import {HttpClient} from "@angular/common/http";
+import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
-
+import {AvatarModule} from "primeng/avatar";
+import {CalendarModule} from "primeng/calendar";
+import {ScrollPanelModule} from "primeng/scrollpanel";
+import {MultiSelectModule} from "primeng/multiselect";
 
 
 @NgModule({
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CalendarModule, FormsModule
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule
   ]
 })
-export class CoursesModule { }
+export class CoursesModule {}

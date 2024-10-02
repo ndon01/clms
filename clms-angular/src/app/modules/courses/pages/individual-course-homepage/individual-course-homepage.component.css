@@ -8,7 +8,7 @@
 .p-card-header {
   font-weight: bold;
   color: #f56565; /* Equivalent to text-red-500 */
-  padding: 1rem;
+  padding: 4rem;
 }
 
 .p-card-body {
