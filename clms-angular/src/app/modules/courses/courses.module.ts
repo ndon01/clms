@@ -19,6 +19,8 @@ import {Ripple} from "primeng/ripple";
 import {
   CourseAssignmentsPageComponent
 } from "@modules/courses/pages/course-assignments-page/course-assignments-page.component";
+import {PickListModule} from "primeng/picklist";
+import {HttpClient} from "@angular/common/http";
 
 
 
@@ -26,7 +28,7 @@ import {
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, PickListModule
   ]
 })
-export class CoursesModule { }
+export class CoursesModule {}

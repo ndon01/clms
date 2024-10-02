@@ -71,5 +71,11 @@ public class CourseController {
         // ...
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/{courseId}/members")
+    public ResponseEntity<?> getCourseMembers(@PathVariable int courseId)
+    {
+
+    }
 }
 
