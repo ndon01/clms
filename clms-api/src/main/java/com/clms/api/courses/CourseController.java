@@ -1,6 +1,7 @@
 package com.clms.api.courses;
 
 import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
+import com.clms.api.common.domain.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +71,20 @@ public class CourseController {
 
         // ...
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{courseId}/members")
+    public ResponseEntity<List<User>> getCourseMembers(@PathVariable int courseId)
+    {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        List<User> members = currentCourse.getMembers();
+
+
+        return ResponseEntity.ok(members);
     }
 }
 

@@ -14,10 +14,7 @@
           <div class="flex justify-start">
             <button pButton pRipple type="button" label="Add User" icon="pi pi-plus" class="p-button-success" (click)="setMemberModalVisibility(true)"></button>
           </div>
-          <p-table [value]="[{
-              id: 0,
-              username: 'admin',
-          }]" styleClass="p-datatable-striped"
+          <p-table [value]="courseMembers" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
                    dataKey="id" editMode="row">
             <ng-template pTemplate="header">
@@ -76,7 +73,24 @@
 
 <p-dialog [modal]="true" [(visible)]="isAddMemberModalVisible" (onHide)="addMemberModalCancel()">
   <ng-template pTemplate="content">
-
+    <!-- input box for user search -->
+    <!-- picklist of user search and users to add -->
+    <p-pickList
+      [source]="allUsers"
+      [target]="selectedUsers"
+      sourceHeader="Available"
+      targetHeader="Selected"
+      [dragdrop]="true"
+      [responsive]="true"
+      [sourceStyle]="{ height: '30rem' }"
+      [targetStyle]="{ height: '30rem' }"
+      breakpoint="1400px">
+      <ng-template let-user pTemplate="item">
+        <div class="flex flex-row items-center gap-5">
+          <span>{{ user.username }}</span>
+        </div>
+      </ng-template>
+    </p-pickList>
   </ng-template>
 
   <ng-template pTemplate="footer">
