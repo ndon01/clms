@@ -23,6 +23,6 @@ public class Course
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="course_members",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "member_id"))
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> members;
 }
