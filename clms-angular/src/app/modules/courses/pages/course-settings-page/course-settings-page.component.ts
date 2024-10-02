@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {UserProjection} from "@core/model/User.model";
+import {filter, map} from "rxjs";
 
 @Component({
   selector: 'courses-course-settings-page',
@@ -11,7 +12,6 @@ import {UserProjection} from "@core/model/User.model";
 export class CourseSettingsPageComponent implements OnInit{
 
   courseId !: number;
-  availableUsers: UserProjection[] = [];
   courseMembers: UserProjection[] = [];
   constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
   }
@@ -36,9 +36,19 @@ export class CourseSettingsPageComponent implements OnInit{
 
 
   isAddMemberModalVisible: boolean = false;
+  allUsers: UserProjection[] = [];
+  selectedUsers: UserProjection[] = [];
 
   setMemberModalVisibility(visibility: boolean) {
     this.isAddMemberModalVisible = visibility;
+    this.httpClient.get<UserProjection[]>('/api/admin/users')
+      .pipe(map((users) => {
+        return users
+          .filter(user => !this.courseMembers.some(member => member.id === user.id))
+      }))
+      .subscribe(data => {
+      this.allUsers = data;
+    })
   }
 
   addMemberModalCancel() {
@@ -47,6 +57,7 @@ export class CourseSettingsPageComponent implements OnInit{
 
   addMemberModalSubmit() {
     this.isAddMemberModalVisible = false;
+    this.selectedUsers = [];
   }
 
 }
