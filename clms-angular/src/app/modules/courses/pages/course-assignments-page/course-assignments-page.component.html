@@ -1,3 +1,102 @@
 <app-course-side-bar>
-  <p>course-assignments-page works!</p>
+  <div class="p-5">
+    <div class="flex flex-col gap-5">
+      <p-card>
+        <ng-template pTemplate="header">
+          <div class="w-full flex justify-center items-center" style="padding-left: 1.25rem;padding-top: 1.25rem;">
+            <h1 style="font-size: 1.5rem;">Assignments</h1>
+          </div>
+        </ng-template>
+        <div class="flex flex-col gap-3">
+          <div class="flex justify-start">
+            <button pButton pRipple type="button" label="New Assignment" icon="pi pi-plus" class="p-button-success" (click)="setAddAssignmentModalVisibility(true)"></button>
+          </div>
+          <p-table [value]="[]" styleClass="p-datatable-striped"
+                   [tableStyle]="{'min-width': '50rem'}"
+                   dataKey="id" editMode="row">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-assignment let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="assignment">
+                <td>
+                  {{ assignment.id }}
+                </td>
+                <td>
+                  {{ assignment.username }}
+                </td>
+                <td>
+                  <div class="flex align-items-center justify-content-center gap-2">
+                    <button
+                      *ngIf="!editing"
+                      pButton
+                      pRipple
+                      type="button"
+                      pInitEditableRow
+                      icon="pi pi-pencil"
+                      class="p-button-rounded p-button-text">
+                    </button>
+                    <button
+                      *ngIf="editing"
+                      pButton
+                      pRipple
+                      type="button"
+                      pSaveEditableRow
+                      icon="pi pi-check"
+                      class="p-button-rounded p-button-text p-button-success mr-2">
+                    </button>
+                    <button
+                      *ngIf="editing"
+                      pButton pRipple
+                      type="button"
+                      pCancelEditableRow
+                      icon="pi pi-times"
+                      class="p-button-rounded p-button-text p-button-danger">
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-card>
+    </div>
+  </div>
 </app-course-side-bar>
+
+<p-dialog [modal]="true" [(visible)]="isAddAssignmentModalVisible" (onHide)="addAssignmentModalCancel()">
+  <ng-template pTemplate="content">
+    <div class="flex flex-col gap-5">
+      <div class="flex flex-col gap-5">
+        <div class="flex flex-col gap-1">
+          <label for="name">Name</label>
+          <input id="name" type="text" pInputText [(ngModel)]="newAssignment.name">
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="description">Description</label>
+          <textarea id="description" pInputTextarea [(ngModel)]="newAssignment.description"></textarea>
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="dueDate">Start Date</label>
+          <p-calendar id="startDate" [(ngModel)]="newAssignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="dueDate">Due Date</label>
+          <p-calendar id="dueDate" [(ngModel)]="newAssignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="addAssignmentModalCancel()"></button>
+      <button pButton type="button" label="Create" (click)="addAssignmentModalSubmit()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
