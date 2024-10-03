@@ -12,9 +12,9 @@ function isValidTheme(theme: String) {
 }
 
 const themeUrlMap = {
-  [AppTheme.Dark]: "primeng",
-  [AppTheme.Light]: "light"
-};
+  [AppTheme.Dark]: "assets/themes/lara-dark-green/theme.css",
+  [AppTheme.Light]: "assets/themes/lara-light-green/theme.css"
+}
 
 @Injectable({
   providedIn: 'root'
@@ -71,7 +71,7 @@ export class ThemeService implements OnInit {
 
   private updateRenderedTheme(): void {
     if (this.#stylesheet) {
-      this.#stylesheet.href = `${this.#path}/${this.themeSignal()}.css`;
+      this.#stylesheet.href = `${themeUrlMap[this.themeSignal()]}`;
     }
 
     localStorage.setItem(storageKey, this.themeSignal());

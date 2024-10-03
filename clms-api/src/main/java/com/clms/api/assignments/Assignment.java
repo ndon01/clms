@@ -1,5 +1,6 @@
 package com.clms.api.assignments;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import java.util.Date;
 public class Assignment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false, length = 255)
