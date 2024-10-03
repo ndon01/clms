@@ -62,8 +62,11 @@ export class CourseSettingsPageComponent implements OnInit{
   addMemberModalSubmit() {
     this.isAddMemberModalVisible = false;
 
+    let ids = this.selectedUsers.map(user => user.id);
 
-    this.httpClient.post(`/api/courses/${this.courseId}/members`, this.selectedUsers.map(user => user.id)).subscribe(() => {
+    console.log(ids)
+
+    this.httpClient.post(`/api/courses/${this.courseId}/members`, ids).subscribe(() => {
         this.loadMembers();
     });
 

@@ -14,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseRepository courseRepository;
+    private final CourseMemberInsertService courseMemberInsertService;
 
     @GetMapping()
     public List<Course> getCourses() {
@@ -69,7 +70,7 @@ public class CourseController {
             return ResponseEntity.status(400).build();
         }
 
-
+        courseMemberInsertService.insertMembersByUserIdsAndCourseId(memberIds, courseId);
 
         // ...
         return ResponseEntity.ok().build();
