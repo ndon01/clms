@@ -1,4 +1,5 @@
 <app-sidebar-page-wrapper>
-  <p>dashboard-page works!</p>
-  {{client?.username}}
+  <ng-container *ngFor="let course of myCourses">
+    <app-course-card [course]="course"></app-course-card>
+  </ng-container>
 </app-sidebar-page-wrapper>

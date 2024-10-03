@@ -10,6 +10,7 @@ import {ScrollPanelModule} from "primeng/scrollpanel";
 import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
 import {AvatarModule} from "primeng/avatar";
+import {CourseCardComponent} from "@modules/dashboard/pages/components/course-card/course-card.component";
 
 
 
@@ -17,17 +18,18 @@ import {AvatarModule} from "primeng/avatar";
 @NgModule({
   declarations: [DashboardPageComponent],
   exports: [DashboardPageComponent],
-  imports: [
-    CommonModule,
-    CoreModule,
-    DashboardRoutingModule,
-    Header,
-    CardModule,
-    CalendarModule,
-    ScrollPanelModule,
-    CheckboxModule,
-    FormsModule,
-    AvatarModule,
-  ]
+    imports: [
+        CommonModule,
+        CoreModule,
+        DashboardRoutingModule,
+        Header,
+        CardModule,
+        CalendarModule,
+        ScrollPanelModule,
+        CheckboxModule,
+        FormsModule,
+        AvatarModule,
+        CourseCardComponent,
+    ]
 })
 export class DashboardModule { }
