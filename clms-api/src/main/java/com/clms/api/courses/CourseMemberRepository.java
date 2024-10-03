@@ -10,5 +10,6 @@ import java.util.List;
 public interface CourseMemberRepository extends JpaRepository<CourseMember, CourseMemberId> {
     // You can add custom query methods here if needed
 
-    List<Integer> getCoursesByUserId(int userId);
+    @Query(nativeQuery = true, value = "SELECT course_id FROM course_members WHERE user_id = ?1")
+    List<Integer> getCourseIdsByUserId(int userId);
 }

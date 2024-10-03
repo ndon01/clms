@@ -30,9 +30,8 @@ public class CourseController {
     @GetMapping("/getMyCourses")
     @RequiresUser
     public List<Course> getMyCourses(@CurrentUser User user) {
-        List<Integer> courseids = courseMemberRepository.getCoursesByUserId(user.getId());
-        List<Course> courses = courseRepository.findAllById(courseids);
-        return courses;
+        List<Integer> courseIds = courseMemberRepository.getCourseIdsByUserId(user.getId());
+        return courseRepository.findAllById(courseIds);
     }
 
     @PostMapping()
