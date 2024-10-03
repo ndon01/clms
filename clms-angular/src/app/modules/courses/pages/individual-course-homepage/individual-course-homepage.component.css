@@ -22,16 +22,19 @@
 }
 :host ::ng-deep.p-multiselect-header{
   background-color: #1e293b; /* Dark background color */
-  border: 1px solid #475569; /* Light border */
+  border: 1px solid #822727; /* Equivalent to border-red-800 */
+  border-top: none;
+  border-bottom:none;
   color: black;
   padding: 0.5rem;
-  border-radius: 0.375rem; /* Rounded corners */
+  border-top-right-radius:0.375rem;
+  border-top-left-radius:0.375rem;
 
 }
 /* Style the outer container of the p-multiSelect */
 :host ::ng-deep.p-multiselect {
   background-color: #1e293b; /* Dark background color */
-  border: 1px solid #475569; /* Light border */
+  border: 1px solid #822727; /* Equivalent to border-red-800 */
   color: white;
   padding: 0.5rem;
   border-radius: 0.375rem; /* Rounded corners */
@@ -46,7 +49,7 @@
 /* Style the dropdown panel */
 :host ::ng-deep.p-multiselect-panel ::ng-deep{
   background-color: #111827; /* Dark background for dropdown */
-  border: 1px solid #374151; /* Border color */
+  border: 1px solid #822727; /* Equivalent to border-red-800 */
 }
 
 /* Style each item in the dropdown */
@@ -62,7 +65,7 @@
 }
 :host ::ng-deep.p-multiselect-filter{
   background-color: #1e293b; /* Dark background for filter input */
-  border: 1px solid #475569; /* Light border */
+  border: 1px solid #822727; /* Equivalent to border-red-800 */
   color: #e2e8f0; /* Light text color */
   padding: 0.5rem;
   border-radius: 0.375rem; /* Rounded corners */

@@ -11,7 +11,6 @@ function isValidTheme(theme: String) {
   return Object.values(AppTheme).includes(theme as AppTheme);
 }
 
-
 const themeUrlMap = {
   [AppTheme.Dark]: "assets/themes/lara-dark-green/theme.css",
   [AppTheme.Light]: "assets/themes/lara-light-green/theme.css"
