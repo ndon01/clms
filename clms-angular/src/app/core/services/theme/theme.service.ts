@@ -11,6 +11,11 @@ function isValidTheme(theme: String) {
   return Object.values(AppTheme).includes(theme as AppTheme);
 }
 
+const themeUrlMap = {
+  [AppTheme.Dark]: "primeng",
+  [AppTheme.Light]: "light"
+};
+
 @Injectable({
   providedIn: 'root'
 })
