@@ -15,3 +15,23 @@
   background-color: var(--surface-d);
   padding: 25px
 }
+
+.bg-surface-a {
+  background-color: var(--surface-a);
+}
+
+.bg-surface-b {
+  background-color: var(--surface-b);
+}
+
+.bg-surface-c {
+  background-color: var(--surface-c);
+}
+
+.bg-surface-d {
+  background-color: var(--surface-d);
+}
+
+.bg-surface-e {
+  background-color: var(--surface-e);
+}
