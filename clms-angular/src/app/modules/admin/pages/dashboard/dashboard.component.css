@@ -9,3 +9,15 @@
 .p-col-fixed {
   background-color: #f4f4f4;
 }
+
+:host ::ng-deep p-menu > div {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  height: 100%;
+  border-radius: 0;
+}
+
+:host ::ng-deep p-menu > div > ul {
+  height: 100%;
+}
