@@ -26,12 +26,16 @@ export class CourseSettingsPageComponent implements OnInit{
       this.courseId = parseInt(id, 10); // Convert the value to a number
     });
 
+    this.loadMembers();
+
+
+  }
+
+  loadMembers() {
     this.httpClient.get<UserProjection[]>(`/api/courses/${this.courseId}/members`).subscribe(data =>
     {
       this.courseMembers = data;
     });
-
-
   }
 
 
@@ -57,6 +61,12 @@ export class CourseSettingsPageComponent implements OnInit{
 
   addMemberModalSubmit() {
     this.isAddMemberModalVisible = false;
+
+
+    this.httpClient.post(`/api/courses/${this.courseId}/members`, this.selectedUsers.map(user => user.id)).subscribe(() => {
+        this.loadMembers();
+    });
+
     this.selectedUsers = [];
   }
 
