@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
-import { AssignmentService } from './assignment.service'; // Import the service
+import { AssignmentService } from './assignment.service';
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router"; // Import the service
 
 interface Assignment {
   id: number;
-  title: string;
+  name: string;
   dueDate: string;
   completed: boolean;
 }
@@ -15,6 +17,10 @@ interface Assignment {
   styleUrls: ['./individual-course-homepage.component.css']
 })
 export class IndividualCourseHomepageComponent implements OnInit {
+  courseId!: number;
+
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
+  }
   date: Date = new Date();
   isSidebarOpen: boolean = true;
   assignments: Assignment[] = [];
@@ -26,24 +32,27 @@ export class IndividualCourseHomepageComponent implements OnInit {
   filteredAssignments: Assignment[] = [];
   groupedAssignments: { [key: string]: Assignment[] } = {};
 
-  constructor(private assignmentService: AssignmentService) {} // Inject the service
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id'); // Get the value of 'id' parameter
+      if (!id) {
+        return;
+      }
+      this.courseId = parseInt(id, 10); // Convert the value to a number
+    });
     this.fetchAssignments(); // Fetch assignments from the backend
   }
 
   // Fetch assignments from the backend
   fetchAssignments() {
-    this.assignmentService.getAllAssignments().subscribe(
-      (data: Assignment[]) => {
-        this.assignments = data;
-        this.updateFilteredAssignments(); // Update the view after fetching
-        this.updateGroupedAssignments();
-      },
-      (error) => {
-        console.error('Error fetching assignments:', error);
-      }
-    );
+    this.http.get<Assignment[]>(`http://localhost:8080/api/courses/${this.courseId}/assignments`).subscribe(assignments => {
+      this.assignments = assignments;
+      this.updateFilteredAssignments();
+      this.updateGroupedAssignments();
+      console.log("Assignments: ", this.assignments)
+    });
+
   }
 
   // Create a list of unique months from assignments' due dates
