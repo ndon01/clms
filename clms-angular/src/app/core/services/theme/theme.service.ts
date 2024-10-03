@@ -11,6 +11,12 @@ function isValidTheme(theme: String) {
   return Object.values(AppTheme).includes(theme as AppTheme);
 }
 
+
+const themeUrlMap = {
+  [AppTheme.Dark]: "primeng/resources/themes/lara-dark-teal/theme.css",
+  [AppTheme.Light]: "primeng/resources/themes/lara-light-teal/theme.css"
+}
+
 @Injectable({
   providedIn: 'root'
 })
