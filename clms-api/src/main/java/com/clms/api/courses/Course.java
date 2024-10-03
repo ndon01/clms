@@ -1,5 +1,6 @@
 package com.clms.api.courses;
 
+import com.clms.api.assignments.Assignment;
 import com.clms.api.common.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,4 +26,10 @@ public class Course
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> members;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name ="course_assignments",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "assignment_id"))
+    private List<Assignment> assignments;
 }
