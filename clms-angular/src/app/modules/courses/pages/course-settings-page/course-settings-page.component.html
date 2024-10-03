@@ -11,9 +11,11 @@
           </div>
         </ng-template>
         <div class="flex flex-col gap-3">
-          <div class="flex justify-start">
-            <button pButton pRipple type="button" label="Add User" icon="pi pi-plus" class="p-button-success" (click)="setMemberModalVisibility(true)"></button>
+          <div class="flex flex-row">
+            <button pButton pRipple type="button" label="Add Members" icon="pi pi-plus" class="p-button-success" (click)="setMemberModalVisibility(true)"></button>
+            <button pButton pRipple type="button" label="Remove Members" icon="pi pi-minus" class="p-button-success" (click)="setRemoveMemberModalVisibility(true)"></button>
           </div>
+
           <p-table [value]="courseMembers" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
                    dataKey="id" editMode="row">
@@ -100,6 +102,39 @@
     <div class="flex flex-row gap-5">
       <button pButton type="button" label="Cancel" (click)="addMemberModalCancel()"></button>
       <button pButton type="button" label="Create" (click)="addMemberModalSubmit()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="isRemoveMemberModalVisible" (onHide)="removeMemberModalCancel()">
+  <ng-template pTemplate="content">
+    <!-- input box for user search -->
+    <!-- picklist of user search and users to add -->
+    <p-pickList
+      [source]="courseMembers.copyWithin(0, courseMembers.length)"
+      [target]="selectedUsers"
+      sourceHeader="Enrolled"
+      targetHeader="Remove"
+      [dragdrop]="true"
+      [responsive]="true"
+      [sourceStyle]="{ height: '30rem' }"
+      [targetStyle]="{ height: '30rem' }"
+      filterBy="username"
+      sourceFilterPlaceholder="Search by username"
+      targetFilterPlaceholder="Search by username"
+      breakpoint="1400px">
+      <ng-template let-user pTemplate="item">
+        <div class="flex flex-row items-center gap-5">
+          <span>{{ user.username }}</span>
+        </div>
+      </ng-template>
+    </p-pickList>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row gap-5">
+      <button pButton type="button" label="Cancel" (click)="removeMemberModalCancel()"></button>
+      <button pButton type="button" label="Remove" (click)="removeMemberModalSubmit()"></button>
     </div>
   </ng-template>
 </p-dialog>
