@@ -1,21 +1,17 @@
--- Alter assignments table to change id to serial
-ALTER TABLE assignments
-    ALTER COLUMN id SET DATA TYPE serial;
+-- 1. Create a sequence for each table
+CREATE SEQUENCE assignments_id_seq;
+CREATE SEQUENCE questions_id_seq;
+CREATE SEQUENCE assignment_attempts_id_seq;
+CREATE SEQUENCE question_attempts_id_seq;
 
--- Alter course_assignments table to keep id references consistent
--- No change needed as course_id and assignment_id reference other tables
+-- 2. Attach the sequence to the existing id column for each table
+ALTER TABLE assignments ALTER COLUMN id SET DEFAULT nextval('assignments_id_seq');
+ALTER TABLE questions ALTER COLUMN id SET DEFAULT nextval('questions_id_seq');
+ALTER TABLE assignment_attempts ALTER COLUMN id SET DEFAULT nextval('assignment_attempts_id_seq');
+ALTER TABLE question_attempts ALTER COLUMN id SET DEFAULT nextval('question_attempts_id_seq');
 
--- Alter questions table to change id to serial
-ALTER TABLE questions
-    ALTER COLUMN id SET DATA TYPE serial;
-
--- Alter assignment_questions table to keep id references consistent
--- No change needed as assignment_id and question_id reference other tables
-
--- Alter assignment_attempts table to change id to serial
-ALTER TABLE assignment_attempts
-    ALTER COLUMN id SET DATA TYPE serial;
-
--- Alter question_attempts table to change id to serial
-ALTER TABLE question_attempts
-    ALTER COLUMN id SET DATA TYPE serial;
+-- 3. Set the sequence to start from the max current value + 1
+SELECT setval('assignments_id_seq', (SELECT MAX(id) FROM assignments));
+SELECT setval('questions_id_seq', (SELECT MAX(id) FROM questions));
+SELECT setval('assignment_attempts_id_seq', (SELECT MAX(id) FROM assignment_attempts));
+SELECT setval('question_attempts_id_seq', (SELECT MAX(id) FROM question_attempts));

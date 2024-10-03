@@ -17,10 +17,15 @@ export class CourseAssignmentsPageComponent implements OnInit {
 
   ngOnInit() {
     // Fetch assignments from API
+    this.loadAssignments();
+  }
+
+  loadAssignments() {
     this.httpClient.get<AssignmentProjection[]>('/api/assignments').subscribe(assignments => {
       this.courseAssignments = assignments;
     });
   }
+
 
   isAddAssignmentModalVisible: boolean = false;
 
@@ -41,5 +46,18 @@ export class CourseAssignmentsPageComponent implements OnInit {
 
   addAssignmentModalSubmit() {
     this.isAddAssignmentModalVisible = false;
+
+    // Post new assignment to API
+    this.httpClient.post<AssignmentProjection>('/api/assignments', this.newAssignment).subscribe(newAssignment => {
+      this.loadAssignments();
+    });
+
+    // Clear new assignment form
+    this.newAssignment = {
+      name: '',
+      description: '',
+      startDate: new Date(),
+      dueDate: new Date()
+    };
   }
 }
