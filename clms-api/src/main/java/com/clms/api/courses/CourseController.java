@@ -2,8 +2,11 @@ package com.clms.api.courses;
 
 import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
 import com.clms.api.common.domain.User;
+import com.clms.api.common.security.currentUser.CurrentUser;
+import com.clms.api.common.security.requiresUser.RequiresUser;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +18,21 @@ import java.util.List;
 public class CourseController {
     private final CourseRepository courseRepository;
     private final CourseMemberInsertService courseMemberInsertService;
+    private final CourseMemberRemoveService courseMemberRemoveService;
+    private final CourseMemberRepository courseMemberRepository;
 
     @GetMapping()
     public List<Course> getCourses() {
         return courseRepository.findAll();
+    }
+
+
+    @GetMapping("/getMyCourses")
+    @RequiresUser
+    public List<Course> getMyCourses(@CurrentUser User user) {
+        List<Integer> courseids = courseMemberRepository.getCoursesByUserId(user.getId());
+        List<Course> courses = courseRepository.findAllById(courseids);
+        return courses;
     }
 
     @PostMapping()
@@ -71,6 +85,21 @@ public class CourseController {
         }
 
         courseMemberInsertService.insertMembersByUserIdsAndCourseId(memberIds, courseId);
+
+        // ...
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{courseId}/members/removeBulkMembers")
+    public ResponseEntity<?> removeMembers(@PathVariable int courseId, @RequestBody List<Integer> memberIds) {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        for (Integer memberId : memberIds) {
+            courseMemberRemoveService.removeMemberByUserIdAndCourseId(memberId, courseId);
+        }
 
         // ...
         return ResponseEntity.ok().build();
