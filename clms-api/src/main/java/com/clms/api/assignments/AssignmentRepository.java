@@ -1,2 +1,6 @@
-package com.clms.api.assignments;public interface AssignmentRepository {
+package com.clms.api.assignments;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AssignmentRepository extends JpaRepository<Assignment, Integer> {
 }

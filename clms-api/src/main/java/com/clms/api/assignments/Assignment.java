@@ -1,4 +1,5 @@
-package com.clms.api.assignments.models;
+package com.clms.api.assignments;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
