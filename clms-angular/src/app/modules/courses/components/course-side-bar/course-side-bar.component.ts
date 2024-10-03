@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {NgIf} from "@angular/common";
 import {OverlayPanelModule} from "primeng/overlaypanel";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {UserProjection} from "@core/model/User.model";
 import {ClientService} from "@core/services/client/client.service";
 import {ClientDataSourceService} from "@core/services/client-data-source.service";
 import {GetPermissionsFromUserAsMap} from "@core/util/UserUtil";
+import {MenuItem, MenuItemCommandEvent} from "primeng/api";
 
 @Component({
   selector: 'app-course-side-bar',
@@ -13,12 +14,14 @@ import {GetPermissionsFromUserAsMap} from "@core/util/UserUtil";
   styleUrl: './course-side-bar.component.css'
 })
 export class CourseSideBarComponent implements OnInit {
+  items: MenuItem[] | undefined;
+
   courseId!: number
 
   Client: UserProjection | null = null;
 
   hasAdminPageAccess: boolean = false;
-  constructor(private clientService: ClientService, private clientDataSourceService: ClientDataSourceService, private route: ActivatedRoute) {}
+  constructor(private clientService: ClientService, private clientDataSourceService: ClientDataSourceService, private route: ActivatedRoute, private router: Router) {}
   ngOnInit() {
     this.clientDataSourceService.get().subscribe(newUser => {
       this.Client = newUser
@@ -32,7 +35,65 @@ export class CourseSideBarComponent implements OnInit {
       }
       this.courseId = parseInt(id, 10); // Convert the value to a number
     });
+
+    this.loadItems();
   }
+
+  loadItems() {
+    this.items = [
+      {
+        separator: true
+      },
+
+      {
+        separator: true
+      },
+
+      {
+        label: 'Back',
+        icon: 'pi pi-arrow-left',
+        command: () => {
+          this.router.navigate(["dashboard"])
+        }
+      },
+
+      {
+        separator: true
+      },
+
+      {
+        separator: true
+      },
+
+
+
+      {
+        label: 'Home',
+        icon: 'pi pi-home',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "home"])
+        }
+      },
+
+      {
+        label: 'Assignments',
+        icon: 'pi pi-file',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "assignments"])
+        }
+      },
+
+      {
+        label: 'Settings',
+        icon: 'pi pi-cog',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "settings"])
+        }
+      }
+
+    ];
+  }
+
 
   ngOnChanges() {
     this.hasAdminPageAccess = this.clientService.hasPermission("ADMIN_PAGE_ACCESS")

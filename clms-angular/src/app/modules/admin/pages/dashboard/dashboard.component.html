@@ -1,16 +1,35 @@
 <div class="flex flex-row h-screen w-screen">
-  <div style="width: 250px; box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);">
-    <div class="m-3">
-      <span class="pi pi-arrow-left cursor-pointer" (click)="router.navigate(['dashboard'])"></span>
-    </div>
-    <p-listbox
-      [options]="tabs"
-      [(ngModel)]="selectedTab"
-      optionLabel="label"
-      (onChange)="onTabChange($event)"
-    >
-    </p-listbox>
-  </div>
+  <p-menu [model]="items">
+    <ng-template pTemplate="end">
+
+      <div class="flex flex-row justify-center items-center pt-3 pb-3">
+        <app-theme-switcher/>
+      </div>
+
+      <div class="flex flex-row justify-between items-center pl-3 pr-3 pb-2" style="width: 250px">
+        <!-- user information -->
+        <div class="flex flex-row gap-3 justify-center items-center">
+          <div class="w-10 h-10 flex justify-center items-center bg-black">
+            <span class="text-white">{{usernameToInitials(Client?.username || "")}}</span>
+          </div>
+          <div class="flex flex-col justify-center">
+            <span>{{Client?.username}}</span>
+          </div>
+        </div>
+        <!-- actions -->
+        <div class="flex flex-row">
+        <span class="pi pi-ellipsis-h" (click)="op.toggle($event)">
+          <p-overlayPanel #op>
+            <div>
+              <button class="p-button p-button-text hover:bg-gray-200" (click)="logout()">Logout</button>
+            </div>
+          </p-overlayPanel>
+        </span>
+        </div>
+      </div>
+
+    </ng-template>
+  </p-menu>
   <div class="w-full pl-10 pr-10 pt-5 pb-5 overflow-scroll ">
     <router-outlet></router-outlet>
   </div>

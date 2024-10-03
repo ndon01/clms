@@ -28,6 +28,8 @@ import {FormsModule} from "@angular/forms";
 import {RouterOutlet} from "@angular/router";
 import {CoursesDashboardComponent} from "@modules/admin/courses/courses-dashboard/courses-dashboard.component";
 import {InputTextModule} from "primeng/inputtext";
+import {MenuModule} from "primeng/menu";
+import {OverlayPanelModule} from "primeng/overlaypanel";
 
 @NgModule({
   declarations: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent],
@@ -45,7 +47,10 @@ import {InputTextModule} from "primeng/inputtext";
     CardModule,
     DialogModule,
     InputTextModule,
-    ButtonDirective
+    ButtonDirective,
+    MenuModule,
+    OverlayPanelModule,
+    CoreModule
   ],
 })
 export class AdminModule { }
