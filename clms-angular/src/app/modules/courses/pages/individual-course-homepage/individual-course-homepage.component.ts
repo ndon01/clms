@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
+import { AssignmentService } from './assignment.service'; // Import the service
 
 interface Assignment {
   id: number;
@@ -16,16 +17,7 @@ interface Assignment {
 export class IndividualCourseHomepageComponent implements OnInit {
   date: Date = new Date();
   isSidebarOpen: boolean = true;
-  assignments: Assignment[] = [
-    { id: 1, title: "Practice Test 1", dueDate: "2024-10-15", completed: false },
-    { id: 2, title: "Vocabulary Quiz", dueDate: "2024-10-17", completed: false },
-    { id: 3, title: "Math Drills", dueDate: "2024-09-20", completed: false },
-    { id: 4, title: "Essay Writing", dueDate: "2024-10-22", completed: false },
-    { id: 5, title: "Reading Comprehension", dueDate: "2024-09-25", completed: false },
-    { id: 6, title: "Grammar Review", dueDate: "2024-09-02", completed: false },
-    { id: 7, title: "Practice Test 2", dueDate: "2024-10-05", completed: false },
-    { id: 8, title: "Algebra Workshop", dueDate: "2024-10-10", completed: false },
-  ];
+  assignments: Assignment[] = [];
 
   // Property to store selected months
   selectedMonths: { label: string, value: string }[] = [];
@@ -34,9 +26,24 @@ export class IndividualCourseHomepageComponent implements OnInit {
   filteredAssignments: Assignment[] = [];
   groupedAssignments: { [key: string]: Assignment[] } = {};
 
+  constructor(private assignmentService: AssignmentService) {} // Inject the service
+
   ngOnInit() {
-    this.updateFilteredAssignments();
-    this.updateGroupedAssignments();
+    this.fetchAssignments(); // Fetch assignments from the backend
+  }
+
+  // Fetch assignments from the backend
+  fetchAssignments() {
+    this.assignmentService.getAllAssignments().subscribe(
+      (data: Assignment[]) => {
+        this.assignments = data;
+        this.updateFilteredAssignments(); // Update the view after fetching
+        this.updateGroupedAssignments();
+      },
+      (error) => {
+        console.error('Error fetching assignments:', error);
+      }
+    );
   }
 
   // Create a list of unique months from assignments' due dates
