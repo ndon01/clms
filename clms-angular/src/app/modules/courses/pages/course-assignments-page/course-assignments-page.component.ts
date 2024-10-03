@@ -55,7 +55,7 @@ export class CourseAssignmentsPageComponent implements OnInit {
     this.isAddAssignmentModalVisible = false;
 
     // Post new assignment to API
-    this.httpClient.post<AssignmentProjection>(`/api/courses/${this.courseId}/assignments`, this.newAssignment).subscribe(newAssignment => {
+    this.httpClient.post<AssignmentProjection>(`/api/courses/${this.courseId}/assignments/create`, this.newAssignment).subscribe(newAssignment => {
       this.loadAssignments();
     });
 
