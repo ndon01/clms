@@ -6,7 +6,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* PrimeNG checkbox component for question-bank-table*/
-.p-checkbox .p-checkbox-box {
-  border: 1px solid black; /* Customize the border style as needed */
+/* You can add global styles to this file, and also import other style files */
+
+.lms-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--surface-d);
+  padding: 25px
 }

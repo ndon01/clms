@@ -2,34 +2,99 @@ import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Route, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {filter} from "rxjs";
+import {MenuItem} from "primeng/api";
+import {ClientService} from "@core/services/client/client.service";
+import {UserProjection} from "@core/model/User.model";
+import {GetPermissionsFromUserAsMap} from "@core/util/UserUtil";
+import {ClientDataSourceService} from "@core/services/client-data-source.service";
 
 @Component({
   selector: 'admin-dashboard-export',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
-  tabs = [
-    { label: 'Users', value: 'users' },
-    { label: 'Question Bank', value: 'question-bank' },
-    { label: 'Courses', value: 'courses' }
-  ];
+export class DashboardComponent implements OnInit {
+  items: MenuItem[] | undefined;
+  Client: UserProjection | null = null;
 
-  selectedTab = this.tabs[0]; // Default selection
-
-  onTabChange(event: any) {
-    console.log('Selected Tab: ', event.value);
-    this.router.navigate(['/admin/' + this.selectedTab.value])
-
+  constructor(public router: Router, private clientService: ClientService, private clientDataSourceService: ClientDataSourceService) {
   }
 
-  constructor(public router: Router) {
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
-      const url = this.router.url;
-      const tabName = url.split('/').pop();
-      this.selectedTab = this.tabs.find((tab) => tab.value === tabName) || this.tabs[0];
+  ngOnInit() {
+    this.clientDataSourceService.get().subscribe(newUser => {
+      this.Client = newUser
     })
+
+    this.loadItems();
+  }
+  loadItems() {
+    this.items = [
+      {
+        separator: true
+      },
+
+      {
+        separator: true
+      },
+
+      {
+        label: 'Back',
+        icon: 'pi pi-arrow-left',
+        command: () => {
+          this.router.navigate(["dashboard"])
+        }
+      },
+
+      {
+        separator: true
+      },
+
+      {
+        separator: true
+      },
+
+
+      {
+        label: 'Users',
+        icon: 'pi pi-users',
+        command: () => {
+          this.router.navigate(["admin", "users"])
+        }
+      },
+
+      {
+        label: 'Question Bank',
+        icon: 'pi pi-question-circle',
+        command: () => {
+          this.router.navigate(["admin", "question-bank"])
+        }
+      },
+
+      {
+        label: 'Courses',
+        icon: 'pi pi-book',
+        command: () => {
+          this.router.navigate(["admin", "courses"])
+        }
+      },
+
+
+
+    ];
   }
 
+
+  logout() {
+    this.clientService.logout();
+  }
+
+  usernameToInitials(username: string) {
+    if (username.length === 0 || username === null) {
+      return ""
+    }
+
+    const initials = username.match(/\b\w/g) || [];
+    return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase();
+  }
 
 }

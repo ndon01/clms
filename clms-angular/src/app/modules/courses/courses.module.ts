@@ -27,13 +27,15 @@ import {AvatarModule} from "primeng/avatar";
 import {CalendarModule} from "primeng/calendar";
 import {ScrollPanelModule} from "primeng/scrollpanel";
 import {MultiSelectModule} from "primeng/multiselect";
+import {ThemeSwitcherComponent} from "@core/components/theme-switcher/theme-switcher.component";
+import {MenuModule} from "primeng/menu";
 
 
 @NgModule({
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule,
   ]
 })
 export class CoursesModule {}
