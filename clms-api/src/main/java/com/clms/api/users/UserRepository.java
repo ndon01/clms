@@ -1,4 +1,4 @@
-package com.clms.api.users.core;
+package com.clms.api.users;
 
 import com.clms.api.common.domain.User;
 import org.hibernate.query.Page;
