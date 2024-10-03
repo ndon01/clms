@@ -11,12 +11,11 @@
           <div class="flex justify-start">
             <button pButton pRipple type="button" label="New Assignment" icon="pi pi-plus" class="p-button-success" (click)="setAddAssignmentModalVisibility(true)"></button>
           </div>
-          <p-table [value]="[]" styleClass="p-datatable-striped"
+          <p-table [value]="courseAssignments" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
                    dataKey="id" editMode="row">
             <ng-template pTemplate="header">
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Actions</th>
               </tr>
@@ -24,10 +23,7 @@
             <ng-template pTemplate="body" let-assignment let-editing="editing" let-ri="rowIndex">
               <tr [pEditableRow]="assignment">
                 <td>
-                  {{ assignment.id }}
-                </td>
-                <td>
-                  {{ assignment.username }}
+                  {{ assignment.name }}
                 </td>
                 <td>
                   <div class="flex align-items-center justify-content-center gap-2">
