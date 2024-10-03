@@ -62,12 +62,14 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{courseId}/addMembers")
+    @PostMapping("/{courseId}/members")
     public ResponseEntity<?> addMembers(@PathVariable int courseId, @RequestBody List<Integer> memberIds) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
         }
+
+
 
         // ...
         return ResponseEntity.ok().build();
