@@ -3,9 +3,7 @@ package com.clms.api.admin.users.updateUser;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.domain.UserProjection;
 import com.clms.api.users.UserSearchService;
-import com.clms.api.users.UserService;
 import com.clms.api.users.UserUpdateService;
-import com.clms.api.users.core.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

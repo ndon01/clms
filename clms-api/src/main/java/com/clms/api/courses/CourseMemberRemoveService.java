@@ -1,7 +1,7 @@
 package com.clms.api.courses;
 
 import com.clms.api.common.domain.User;
-import com.clms.api.users.core.UserRepository;
+import com.clms.api.users.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
