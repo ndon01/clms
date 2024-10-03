@@ -41,6 +41,7 @@ export class ClientService implements OnInit {
     return this.user;
   }
 
+
   public isAuthenticated(): boolean {
     return this.authenticated;
   }

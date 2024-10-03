@@ -40,8 +40,10 @@ export class CourseSettingsPageComponent implements OnInit{
 
 
   isAddMemberModalVisible: boolean = false;
+  isRemoveMemberModalVisible: boolean = false;
   allUsers: UserProjection[] = [];
   selectedUsers: UserProjection[] = [];
+  unenrolledUsers: UserProjection[] = [];
 
   setMemberModalVisibility(visibility: boolean) {
     this.isAddMemberModalVisible = visibility;
@@ -59,6 +61,10 @@ export class CourseSettingsPageComponent implements OnInit{
     this.isAddMemberModalVisible = false;
   }
 
+  removeMemberModalCancel() {
+    this.isRemoveMemberModalVisible = false;
+  }
+
   addMemberModalSubmit() {
     this.isAddMemberModalVisible = false;
 
@@ -72,5 +78,30 @@ export class CourseSettingsPageComponent implements OnInit{
 
     this.selectedUsers = [];
   }
+  setRemoveMemberModalVisibility(visibility: boolean) {
+    this.isRemoveMemberModalVisible = visibility;
+    this.httpClient.get<UserProjection[]>('/api/admin/users')
+      .pipe(map((users) => {
+        return users
+          .filter(user => this.courseMembers.some(member => member.id === user.id))
+      }))
+      .subscribe(data => {
+        this.unenrolledUsers = data;
+      })
+  }
+  removeMemberModalSubmit()
+  {
+    this.isRemoveMemberModalVisible = false;
+    let ids = this.selectedUsers.map(user => user.id);
 
+    console.log(ids)
+
+    this.httpClient.post(`/api/courses/${this.courseId}/members/removeBulkMembers`, ids).subscribe(() => {
+      this.loadMembers();
+    });
+
+    this.selectedUsers = [];
+  }
+
+  protected readonly Object = Object;
 }
