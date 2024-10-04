@@ -1,12 +1,18 @@
 package com.clms.api.courses;
 
-import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
+import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
+import com.clms.api.courses.assignments.CourseAssignment;
+import com.clms.api.courses.assignments.CourseAssignmentId;
+import com.clms.api.courses.assignments.CourseAssignmentRepository;
+import com.clms.api.courses.members.CourseMemberInsertService;
+import com.clms.api.courses.members.CourseMemberRemoveService;
+import com.clms.api.courses.members.CourseMemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +26,8 @@ public class CourseController {
     private final CourseMemberInsertService courseMemberInsertService;
     private final CourseMemberRemoveService courseMemberRemoveService;
     private final CourseMemberRepository courseMemberRepository;
+    private final AssignmentRepository assignmentRepository;
+    private final CourseAssignmentRepository courseAssignmentRepository;
 
     @GetMapping()
     public List<Course> getCourses() {
@@ -116,6 +124,44 @@ public class CourseController {
 
 
         return ResponseEntity.ok(members);
+    }
+
+    @GetMapping("/{courseId}/assignments")
+    public ResponseEntity<List<Assignment>> getCourseAssignments(@PathVariable int courseId) {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        List<Assignment> assignments = currentCourse.getAssignments();
+
+        return ResponseEntity.ok(assignments);
+    }
+
+    @PostMapping("/{courseId}/assignments/create")
+    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment) {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (assignment == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        assignment = assignmentRepository.saveAndFlush(assignment);
+
+        CourseAssignment courseAssignment = new CourseAssignment();
+
+        CourseAssignmentId courseAssignmentId = new CourseAssignmentId();
+        courseAssignmentId.setAssignment(assignment);
+        courseAssignmentId.setCourse(currentCourse);
+
+        courseAssignment.setId(courseAssignmentId);
+
+        courseAssignmentRepository.saveAndFlush(courseAssignment);
+
+        return ResponseEntity.ok().build();
     }
 }
 

@@ -24,4 +24,5 @@ export class DashboardPageComponent implements OnInit {
     })
   }
 
+    protected readonly Array = Array;
 }

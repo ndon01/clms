@@ -1,6 +1,5 @@
-package com.clms.api.courses;
+package com.clms.api.courses.members;
 
-import com.clms.api.common.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

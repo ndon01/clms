@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AssignmentProjection} from "@modules/courses/model/assignment.model";
 import {HttpClient} from "@angular/common/http";
-import {Route, Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 
 @Component({
   selector: 'courses-course-assignments-page',
@@ -10,18 +10,25 @@ import {Route, Router} from "@angular/router";
 })
 export class CourseAssignmentsPageComponent implements OnInit {
   courseAssignments: AssignmentProjection[] = [];
-
-  constructor(private httpClient: HttpClient) {
+  courseId!: number;
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
   }
 
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id'); // Get the value of 'id' parameter
+      if (!id) {
+        return;
+      }
+      this.courseId = parseInt(id, 10); // Convert the value to a number
+    });
     // Fetch assignments from API
     this.loadAssignments();
   }
 
   loadAssignments() {
-    this.httpClient.get<AssignmentProjection[]>('/api/assignments').subscribe(assignments => {
+    this.httpClient.get<AssignmentProjection[]>(`/api/courses/${this.courseId}/assignments`).subscribe(assignments => {
       this.courseAssignments = assignments;
     });
   }
@@ -48,7 +55,7 @@ export class CourseAssignmentsPageComponent implements OnInit {
     this.isAddAssignmentModalVisible = false;
 
     // Post new assignment to API
-    this.httpClient.post<AssignmentProjection>('/api/assignments', this.newAssignment).subscribe(newAssignment => {
+    this.httpClient.post<AssignmentProjection>(`/api/courses/${this.courseId}/assignments/create`, this.newAssignment).subscribe(newAssignment => {
       this.loadAssignments();
     });
 

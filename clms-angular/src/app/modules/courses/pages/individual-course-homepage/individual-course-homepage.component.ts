@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
+import { AssignmentService } from './assignment.service';
+import {HttpClient} from "@angular/common/http";
+import {ActivatedRoute} from "@angular/router"; // Import the service
 
 interface Assignment {
   id: number;
-  title: string;
+  name: string;
   dueDate: string;
   completed: boolean;
 }
@@ -14,18 +17,13 @@ interface Assignment {
   styleUrls: ['./individual-course-homepage.component.css']
 })
 export class IndividualCourseHomepageComponent implements OnInit {
+  courseId!: number;
+
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
+  }
   date: Date = new Date();
   isSidebarOpen: boolean = true;
-  assignments: Assignment[] = [
-    { id: 1, title: "Practice Test 1", dueDate: "2024-10-15", completed: false },
-    { id: 2, title: "Vocabulary Quiz", dueDate: "2024-10-17", completed: false },
-    { id: 3, title: "Math Drills", dueDate: "2024-09-20", completed: false },
-    { id: 4, title: "Essay Writing", dueDate: "2024-10-22", completed: false },
-    { id: 5, title: "Reading Comprehension", dueDate: "2024-09-25", completed: false },
-    { id: 6, title: "Grammar Review", dueDate: "2024-09-02", completed: false },
-    { id: 7, title: "Practice Test 2", dueDate: "2024-10-05", completed: false },
-    { id: 8, title: "Algebra Workshop", dueDate: "2024-10-10", completed: false },
-  ];
+  assignments: Assignment[] = [];
 
   // Property to store selected months
   selectedMonths: { label: string, value: string }[] = [];
@@ -34,9 +32,27 @@ export class IndividualCourseHomepageComponent implements OnInit {
   filteredAssignments: Assignment[] = [];
   groupedAssignments: { [key: string]: Assignment[] } = {};
 
+
   ngOnInit() {
-    this.updateFilteredAssignments();
-    this.updateGroupedAssignments();
+    this.activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id'); // Get the value of 'id' parameter
+      if (!id) {
+        return;
+      }
+      this.courseId = parseInt(id, 10); // Convert the value to a number
+    });
+    this.fetchAssignments(); // Fetch assignments from the backend
+  }
+
+  // Fetch assignments from the backend
+  fetchAssignments() {
+    this.http.get<Assignment[]>(`http://localhost:8080/api/courses/${this.courseId}/assignments`).subscribe(assignments => {
+      this.assignments = assignments;
+      this.updateFilteredAssignments();
+      this.updateGroupedAssignments();
+      console.log("Assignments: ", this.assignments)
+    });
+
   }
 
   // Create a list of unique months from assignments' due dates

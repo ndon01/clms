@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {CardModule} from "primeng/card";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-course-card',
@@ -12,17 +13,17 @@ import {Ripple} from "primeng/ripple";
   imports: [
     CardModule,
     ButtonDirective,
-    Ripple
+    Ripple,
+    NgIf
   ],
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css'
 })
 export class CourseCardComponent {
-  @Input() course: CourseProjection | null = {id: 0, name: '', description: ''};
-
+  @Input() course!: CourseProjection;
   constructor(private router: Router) {
-
   }
+
   viewCourse() {
     this.router.navigate(['courses', this.course?.id]);
   }
