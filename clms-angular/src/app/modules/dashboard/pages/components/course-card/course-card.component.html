@@ -1,8 +1,18 @@
-<p-card [header]="course?.name" subheader="{{course?.id}}" [style]="{width: '200px', length: '150px'}">
-  <p>
-    {{ course?.description }}
-  </p>
-  <ng-template pTemplate="footer">
-    <button pButton pRipple type="button" label="View Course" icon="pi pi-eye" class="p-button-success" (click)="viewCourse()"></button>
-  </ng-template>
-</p-card>
+<ng-container *ngIf="course === undefined">
+  <p-card header="No Course Found" [style]="{width: '250px', height: '250px'}">
+    <p>
+      No course found with the given ID.
+    </p>
+  </p-card>
+</ng-container>
+
+<ng-container *ngIf="course !== undefined">
+  <p-card header="{{course.name || 'NO NAME FOUND'}}" subheader="{{course.id || 'NO ID FOUND'}}" [style]="{width: '250px', height: '250px'}">
+    <p>
+      {{ course.description || 'NO DESCRIPTION FOUND' }}
+    </p>
+    <ng-template pTemplate="footer">
+      <button pButton pRipple type="button" label="View Course" icon="pi pi-eye" class="p-button-success" (click)="viewCourse()"></button>
+    </ng-template>
+  </p-card>
+</ng-container>

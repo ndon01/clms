@@ -11,6 +11,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
 import {AvatarModule} from "primeng/avatar";
 import {CourseCardComponent} from "@modules/dashboard/pages/components/course-card/course-card.component";
+import {SkeletonModule} from "primeng/skeleton";
 
 
 
@@ -30,6 +31,7 @@ import {CourseCardComponent} from "@modules/dashboard/pages/components/course-ca
         FormsModule,
         AvatarModule,
         CourseCardComponent,
+        SkeletonModule,
     ]
 })
 export class DashboardModule { }

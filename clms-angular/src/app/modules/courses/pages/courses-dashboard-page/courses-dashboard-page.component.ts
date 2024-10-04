@@ -9,7 +9,8 @@ import {HttpClient} from "@angular/common/http";
 })
 export class CoursesDashboardPageComponent implements OnInit {
 
-  allCourses: CourseProjection[] = [];
+  allCourses!: CourseProjection[];
+  myCourses!: CourseProjection[];
 
   constructor(private httpClient: HttpClient) {
   }
@@ -18,5 +19,11 @@ export class CoursesDashboardPageComponent implements OnInit {
     this.httpClient.get<CourseProjection[]>('/api/courses').subscribe(courses => {
       this.allCourses = courses;
     });
+
+    this.httpClient.get<CourseProjection[]>('/api/courses/getMyCourses').subscribe(courses => {
+      this.myCourses = courses;
+    });
   }
+
+  protected readonly Array = Array;
 }

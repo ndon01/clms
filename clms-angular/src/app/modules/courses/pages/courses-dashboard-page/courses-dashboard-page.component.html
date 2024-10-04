@@ -1,16 +1,34 @@
 <app-sidebar-page-wrapper>
-
-  <div>
-    <ng-container *ngFor="let course of allCourses">
-      <p-card>
-        <ng-template pTemplate="header">
-          <h2>{{ course.name }}</h2>
-        </ng-template>
-        <ng-template pTemplate="footer">
-          <button pButton type="button" label="View" [routerLink]="['/courses', course.id]"></button>
-        </ng-template>
-      </p-card>
-    </ng-container>
+  <div class="w-full h-full bg-surface-c flex flex-col p-5 gap-10 overflow-y-scroll">
+    <div>
+      <h1 class="text-3xl font-bold text-on-surface">My Courses</h1>
+      <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
+        <ng-container *ngIf="myCourses === undefined">
+          <ng-container *ngFor="let _ of Array(10)">
+            <div class="w-60 h-60">
+              <p-skeleton width="100%" height="100%"></p-skeleton>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngFor="let course of myCourses">
+          <app-course-card [course]="course"></app-course-card>
+        </ng-container>
+      </div>
+    </div>
+    <div>
+      <h1 class="text-3xl font-bold text-on-surface">All Courses</h1>
+      <div class="flex flex-row w-200 h-max gap-5 p-5 overflow-x-scroll">
+        <ng-container *ngIf="allCourses === undefined">
+          <ng-container *ngFor="let _ of Array(10)">
+              <div class="w-60 h-60">
+                <p-skeleton width="100%" height="100%"></p-skeleton>
+              </div>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngFor="let course of allCourses">
+          <app-course-card [course]="course"></app-course-card>
+        </ng-container>
+      </div>
+    </div>
   </div>
-
 </app-sidebar-page-wrapper>
