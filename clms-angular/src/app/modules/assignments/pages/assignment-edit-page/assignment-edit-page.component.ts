@@ -18,10 +18,18 @@ export class AssignmentEditPageComponent {
       description: 'This is the first assignment',
       startDate: new Date(),
       dueDate: new Date(),
+      questions: [
+        {
+          id: 1,
+          question: 'What is the capital of France?',
+        }
+      ]
     }
   }
 
   goBack() {
     this.location.back();
   }
+
+  protected readonly Array = Array;
 }

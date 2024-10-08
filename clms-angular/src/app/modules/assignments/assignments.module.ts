@@ -9,6 +9,9 @@ import {Button, ButtonDirective} from "primeng/button";
 import {
   AssignmentEditPageComponent
 } from "@modules/assignments/pages/assignment-edit-page/assignment-edit-page.component";
+import {CourseCardComponent} from "@modules/dashboard/pages/components/course-card/course-card.component";
+import {SkeletonModule} from "primeng/skeleton";
+import {OrderListModule} from "primeng/orderlist";
 
 
 
@@ -16,7 +19,7 @@ import {
   declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent],
   exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent],
   imports: [
-    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button
+    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule
   ]
 })
 export class AssignmentsModule { }
