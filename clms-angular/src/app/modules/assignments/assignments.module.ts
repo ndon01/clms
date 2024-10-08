@@ -18,14 +18,15 @@ import {
 import {InputGroupModule} from "primeng/inputgroup";
 import {FormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
+import {DialogModule} from "primeng/dialog";
 
 
 
 @NgModule({
   declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent],
   exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent],
-  imports: [
-    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, QuestionEditorViewComponent, InputGroupModule, FormsModule, CalendarModule
-  ]
+    imports: [
+        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, QuestionEditorViewComponent, InputGroupModule, FormsModule, CalendarModule, DialogModule
+    ]
 })
 export class AssignmentsModule { }
