@@ -7,9 +7,17 @@
     </div>
     <div class="w-full h-full p-5">
       <div>
-        <h1 class="text-3xl font-bold text-on-surface text-color-primary">Assignment Details</h1>
+        <h1 class="text-3xl font-bold text-on-surface text-color-primary">{{assignment.name}} Details</h1>
         <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
-
+          <div class="flex flex-col text-color-primary">
+            <p class="font-bold">Start Date</p>
+            <p-calendar id="startDate" [(ngModel)]="assignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
+          </div>
+          <div class="flex flex-col text-color-primary">
+            <p class="font-bold">Due Date</p>
+            <p-calendar id="dueDate" [(ngModel)]="assignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
+          </div>
+          
         </div>
       </div>
       <div>
