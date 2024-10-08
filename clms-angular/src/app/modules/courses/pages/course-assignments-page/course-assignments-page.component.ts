@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AssignmentProjection} from "@modules/courses/model/assignment.model";
+import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Route, Router} from "@angular/router";
 
@@ -11,7 +11,9 @@ import {ActivatedRoute, Route, Router} from "@angular/router";
 export class CourseAssignmentsPageComponent implements OnInit {
   courseAssignments: AssignmentProjection[] = [];
   courseId!: number;
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
+
+
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
 
@@ -66,5 +68,9 @@ export class CourseAssignmentsPageComponent implements OnInit {
       startDate: new Date(),
       dueDate: new Date()
     };
+  }
+
+  viewAssignment(assignment: AssignmentProjection) {
+    this.router.navigate(["assignments", assignment.id]);
   }
 }

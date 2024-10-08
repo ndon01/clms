@@ -70,4 +70,9 @@ public class AssignmentController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/client-scope")
+    public void getClientScope(@PathVariable int id) {
+
+    }
 }

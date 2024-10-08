@@ -43,6 +43,11 @@ routes = [
       {
         path: 'courses',
         loadChildren: () => import('./modules/courses/courses.module').then(m => m.CoursesModule)
+      },
+
+      {
+        path: 'assignments',
+        loadChildren: () => import('./modules/assignments/assignments.module').then(m => m.AssignmentsModule)
       }
 
     ]
