@@ -30,14 +30,22 @@ import {CoursesDashboardComponent} from "@modules/admin/courses/courses-dashboar
 import {InputTextModule} from "primeng/inputtext";
 import {MenuModule} from "primeng/menu";
 import {OverlayPanelModule} from "primeng/overlaypanel";
+import {
+  CreateQuestionComponent
+} from "@modules/admin/question-bank/dashboards/create-question/create-question.component";
+import {
+  CreateQuestionModalComponent
+} from "@modules/admin/question-bank/modals/create-question-modal/modal/create-question-modal.component";
+import {FileUploadModule} from "primeng/fileupload";
+import {CheckboxModule} from "primeng/checkbox";
+import {DropdownModule} from "primeng/dropdown";
 
 @NgModule({
-  declarations: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent],
-  exports: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent],
+  declarations: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent,CreateQuestionComponent],
+  exports: [DashboardComponent, UsersComponent, QuestionBankComponent, CoursesDashboardComponent,CreateQuestionComponent],
   imports: [
     AdminUserModule,
     ListboxModule,
-    FormsModule,
     AdminQuestionBankModule,
     NgIf,
     RouterOutlet,
@@ -50,7 +58,12 @@ import {OverlayPanelModule} from "primeng/overlaypanel";
     ButtonDirective,
     MenuModule,
     OverlayPanelModule,
-    CoreModule
+    CoreModule,
+    Button,
+    FileUploadModule,
+    CheckboxModule,
+    DropdownModule,
+    FormsModule
   ],
 })
 export class AdminModule { }
