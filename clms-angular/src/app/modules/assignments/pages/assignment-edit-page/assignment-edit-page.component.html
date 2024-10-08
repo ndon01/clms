@@ -1,62 +1,88 @@
-<div class="w-screen h-screen">
-  <div class="w-full h-full bg-surface-b">
-    <div class="w-full h-12 bg-surface-e flex flex-row">
-      <div class="text-color-primary w-full flex justify-start items-center pl-3"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
-      <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
-      <div class="text-color-primary w-full flex justify-end items-center pr-3"><span>Save</span></div>
+<div class="w-full min-h-screen h-full bg-surface-b flex flex-col">
+  <div class="w-full h-12 bg-surface-e flex flex-row p-5">
+    <div class="text-color-primary w-full flex justify-start items-center"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
+    <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
+    <div class="text-color-primary w-full flex justify-end items-center"><span>Save</span></div>
+  </div>
+  <div class="w-full h-full flex flex-col p-5 bg-surface-b">
+    <div>
+      <h1 class="text-3xl font-bold text-on-surface text-color-primary">{{assignment.name}} Details</h1>
+      <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
+        <div class="flex flex-col text-color-primary">
+          <p class="font-bold">Start Date</p>
+          <p-calendar id="startDate" [(ngModel)]="assignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
+        </div>
+        <div class="flex flex-col text-color-primary">
+          <p class="font-bold">Due Date</p>
+          <p-calendar id="dueDate" [(ngModel)]="assignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
+        </div>
+        <div class="flex flex-col text-color-primary">
+          <label for="name">Name</label>
+          <input
+            pInputText
+            id="name"
+            [(ngModel)]="assignment.name" />
+        </div>
+        <div class="flex flex-col text-color-primary">
+          <label for="description">Description</label>
+          <input
+            pInputText
+            id="description"
+            [(ngModel)]="assignment.description" />
+        </div>
+      </div>
     </div>
-    <div class="w-full h-full p-5">
-      <div>
-        <h1 class="text-3xl font-bold text-on-surface text-color-primary">{{assignment.name}} Details</h1>
-        <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
-          <div class="flex flex-col text-color-primary">
-            <p class="font-bold">Start Date</p>
-            <p-calendar id="startDate" [(ngModel)]="assignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
-          </div>
-          <div class="flex flex-col text-color-primary">
-            <p class="font-bold">Due Date</p>
-            <p-calendar id="dueDate" [(ngModel)]="assignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
-          </div>
-          <div class="flex flex-col text-color-primary">
-            <label for="name">Name</label>
-            <input
-              pInputText
-              id="name"
-              [(ngModel)]="assignment.name" />
-          </div>
-          <div class="flex flex-col text-color-primary">
-            <label for="description">Description</label>
-            <input
-              pInputText
-              id="description"
-              [(ngModel)]="assignment.description" />
+    <div class="w-full">
+      <h1 class="text-3xl font-bold text-on-surface text-color-primary">Questions</h1>
+      <div class="flex flex-col w-full gap-3 pt-5">
+        <div class="flex flex-row gap-5 p-2 bg-surface-e rounded text-color-primary">
+          <div>
+            <button pButton type="button" label="Add Question" (click)="openAddQuestionModal()"></button>
           </div>
         </div>
-      </div>
-      <div>
-        <h1 class="text-3xl font-bold text-on-surface text-color-primary">Questions</h1>
-        <div class="flex flex-row overflow-x-scroll w-full">
-          <div class="w-full">
-            <p-orderList
-              [value]="assignment.questions"
-              [listStyle]="{ 'max-height': '30rem' }"
-              header="Question List"
-              [dragdrop]="true">
-              <ng-template let-question pTemplate="item">
-                <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectQuestion(question)">
-                  <div class="flex flex-row gap-3">
-                    <span class="text-color-primary">{{question.question}}</span>
-                  </div>
+        <div class="flex w-full">
+          <p-orderList
+            class="w-full"
+            [value]="assignment.questions"
+            [listStyle]="{ 'max-height': '30rem', 'width': '100%' }"
+            header="Question List"
+            [dragdrop]="true">
+            <ng-template let-question pTemplate="item">
+              <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectQuestion(question)">
+                <div class="flex flex-row gap-3">
+                  <span class="text-color-primary">{{question.question}}</span>
                 </div>
-              </ng-template>
-            </p-orderList>
-          </div>
-          <div class="w-full bg-sur">
-            <app-question-editor-view [question]="selectedQuestion"/>
-          </div>
+              </div>
+            </ng-template>
+          </p-orderList>
         </div>
       </div>
-
     </div>
   </div>
 </div>
+
+<p-dialog [modal]="true" header="Edit Question" [(visible)]="isEditQuesitonModalVisible" (onHide)="cancelEditQuestionModal()">
+  <ng-template pTemplate="content">
+    <app-question-editor-view [question]="selectedQuestion"></app-question-editor-view>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="w-full flex flex-row gap-3 pt-6">
+      <button pButton type="button" label="Cancel" (click)="cancelEditQuestionModal()"></button>
+      <button pButton type="button" label="Update" (click)="saveEditQuestionModal()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [modal]="true" header="Add Question" [(visible)]="isAddQuestionModalVisible" (onHide)="cancelAddQuestionModal()">
+  <ng-template pTemplate="content">
+    <app-question-editor-view [question]="newQuestion"></app-question-editor-view>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="w-full flex flex-row gap-3 pt-6">
+      <button pButton type="button" label="Cancel" (click)="cancelAddQuestionModal()"></button>
+      <button pButton type="button" label="Create" (click)="saveAddQuestionModal()"></button>
+    </div>
+  </ng-template>
+</p-dialog>

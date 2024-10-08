@@ -11,7 +11,6 @@ import {QuestionProjection} from "@modules/assignments/model/question.model";
 })
 export class AssignmentEditPageComponent {
   assignment!: AssignmentProjection;
-  selectedQuestion!: QuestionProjection;
 
   constructor(private router: Router, private location: Location) {
     this.assignment = {
@@ -31,11 +30,64 @@ export class AssignmentEditPageComponent {
 
   selectQuestion(q: QuestionProjection) {
     this.selectedQuestion = q;
+    this.openEditQuestionModal()
+  }
+
+  // Edit question modal
+
+  isEditQuesitonModalVisible = false;
+  selectedQuestion!: QuestionProjection;
+
+  openEditQuestionModal() {
+    this.isEditQuesitonModalVisible = true;
+  }
+
+  closeEditQuestionModal() {
+    this.isEditQuesitonModalVisible = false;
+  }
+
+  cancelEditQuestionModal() {
+    this.closeEditQuestionModal();
+  }
+
+  saveEditQuestionModal() {
+    this.closeEditQuestionModal();
+  }
+
+  // Add question modal
+
+  isAddQuestionModalVisible = false;
+  newQuestion: QuestionProjection = {
+    id: 0,
+    question: ''
+  };
+
+  openAddQuestionModal() {
+    this.isAddQuestionModalVisible = true;
+  }
+
+  closeAddQuestionModal() {
+    this.isAddQuestionModalVisible = false;
+  }
+
+  cancelAddQuestionModal() {
+    this.closeAddQuestionModal();
+    this.resetAddQuestionModal();
+  }
+
+  saveAddQuestionModal() {
+    this.closeAddQuestionModal();
+    this.resetAddQuestionModal();
+  }
+
+  resetAddQuestionModal() {
+    this.newQuestion = {
+      id: 0,
+      question: ''
+    }
   }
 
   goBack() {
     this.location.back();
   }
-
-  protected readonly Array = Array;
 }
