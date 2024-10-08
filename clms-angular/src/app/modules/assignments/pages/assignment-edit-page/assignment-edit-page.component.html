@@ -1,4 +1,4 @@
-<div class="w-full min-h-screen h-full bg-surface-b flex flex-col">
+<div class="w-full min-h-screen h-full bg-surface-b flex flex-col" *ngIf="assignment">
   <div class="w-full h-12 bg-surface-e flex flex-row p-5">
     <div class="text-color-primary w-full flex justify-start items-center"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
     <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
