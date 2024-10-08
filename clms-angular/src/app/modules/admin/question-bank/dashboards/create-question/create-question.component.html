@@ -1,0 +1,68 @@
+<div class="max-w-4xl mx-auto p-6 space-y-6">
+    <h1 class="text-2xl font-bold">Assignment - Create Question</h1>
+
+    <div class="flex space-x-2">
+        <p-button label="Templates" styleClass="p-button-outlined"></p-button>
+        <p-button label="From Image" styleClass="p-button-outlined"></p-button>
+        <p-button label="From Generator" styleClass="p-button-outlined"></p-button>
+        <p-button label="Browse" styleClass="p-button-outlined"></p-button>
+        <p-button label="Save"></p-button>
+    </div>
+
+    <div class="space-y-4">
+        <input type="text" placeholder = "title"/>
+        <div class="border rounded-md p-4">
+            <label class="block mb-2">Question Image</label>
+            <div *ngIf="image; else noImage">
+                <div class="relative">
+                    <img [src]="image" alt="Uploaded question" class="max-w-full h-auto rounded-md" />
+                    <p-button icon="pi pi-times" styleClass="p-button-danger p-button-rounded p-button-icon-only"
+                              class="absolute top-2 right-2" (onClick)="removeImage()"></p-button>
+                </div>
+            </div>
+            <ng-template #noImage>
+                <p-fileUpload customUpload="true" (uploadHandler)="handleImageUpload($event)" mode="basic"
+                              accept="image/*" maxFileSize="1000000" chooseLabel="Upload Image"></p-fileUpload>
+            </ng-template>
+        </div>
+
+        <div class="space-y-2">
+            <h2 class="font-semibold">Answers</h2>
+            <div *ngFor="let answer of answers; let i = index" class="flex items-center space-x-2">
+                <p-checkbox></p-checkbox>
+                <input type="text" pInputText [(ngModel)]="answers[i]" placeholder = "Answer {{i + 1}}" />
+
+            </div>
+            <p-button *ngIf="answers.length < 5" label="+" styleClass="p-button-outlined" (onClick)="addAnswer()"></p-button>
+        </div>
+
+        <div class="space-y-2">
+            <div class="flex items-center space-x-2">
+                <p-checkbox [(ngModel)]="keepAnswersOrdered"></p-checkbox>
+                <label >Keep answers ordered</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <p-checkbox [(ngModel)]="allowWorkUpload"></p-checkbox>
+                <label >Allow work upload</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <p-checkbox [(ngModel)]="required"></p-checkbox>
+                <label >Required</label>
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <h2 class="font-semibold">Category</h2>
+            <div class="flex space-x-2">
+                <p-dropdown [options]="[{label: 'HOA', value: 'hoa'}]" placeholder="HOA"></p-dropdown>
+                <p-dropdown [options]="[{label: 'Percents', value: 'percents'}]" placeholder="Percents"></p-dropdown>
+                <p-dropdown [options]="[{label: 'Linear Equations', value: 'linear-equations'}]" placeholder="Linear Equations"></p-dropdown>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="font-semibold">Difficulty</h2>
+            <p-dropdown placeholder="0"></p-dropdown>
+        </div>
+    </div>
+</div>

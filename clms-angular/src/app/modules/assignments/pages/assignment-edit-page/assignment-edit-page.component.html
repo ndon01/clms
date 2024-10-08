@@ -1,11 +1,49 @@
-<div class="w-full h-full bg-surface-b">
-  <div class="w-full h-12 bg-surface-e flex flex-row">
-    <div class="text-color-primary w-full flex justify-start items-center pl-3"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
-    <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
-    <div class="text-color-primary w-full flex justify-end items-center pr-3"><span>Save</span></div>
-  </div>
-  <div class="w-">
+<div class="w-screen h-screen">
+  <div class="w-full h-full bg-surface-b">
+    <div class="w-full h-12 bg-surface-e flex flex-row">
+      <div class="text-color-primary w-full flex justify-start items-center pl-3"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
+      <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
+      <div class="text-color-primary w-full flex justify-end items-center pr-3"><span>Save</span></div>
+    </div>
+    <div class="w-full h-full p-5">
+      <div>
+        <h1 class="text-3xl font-bold text-on-surface text-color-primary">{{assignment.name}} Details</h1>
+        <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
+          <div class="flex flex-col text-color-primary">
+            <p class="font-bold">Start Date</p>
+            <p-calendar id="startDate" [(ngModel)]="assignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
+          </div>
+          <div class="flex flex-col text-color-primary">
+            <p class="font-bold">Due Date</p>
+            <p-calendar id="dueDate" [(ngModel)]="assignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
+          </div>
+          
+        </div>
+      </div>
+      <div>
+        <h1 class="text-3xl font-bold text-on-surface text-color-primary">Questions</h1>
+        <div class="flex flex-row overflow-x-scroll w-full">
+          <div class="w-full">
+            <p-orderList
+              [value]="assignment.questions"
+              [listStyle]="{ 'max-height': '30rem' }"
+              header="Question List"
+              [dragdrop]="true">
+              <ng-template let-question pTemplate="item">
+                <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectQuestion(question)">
+                  <div class="flex flex-row gap-3">
+                    <span class="text-color-primary">{{question.question}}</span>
+                  </div>
+                </div>
+              </ng-template>
+            </p-orderList>
+          </div>
+          <div class="w-full bg-sur">
+            <app-question-editor-view [question]="selectedQuestion"/>
+          </div>
+        </div>
+      </div>
 
-
+    </div>
   </div>
 </div>
