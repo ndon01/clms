@@ -32,6 +32,15 @@
                       pButton
                       pRipple
                       type="button"
+                      icon="pi pi-eye text-xl"
+                      class="p-button-rounded p-button-text"
+                      (click)="viewAssignment(assignment)">
+                    </button>
+                    <button
+                      *ngIf="!editing"
+                      pButton
+                      pRipple
+                      type="button"
                       pInitEditableRow
                       icon="pi pi-pencil"
                       class="p-button-rounded p-button-text">
