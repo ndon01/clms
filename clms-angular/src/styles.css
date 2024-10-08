@@ -34,3 +34,11 @@
 .bg-surface-e {
   background-color: var(--surface-e);
 }
+
+.text-color-primary {
+  color: var(--text-color);
+}
+
+.text-color-secondary {
+  color: var(--text-color-secondary);
+}
