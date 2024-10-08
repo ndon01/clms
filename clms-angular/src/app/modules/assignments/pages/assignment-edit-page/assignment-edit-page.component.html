@@ -22,16 +22,16 @@
               header="Question List"
               [dragdrop]="true">
               <ng-template let-question pTemplate="item">
-                <div class="flex flex-wrap p-2 align-items-center gap-3">
+                <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectQuestion(question)">
                   <div class="flex flex-row gap-3">
-                    <span class="text-color-primary">{{question}}</span>
+                    <span class="text-color-primary">{{question.question}}</span>
                   </div>
                 </div>
               </ng-template>
             </p-orderList>
           </div>
-          <div class="w-full">
-
+          <div class="w-full bg-sur">
+            <app-question-editor-view [question]="selectedQuestion"/>
           </div>
         </div>
       </div>

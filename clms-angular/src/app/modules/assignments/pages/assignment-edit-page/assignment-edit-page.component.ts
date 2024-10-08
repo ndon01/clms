@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
+import {QuestionProjection} from "@modules/assignments/model/question.model";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -10,6 +11,7 @@ import {Location} from "@angular/common";
 })
 export class AssignmentEditPageComponent {
   assignment!: AssignmentProjection;
+  selectedQuestion!: QuestionProjection;
 
   constructor(private router: Router, private location: Location) {
     this.assignment = {
@@ -25,6 +27,10 @@ export class AssignmentEditPageComponent {
         }
       ]
     }
+  }
+
+  selectQuestion(q: QuestionProjection) {
+    this.selectedQuestion = q;
   }
 
   goBack() {
