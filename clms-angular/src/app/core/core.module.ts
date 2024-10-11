@@ -8,11 +8,17 @@ import {PageNotFoundComponent} from "@core/pages/page-not-found/page-not-found.c
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {ThemeSwitcherComponent} from "@core/components/theme-switcher/theme-switcher.component";
 import {MenuModule} from "primeng/menu";
+import {
+  SidebarClientBlockComponent
+} from "@core/components/sidebar/sidebar-client-block/sidebar-client-block.component";
+import {DialogModule} from "primeng/dialog";
+import {FileUploadModule} from "primeng/fileupload";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
-  declarations: [SidebarPageWrapperComponent, PageNotFoundComponent, ThemeSwitcherComponent],
-  exports: [SidebarPageWrapperComponent, PageNotFoundComponent, ThemeSwitcherComponent],
+  declarations: [SidebarPageWrapperComponent, PageNotFoundComponent, ThemeSwitcherComponent, SidebarClientBlockComponent],
+  exports: [SidebarPageWrapperComponent, PageNotFoundComponent, ThemeSwitcherComponent, SidebarClientBlockComponent],
   providers: [ThemeService, ClientService],
-    imports: [CommonModule, RouterLink, NgOptimizedImage, OverlayPanelModule, MenuModule],
+  imports: [CommonModule, RouterLink, NgOptimizedImage, OverlayPanelModule, MenuModule, DialogModule, FileUploadModule, FormsModule],
 })
 export class CoreModule {}

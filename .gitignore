@@ -13,3 +13,5 @@ teamiq-spa/node
 teamiq-spa/.angular
 
 teamiq-api/src/main/resources/static/*
+
+docker/localstack/data/*

@@ -1,0 +1,72 @@
+<div class="flex flex-row justify-between items-center pl-3 pr-3 pt-2 pb-2" style="width: 250px">
+  <!-- user information -->
+  <div class="flex flex-row gap-3 justify-center items-center">
+    <div class="w-10 h-10 flex justify-center items-center bg-black cursor-pointer rounded-full object-cover" (click)="displayAvatarDialog = true">
+      <ng-container *ngIf="!currentAvatarUrl; else avatar">
+        <span class="text-white">{{usernameToInitials(client.username || "")}}</span>
+      </ng-container>
+      <ng-template #avatar>
+        <img [src]="currentAvatarUrl || ''" alt="avatar" class="w-full h-full rounded-full object-cover" width="100%" height="100%">
+      </ng-template>
+    </div>
+    <div class="flex flex-col justify-center">
+      <span>{{client.username}}</span>
+    </div>
+  </div>
+  <!-- actions -->
+  <div class="flex flex-row">
+    <span class="pi pi-ellipsis-h" (click)="op.toggle($event)">
+      <p-overlayPanel #op>
+        <div>
+          <button class="p-button p-button-text hover:bg-gray-200" (click)="logout()">Logout</button>
+        </div>
+      </p-overlayPanel>
+    </span>
+  </div>
+</div>
+
+<!-- Avatar Dialog -->
+<p-dialog header="Change your Avatar" [visible]="displayAvatarDialog" [style]="{width: '450px'}" [modal]="true" [resizable]="false" [draggable]="false" [showHeader]="true" [baseZIndex]="10000" [closable]="false">
+  <div class="flex flex-col gap-3 p-3">
+    <div class="flex flex-col gap-3">
+      <!-- Current Avatar Preview -->
+      <div *ngIf="currentAvatarUrl && (uploadedFile == null || uploadedFileUrl == null)" class="flex flex-col w-full h-max justify-center items-center gap-2">
+        <img [src]="currentAvatarUrl" alt="Current Avatar" class="w-48 h-48 rounded-full object-cover">
+        <button pButton type="button" label="Remove Current Avatar" (click)="removeCurrentAvatar()"></button>
+      </div>
+
+      <div *ngIf="uploadedFile != null && uploadedFileUrl != null" class="flex flex-col w-full h-max justify-center items-center">
+        <img [src]="uploadedFileUrl" alt="Uploaded Avatar" class="w-48 h-48 rounded-full object-cover">
+      </div>
+
+      <!-- File upload for new avatar -->
+      <div class="flex flex-col w-full h-max justify-center items-center">
+        <p-fileUpload
+          name="avatar"
+          [auto]="false"
+          mode="basic"
+          chooseLabel="Upload"
+          chooseIcon="pi pi-upload"
+          [showCancelButton]="uploadedFile != null"
+          [showUploadButton]="false"
+          [files]="uploadedFile && [uploadedFile] || []"
+          accept="image/*"
+          maxFileSize="1000000000"
+          (onClear)="onCancelUpload()"
+          (onSelect)="onUpload($event)"
+          (onError)="onUploadError($event)"
+          (onImageError)="onUploadError($event)"
+          *ngIf="uploadedFile == null"
+        >
+        </p-fileUpload>
+
+        <button pButton type="button" label="Remove" (click)="onCancelUpload()" class="mt-3 mb-3" *ngIf="uploadedFile != null"></button>
+      </div>
+    </div>
+    <!-- Footer buttons -->
+    <div class="flex flex-row justify-end gap-3">
+      <button pButton type="button" label="Cancel" class="p-button-text" (click)="onCancel()"></button>
+      <button pButton type="button" label="Update" class="p-button" (click)="onSave()" [disabled]="!uploadedFile"></button>
+    </div>
+  </div>
+</p-dialog>

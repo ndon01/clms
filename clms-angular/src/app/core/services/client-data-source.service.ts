@@ -29,7 +29,7 @@ export class ClientDataSourceService {
   }
 
   refresh() {
-    this.httpClient.get<UserProjection>('/api/v1/users/me', {
+    this.httpClient.get<UserProjection>('/api/v1/users/client', {
       observe: 'response',
     }).subscribe(data =>{
       if (data.status === 200) {

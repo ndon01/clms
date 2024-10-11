@@ -9,6 +9,7 @@ export type User = {
   password: string;
   roles: RoleProjection[];
   permissions: PermissionProjection[];
+  avatarUrl: string;
 }
 
 export type UserProjection = Partial<User>;
