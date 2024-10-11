@@ -23,6 +23,6 @@ import {QuestionProjection} from "@modules/assignments/model/question.model";
   templateUrl: './question-editor-view.component.html',
   styleUrl: './question-editor-view.component.css'
 })
-export class QuestionEditorViewComponent {
+export class QuestionEditorViewComponent  {
   @Input() question!: QuestionProjection;
 }
