@@ -1,0 +1,26 @@
+<div class="flex justify-between items-center mb-4">
+  <h3 class="text-2xl font-bold">{{ headerText }}</h3>
+
+  <!-- PrimeNG MultiSelect for filtering assignments by month of due date -->
+  <p-multiSelect
+    [options]="months"
+    [(ngModel)]="selectedMonths"
+    optionLabel="label"
+    placeholder="Select Months"
+    (onChange)="onMonthSelectionChange()"
+    class="w-64"
+  ></p-multiSelect>
+</div>
+
+<div *ngFor="let group of groupedAssignments | keyvalue">
+  <h4 class="text-xl font-semibold mb-2">Week of {{ group.key | date: 'longDate' }}</h4>
+  <div class="flex overflow-x-auto pb-2 space-x-4">
+    <p-card *ngFor="let assignment of group.value; trackBy: trackByAssignmentId" class="bg-gray-800 border-red-800 flex-shrink-0 w-64">
+      <p-header>
+        <span class="textarea-md font-bold">{{ assignment.name }}</span>
+      </p-header>
+      <p>Due: {{ assignment.dueDate | date: 'MM/dd/yyyy HH:mm a' }}</p>
+
+    </p-card>
+  </div>
+</div>
