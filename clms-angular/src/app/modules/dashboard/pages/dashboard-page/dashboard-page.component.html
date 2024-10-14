@@ -16,4 +16,8 @@
       </div>
     </div>
   </div>
+  <div class="w-full h-full bg-surface-c flex flex-col p-5 gap-10 overflow-y-scroll">
+    <div *ngIf="myAssignments.length === 0"> No Assignments available </div>
+    <app-assignments-list [assignments]="myAssignments"></app-assignments-list>
+  </div>
 </app-sidebar-page-wrapper>

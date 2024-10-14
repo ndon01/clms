@@ -4,6 +4,7 @@ import {User, UserProjection} from "@core/model/User.model";
 import {HttpClient} from "@angular/common/http";
 import {SidebarPageWrapperComponent} from "@core/components/sidebar-page-wrapper/sidebar-page-wrapper.component";
 import {CourseProjection} from "@modules/courses/model/course.model";
+import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -13,6 +14,7 @@ import {CourseProjection} from "@modules/courses/model/course.model";
 export class DashboardPageComponent implements OnInit {
   client: UserProjection | null = null
   myCourses: CourseProjection[] = []
+  myAssignments: AssignmentProjection[] = []
 
   constructor(private clientService: ClientService, private httpClient: HttpClient) {
     this.client = clientService.getUser()
@@ -21,8 +23,24 @@ export class DashboardPageComponent implements OnInit {
   ngOnInit() {
     this.httpClient.get<CourseProjection[]>('/api/courses/getMyCourses').subscribe(data => {
       this.myCourses = data
+      this.fetchAssignments()
     })
+
+
+  }
+
+  fetchAssignments() {
+    const courseIds = this.myCourses.map(course => course.id);
+    courseIds.forEach(courseId => {
+      this.httpClient.get<AssignmentProjection[]>(`/api/courses/${courseId}/assignments`).subscribe((data) =>
+      {
+        this.myAssignments.push(...data)
+
+      });
+    });
+
   }
 
     protected readonly Array = Array;
+  protected readonly print = print;
 }
