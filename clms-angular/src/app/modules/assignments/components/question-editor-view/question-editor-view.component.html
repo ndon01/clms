@@ -9,7 +9,7 @@
       <!-- Left Column: Answer Choices -->
       <div class="w-full lg:w-1/2 space-y-2">
         <h2 class="font-semibold">Answers</h2>
-        <div *ngFor = "let answer of testInput.answers; let i = index" class="flex items-center space-x-2">
+        <div *ngFor = "let answer of question.answers; let i = index" class="flex items-center space-x-2">
           <p-checkbox [(ngModel)]="answer.isCorrect"></p-checkbox>
           <p-editor *ngIf="modules" [(ngModel)]="answer.text" [modules]="modules">
             ></p-editor>

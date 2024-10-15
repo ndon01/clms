@@ -7,6 +7,7 @@ export type AnswerProjection = Partial<Answer>;
 
 export type Question = {
   id: number;
+  assignmentId: number;
   question: string;
   questionType: 'single-choice' | 'multiple-choice';
   answers: AnswerProjection[];

@@ -1,1 +1,1 @@
-DROP TABLE assignment_questions;
+DROP TABLE if exists assignment_questions;
