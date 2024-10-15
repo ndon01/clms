@@ -60,6 +60,7 @@ export class AssignmentEditPageComponent implements OnInit {
   };
 
   openAddQuestionModal() {
+    this.resetAddQuestionModal();
     this.isAddQuestionModalVisible = true;
   }
 
@@ -73,14 +74,54 @@ export class AssignmentEditPageComponent implements OnInit {
   }
 
   saveAddQuestionModal() {
-    this.closeAddQuestionModal();
-    this.resetAddQuestionModal();
+    // Make sure the newQuestion object is valid before sending the request.
+    if (!this.newQuestion.question || this.newQuestion.question.trim() === '') {
+      alert('Question text is required.');
+      return;
+    }
+
+    // Example URL for the endpoint
+    const url = '/api/assignment-questions';
+
+    // Send the POST request
+    this.httpClient.post<QuestionProjection>(url, this.newQuestion).subscribe(
+      response => {
+        this.assignment.questions = this.assignment.questions || [];
+        this.assignment.questions.push(response);
+
+        // Close the modal and reset the form
+        this.closeAddQuestionModal();
+        this.resetAddQuestionModal();
+
+        alert('Question added successfully.');
+      },
+      error => {
+        console.error('Error adding question:', error);
+        alert('Failed to add the question. Please try again.');
+      }
+    );
   }
+
 
   resetAddQuestionModal() {
     this.newQuestion = {
       id: 0,
-      question: ''
+      assignmentId: this.assignment.id,
+      question: '',
+      answers: [{
+        text: "",
+        isCorrect: false
+      }, {
+        text: "",
+        isCorrect: false
+      }, {
+        text: "",
+        isCorrect: false
+      }, {
+        text: "",
+        isCorrect: false
+      }],
+      questionType: 'single-choice',
     }
   }
 
