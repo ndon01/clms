@@ -14,7 +14,7 @@ services:
       - clms-database-volume:/var/lib/postgresql/data
   localstack:
     build:
-        context: /docker/localstack
+        context: ./docker/localstack
         dockerfile: Dockerfile
     ports:
       - "4566:4566"            # LocalStack Gateway
