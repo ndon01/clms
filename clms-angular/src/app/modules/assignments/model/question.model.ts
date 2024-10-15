@@ -10,6 +10,9 @@ export type Question = {
   question: string;
   questionType: 'single-choice' | 'multiple-choice';
   answers: AnswerProjection[];
+  keepAnswersOrder: boolean;
+  allowWorkUpload: boolean;
+  required: boolean;
 }
 
 export type QuestionProjection = Partial<Question>;
