@@ -61,9 +61,9 @@
   </div>
 </div>
 
-<p-dialog [modal]="true" header="Edit Question" [(visible)]="isEditQuesitonModalVisible" (onHide)="cancelEditQuestionModal()">
+<p-dialog [modal]="true" header="Edit Question" [(visible)]="isEditQuesitonModalVisible" (onHide)="cancelEditQuestionModal()" class="w-full" styleClass="w-screen h-screen">
   <ng-template pTemplate="content">
-    <app-question-editor-view [question]="selectedQuestion"></app-question-editor-view>
+    <app-question-editor-view [question]="selectedQuestion" class="w-full h-full"></app-question-editor-view>
   </ng-template>
 
   <ng-template pTemplate="footer">
@@ -74,9 +74,9 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [modal]="true" header="Add Question" [(visible)]="isAddQuestionModalVisible" (onHide)="cancelAddQuestionModal()">
+<p-dialog [modal]="true" header="Add Question" [(visible)]="isAddQuestionModalVisible" (onHide)="cancelAddQuestionModal()" class="w-full" styleClass="w-full">
   <ng-template pTemplate="content">
-    <app-question-editor-view [question]="newQuestion"></app-question-editor-view>
+    <app-question-editor-view [question]="newQuestion" class="w-full"></app-question-editor-view>
   </ng-template>
 
   <ng-template pTemplate="footer">
