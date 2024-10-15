@@ -4,9 +4,7 @@ export type Assignment = {
   id: number;
   name: string;
   description: string;
-
   questions: QuestionProjection[];
-
   startDate: Date;
   dueDate: Date;
 }

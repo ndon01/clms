@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {SidebarPageWrapperComponent} from "@core/components/sidebar-page-wrapper/sidebar-page-wrapper.component";
 import {CourseProjection} from "@modules/courses/model/course.model";
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
+import {map} from "rxjs";
 
 @Component({
   selector: 'app-dashboard-page',
@@ -14,7 +15,7 @@ import {AssignmentProjection} from "@modules/assignments/model/assignment.model"
 export class DashboardPageComponent implements OnInit {
   client: UserProjection | null = null
   myCourses: CourseProjection[] = []
-  myAssignments: AssignmentProjection[] = []
+  myAssignments: AssignmentProjection[] = [];
 
   constructor(private clientService: ClientService, private httpClient: HttpClient) {
     this.client = clientService.getUser()
@@ -32,10 +33,19 @@ export class DashboardPageComponent implements OnInit {
   fetchAssignments() {
     const courseIds = this.myCourses.map(course => course.id);
     courseIds.forEach(courseId => {
-      this.httpClient.get<AssignmentProjection[]>(`/api/courses/${courseId}/assignments`).subscribe((data) =>
+      this.httpClient.get<AssignmentProjection[]>(`/api/courses/${courseId}/assignments`).pipe(map(assignments => {
+        return assignments.map(assignment => {
+          if (typeof assignment.startDate === 'string') {
+            assignment.startDate = new Date(assignment.startDate);
+          }
+          if (typeof assignment.dueDate === 'string') {
+            assignment.dueDate = new Date(assignment.dueDate);
+          }
+          return assignment;
+        });
+      })).subscribe((data) =>
       {
         this.myAssignments.push(...data)
-
       });
     });
 

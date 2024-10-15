@@ -49,11 +49,9 @@ export class AssignmentsListComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-        if(changes['assignments']) {
-          this.updateFilteredAssignments();
-          this.updateGroupedAssignments();
-        }
-    }
+    this.updateFilteredAssignments();
+    this.updateGroupedAssignments();
+  }
 
   ngOnInit() {
 
@@ -66,13 +64,13 @@ export class AssignmentsListComponent implements OnChanges, OnInit {
   get months(): { label: string, value: string }[] {
     const months = Array.from(new Set(this.assignments.map(assignment => {
       const date = assignment.dueDate;
-      if(date == null) {
+      if (date == null) {
         return ""
       }
       return format(date, 'MMMM yyyy'); // Format the month and year
     })));
 
-    return months.map(month => ({ label: month, value: month }));
+    return months.map(month => ({label: month, value: month}));
   }
 
   // Updates the filtered assignments based on selected months or current month
@@ -84,7 +82,7 @@ export class AssignmentsListComponent implements OnChanges, OnInit {
 
     this.filteredAssignments = this.assignments.filter(assignment => {
       const assignmentDate = assignment.dueDate;
-      if(assignmentDate == null) {
+      if (assignmentDate == null) {
         return false
       }
 
@@ -99,7 +97,7 @@ export class AssignmentsListComponent implements OnChanges, OnInit {
     const grouped: { [key: string]: AssignmentProjection[] } = {};
     this.filteredAssignments.forEach(assignment => {
       const weekStart = assignment.dueDate;
-      if(weekStart != undefined) {
+      if (weekStart != undefined) {
         console.log(typeof weekStart)
         weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // Get start of the week
         const weekKey = weekStart.toISOString().split('T')[0]; // Use this as key
