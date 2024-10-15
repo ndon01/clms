@@ -1,10 +1,9 @@
-<div class="max-w-4xl mx-auto p-6 space-y-6">
+<div class="w-full h-full">
   <div class="space-y-4">
     <input type="text" placeholder = "title"/>
-    <div class="border rounded-md p-4">
-      <label class="block mb-2">Question Image</label>
-
-    </div>
+    <p-editor *ngIf="modules" [(ngModel)]="question.question" [modules]="modules">
+      ></p-editor>
+    {{question.question}}
 
     <div class="flex flex-wrap justify-between gap-4">
       <!-- Left Column: Answer Choices -->
@@ -12,7 +11,8 @@
         <h2 class="font-semibold">Answers</h2>
         <div *ngFor = "let answer of testInput.answers; let i = index" class="flex items-center space-x-2">
           <p-checkbox [(ngModel)]="answer.isCorrect"></p-checkbox>
-          <input type="text" [placeholder]="'Answer ' + (i + 1)" [(ngModel)]="answer.text"/>
+          <p-editor *ngIf="modules" [(ngModel)]="answer.text" [modules]="modules">
+            ></p-editor>
         </div>
       </div>
 

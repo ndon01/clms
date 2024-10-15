@@ -14,10 +14,11 @@ import {ClientService} from "@core/services/client/client.service";
 import {SharedModule} from "@shared/shared.module";
 import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
+import {QuillModule} from "ngx-quill";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule, SharedModule, ToastModule],
+  imports: [BrowserModule, AppRoutingModule, CoreModule, ReactiveFormsModule, DialogModule, BrowserAnimationsModule, SharedModule, ToastModule, QuillModule.forRoot()],
   providers: [ThemeService, provideHttpClient(), DialogService, MessageService, ClientService],
   bootstrap: [AppComponent],
 })
