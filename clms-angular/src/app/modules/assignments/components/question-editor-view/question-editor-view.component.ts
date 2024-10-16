@@ -1,11 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AnswerProjection, QuestionProjection} from "@modules/assignments/model/question.model";
 
-import Quill from 'quill'
-
-import ImageResize from 'quill-image-resize-module--fix-imports-error';
-Quill.register('modules/imageResize', ImageResize)
-
 @Component({
   selector: 'app-question-editor-view',
   templateUrl: './question-editor-view.component.html',
@@ -24,6 +19,7 @@ export class QuestionEditorViewComponent implements OnInit{
     required: false
   }
 
+  @Input() assignmentId: number | undefined = undefined;
 
   @Input() question : QuestionProjection = {
     id: 0,
@@ -35,30 +31,27 @@ export class QuestionEditorViewComponent implements OnInit{
     required: false
   };
 
-  modules!: any;
   constructor() {
-    this.modules = {
-      imageResize: {},
-      toolbar: [['image']]
-    }
-  }
-  addBindingCreated(quill) {
-    quill.keyboard.addBinding({
-      key: 'b'
-    }, (range, context) => {
-      // tslint:disable-next-line:no-console
-      console.log('KEYBINDING B', range, context)
-    })
-
-    quill.keyboard.addBinding({
-      key: 'B',
-      shiftKey: true
-    }, (range, context) => {
-      // tslint:disable-next-line:no-console
-      console.log('KEYBINDING SHIFT + B', range, context)
-    })
   }
 
   ngOnInit(): void {
   }
+
+  addAnswer() {
+    if (!this.question) return;
+    if (!this.question.answers) this.question.answers = [];
+    this.question.answers = [...this.question.answers, {text: "", isCorrect: false}];
+  }
+
+  removeAnswer(index: number) {
+    if (!this.question) return;
+    if (!this.question.answers) this.question.answers = [];
+    this.question.answers = this.question.answers.filter((_, i) => i !== index);
+  }
+
+  textExists(question: string | undefined) {
+    return question && question.length >= 0 ? true : false;
+  }
+
+  protected readonly undefined = undefined;
 }

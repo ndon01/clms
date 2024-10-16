@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
 import {QuestionProjection} from "@modules/assignments/model/question.model";
 import {HttpClient} from "@angular/common/http";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -11,17 +12,23 @@ import {HttpClient} from "@angular/common/http";
   styleUrl: './assignment-edit-page.component.css'
 })
 export class AssignmentEditPageComponent implements OnInit {
+  assignmentId!: number;
   assignment!: AssignmentProjection;
 
-  constructor(private router: Router, private location: Location, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
+  constructor(private router: Router, private location: Location, private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
   }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
-      this.httpClient.get<AssignmentProjection>(`/api/assignments/${id}`).subscribe(assignment => {
-        this.assignment = assignment;
-      });
+      this.assignmentId = parseInt(id, 10);
+      this.fetchAssignment();
+    });
+  }
+
+  fetchAssignment() {
+    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment => {
+      this.assignment = assignment;
     });
   }
 
@@ -82,24 +89,21 @@ export class AssignmentEditPageComponent implements OnInit {
 
     // Example URL for the endpoint
     const url = '/api/assignment-questions';
-
     // Send the POST request
     this.httpClient.post<QuestionProjection>(url, this.newQuestion).subscribe(
       response => {
-        this.assignment.questions = this.assignment.questions || [];
-        this.assignment.questions.push(response);
-
         // Close the modal and reset the form
         this.closeAddQuestionModal();
         this.resetAddQuestionModal();
-
-        alert('Question added successfully.');
-      },
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question saved successfully.'})
+        },
       error => {
-        console.error('Error adding question:', error);
-        alert('Failed to add the question. Please try again.');
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while saving the question.'})
       }
-    );
+    ).add(() => {
+      // Do something after the request is complete.
+      this.fetchAssignment();
+    });
   }
 
 
@@ -108,21 +112,15 @@ export class AssignmentEditPageComponent implements OnInit {
       id: 0,
       assignmentId: this.assignment.id,
       question: '',
-      answers: [{
-        text: "",
-        isCorrect: false
-      }, {
-        text: "",
-        isCorrect: false
-      }, {
-        text: "",
-        isCorrect: false
-      }, {
-        text: "",
-        isCorrect: false
-      }],
+      answers: [],
       questionType: 'single-choice',
     }
+  }
+
+  parseHtmlForFiles(html: string): string[] {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    return Array.from(doc.querySelectorAll('img')).map(img => img.src);
   }
 
   goBack() {

@@ -1,18 +1,34 @@
 package com.clms.api.assignments;
 
+import com.clms.api.filestorage.FileMetadata;
+import com.clms.api.filestorage.FileMetadataRepository;
+import com.clms.api.filestorage.FileStorageService;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Date;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/assignments")
+@RequiredArgsConstructor
+@Slf4j
 public class AssignmentController {
 
-    @Autowired
-    private AssignmentRepository assignmentRepository;
+    private final AssignmentRepository assignmentRepository;
+    private final FileStorageService fileStorageService;
+    private final FileMetadataRepository fileMetadataRepository;
+    private final AssignmentFileRepository assignmentFileRepository;
 
     // Get all assignments
     @GetMapping
@@ -71,8 +87,55 @@ public class AssignmentController {
         }
     }
 
-    @GetMapping("/{id}/client-scope")
-    public void getClientScope(@PathVariable int id) {
+    @PostMapping("/{id}/files")
+    public ResponseEntity<?> uploadFile(@PathVariable int id, MultipartFile file) {
+        Optional<Assignment> assignmentOptional = assignmentRepository.findById(id);
+        if (assignmentOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("Assignment not found");
+        }
 
+        FileMetadata fileMetadata = fileStorageService.createFile("assignments/files", file);
+        AssignmentFile assignmentFile = new AssignmentFile();
+        assignmentFile.setFileMetadata(fileMetadata);
+        assignmentFile.setAssignment(assignmentOptional.get());
+        assignmentFileRepository.saveAndFlush(assignmentFile);
+
+        return ResponseEntity.status(201).header("location", "/api/assignments/files/" + assignmentFile.getId()).build();
+    }
+
+    @GetMapping("/files/{fileId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable UUID fileId, HttpServletRequest request) {
+        Optional<AssignmentFile> assignmentFileOptional = assignmentFileRepository.findById(fileId);
+        if (assignmentFileOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        AssignmentFile assignmentFile = assignmentFileOptional.get();
+        FileMetadata fileMetadata = assignmentFile.getFileMetadata();
+
+        Resource fileResource = fileStorageService.getFile(fileMetadata);
+
+        if (fileResource == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(fileResource.getFile().getAbsolutePath());
+        } catch (Exception e) {
+            log.error("Could not determine file type.", e);
+        }
+
+        // Fallback to a default content type if not able to determine
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        // Return the file as a ResponseEntity with proper headers
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
+                .body(fileResource);
     }
 }
