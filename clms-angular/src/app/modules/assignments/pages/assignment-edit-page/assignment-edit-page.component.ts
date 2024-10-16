@@ -36,6 +36,10 @@ export class AssignmentEditPageComponent implements OnInit {
     this.selectedQuestion = q;
     this.openEditQuestionModal()
   }
+  selectDeleteQuestion(q: QuestionProjection) {
+    this.selectedQuestion = q;
+    this.deleteQuestion();
+  }
 
   // Edit question modal
 
@@ -56,6 +60,20 @@ export class AssignmentEditPageComponent implements OnInit {
 
   saveEditQuestionModal() {
     this.closeEditQuestionModal();
+  }
+  deleteQuestion() {
+    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    this.httpClient.delete(url).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question deleted successfully.'})
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while deleting the question.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
+      this.closeEditQuestionModal();
+    });
   }
 
   // Add question modal

@@ -24,6 +24,8 @@ public class AssignmentQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String title;
+
     private String question;
 
     @Column(name = "created_at")
@@ -96,6 +98,7 @@ class AssignmentQuestionAnswer implements Serializable {
 @Data
 class AssignmentQuestionRequest {
     private String question;
+    private String title;
     private String questionType;
     private List<AssignmentQuestionAnswer> answers;
     private Date createdAt = new Date();

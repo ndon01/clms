@@ -53,6 +53,7 @@ public class AssignmentQuestionController {
         if (assignmentOptional.isPresent()) {
             AssignmentQuestion question = new AssignmentQuestion();
             question.setQuestion(request.getQuestion());
+            question.setTitle(request.getTitle());
             question.setQuestionType(request.getQuestionType());
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
@@ -81,6 +82,7 @@ public class AssignmentQuestionController {
         if (questionOptional.isPresent()) {
             AssignmentQuestion question = questionOptional.get();
             question.setQuestion(request.getQuestion());
+            question.setTitle(request.getTitle());
             question.setQuestionType(request.getQuestionType());
             question.setAnswers(request.getAnswers());
             question.setCreatedAt(request.getCreatedAt());
