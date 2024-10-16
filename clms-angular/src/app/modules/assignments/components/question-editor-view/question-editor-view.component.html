@@ -1,22 +1,35 @@
-<div class="w-full h-full">
-  <div class="space-y-4">
-    <input type="text" placeholder = "title"/>
-    <p-editor *ngIf="modules" [(ngModel)]="question.question" [modules]="modules">
-      ></p-editor>
-    {{question.question}}
+<div class="w-full h-full flex flex-col gap-3" *ngIf="question">
+    <div class="w-full flex flex-col gap-3">
+      <h2 class="font-semibold">Content</h2>
+      <app-question-quill-editor [(text)]="question.question" [assignmentId]="assignmentId" class="w-full"/>
+    </div>
 
-    <div class="flex flex-wrap justify-between gap-4">
+    <div class="flex flex-wrap justify-between gap-3">
       <!-- Left Column: Answer Choices -->
-      <div class="w-full lg:w-1/2 space-y-2">
+      <div class="w-full h-full flex flex-col gap-3">
         <h2 class="font-semibold">Answers</h2>
-        <div *ngFor = "let answer of question.answers; let i = index" class="flex items-center space-x-2">
-          <p-checkbox [(ngModel)]="answer.isCorrect"></p-checkbox>
-          <p-editor *ngIf="modules" [(ngModel)]="answer.text" [modules]="modules">
-            ></p-editor>
-        </div>
+        <p-orderList
+          class="w-full"
+          *ngIf="question.answers"
+          [value]="question.answers"
+          [listStyle]="{'max-height': '300px', 'height': '100%'}"
+        >
+          <ng-template let-answer let-i="index" pTemplate="item">
+            <div class="flex flex-row gap-3 w-full h-full">
+              <p-checkbox [(ngModel)]="answer.isCorrect"></p-checkbox>
+              <app-question-quill-editor [(text)]="answer.text" [assignmentId]="assignmentId" class="w-full h-full" />
+              <button class="btn btn-danger" (click)="removeAnswer(i)">Remove</button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="empty" class="w-full h-full">
+            <div class="w-full h-full flex justify-center items-center">
+              No answers added yet.
+            </div>
+          </ng-template>
+        </p-orderList>
+        <button class="btn btn-primary mt-3" (click)="addAnswer()">Add Answer</button>
       </div>
-
-      <div class="w-full lg:w-1/3 space-y-2">
+      <div class="w-full h-full flex flex-col gap-3">
         <div class="flex items-center space-x-2">
           <p-checkbox [(ngModel)]="testInput.keepAnswersOrder">></p-checkbox>
           <label >Keep answers ordered</label>
@@ -31,19 +44,4 @@
         </div>
       </div>
     </div>
-
-    <div class="space-y-2">
-      <h2 class="font-semibold">Category</h2>
-      <div class="flex space-x-2">
-        <p-dropdown [options]="[{label: 'HOA', value: 'hoa'}]" placeholder="HOA"></p-dropdown>
-        <p-dropdown [options]="[{label: 'Percents', value: 'percents'}]" placeholder="Percents"></p-dropdown>
-        <p-dropdown [options]="[{label: 'Linear Equations', value: 'linear-equations'}]" placeholder="Linear Equations"></p-dropdown>
-      </div>
-    </div>
-
-    <div>
-      <h2 class="font-semibold">Difficulty</h2>
-      <p-dropdown placeholder="0"></p-dropdown>
-    </div>
-  </div>
 </div>

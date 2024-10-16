@@ -23,14 +23,17 @@ import {CheckboxModule} from "primeng/checkbox";
 import {EditorModule} from "primeng/editor";
 import {DropdownModule} from "primeng/dropdown";
 import {QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent} from "ngx-quill";
+import {
+    QuestionQuillEditorComponent
+} from "@modules/assignments/components/question-quill-editor/question-quill-editor.component";
 
 
 
 @NgModule({
   declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent],
   exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent],
-  imports: [
-    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent
-  ]
+    imports: [
+        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent
+    ]
 })
 export class AssignmentsModule { }
