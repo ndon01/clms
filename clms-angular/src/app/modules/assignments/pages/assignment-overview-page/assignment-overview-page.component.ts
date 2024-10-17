@@ -34,6 +34,7 @@ export class AssignmentOverviewPageComponent implements OnInit {
     this.httpClient.post(`/api/assignments/attempts/start-attempt`, {
       assignmentId: this.assignment.id
     }).subscribe(() => {
+      this.router.navigate(["assignments", this.assignment.id, "attempt"]);
     });
   }
 }
