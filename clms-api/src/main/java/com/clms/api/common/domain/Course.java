@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@EqualsAndHashCode
+
 @Entity
 @Table(name="courses")
 @Data

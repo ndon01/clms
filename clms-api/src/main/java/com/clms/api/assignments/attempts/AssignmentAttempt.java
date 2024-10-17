@@ -4,6 +4,9 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.common.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -23,5 +26,14 @@ public class AssignmentAttempt {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AssignmentAttemptStatus status;
 
+    private Date startedAt;
+}
+
+enum AssignmentAttemptStatus {
+    IN_PROGRESS,
+    SUBMITTED
 }

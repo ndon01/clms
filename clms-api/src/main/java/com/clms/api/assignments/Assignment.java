@@ -45,9 +45,7 @@ public class Assignment {
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AssignmentQuestion> questions;
 
-    @ManyToOne
-    @JoinTable(name = "courses",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
-    private Course course;
+
+
+    private int maxAttempts;
 }
