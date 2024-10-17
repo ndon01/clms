@@ -58,8 +58,24 @@ export class AssignmentEditPageComponent implements OnInit {
     this.closeEditQuestionModal();
   }
 
+
   saveEditQuestionModal() {
-    this.closeEditQuestionModal();
+    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    this.selectedQuestion.assignmentId = this.assignment.id;
+    console.log('selected question assignment id', this.selectedQuestion.assignmentId)
+    this.httpClient.put(url,this.selectedQuestion).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question updated successfully.'})
+      },
+      error => {
+        console.error('Error Details',error)
+        console.log('selected question',this.selectedQuestion)
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the question.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
+      this.closeEditQuestionModal();
+    });
   }
   deleteQuestion() {
     const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
@@ -104,6 +120,7 @@ export class AssignmentEditPageComponent implements OnInit {
       alert('Question text is required.');
       return;
     }
+
 
     // Example URL for the endpoint
     const url = '/api/assignment-questions';

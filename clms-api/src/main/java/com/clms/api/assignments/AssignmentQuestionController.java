@@ -88,17 +88,25 @@ public class AssignmentQuestionController {
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
 
+            // Check if the assignment ID is valid
             Optional<Assignment> assignmentOptional = assignmentRepository.findById(request.getAssignmentId());
             if (assignmentOptional.isPresent()) {
                 question.setAssignment(assignmentOptional.get());
+                // Log success before saving
+                System.out.println("Updating question with ID: " + id);
                 return ResponseEntity.ok(questionRepository.save(question));
             } else {
+                // Log the error cause
+                System.out.println("Invalid assignment ID: " + request.getAssignmentId());
                 return ResponseEntity.badRequest().body(null);
             }
         } else {
+            // Log the missing question scenario
+            System.out.println("Question not found with ID: " + id);
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // Delete a question
     @DeleteMapping("/{id}")
