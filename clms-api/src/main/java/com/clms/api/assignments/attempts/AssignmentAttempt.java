@@ -36,7 +36,3 @@ public class AssignmentAttempt {
     private Date startedAt;
 }
 
-enum AssignmentAttemptStatus {
-    IN_PROGRESS,
-    SUBMITTED
-}
