@@ -1,4 +1,4 @@
-package com.clms.api.courses;
+package com.clms.api.common.domain;
 
 import com.clms.api.assignments.Assignment;
 import com.clms.api.common.domain.User;

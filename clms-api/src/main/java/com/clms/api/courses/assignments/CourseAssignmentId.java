@@ -1,15 +1,13 @@
 package com.clms.api.courses.assignments;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.common.domain.User;
-import com.clms.api.courses.Course;
+import com.clms.api.common.domain.Course;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 

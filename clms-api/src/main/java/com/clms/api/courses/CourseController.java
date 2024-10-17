@@ -2,6 +2,7 @@ package com.clms.api.courses;
 
 import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.common.domain.Course;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;

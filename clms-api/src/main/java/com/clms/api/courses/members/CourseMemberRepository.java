@@ -1,7 +1,7 @@
 package com.clms.api.courses.members;
 
 import com.clms.api.common.domain.User;
-import com.clms.api.courses.Course;
+import com.clms.api.common.domain.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

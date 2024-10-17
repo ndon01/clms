@@ -1,7 +1,7 @@
 package com.clms.api.courses.members;
 
 import com.clms.api.common.domain.User;
-import com.clms.api.courses.Course;
+import com.clms.api.common.domain.Course;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.users.UserRepository;
 import lombok.RequiredArgsConstructor;
