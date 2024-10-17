@@ -1,6 +1,7 @@
 package com.clms.api.assignments;
 
 
+import com.clms.api.common.domain.Course;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -43,4 +44,10 @@ public class Assignment {
             joinColumns = @JoinColumn(name = "assignment_id"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AssignmentQuestion> questions;
+
+    @ManyToOne
+    @JoinTable(name = "courses",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
+    private Course course;
 }

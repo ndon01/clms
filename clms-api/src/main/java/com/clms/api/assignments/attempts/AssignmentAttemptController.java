@@ -5,17 +5,13 @@ import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
-import com.clms.api.courses.assignments.CourseAssignment;
-import com.clms.api.courses.assignments.CourseAssignmentId;
+import com.clms.api.common.domain.Course;
 import com.clms.api.courses.assignments.CourseAssignmentRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/assignments/attempts")
@@ -25,22 +21,20 @@ import java.util.UUID;
 public class AssignmentAttemptController {
 
     private final AssignmentRepository assignmentRepository;
-    private final CourseAssignmentRepository courseAssignmentRepository;
     private final AssignmentAttemptRepository assignmentAttemptRepository;
 
     @PostMapping("/start-attempt")
     public ResponseEntity<?> startAttempt(@CurrentUser User user, @RequestBody StartAssignmentAttemptRequest startAssignmentRequest) {
         int userId = user.getId();
         Assignment assignment = assignmentRepository.findById(startAssignmentRequest.getAssignmentId()).orElse(null);
-        CourseAssignment courseAssignment = courseAssignmentRepository.findById(new CourseAssignmentId(assignment)).orElse(null);
-
+        Course course = assignment.getCourse();
 
 
         if(assignment == null) {
             return ResponseEntity.notFound().build();
         }
 
-        if(courseAssignment == null) {
+        if(course == null) {
             return ResponseEntity.notFound().build();
             //TODO FIX THIS ONCE WE CAN MAKE AN ASSIGNMENT OUTSIDE OF A COURSE
         }
