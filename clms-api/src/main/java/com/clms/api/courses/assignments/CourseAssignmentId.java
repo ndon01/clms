@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -16,7 +17,9 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class CourseAssignmentId implements Serializable {
+
 
     @ManyToOne
     @JoinColumn(name = "assignment_id")
@@ -25,4 +28,8 @@ public class CourseAssignmentId implements Serializable {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public CourseAssignmentId(Assignment myAssignment) {
+        this.assignment = myAssignment;
+    }
 }

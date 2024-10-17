@@ -8,4 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CourseAssignmentRepository extends JpaRepository<CourseAssignment, CourseAssignmentId> {
+
 }
