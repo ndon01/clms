@@ -36,6 +36,10 @@ export class AssignmentEditPageComponent implements OnInit {
     this.selectedQuestion = q;
     this.openEditQuestionModal()
   }
+  selectDeleteQuestion(q: QuestionProjection) {
+    this.selectedQuestion = q;
+    this.deleteQuestion();
+  }
 
   // Edit question modal
 
@@ -54,8 +58,38 @@ export class AssignmentEditPageComponent implements OnInit {
     this.closeEditQuestionModal();
   }
 
+
   saveEditQuestionModal() {
-    this.closeEditQuestionModal();
+    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    this.selectedQuestion.assignmentId = this.assignment.id;
+    console.log('selected question assignment id', this.selectedQuestion.assignmentId)
+    this.httpClient.put(url,this.selectedQuestion).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question updated successfully.'})
+      },
+      error => {
+        console.error('Error Details',error)
+        console.log('selected question',this.selectedQuestion)
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the question.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
+      this.closeEditQuestionModal();
+    });
+  }
+  deleteQuestion() {
+    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    this.httpClient.delete(url).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question deleted successfully.'})
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while deleting the question.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
+      this.closeEditQuestionModal();
+    });
   }
 
   // Add question modal
@@ -86,6 +120,7 @@ export class AssignmentEditPageComponent implements OnInit {
       alert('Question text is required.');
       return;
     }
+
 
     // Example URL for the endpoint
     const url = '/api/assignment-questions';

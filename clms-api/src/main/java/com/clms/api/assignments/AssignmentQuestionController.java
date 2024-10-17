@@ -53,6 +53,7 @@ public class AssignmentQuestionController {
         if (assignmentOptional.isPresent()) {
             AssignmentQuestion question = new AssignmentQuestion();
             question.setQuestion(request.getQuestion());
+            question.setTitle(request.getTitle());
             question.setQuestionType(request.getQuestionType());
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
@@ -81,22 +82,31 @@ public class AssignmentQuestionController {
         if (questionOptional.isPresent()) {
             AssignmentQuestion question = questionOptional.get();
             question.setQuestion(request.getQuestion());
+            question.setTitle(request.getTitle());
             question.setQuestionType(request.getQuestionType());
             question.setAnswers(request.getAnswers());
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
 
+            // Check if the assignment ID is valid
             Optional<Assignment> assignmentOptional = assignmentRepository.findById(request.getAssignmentId());
             if (assignmentOptional.isPresent()) {
                 question.setAssignment(assignmentOptional.get());
+                // Log success before saving
+                System.out.println("Updating question with ID: " + id);
                 return ResponseEntity.ok(questionRepository.save(question));
             } else {
+                // Log the error cause
+                System.out.println("Invalid assignment ID: " + request.getAssignmentId());
                 return ResponseEntity.badRequest().body(null);
             }
         } else {
+            // Log the missing question scenario
+            System.out.println("Question not found with ID: " + id);
             return ResponseEntity.notFound().build();
         }
     }
+
 
     // Delete a question
     @DeleteMapping("/{id}")

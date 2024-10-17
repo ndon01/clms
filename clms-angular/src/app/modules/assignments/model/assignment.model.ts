@@ -7,6 +7,8 @@ export type Assignment = {
   questions: QuestionProjection[];
   startDate: Date;
   dueDate: Date;
+  maxAttempts:number;
+  timeLimitMinutes: number;
 }
 
 export type AssignmentProjection = Partial<Assignment>

@@ -8,6 +8,32 @@
     <div>
       <h1 class="text-3xl font-bold text-on-surface text-color-primary">{{assignment.name}} Details</h1>
       <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
+      <div class="flex flex-col text-color-primary">
+        <label for="name">Name</label>
+        <input
+          pInputText
+          id="name"
+          [(ngModel)]="assignment.name" />
+      </div>
+      <div class="flex flex-col text-color-primary">
+        <label for="description">Description</label>
+        <input
+          pInputText
+          id="description"
+          [(ngModel)]="assignment.description" />
+      </div>
+        <div class="flex flex-col text-color-primary">
+          <label for="maxAttempts">Maximum Attempts</label>
+          <p-inputNumber
+            id="maxAttempts"
+            [(ngModel)]="assignment.maxAttempts" />
+        </div>
+        <div class="flex flex-col text-color-primary">
+          <label for="timeLimit">Time Limit</label>
+          <p-inputNumber
+            id="timeLimit"
+            [(ngModel)]="assignment.timeLimitMinutes" />
+        </div>
         <div class="flex flex-col text-color-primary">
           <p class="font-bold">Start Date</p>
           <p-calendar id="startDate" [(ngModel)]="assignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
@@ -16,31 +42,61 @@
           <p class="font-bold">Due Date</p>
           <p-calendar id="dueDate" [(ngModel)]="assignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
         </div>
-        <div class="flex flex-col text-color-primary">
-          <label for="name">Name</label>
-          <input
-            pInputText
-            id="name"
-            [(ngModel)]="assignment.name" />
-        </div>
-        <div class="flex flex-col text-color-primary">
-          <label for="description">Description</label>
-          <input
-            pInputText
-            id="description"
-            [(ngModel)]="assignment.description" />
-        </div>
+
       </div>
     </div>
     <div class="w-full">
       <h1 class="text-3xl font-bold text-on-surface text-color-primary">Questions</h1>
       <div class="flex flex-col w-full gap-3 pt-5">
-        <div class="flex flex-row gap-5 p-2 bg-surface-e rounded text-color-primary">
+        <div class="text-color-primary">
           <div>
-            <button pButton type="button" label="Create Question" (click)="openAddQuestionModal()"></button>
+            <button
+              pButton
+              type="button"
+              label="Create Question"
+              (click)="openAddQuestionModal()">
+            </button>
           </div>
         </div>
         <div class="flex w-full">
+          <p-table *ngIf = "assignment.questions"
+                   [value]="assignment.questions"
+                   [paginator]="true"
+                   [rows]="5"
+                   [rowsPerPageOptions]="[5, 10, 20]"
+                   [reorderableColumns]="true"
+                   class="w-full"
+          >
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th style = "width:3rem"></th>
+                <th pReorderableColumn>Question</th>
+                <th pReorderableColumn>Question Type</th>
+                <th pReorderableColumn>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body"
+                         let-question
+                         let-index="rowIndex"
+            >
+              <tr [pReorderableRow]="index">
+                <td>
+                  <span class = "pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                <td>
+                  <span>{{question.title}}</span>
+                </td>
+                <td>
+                  <span>{{question?.questionType}}</span>
+                </td>
+                <td>
+                  <button pButton pRipple icon = "pi pi-pencil" type="button" (click)="(selectQuestion(question))"></button>
+                  <button pButton pRipple icon = "pi pi-trash" type="button" (click)="(selectDeleteQuestion(question))"></button>
+                </td>
+              </tr>
+            </ng-template>
+            <!--
           <p-orderList
             class="w-full"
             [value]="assignment.questions"
@@ -54,6 +110,8 @@
               </div>
             </ng-template>
           </p-orderList>
+          !-->
+          </p-table>
         </div>
       </div>
     </div>
