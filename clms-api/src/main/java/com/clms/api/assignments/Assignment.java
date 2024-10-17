@@ -39,13 +39,15 @@ public class Assignment {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name= "questions",
             joinColumns = @JoinColumn(name = "assignment_id"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AssignmentQuestion> questions;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
     private int maxAttempts;
 }

@@ -6,9 +6,6 @@ import com.clms.api.common.domain.Course;
 import com.clms.api.common.domain.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
-import com.clms.api.courses.assignments.CourseAssignment;
-import com.clms.api.courses.assignments.CourseAssignmentId;
-import com.clms.api.courses.assignments.CourseAssignmentRepository;
 import com.clms.api.courses.members.CourseMemberInsertService;
 import com.clms.api.courses.members.CourseMemberRemoveService;
 import com.clms.api.courses.members.CourseMemberRepository;
@@ -28,7 +25,6 @@ public class CourseController {
     private final CourseMemberRemoveService courseMemberRemoveService;
     private final CourseMemberRepository courseMemberRepository;
     private final AssignmentRepository assignmentRepository;
-    private final CourseAssignmentRepository courseAssignmentRepository;
 
     @GetMapping()
     public List<Course> getCourses() {
@@ -150,18 +146,9 @@ public class CourseController {
             return ResponseEntity.status(400).build();
         }
 
-        assignment = assignmentRepository.saveAndFlush(assignment);
+        assignment.setCourse(currentCourse);
 
-        CourseAssignment courseAssignment = new CourseAssignment();
-
-        CourseAssignmentId courseAssignmentId = new CourseAssignmentId();
-        courseAssignmentId.setAssignment(assignment);
-        courseAssignmentId.setCourse(currentCourse);
-
-        courseAssignment.setId(courseAssignmentId);
-
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
+        assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();
     }
 }
