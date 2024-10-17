@@ -17,7 +17,6 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class CourseAssignmentId implements Serializable {
 
 

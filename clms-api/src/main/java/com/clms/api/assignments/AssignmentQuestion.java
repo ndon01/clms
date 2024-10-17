@@ -26,6 +26,7 @@ public class AssignmentQuestion {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT", length = 1024)
     private String question;
 
     @Column(name = "created_at")
@@ -43,6 +44,7 @@ public class AssignmentQuestion {
       isCorrect: boolean;
     }
      */
+    @Column(columnDefinition = "TEXT", length = 1024)
     @Convert(converter = AssignmentQuestionAnswerConverter.class)
     private List<AssignmentQuestionAnswer> answers;
 
