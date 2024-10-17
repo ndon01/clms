@@ -10,6 +10,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrl: './assignment-overview-page.component.css'
 })
 export class AssignmentOverviewPageComponent implements OnInit {
+  assignmentId!: number;
   assignment!: AssignmentProjection;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private httpClient: HttpClient) {
@@ -18,18 +19,18 @@ export class AssignmentOverviewPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
+      this.assignmentId = parseInt(id, 10)
       this.httpClient.get<AssignmentProjection>(`/api/assignments/${id}`).subscribe(assignment => {
         this.assignment = assignment;
       });
     });
   }
 
+  editAssignment() {
+    this.router.navigate(["assignments", this.assignment.id, "edit"])
+  }
 
   startAssignment() {
 
-  }
-
-  editAssignment() {
-    this.router.navigate(["assignments", this.assignment.id, "edit"])
   }
 }

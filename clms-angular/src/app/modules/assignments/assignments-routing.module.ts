@@ -9,6 +9,9 @@ import {
 import {
   AssignmentEditPageComponent
 } from "@modules/assignments/pages/assignment-edit-page/assignment-edit-page.component";
+import {
+  AssignmentAttemptPageComponent
+} from "@modules/assignments/pages/assignment-attempt-page/assignment-attempt-page.component";
 
 const routes: Routes = [
   {
@@ -20,6 +23,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'overview', pathMatch: 'full' },
           { path: 'overview', component: AssignmentOverviewPageComponent },
           { path: 'edit', component: AssignmentEditPageComponent },
+          { path: 'attempt', component: AssignmentAttemptPageComponent },
           { path: '**', redirectTo: 'overview' }
         ]
       },
