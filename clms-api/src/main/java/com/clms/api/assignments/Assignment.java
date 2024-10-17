@@ -55,4 +55,7 @@ public class Assignment {
     private Course course;
 
     private int maxAttempts;
+
+    @Column(name = "time_limit_minutes")
+    private int timeLimitMinutes;
 }

@@ -67,6 +67,8 @@ public class AssignmentController {
             assignment.setStartDate(assignmentDetails.getStartDate());
             assignment.setDueDate(assignmentDetails.getDueDate());
             assignment.setUpdatedAt(new Date()); // Update the updated_at timestamp
+            assignment.setMaxAttempts(assignmentDetails.getMaxAttempts());
+            assignment.setTimeLimitMinutes(assignmentDetails.getTimeLimitMinutes());
 
             Assignment updatedAssignment = assignmentRepository.save(assignment);
             return ResponseEntity.ok(updatedAssignment);
