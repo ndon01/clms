@@ -26,17 +26,22 @@ import {QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent} from "
 import {
     QuestionQuillEditorComponent
 } from "@modules/assignments/components/question-quill-editor/question-quill-editor.component";
+
 import {TableModule} from "primeng/table";
 import {Ripple} from "primeng/ripple";
 import {InputNumberModule} from "primeng/inputnumber";
 
+import {
+  AssignmentAttemptPageComponent
+} from "@modules/assignments/pages/assignment-attempt-page/assignment-attempt-page.component";
+
 
 
 @NgModule({
-  declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent],
-  exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent],
-  imports: [
-    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule
-  ]
+  declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent, AssignmentAttemptPageComponent],
+  exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent,AssignmentAttemptPageComponent],
+    imports: [
+        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule
+    ]
 })
 export class AssignmentsModule { }
