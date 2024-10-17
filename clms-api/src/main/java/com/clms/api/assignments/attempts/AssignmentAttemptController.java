@@ -57,7 +57,7 @@ public class AssignmentAttemptController {
         newAssignmentAttempt.setStatus(AssignmentAttemptStatus.IN_PROGRESS);
         newAssignmentAttempt.setStartedAt(new Date());
 
-        assignmentAttemptRepository.save(newAssignmentAttempt);
+        assignmentAttemptRepository.saveAndFlush(newAssignmentAttempt);
 
         return ResponseEntity.status(201).body(StartAssignmentAttemptResponse.builder().attemptId(newAssignmentAttempt.getId().toString()).build());
 
