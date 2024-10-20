@@ -20,7 +20,7 @@ public class AssignmentSubmissionScheduler {
 
     private final AssignmentAttemptRepository assignmentAttemptRepository;
 
-    @Scheduled(fixedRate = 30000)
+    @Scheduled(fixedRate = 5000)
     @Transactional
     public void scheduleFixedRateTask() {
         log.info("Checking for assignment attempts that are past due date");
@@ -29,12 +29,26 @@ public class AssignmentSubmissionScheduler {
 
         Date now = new Date();
         for (AssignmentAttempt assignmentAttempt : assignmentAttempts) {
+            log.info("Checking assignment attempt {}", assignmentAttempt.getId());
             Assignment assignment = assignmentAttempt.getAssignment();
 
             // past due date
             if (assignment.getDueDate().before(now)) {
+                log.info("Assignment attempt {} is past due.", assignmentAttempt.getId());
+
                 assignmentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
                 assignmentAttemptRepository.saveAndFlush(assignmentAttempt);
+            }
+
+            // time limit exceeded
+            if (assignment.getTimeLimitMinutes() > 0) {
+                long timeElapsedMs = now.getTime() - assignmentAttempt.getStartedAt().getTime();
+                long timeElapsed = timeElapsedMs / 60000;
+                if (timeElapsed > assignment.getTimeLimitMinutes()) {
+                    log.info("Assignment attempt {} exceeded time limit.", assignmentAttempt.getId());
+                    assignmentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
+                    assignmentAttemptRepository.saveAndFlush(assignmentAttempt);
+                }
             }
         }
     }
