@@ -2,15 +2,19 @@ package com.clms.api.assignments;
 
 
 import com.clms.api.common.domain.Course;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "assignments")
-@Data
+@Getter
+@Setter
 public class Assignment {
 
     @Id
@@ -39,15 +43,19 @@ public class Assignment {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name= "questions",
             joinColumns = @JoinColumn(name = "assignment_id"),
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AssignmentQuestion> questions;
 
-    @ManyToOne
-    @JoinTable(name = "courses",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    @JsonIgnore
     private Course course;
+
+    private int maxAttempts;
+
+    @Column(name = "time_limit_minutes")
+    private int timeLimitMinutes;
 }

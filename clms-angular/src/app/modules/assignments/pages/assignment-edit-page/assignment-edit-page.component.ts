@@ -57,6 +57,19 @@ export class AssignmentEditPageComponent implements OnInit {
   cancelEditQuestionModal() {
     this.closeEditQuestionModal();
   }
+  saveAssignment(assignment : AssignmentProjection){
+    const url = `/api/assignments/${this.assignment.id}`;
+    this.httpClient.put(url, this.assignment).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Assignment updated successfully.'})
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the assignment.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
+    });
+  }
 
 
   saveEditQuestionModal() {

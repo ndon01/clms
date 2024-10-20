@@ -5,13 +5,16 @@ import com.clms.api.common.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@EqualsAndHashCode
+
 @Entity
 @Table(name="courses")
-@Data
+@Getter
+@Setter
 public class Course
 {
     @Id
@@ -28,8 +31,8 @@ public class Course
     private List<User> members;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name ="course_assignments",
+    @JoinTable(name = "assignments",
             joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "assignment_id"))
+            inverseJoinColumns = @JoinColumn(name = "id"))
     private List<Assignment> assignments;
 }

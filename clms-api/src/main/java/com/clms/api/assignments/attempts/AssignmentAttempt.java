@@ -4,11 +4,17 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.common.domain.User;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "assignment_attempts")
-@Data
+@Getter
+@Setter
 public class AssignmentAttempt {
 
     @Id
@@ -23,5 +29,10 @@ public class AssignmentAttempt {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AssignmentAttemptStatus status;
 
+    private Date startedAt;
 }
+

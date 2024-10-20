@@ -2,7 +2,10 @@
   <div class="w-full h-12 bg-surface-e flex flex-row p-5">
     <div class="text-color-primary w-full flex justify-start items-center"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
     <div class="text-color-primary w-full flex justify-center items-center">{{assignment.name}}</div>
-    <div class="text-color-primary w-full flex justify-end items-center"><span>Save</span></div>
+    <div class="text-color-primary w-full flex justify-end items-center"><span (click)="saveAssignment(assignment)"
+                                                                               class = "cursor-pointer">
+      Save</span>
+    </div>
   </div>
   <div class="w-full h-full flex flex-col p-5 bg-surface-b">
     <div>
