@@ -13,6 +13,8 @@ import {catchError, map, tap} from 'rxjs';
 import { AbstractControl } from '@angular/forms';
 import {LoginService} from "@modules/authentication/pages/login/login.service";
 import {MessageService} from "primeng/api";
+import {ClientService} from "@core/services/client/client.service";
+import {ClientDataSourceService} from "@core/services/client-data-source.service";
 
 @Component({
   selector: 'authentication-login-page',
@@ -25,7 +27,7 @@ export class LoginComponent {
 
   password = new FormControl<String>("");
 
-  constructor(private router: Router, public location: Location, private loginService: LoginService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService) {
+  constructor(private router: Router, public location: Location, private loginService: LoginService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService, private clientDataSourceService: ClientDataSourceService) {
     const passwordCharacterLimiter = map((newString: String | null) => {
       if (newString == null) return null;
       return newString.substring(0, 64);
@@ -62,6 +64,7 @@ export class LoginComponent {
     this.loginService.login(this.username.value || "", this.password.value || "")
       .pipe(tap(response => this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE))
       .subscribe((response) => {
+        this.clientDataSourceService.refresh();
         this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
         this.router.navigate(["/dashboard"])
         this.messageService.add({severity:'success', summary:'Success', detail:'Welcome back!'});
