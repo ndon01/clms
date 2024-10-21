@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Route, Router} from "@angular/router";
@@ -13,8 +13,11 @@ export class CourseAssignmentsPageComponent implements OnInit {
   courseId!: number;
 
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {
-  }
+  constructor(private httpClient: HttpClient,
+              private route: ActivatedRoute,
+              private router: Router,
+              private ref: ChangeDetectorRef
+  ) {}
 
 
   ngOnInit() {

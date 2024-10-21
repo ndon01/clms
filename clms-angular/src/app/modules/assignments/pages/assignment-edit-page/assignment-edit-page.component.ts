@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {assertInInjectionContext, Component, OnInit} from '@angular/core';
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
@@ -29,6 +29,9 @@ export class AssignmentEditPageComponent implements OnInit {
   fetchAssignment() {
     this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment => {
       this.assignment = assignment;
+      this.assignment.startDate = assignment.startDate ? new Date(assignment.startDate) : null;
+      this.assignment.dueDate= assignment.dueDate? new Date(assignment.dueDate) : null;
+      console.log("Assignment after fetching", this.assignment);
     });
   }
 
