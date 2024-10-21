@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { AssignmentService } from './assignment.service';
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router"; // Import the service
+import {ActivatedRoute, Router} from "@angular/router"; // Import the service
 
 interface Assignment {
   id: number;
@@ -19,7 +19,7 @@ interface Assignment {
 export class IndividualCourseHomepageComponent implements OnInit {
   courseId!: number;
 
-  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute) {
+  constructor(private http: HttpClient, private activatedRoute: ActivatedRoute,private router: Router) {
   }
   date: Date = new Date();
   isSidebarOpen: boolean = true;
@@ -54,7 +54,9 @@ export class IndividualCourseHomepageComponent implements OnInit {
     });
 
   }
-
+  navigateToAssignment(assignmentId: number){
+    this.router.navigate([`/assignments/${assignmentId}/overview`]);
+  }
   // Create a list of unique months from assignments' due dates
   get months(): { label: string, value: string }[] {
     const months = Array.from(new Set(this.assignments.map(assignment => {
