@@ -5,8 +5,8 @@ export type Assignment = {
   name: string;
   description: string;
   questions: QuestionProjection[];
-  startDate: Date;
-  dueDate: Date;
+  startDate: Date | null;
+  dueDate: Date | null;
   maxAttempts:number;
   timeLimitMinutes: number;
 }
