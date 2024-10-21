@@ -41,8 +41,10 @@ public class AssignmentAttemptController {
 
         AssignmentAttempt currentAttempt = assignmentAttempts.stream().filter(attempt -> attempt.getStatus() == AssignmentAttemptStatus.IN_PROGRESS).findFirst().orElse(null);
         if (currentAttempt != null) {
-            return ResponseEntity.status(302).body(StartAssignmentAttemptResponse.builder().attemptId(currentAttempt.getId().toString()).build());
-
+            return ResponseEntity.status(302).body(StartAssignmentAttemptResponse
+                    .builder()
+                    .attemptId(currentAttempt.getId().toString())
+                    .build());
         }
 
         if (assignment.getMaxAttempts() <= assignmentAttempts.size()) {

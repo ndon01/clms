@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/assignment-questions")
@@ -58,6 +60,8 @@ public class AssignmentQuestionController {
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
             question.setAssignment(assignmentOptional.get());
+            question.setKeepAnswersOrdered(request.getKeepAnswersOrdered() || false);
+            question.setOrder(request.getOrder());
 
             // Manually convert answers to JSON
             try {
@@ -87,6 +91,8 @@ public class AssignmentQuestionController {
             question.setAnswers(request.getAnswers());
             question.setCreatedAt(request.getCreatedAt());
             question.setUpdatedAt(request.getUpdatedAt());
+            question.setKeepAnswersOrdered(request.getKeepAnswersOrdered() || false);
+            question.setOrder(request.getOrder());
 
             // Check if the assignment ID is valid
             Optional<Assignment> assignmentOptional = assignmentRepository.findById(request.getAssignmentId());
@@ -107,6 +113,28 @@ public class AssignmentQuestionController {
         }
     }
 
+    @PostMapping("/bulk-update")
+    public ResponseEntity<List<AssignmentQuestion>> bulkUpdateQuestions(@RequestBody List<AssignmentQuestionRequest> requests) {
+        List<AssignmentQuestion> updatedQuestions = new ArrayList<>();
+
+        for (AssignmentQuestionRequest request : requests) {
+            Optional<AssignmentQuestion> questionOptional = questionRepository.findById(request.getId());
+            if (questionOptional.isPresent()) {
+                AssignmentQuestion question = questionOptional.get();
+                question.setQuestion(request.getQuestion());
+                question.setTitle(request.getTitle());
+                question.setQuestionType(request.getQuestionType());
+                question.setAnswers(request.getAnswers());
+                question.setCreatedAt(request.getCreatedAt());
+                question.setUpdatedAt(request.getUpdatedAt());
+                question.setKeepAnswersOrdered(request.getKeepAnswersOrdered() || false);
+                question.setOrder(request.getOrder());
+                updatedQuestions.add(question);
+            }
+        }
+
+        return ResponseEntity.ok(questionRepository.saveAll(updatedQuestions));
+    }
 
     // Delete a question
     @DeleteMapping("/{id}")
