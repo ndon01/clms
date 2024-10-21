@@ -64,11 +64,9 @@
         <div class="flex w-full">
           <p-table *ngIf = "assignment.questions"
                    [value]="assignment.questions"
-                   [paginator]="true"
-                   [rows]="5"
-                   [rowsPerPageOptions]="[5, 10, 20]"
                    [reorderableColumns]="true"
                    class="w-full"
+                   (onRowReorder)="onQuestionsReordered($event)"
           >
 
             <ng-template pTemplate="header">
@@ -99,21 +97,6 @@
                 </td>
               </tr>
             </ng-template>
-            <!--
-          <p-orderList
-            class="w-full"
-            [value]="assignment.questions"
-            [listStyle]="{ 'max-height': '30rem', 'width': '100%' }"
-            [dragdrop]="true">
-            <ng-template let-question pTemplate="item">
-              <div class="flex flex-wrap p-2 align-items-center gap-3" (click)="selectQuestion(question)">
-                <div class="flex flex-row gap-3">
-                  <p-editor [readonly]="true" [(ngModel)]="question.question" [modules]="{}"></p-editor>
-                </div>
-              </div>
-            </ng-template>
-          </p-orderList>
-          !-->
           </p-table>
         </div>
       </div>

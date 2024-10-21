@@ -20,7 +20,7 @@ public class AssignmentSubmissionScheduler {
 
     private final AssignmentAttemptRepository assignmentAttemptRepository;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 30000)
     @Transactional
     public void scheduleFixedRateTask() {
         log.info("Checking for assignment attempts that are past due date");

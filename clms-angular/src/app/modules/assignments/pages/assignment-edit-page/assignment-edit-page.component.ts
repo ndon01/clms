@@ -23,6 +23,7 @@ export class AssignmentEditPageComponent implements OnInit {
       const id = params['id'];
       this.assignmentId = parseInt(id, 10);
       this.fetchAssignment();
+      this.resetAddQuestionModal();
     });
   }
 
@@ -31,7 +32,45 @@ export class AssignmentEditPageComponent implements OnInit {
       this.assignment = assignment;
       this.assignment.startDate = assignment.startDate ? new Date(assignment.startDate) : null;
       this.assignment.dueDate= assignment.dueDate? new Date(assignment.dueDate) : null;
+      this.sortQuestionsByOrder();
       console.log("Assignment after fetching", this.assignment);
+    });
+  }
+
+  // Sort the questions by the 'order' field
+  sortQuestionsByOrder() {
+    if (this.assignment.questions) {
+      this.assignment.questions.sort((a: QuestionProjection, b: QuestionProjection) => {
+        if (a.order && b.order) {
+          return a.order - b.order;
+        }
+        return 0;
+      });
+    }
+  }
+
+  onQuestionsReordered(event: any) {
+    if (!this.assignment.questions) return;
+    // Update the order of the questions based on their new index
+    this.assignment.questions.forEach((question: QuestionProjection, index: number) => {
+      question.order = index + 1; // Start order from 1
+    });
+
+    // Sort the questions by their new order before displaying them
+    this.sortQuestionsByOrder();
+  }
+
+  bulkUpdateQuestions(questions: QuestionProjection[]) {
+    const url = '/api/assignment-questions/bulk-update';
+    this.httpClient.post(url, questions).subscribe(
+      response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Questions updated successfully.'})
+      },
+      error => {
+        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the questions.'})
+      }
+    ).add(() => {
+      this.fetchAssignment();
     });
   }
 
@@ -61,6 +100,10 @@ export class AssignmentEditPageComponent implements OnInit {
     this.closeEditQuestionModal();
   }
   saveAssignment(assignment : AssignmentProjection){
+    if (this.assignment.questions) {
+      this.bulkUpdateQuestions(this.assignment.questions);
+    }
+
     const url = `/api/assignments/${this.assignment.id}`;
     this.httpClient.put(url, this.assignment).subscribe(
       response => {
@@ -111,10 +154,7 @@ export class AssignmentEditPageComponent implements OnInit {
   // Add question modal
 
   isAddQuestionModalVisible = false;
-  newQuestion: QuestionProjection = {
-    id: 0,
-    question: ''
-  };
+  newQuestion: QuestionProjection = {};
 
   openAddQuestionModal() {
     this.resetAddQuestionModal();
@@ -165,6 +205,7 @@ export class AssignmentEditPageComponent implements OnInit {
       question: '',
       answers: [],
       questionType: 'single-choice',
+      keepAnswersOrdered: false,
     }
   }
 
