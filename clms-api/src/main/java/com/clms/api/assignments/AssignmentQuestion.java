@@ -97,6 +97,7 @@ class AssignmentQuestionAnswer implements Serializable {
         isCorrect = correct;
     }
 }
+
 @Data
 class AssignmentQuestionRequest {
     private String question;
@@ -108,3 +109,4 @@ class AssignmentQuestionRequest {
 
     private int assignmentId;
 }
+

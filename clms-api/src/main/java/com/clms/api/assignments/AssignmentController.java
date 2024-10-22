@@ -1,23 +1,27 @@
 package com.clms.api.assignments;
 
+import com.clms.api.assignments.attempts.AssignmentQuestionAttempt;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/assignments")
@@ -29,7 +33,7 @@ public class AssignmentController {
     private final FileStorageService fileStorageService;
     private final FileMetadataRepository fileMetadataRepository;
     private final AssignmentFileRepository assignmentFileRepository;
-
+    private final ObjectMapper mapper = new ObjectMapper();
     // Get all assignments
     @GetMapping
     public List<Assignment> getAllAssignments() {
@@ -46,6 +50,60 @@ public class AssignmentController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/{id}/attempt")
+    public ResponseEntity<AssignmentQuestionAttemptResponse> getAssignmentForAttemptById(@PathVariable int id) {
+        log.info("Fetching assignment with id: {}", id);
+
+        Optional<Assignment> assignmentOptional = assignmentRepository.findById(id);
+
+        if (assignmentOptional.isPresent()) {
+            Assignment assignment = assignmentOptional.get();
+            log.info("Assignment found: {}", assignment);
+
+            AssignmentQuestionAttemptResponse response = new AssignmentQuestionAttemptResponse();
+            response.setAssignmentId(assignment.getId());
+
+            List<AssignmentQuestionAnswerAttempt> filteredAnswers = new ArrayList<>();
+
+            // Process each question in the assignment
+            for (AssignmentQuestion question : assignment.getQuestions()) {
+                log.info("Processing question with id: {}", question.getId());
+                try {
+                    List<AssignmentQuestionAnswerAttempt> filteredAnswerAttempts = new ArrayList<>();
+                    for (AssignmentQuestionAnswer answer : question.getAnswers()) {
+                        AssignmentQuestionAnswerAttempt answerAttempt = new AssignmentQuestionAnswerAttempt();
+                        answerAttempt.setText(answer.getText());
+                        filteredAnswerAttempts.add(answerAttempt);
+                    }
+
+                    // Set the filtered answers to the response
+                    response.setAnswers(filteredAnswerAttempts);
+
+                } catch (Exception e) {
+                    log.error("Error parsing answers JSON for question id: {}", question.getId(), e);
+                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                }
+            }
+
+            log.info("Returning response for assignment id: {}", assignment.getId());
+            return ResponseEntity.ok(response);
+        } else {
+            log.warn("Assignment with id {} not found", id);
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Utility method to save answers as JSON
+    public String serializeAnswersToJson(List<AssignmentQuestionAnswer> answers) {
+        try {
+            return mapper.writeValueAsString(answers);  // Serializing list of answers to JSON string
+        } catch (Exception e) {
+            log.error("Error serializing answers to JSON", e);
+            return "[]";  // Return an empty JSON array in case of an error
+        }
+    }
+
 
     // Create a new assignment
     @PostMapping

@@ -34,14 +34,16 @@ import {InputNumberModule} from "primeng/inputnumber";
 import {
   AssignmentAttemptPageComponent
 } from "@modules/assignments/pages/assignment-attempt-page/assignment-attempt-page.component";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {ScrollPanelModule} from "primeng/scrollpanel";
 
 
 
 @NgModule({
   declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent, AssignmentAttemptPageComponent],
   exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent,AssignmentAttemptPageComponent],
-    imports: [
-        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule
-    ]
+  imports: [
+    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule, RadioButtonModule, ScrollPanelModule
+  ]
 })
 export class AssignmentsModule { }
