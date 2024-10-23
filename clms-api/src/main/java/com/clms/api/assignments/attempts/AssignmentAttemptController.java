@@ -67,7 +67,7 @@ public class AssignmentAttemptController {
     }
 
     @PostMapping("/submit-attempt")
-    public ResponseEntity<?> submitCurrentAttempt(@CurrentUser User user, @PathVariable int assignmentId, @RequestBody SubmitAssignmentAttemptRequest submitAssignmentRequest) {
+    public ResponseEntity<?> submitCurrentAttempt(@CurrentUser User user, @RequestBody SubmitAssignmentAttemptRequest submitAssignmentRequest) {
         int userId = user.getId();
         Assignment assignment = assignmentRepository.findById(submitAssignmentRequest.getAssignmentId()).orElse(null);
 

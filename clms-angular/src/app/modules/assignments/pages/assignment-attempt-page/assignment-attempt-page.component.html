@@ -1,4 +1,5 @@
-<div *ngIf="questionsLoaded && currentQuestion != null" class="flex min-h-screen flex-col bg-gray-100">
+<div *ngIf="questionsLoaded && currentQuestion != null" xmlns="http://www.w3.org/1999/html"
+     class="flex min-h-screen flex-col bg-gray-100">
   <header class="bg-white p-4 shadow-sm">
     <h1 class="text-lg font-semibold">Summer SAT Math Prep &gt; Assignments &gt; Week 1: Percents</h1>
   </header>
@@ -8,7 +9,7 @@
         <div class="mb-4 flex items-center justify-between">
           <h2 class="text-xl font-bold">{{ currentQuestion.title}}:</h2>
         </div>
-        <app-question-quill-editor [(text)]="currentQuestion.question"  [assignmentId]="assignmentId" class="w-full"/>
+        <p-editor [(ngModel)]="currentQuestion.question" [readonly] = "true" [modules]="{}" [style]="{'height':'320px'}"></p-editor>
 
 
         <div *ngFor="let answer of currentQuestion.answers; let i = index" class="mb-4 flex items-center space-x-2">
@@ -35,15 +36,19 @@
           (click)="handlePreviousQuestion()"
           [disabled]="currentQuestionIndex === 0">
         </button>
+        <ng-container *ngIf = "!(currentQuestionIndex == questions.length -1 ); else submit_button">
+          <button
+                  pButton
+                  (click)="handleNextQuestion()"
+                  label="Next Question"
+                  icon="pi pi-chevron-right"
+                  iconPos="right">
+          </button>
+        </ng-container>
+        <ng-template #submit_button>
+          <button pButton = "handleNextQuestion()" label = "Submit"></button>
+        </ng-template>
 
-        <button pButton
-                (click)="handleNextQuestion()"
-                [disabled]="currentQuestionIndex >= questions.length - 1"
-                label="Next Question"
-                icon="pi pi-chevron-right"
-                iconPos="right">
-
-        </button>
       </div>
     </main>
     <aside class="w-full bg-white p-6 shadow-md md:w-64">
