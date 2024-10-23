@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-assignment-attempt-page',
@@ -15,8 +16,15 @@ export class AssignmentAttemptPageComponent {
   questions: QuestionProjection[] = [];
   currentQuestion : QuestionProjection | null = null;
   questionsLoaded = false;
-  constructor(private httpClient: HttpClient,private activatedRoute:ActivatedRoute, private messageService: MessageService){
+  constructor(private httpClient: HttpClient,
+              private activatedRoute:ActivatedRoute,
+              private messageService: MessageService,
+              private sanitizer: DomSanitizer
+  ){
+
   }
+  //to get course and assignment name should be able to fetch assignment from id and then that should have the course id to get the name
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
@@ -25,7 +33,7 @@ export class AssignmentAttemptPageComponent {
     });
   }
   fetchQuestions(){
-    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment=> {
+    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}/attempt`).subscribe(assignment=> {
       if (!assignment.questions) {
         this.messageService.add({severity: 'error', summary: 'Error', detail: 'No questions found for this assignment'});
         return;
@@ -37,6 +45,11 @@ export class AssignmentAttemptPageComponent {
     });
 
 }
+
+  sanitizeHtml(html: string | undefined): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(<string>html);
+  }
+
 
   currentQuestionIndex = 0;
   selectedAnswer: string | null = null;
@@ -55,12 +68,14 @@ export class AssignmentAttemptPageComponent {
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
       this.selectedAnswer = null;
+      this.currentQuestion = this.questions[this.currentQuestionIndex];
     }
   }
   handlePreviousQuestion() {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
       this.selectedAnswer = null;
+      this.currentQuestion = this.questions[this.currentQuestionIndex];
     }
   }
 

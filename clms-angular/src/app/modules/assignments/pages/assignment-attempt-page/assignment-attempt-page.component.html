@@ -6,21 +6,23 @@
     <main class="flex-1 p-6">
       <div class="mx-auto max-w-3xl rounded-lg bg-white p-6 shadow-md">
         <div class="mb-4 flex items-center justify-between">
-          <h2 class="text-xl font-bold">Question {{ currentQuestion}}:</h2>
+          <h2 class="text-xl font-bold">{{ currentQuestion.title}}:</h2>
         </div>
-        <p class="mb-6 text-lg">{{currentQuestion.question}}</p>
-        <div *ngFor="let answer of currentQuestion.answers" class="mb-4 flex items-center space-x-2">
+        <app-question-quill-editor [(text)]="currentQuestion.question"  [assignmentId]="assignmentId" class="w-full"/>
+
+
+        <div *ngFor="let answer of currentQuestion.answers; let i = index" class="mb-4 flex items-center space-x-2">
           <p-radioButton
-            [inputId]="'option-' + answer.text"
-            name="answer"
+            [inputId]="answer.text"
             [value]="answer.text"
+            name="'option-' + currentQuestion.id + '-' + i"
             [(ngModel)]="selectedAnswer"
             (onClick)="handleAnswerSelect(answer.text)">
           </p-radioButton>
           <label
             [for]="'option-' + answer.text"
-            class="flex-1 cursor-pointer rounded-md border p-4 hover:bg-gray-50">
-            {{answer.text}}
+            class="flex-1 cursor-pointer rounded-md border p-4 hover:bg-gray-50"
+            [innerHTML]="sanitizeHtml(answer.text)">
           </label>
         </div>
       </div>

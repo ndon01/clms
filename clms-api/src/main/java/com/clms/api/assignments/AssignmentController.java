@@ -63,6 +63,7 @@ public class AssignmentController {
 
             AssignmentQuestionAttemptResponse response = new AssignmentQuestionAttemptResponse();
             response.setAssignmentId(assignment.getId());
+            response.setQuestions(assignment.getQuestions());
 
             List<AssignmentQuestionAnswerAttempt> filteredAnswers = new ArrayList<>();
 
