@@ -109,6 +109,7 @@ class AssignmentQuestionAnswer implements Serializable {
         isCorrect = correct;
     }
 }
+
 @Data
 class AssignmentQuestionRequest {
     private Integer id;
@@ -122,3 +123,4 @@ class AssignmentQuestionRequest {
     private Integer assignmentId;
     private Integer order;
 }
+
