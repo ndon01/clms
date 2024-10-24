@@ -31,11 +31,12 @@ import {ThemeSwitcherComponent} from "@core/components/theme-switcher/theme-swit
 import {MenuModule} from "primeng/menu";
 import {CourseCardComponent} from "@modules/dashboard/pages/components/course-card/course-card.component";
 import {SkeletonModule} from "primeng/skeleton";
+import {CourseModulesPageComponent} from "@modules/courses/pages/course-modules-page/course-modules-page.component";
 
 
 @NgModule({
-  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
-  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent],
+  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent],
+  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent],
   imports: [
     CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule,
   ]

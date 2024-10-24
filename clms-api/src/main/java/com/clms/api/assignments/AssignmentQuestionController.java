@@ -52,6 +52,7 @@ public class AssignmentQuestionController {
         } else {
             logger.info("'answers' field is null");
         }
+
         if (assignmentOptional.isPresent()) {
             AssignmentQuestion question = new AssignmentQuestion();
             question.setQuestion(request.getQuestion());
@@ -61,7 +62,7 @@ public class AssignmentQuestionController {
             question.setUpdatedAt(request.getUpdatedAt());
             question.setAssignment(assignmentOptional.get());
             question.setKeepAnswersOrdered(request.getKeepAnswersOrdered() || false);
-            question.setOrder(request.getOrder());
+            question.setOrder(request.getOrder() == null ? 0 : request.getOrder());
 
             // Manually convert answers to JSON
             try {
