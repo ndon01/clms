@@ -6,6 +6,8 @@ import com.clms.api.authentication.RegistrationService;
 import com.clms.api.authorization.RoleCRUDService;
 import com.clms.api.authorization.RoleUpdateService;
 import com.clms.api.authorization.Role;
+import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.users.UserService;
 import com.clms.api.users.api.projections.converters.UserProjectionConverter;
@@ -28,7 +30,7 @@ public class AdminController {
     private final AdminUserService adminUserService;
     private final RoleUpdateService roleUpdateService;
     private final RoleCRUDService roleCRUDService;
-    private final UserProjectionConverter userProjectionConverterService;
+    private final GenericProjectionConverter<User, UserProjection> userProjectionConverterService;
 
     @GetMapping("/users")
     public List<UserProjection> getUsers() {
