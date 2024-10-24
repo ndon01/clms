@@ -1,7 +1,7 @@
 package com.clms.api.assignments.attempts.models;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.*;

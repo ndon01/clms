@@ -28,7 +28,9 @@ export class AssignmentEditPageComponent implements OnInit {
   }
 
   fetchAssignment() {
-    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment => {
+    this.httpClient.get<AssignmentProjection>(`/api/assignments/getAssignmentEditDetails`, {
+      params: { assignmentId: this.assignmentId }
+    }).subscribe(assignment => {
       this.assignment = assignment;
       this.assignment.startDate = assignment.startDate ? new Date(assignment.startDate) : null;
       this.assignment.dueDate= assignment.dueDate? new Date(assignment.dueDate) : null;

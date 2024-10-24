@@ -1,21 +1,16 @@
 package com.clms.api.assignments;
 
-import com.clms.api.assignments.attempts.AssignmentQuestionAttempt;
+import com.clms.api.assignments.projections.AssignmentDetailsProjection;
+import com.clms.api.assignments.projections.AssignmentEditDetailsProjection;
+import com.clms.api.common.web.projections.GenericProjectionConverter;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,15 +32,29 @@ public class AssignmentController {
     private final FileStorageService fileStorageService;
     private final FileMetadataRepository fileMetadataRepository;
     private final AssignmentFileRepository assignmentFileRepository;
+
+    private final GenericProjectionConverter<Assignment, AssignmentDetailsProjection> assignmentDetailsProjectionConverter;
+    private final GenericProjectionConverter<Assignment, AssignmentEditDetailsProjection> assignmentEditDetailsProjectionConverter;
     private final ObjectMapper mapper = new ObjectMapper();
-    // Get all assignments
     @GetMapping
-    public List<Assignment> getAllAssignments() {
-        return assignmentRepository.findAll();
+    public List<AssignmentDetailsProjection> getAllAssignments() {
+        return assignmentRepository.findAll().stream().map(assignmentDetailsProjectionConverter::convert).collect(Collectors.toList());
     }
 
-    // Get an assignment by ID
+    @GetMapping("/getAssignmentEditDetails")
+    @Transactional
+    public AssignmentEditDetailsProjection getAssignmentEditDetails(@RequestParam Integer assignmentId) {
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) {
+            return null;
+        }
+
+
+        return assignmentEditDetailsProjectionConverter.convert(assignment);
+    }
+
     @GetMapping("/{id}")
+    @Transactional
     public ResponseEntity<Assignment> getAssignmentById(@PathVariable int id) {
         Optional<Assignment> assignment = assignmentRepository.findById(id);
         if (assignment.isPresent()) {
@@ -56,14 +65,14 @@ public class AssignmentController {
     }
 
     @GetMapping("/getAssignmentDetails")
-    public ResponseEntity<AssignmentDetailsResponse> getAssignmentDetails(@RequestParam("assignmentId") Integer assignmentId) {
+    public ResponseEntity<AssignmentDetailsProjection> getAssignmentDetails(@RequestParam("assignmentId") Integer assignmentId) {
         Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
         if (assignment == null) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(
-                AssignmentDetailsResponse
+                AssignmentDetailsProjection
                 .builder()
                 .id(assignment.getId())
                 .name(assignment.getName())

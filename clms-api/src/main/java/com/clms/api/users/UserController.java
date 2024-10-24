@@ -1,12 +1,12 @@
 package com.clms.api.users;
 
-import com.clms.api.common.domain.User;
-import com.clms.api.common.domain.UserProjection;
+import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.users.api.User;
+import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-
+    private final GenericProjectionConverter<User, UserProjection> userProjectionConverterService;
     @GetMapping
     public List<UserProjection> getUsersV1(@CurrentUser User user) {
         return userService.getUsers()
                 .stream()
-                .map(userService::convertToUserProjection)
+                .map(userProjectionConverterService::convert)
                 .toList();
     }
 

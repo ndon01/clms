@@ -1,9 +1,8 @@
 package com.clms.api.users.avatars;
 
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.clms.api.filestorage.FileAccessPolicy;
 import com.clms.api.filestorage.FileMetadata;
-import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

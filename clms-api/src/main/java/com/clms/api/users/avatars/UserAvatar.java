@@ -1,6 +1,6 @@
 package com.clms.api.users.avatars;
 
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.clms.api.filestorage.FileMetadata;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

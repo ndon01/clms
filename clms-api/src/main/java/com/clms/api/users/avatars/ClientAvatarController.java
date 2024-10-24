@@ -1,6 +1,6 @@
 package com.clms.api.users.avatars;
 
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import jakarta.servlet.http.HttpServletRequest;

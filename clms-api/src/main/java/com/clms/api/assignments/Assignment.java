@@ -1,12 +1,8 @@
 package com.clms.api.assignments;
 
 
-import com.clms.api.common.domain.Course;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.clms.api.courses.api.Course;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

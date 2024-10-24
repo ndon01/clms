@@ -1,7 +1,7 @@
 package com.clms.api.common.security.authorization.requiresRole;
 
 import com.clms.api.authorization.Role;
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.clms.api.common.security.CurrentUserContextHolder;
 import com.clms.api.common.security.exceptions.UserAuthenticationRequiredException;
 import com.clms.api.common.web.BaseAnnotationInterceptor;

@@ -1,11 +1,8 @@
-package com.clms.api.common.domain;
+package com.clms.api.courses.api;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.common.domain.User;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.clms.api.users.api.User;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +20,6 @@ public class Course
     private int id;
     private String name;
     private String description;
-    //private int tutorId;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name ="course_members",
