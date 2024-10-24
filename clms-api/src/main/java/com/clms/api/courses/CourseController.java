@@ -150,6 +150,9 @@ public class CourseController {
                         .builder()
                         .id(assignment.getId())
                         .name(assignment.getName())
+                        .description(assignment.getDescription())
+                        .startDate(assignment.getStartDate())
+                        .dueDate(assignment.getDueDate())
                         .build())
                 .collect(Collectors.toList());
 
