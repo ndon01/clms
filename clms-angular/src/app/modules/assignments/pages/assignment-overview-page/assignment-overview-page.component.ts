@@ -3,6 +3,7 @@ import {AssignmentProjection} from "@modules/assignments/model/assignment.model"
 import { DatePipe } from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'assignment-overview-page',
@@ -35,8 +36,16 @@ export class AssignmentOverviewPageComponent implements OnInit {
   startAssignment() {
     this.httpClient.post(`/api/assignments/attempts/start-attempt`, {
       assignmentId: this.assignment.id
-    }).subscribe(() => {
-      this.router.navigate(["assignments", this.assignment.id, "attempt"]);
-    });
+    },{
+      observe: 'response',
+      responseType: 'text'
+      }
+    ).pipe(tap(response => {
+      console.log(response);
+      if (response.status === 201 || response.status == 302) {
+        const attemptId = response.headers.get('Location');
+        this.router.navigate(["assignments", this.assignment.id, "attempt"])
+      }
+    })).subscribe()
   }
 }

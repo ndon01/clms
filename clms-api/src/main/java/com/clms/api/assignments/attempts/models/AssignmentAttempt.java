@@ -69,7 +69,7 @@ class AttemptQuestionAnswersConverter implements AttributeConverter<List<Attempt
         try {
             // Convert the JSON String back to a List of answers
             return objectMapper.readValue(answersJSON,
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, AttemptQuestionAnswersConverter.class));
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, AttemptQuestionAnswer.class));
         } catch (IOException e) {
             // Handle exception in case of failure
             throw new RuntimeException("Could not deserialize answers list", e);

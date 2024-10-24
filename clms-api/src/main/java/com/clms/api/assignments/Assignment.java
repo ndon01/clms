@@ -4,6 +4,7 @@ package com.clms.api.assignments;
 import com.clms.api.common.domain.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -50,6 +51,8 @@ public class Assignment {
             inverseJoinColumns = @JoinColumn(name = "id"))
     private List<AssignmentQuestion> questions;
 
+    //TODO: @Jsonignore breaks '/courses/getCourseFromAssignment' endpoint
+    //TODO: if removed breaks /assignments/{id}/ endpoint
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
