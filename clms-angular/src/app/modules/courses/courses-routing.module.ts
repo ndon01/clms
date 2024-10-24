@@ -10,6 +10,7 @@ import {CourseSettingsPageComponent} from "@modules/courses/pages/course-setting
 import {
   CourseAssignmentsPageComponent
 } from "@modules/courses/pages/course-assignments-page/course-assignments-page.component";
+import {CourseModulesPageComponent} from "@modules/courses/pages/course-modules-page/course-modules-page.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full'},
           { path: 'home', component: IndividualCourseHomepageComponent},
           { path: 'assignments', component: CourseAssignmentsPageComponent },
+          { path: 'modules', component: CourseModulesPageComponent },
           { path: 'settings', component: CourseSettingsPageComponent },
           { path: '**', redirectTo: 'home' }
         ]

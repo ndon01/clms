@@ -1,57 +1,48 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AnswerProjection, QuestionProjection} from "@modules/assignments/model/question.model";
+import { Component, Input, OnInit } from '@angular/core';
+import { AnswerProjection, QuestionProjection } from "@modules/assignments/model/question.model";
 
 @Component({
   selector: 'app-question-editor-view',
   templateUrl: './question-editor-view.component.html',
-  styleUrl: './question-editor-view.component.css'
+  styleUrls: ['./question-editor-view.component.css']
 })
-export class QuestionEditorViewComponent implements OnInit{
-  answers: AnswerProjection[] = [{text: "Answer 1", isCorrect: false}, {text: "Answer 1", isCorrect: false}, {text: "Answer 1", isCorrect: false}, {text: "Answer 1", isCorrect: false}];
+export class QuestionEditorViewComponent implements OnInit {
 
-  testInput: QuestionProjection = {
-    id: 0,
-    question: "",
-    questionType: 'single-choice',
-    answers: this.answers,
-    keepAnswersOrder: false,
-    allowWorkUpload: false,
-    required: false
-  }
+  // Default answers with the 'order' field
+  @Input() question: QuestionProjection | undefined = undefined;
 
   @Input() assignmentId: number | undefined = undefined;
 
-  @Input() question : QuestionProjection = {
-    id: 0,
-    question: "",
-    questionType: 'single-choice',
-    answers: this.answers,
-    keepAnswersOrder: false,
-    allowWorkUpload: false,
-    required: false
-  };
-
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
+    // Initialize default ordering for the answers if they exist
+    if (this.question?.answers) {
+      this.updateAnswerOrder();
+    }
   }
 
-  addAnswer() {
-    if (!this.question) return;
-    if (!this.question.answers) this.question.answers = [];
-    this.question.answers = [...this.question.answers, {text: "", isCorrect: false}];
+  // Add a new answer to the question's answers array and assign the correct order
+  addAnswer(): void {
+    if (!this.question || !this.question.answers) return;
+    const newOrder = this.question.answers.length + 1;
+    this.question.answers = [...this.question.answers, { text: "", isCorrect: false, order: newOrder }];
   }
 
-  removeAnswer(index: number) {
-    if (!this.question) return;
-    if (!this.question.answers) this.question.answers = [];
+  // Remove an answer based on its index and re-assign the correct order
+  removeAnswer(index: number): void {
+    if (!this.question || !this.question.answers || this.question.answers.length <= index) return;
     this.question.answers = this.question.answers.filter((_, i) => i !== index);
+    this.updateAnswerOrder(); // Update order after removal
   }
 
-  textExists(question: string | undefined) {
-    return question && question.length >= 0 ? true : false;
+  // Handle reorder event from p-orderList
+  updateAnswerOrder(event?: any): void {
+    // Reorder the answers' `order` field based on their current position
+    if (this.question && this.question.answers) {
+      this.question.answers.forEach((answer: any, index: number) => {
+        answer.order = index + 1; // Set the order based on the current index
+      });
+    }
   }
-
-  protected readonly undefined = undefined;
 }

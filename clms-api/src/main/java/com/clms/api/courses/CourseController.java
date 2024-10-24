@@ -1,6 +1,7 @@
 package com.clms.api.courses;
 
 import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.AssignmentDetailsResponse;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.common.domain.Course;
 import com.clms.api.common.domain.User;
@@ -14,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -131,7 +134,29 @@ public class CourseController {
         return ResponseEntity.ok(members);
     }
 
+
+
+    @GetMapping("/getAllAssignmentsDetails")
+    public ResponseEntity<List<AssignmentDetailsResponse>> getCourseAssignments2(@RequestParam Integer courseId) {
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        List<AssignmentDetailsResponse> assignmentDetailsResponses = currentCourse.getAssignments()
+                .stream()
+                .map(assignment -> AssignmentDetailsResponse
+                        .builder()
+                        .id(assignment.getId())
+                        .name(assignment.getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(assignmentDetailsResponses);
+    }
+
     @GetMapping("/{courseId}/assignments")
+    @Transactional
     public ResponseEntity<List<Assignment>> getCourseAssignments(@PathVariable int courseId) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {

@@ -2,6 +2,7 @@ package com.clms.api.assignments;
 
 
 import com.clms.api.common.domain.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -51,7 +52,6 @@ public class Assignment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    //@JsonIgnore
     private Course course;
 
     private int maxAttempts;

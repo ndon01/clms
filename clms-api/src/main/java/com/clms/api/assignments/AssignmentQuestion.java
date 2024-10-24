@@ -14,6 +14,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Entity()
 @Data
@@ -37,6 +38,12 @@ public class AssignmentQuestion {
 
     @Column(name = "question_type")
     private String questionType = "Single Choice";
+
+    @Column(name = "keep_answers_ordered")
+    private Boolean keepAnswersOrdered = false;
+
+    @Column(name = "assignment_order")
+    private int order = 0;
 
     /*
     export type Answer = {
@@ -84,6 +91,11 @@ class AssignmentQuestionAnswerConverter implements AttributeConverter<List<Assig
 }
 @Data
 class AssignmentQuestionAnswer implements Serializable {
+
+    private UUID id = UUID.randomUUID();
+
+    private int order = 0;
+
     private String text;
 
     @JsonProperty("isCorrect") // Explicitly map the JSON property to this field
@@ -100,13 +112,15 @@ class AssignmentQuestionAnswer implements Serializable {
 
 @Data
 class AssignmentQuestionRequest {
+    private Integer id;
     private String question;
     private String title;
     private String questionType;
     private List<AssignmentQuestionAnswer> answers;
     private Date createdAt = new Date();
     private Date updatedAt = new Date();
-
-    private int assignmentId;
+    private Boolean keepAnswersOrdered;
+    private Integer assignmentId;
+    private Integer order;
 }
 

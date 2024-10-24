@@ -3,49 +3,42 @@
     <h2 class="font-semibold">Title</h2>
     <input [(ngModel)]="question.title" />
   </div>
-    <div class="w-full flex flex-col gap-3">
-      <h2 class="font-semibold">Content</h2>
-      <app-question-quill-editor [(text)]="question.question" [assignmentId]="assignmentId" class="w-full"/>
-    </div>
+  <div class="w-full flex flex-col gap-3">
+    <h2 class="font-semibold">Content</h2>
+    <app-question-quill-editor [(text)]="question.question" [assignmentId]="assignmentId" class="w-full"/>
+  </div>
 
-    <div class="flex flex-wrap justify-between gap-3">
-      <!-- Left Column: Answer Choices -->
-      <div class="w-full h-full flex flex-col gap-3">
-        <h2 class="font-semibold">Answers</h2>
-        <p-orderList
-          class="w-full"
-          *ngIf="question.answers"
-          [value]="question.answers"
-          [listStyle]="{'max-height': '300px', 'height': '100%'}"
-        >
-          <ng-template let-answer let-i="index" pTemplate="item">
-            <div class="flex flex-row gap-3 w-full h-full">
-              <p-checkbox [(ngModel)]="answer.isCorrect"></p-checkbox>
-              <app-question-quill-editor [(text)]="answer.text" [assignmentId]="assignmentId" class="w-full h-full" />
-              <button class="btn btn-danger" (click)="removeAnswer(i)">Remove</button>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="empty" class="w-full h-full">
-            <div class="w-full h-full flex justify-center items-center">
-              No answers added yet.
-            </div>
-          </ng-template>
-        </p-orderList>
-        <button class="btn btn-primary mt-3" (click)="addAnswer()">Add Answer</button>
-      </div>
-      <div class="w-full h-full flex flex-col gap-3">
-        <div class="flex items-center space-x-2">
-          <p-checkbox [(ngModel)]="question.keepAnswersOrder">></p-checkbox>
-          <label >Keep answers ordered</label>
-        </div>
-        <div class="flex items-center space-x-2">
-          <p-checkbox [(ngModel)]="question.allowWorkUpload">></p-checkbox>
-          <label >Allow work upload</label>
-        </div>
-        <div class="flex items-center space-x-2">
-          <p-checkbox [(ngModel)]="question.required">></p-checkbox>
-          <label >Required</label>
-        </div>
+  <div class="flex flex-wrap justify-between gap-3">
+    <!-- Left Column: Answer Choices -->
+    <div class="w-full h-full flex flex-col gap-3">
+      <h2 class="font-semibold">Answers</h2>
+      <p-orderList
+        class="w-full"
+        *ngIf="question.answers"
+        [value]="question.answers"
+        [listStyle]="{'max-height': '300px', 'height': '100%'}"
+        (onReorder)="updateAnswerOrder($event)"
+      >
+        <ng-template let-answer let-i="index" pTemplate="item">
+          <div class="flex flex-row gap-3 w-full h-full">
+            <p-checkbox [(ngModel)]="answer.isCorrect"  [binary]="true"></p-checkbox>
+            <app-question-quill-editor [(text)]="answer.text" [assignmentId]="assignmentId" class="w-full h-full" />
+            <button class="btn btn-danger" (click)="removeAnswer(i)">Remove</button>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="empty" class="w-full h-full">
+          <div class="w-full h-full flex justify-center items-center">
+            No answers added yet.
+          </div>
+        </ng-template>
+      </p-orderList>
+      <button class="btn btn-primary mt-3" (click)="addAnswer()">Add Answer</button>
+    </div>
+    <div class="w-full h-full flex flex-col gap-3">
+      <div class="flex items-center space-x-2">
+        <p-checkbox [(ngModel)]="question.keepAnswersOrdered" [binary]="true"></p-checkbox>
+        <label>Keep answers ordered</label>
       </div>
     </div>
+  </div>
 </div>
