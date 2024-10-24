@@ -19,11 +19,10 @@
 
         <div *ngFor="let answer of currentQuestion.answers; let i = index" class="mb-4 flex items-center space-x-2">
           <p-radioButton
-            [inputId]="answer.text"
-            [value]="answer.text"
+            [inputId]="answer.id"
+            [value]="selectedAnswer == answer.id"
             name="'option-' + currentQuestion.id + '-' + i"
-            [(ngModel)]="selectedAnswer"
-            (onClick)="handleAnswerSelect(answer.text)">
+            (onClick)="handleAnswerSelect(answer.id)">
           </p-radioButton>
           <label
             [for]="'option-' + answer.text"
@@ -51,7 +50,7 @@
           </button>
         </ng-container>
         <ng-template #submit_button>
-          <button pButton = "handleNextQuestion()" label = "Submit"></button>
+          <button pButton (click)="handleSubmit()" label = "Submit"></button>
         </ng-template>
 
       </div>

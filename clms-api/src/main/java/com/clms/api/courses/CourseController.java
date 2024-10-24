@@ -41,6 +41,7 @@ public class CourseController {
         List<Integer> courseIds = courseMemberRepository.getCourseIdsByUserId(user.getId());
         return courseRepository.findAllById(courseIds);
     }
+    @Transactional
     @GetMapping("/getCourseFromAssignment")
     public Course getCourseFromAssignment(@RequestParam int assignmentId) {
         Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);

@@ -6,6 +6,7 @@ import {MessageService} from "primeng/api";
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {Course, CourseProjection} from "@modules/courses/model/course.model";
+import {AssignmentAttemptAnswerProjection} from "@modules/assignments/model/assignment-attempt-answer.modal";
 
 @Component({
   selector: 'app-assignment-attempt-page',
@@ -19,6 +20,7 @@ export class AssignmentAttemptPageComponent {
   questionsLoaded = false;
   assignment : AssignmentProjection | null = null;
   course : CourseProjection | null = null;
+  assignmentAttemptAnswers: AssignmentAttemptAnswerProjection[] | null = null;
   constructor(private httpClient: HttpClient,
               private activatedRoute:ActivatedRoute,
               private messageService: MessageService,
@@ -35,14 +37,16 @@ export class AssignmentAttemptPageComponent {
       this.fetchQuestions();
       this.fetchAssignment();
       this.fetchCourse();
+      this.fetchAssignmentAttempt();
     });
   }
   fetchAssignment(){
-    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment=> {
-      this.assignment = assignment;
+    this.httpClient.get<AssignmentAttemptAnswerProjection[]>(`/api/assignments/${this.assignmentId}`).subscribe(assignmentAttemptAnswers=> {
+      this.assignmentAttemptAnswers = assignmentAttemptAnswers;
       console.log("Assignment: ", this.assignment)
     });
   }
+
   fetchCourse(){
     this.httpClient.get<CourseProjection>(`/api/courses/getCourseFromAssignment`, {params: {"assignmentId":this.assignmentId?.toString() || ""}}).subscribe(course=> {
       console.log("Course: ", course)
@@ -62,7 +66,12 @@ export class AssignmentAttemptPageComponent {
     });
 
 }
-
+fetchAssignmentAttempt(){
+    this.httpClient.get(`/api/assignments/attempts/get-assignment-attempt-answers`,{
+    params: {assignmentId: this.assignmentId?.toString() || ""}}).subscribe(attempt=> {
+    console.log("Attempt: ", attempt)
+    })
+}
   sanitizeHtml(html: string | undefined): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(<string>html);
   }
@@ -75,25 +84,59 @@ export class AssignmentAttemptPageComponent {
   handleAnswerSelect(value: string | undefined) {
     this.selectedAnswer = value || null;
     if (!this.currentQuestion){return}
-
+    if (!this.assignmentAttemptAnswers){
+      return
+    }
+    for(let answer of Object.values(this.assignmentAttemptAnswers)){
+      if(answer.questionId === this.currentQuestion.id){
+        answer.selectedAnswerId = this.selectedAnswer || "";
+        return;
+      }
+    }
     if (this.currentQuestion.id && !this.completedQuestions.includes(this.currentQuestion.id)) {
       this.completedQuestions = [...this.completedQuestions, this.currentQuestion.id];
     }
   }
 
-  handleNextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
-      this.currentQuestionIndex++;
-      this.selectedAnswer = null;
-      this.currentQuestion = this.questions[this.currentQuestionIndex];
+  saveQuestionAttempt() {
+    this.httpClient.post(`/api/assignments/attempts/update-question-attempt`, {
+      questionId: this.currentQuestion?.id,
+      answer: this.selectedAnswer,
+      assignmentId: this.assignmentId
+    }).subscribe(response => {
+      console.log(response);
+    })
+  }
+  updateSelectedAnswer(){
+    if (!this.assignmentAttemptAnswers || !this.currentQuestion){
+      return
+    }
+    for(let answer of Object.values(this.assignmentAttemptAnswers)){
+      if(answer.questionId === this.currentQuestion.id){
+        this.selectedAnswer = answer.selectedAnswerId || "";
+        return;
+      }
     }
   }
-  handlePreviousQuestion() {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-      this.selectedAnswer = null;
+  handleNextQuestion() {
+    this.saveQuestionAttempt()
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
       this.currentQuestion = this.questions[this.currentQuestionIndex];
     }
+    this.updateSelectedAnswer();
+  }
+
+  handlePreviousQuestion() {
+    this.saveQuestionAttempt()
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+      this.currentQuestion = this.questions[this.currentQuestionIndex];
+    }
+    this.updateSelectedAnswer();
+  }
+  handleSubmit(){
+    this.saveQuestionAttempt()
   }
 
 

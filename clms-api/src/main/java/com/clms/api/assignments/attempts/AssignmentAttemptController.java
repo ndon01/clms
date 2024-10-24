@@ -14,6 +14,7 @@ import com.clms.api.common.domain.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import com.clms.api.common.domain.Course;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -51,10 +52,8 @@ public class AssignmentAttemptController {
 
         AssignmentAttempt currentAttempt = assignmentAttempts.stream().filter(attempt -> attempt.getStatus() == AssignmentAttemptStatus.IN_PROGRESS).findFirst().orElse(null);
         if (currentAttempt != null) {
-            return ResponseEntity.status(302).body(StartAssignmentAttemptResponse
-                    .builder()
-                    .attemptId(currentAttempt.getId().toString())
-                    .build());
+            return ResponseEntity.status(201).body(StartAssignmentAttemptResponse.builder().attemptId(currentAttempt.getId().toString()).build());
+
         }
 
         if (assignment.getMaxAttempts() <= assignmentAttempts.size()) {
@@ -80,6 +79,16 @@ public class AssignmentAttemptController {
 
         return ResponseEntity.status(201).body(StartAssignmentAttemptResponse.builder().attemptId(newAssignmentAttempt.getId().toString()).build());
 
+
+    }
+    @Transactional
+    @GetMapping("/get-assignment-attempt-answers")
+    public ResponseEntity<?> getAssignmentAttemptAnswers(@CurrentUser User user, @RequestParam int assignmentId){
+        AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,assignmentId);
+        if(assignmentAttempt == null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(assignmentAttempt.getAnswers());
 
     }
     @PostMapping("/update-question-attempt")
