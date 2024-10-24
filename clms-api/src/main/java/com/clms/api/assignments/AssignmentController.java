@@ -8,7 +8,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +53,25 @@ public class AssignmentController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/getAssignmentDetails")
+    public ResponseEntity<AssignmentDetailsResponse> getAssignmentDetails(@RequestParam("assignmentId") Integer assignmentId) {
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(
+                AssignmentDetailsResponse
+                .builder()
+                .id(assignment.getId())
+                .name(assignment.getName())
+                .description(assignment.getDescription())
+                .startDate(assignment.getStartDate())
+                .dueDate(assignment.getDueDate())
+                .build()
+        );
     }
 
     @GetMapping("/{id}/attempt")
@@ -200,3 +223,4 @@ public class AssignmentController {
                 .body(fileResource);
     }
 }
+

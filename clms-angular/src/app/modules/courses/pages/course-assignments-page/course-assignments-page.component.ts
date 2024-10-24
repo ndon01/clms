@@ -33,7 +33,9 @@ export class CourseAssignmentsPageComponent implements OnInit {
   }
 
   loadAssignments() {
-    this.httpClient.get<AssignmentProjection[]>(`/api/courses/${this.courseId}/assignments`).subscribe(assignments => {
+    this.httpClient.get<AssignmentProjection[]>(`/api/courses/getAllAssignmentsDetails`, {
+      params: {courseId: this.courseId}
+    }).subscribe(assignments => {
       this.courseAssignments = assignments;
     });
   }

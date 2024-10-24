@@ -20,7 +20,9 @@ export class AssignmentOverviewPageComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.assignmentId = parseInt(id, 10)
-      this.httpClient.get<AssignmentProjection>(`/api/assignments/${id}`).subscribe(assignment => {
+      this.httpClient.get<AssignmentProjection>(`/api/assignments/getAssignmentDetails`, {
+        params: {assignmentId: this.assignmentId}
+      }).subscribe(assignment => {
         this.assignment = assignment;
       });
     });

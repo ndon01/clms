@@ -2,6 +2,7 @@ package com.clms.api.common.domain;
 
 import com.clms.api.assignments.Assignment;
 import com.clms.api.common.domain.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
