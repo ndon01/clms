@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {Course, CourseProjection} from "@modules/courses/model/course.model";
 
 @Component({
   selector: 'app-assignment-attempt-page',
@@ -16,6 +17,8 @@ export class AssignmentAttemptPageComponent {
   questions: QuestionProjection[] = [];
   currentQuestion : QuestionProjection | null = null;
   questionsLoaded = false;
+  assignment : AssignmentProjection | null = null;
+  course : CourseProjection | null = null;
   constructor(private httpClient: HttpClient,
               private activatedRoute:ActivatedRoute,
               private messageService: MessageService,
@@ -30,8 +33,22 @@ export class AssignmentAttemptPageComponent {
       const id = params['id'];
       this.assignmentId = parseInt(id, 10);
       this.fetchQuestions();
+      this.fetchAssignment();
+      this.fetchCourse();
     });
   }
+  fetchAssignment(){
+    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignment=> {
+      this.assignment = assignment;
+      console.log("Assignment: ", this.assignment)
+    });
+  }
+  fetchCourse(){
+    this.httpClient.get<CourseProjection>(`/api/courses/getCourseFromAssignment`, {params: {"assignmentId":this.assignmentId?.toString() || ""}}).subscribe(course=> {
+      console.log("Course: ", course)
+      this.course = course;
+    })}
+
   fetchQuestions(){
     this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}/attempt`).subscribe(assignment=> {
       if (!assignment.questions) {

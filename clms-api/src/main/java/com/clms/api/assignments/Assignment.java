@@ -51,7 +51,7 @@ public class Assignment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    @JsonIgnore
+    //@JsonIgnore
     private Course course;
 
     private int maxAttempts;

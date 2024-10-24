@@ -1,7 +1,12 @@
 <div *ngIf="questionsLoaded && currentQuestion != null" xmlns="http://www.w3.org/1999/html"
      class="flex min-h-screen flex-col bg-gray-100">
   <header class="bg-white p-4 shadow-sm">
-    <h1 class="text-lg font-semibold">Summer SAT Math Prep &gt; Assignments &gt; Week 1: Percents</h1>
+    <ng-container *ngIf="course == null ; else full_title" >
+      <h1 class="text-lg font-semibold">Assignments &gt; {{assignment?.name}}</h1>
+    </ng-container>
+    <ng-template #full_title>
+      <h1 class="text-lg font-semibold">{{course?.name}} &gt; Assignments &gt; {{assignment?.name}}</h1>
+    </ng-template>
   </header>
   <div class="flex flex-1 flex-col md:flex-row">
     <main class="flex-1 p-6">

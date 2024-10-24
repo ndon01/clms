@@ -1,4 +1,4 @@
-package com.clms.api.assignments.attempts;
+package com.clms.api.assignments.attempts.DTO;
 
 import lombok.Builder;
 import lombok.Data;
