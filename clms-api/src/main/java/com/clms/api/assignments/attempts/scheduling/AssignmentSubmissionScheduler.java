@@ -1,9 +1,9 @@
 package com.clms.api.assignments.attempts.scheduling;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.attempts.AssignmentAttempt;
+import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
-import com.clms.api.assignments.attempts.AssignmentAttemptStatus;
+import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

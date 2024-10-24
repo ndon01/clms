@@ -41,6 +41,14 @@ public class CourseController {
         List<Integer> courseIds = courseMemberRepository.getCourseIdsByUserId(user.getId());
         return courseRepository.findAllById(courseIds);
     }
+    @GetMapping("/getCourseFromAssignment")
+    public Course getCourseFromAssignment(@RequestParam int assignmentId) {
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) {
+            return null;
+        }
+        return assignment.getCourse();
+    }
 
     @PostMapping()
     public ResponseEntity<?> createCourse(@RequestBody CourseCreationDto courseDto) {

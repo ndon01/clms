@@ -1,8 +1,7 @@
 package com.clms.api.assignments.attempts;
 
-import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.common.domain.User;
+import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.UUID;
