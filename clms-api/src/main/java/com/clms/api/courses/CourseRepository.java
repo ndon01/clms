@@ -1,6 +1,6 @@
 package com.clms.api.courses;
 
-import com.clms.api.common.domain.Course;
+import com.clms.api.courses.api.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

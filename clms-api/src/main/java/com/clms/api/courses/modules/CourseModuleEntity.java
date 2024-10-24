@@ -1,7 +1,7 @@
 package com.clms.api.courses.modules;
 
 
-import com.clms.api.common.domain.Course;
+import com.clms.api.courses.api.Course;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

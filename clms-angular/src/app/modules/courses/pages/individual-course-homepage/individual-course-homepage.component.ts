@@ -46,7 +46,9 @@ export class IndividualCourseHomepageComponent implements OnInit {
 
   // Fetch assignments from the backend
   fetchAssignments() {
-    this.http.get<Assignment[]>(`http://localhost:8080/api/courses/${this.courseId}/assignments`).subscribe(assignments => {
+    this.http.get<Assignment[]>(`http://localhost:8080/api/courses/getAllAssignmentsDetails`, {
+      params: { courseId: this.courseId }
+    }).subscribe(assignments => {
       this.assignments = assignments;
       this.updateFilteredAssignments();
       this.updateGroupedAssignments();

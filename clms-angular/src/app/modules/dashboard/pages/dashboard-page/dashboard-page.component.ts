@@ -33,7 +33,13 @@ export class DashboardPageComponent implements OnInit {
   fetchAssignments() {
     const courseIds = this.myCourses.map(course => course.id);
     courseIds.forEach(courseId => {
-      this.httpClient.get<AssignmentProjection[]>(`/api/courses/${courseId}/assignments`).pipe(map(assignments => {
+      if (!courseId) {
+        return;
+      }
+
+      this.httpClient.get<AssignmentProjection[]>(`/api/courses/getAllAssignmentsDetails`, {
+        params: { courseId: courseId }
+      }).pipe(map(assignments => {
         return assignments.map(assignment => {
           if (typeof assignment.startDate === 'string') {
             assignment.startDate = new Date(assignment.startDate);

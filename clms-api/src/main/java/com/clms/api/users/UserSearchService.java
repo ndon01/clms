@@ -1,6 +1,6 @@
 package com.clms.api.users;
 
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

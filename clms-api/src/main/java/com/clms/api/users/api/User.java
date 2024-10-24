@@ -1,4 +1,4 @@
-package com.clms.api.common.domain;
+package com.clms.api.users.api;
 
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.Role;

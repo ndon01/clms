@@ -1,6 +1,6 @@
 package com.clms.api.filestorage;
 
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import jakarta.persistence.*;
 import lombok.Data;
 

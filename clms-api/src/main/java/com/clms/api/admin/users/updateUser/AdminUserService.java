@@ -1,7 +1,7 @@
 package com.clms.api.admin.users.updateUser;
 
-import com.clms.api.common.domain.User;
-import com.clms.api.common.domain.UserProjection;
+import com.clms.api.users.api.User;
+import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.users.UserSearchService;
 import com.clms.api.users.UserUpdateService;
 import lombok.RequiredArgsConstructor;

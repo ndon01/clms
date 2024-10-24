@@ -4,16 +4,13 @@ import com.clms.api.admin.users.updateUser.AdminUserService;
 import com.clms.api.authentication.AuthenticationService;
 import com.clms.api.authentication.RegistrationService;
 import com.clms.api.authorization.RoleCRUDService;
-import com.clms.api.authorization.RoleProjection;
 import com.clms.api.authorization.RoleUpdateService;
 import com.clms.api.authorization.Role;
-import com.clms.api.authorization.permissions.PermissionProjection;
-import com.clms.api.common.domain.UserProjection;
+import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.users.UserService;
+import com.clms.api.users.api.projections.converters.UserProjectionConverter;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +28,11 @@ public class AdminController {
     private final AdminUserService adminUserService;
     private final RoleUpdateService roleUpdateService;
     private final RoleCRUDService roleCRUDService;
+    private final UserProjectionConverter userProjectionConverterService;
 
     @GetMapping("/users")
     public List<UserProjection> getUsers() {
-        return userService.getUsers().stream().map(userService::convertToUserProjection).toList();
+        return userService.getUsers().stream().map(userProjectionConverterService::convert).toList();
     }
     @PostMapping("/users/createUser")
     @Transactional

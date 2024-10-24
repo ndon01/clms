@@ -4,7 +4,7 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

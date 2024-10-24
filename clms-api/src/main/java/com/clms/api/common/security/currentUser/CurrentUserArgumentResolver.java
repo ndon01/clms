@@ -1,7 +1,7 @@
 package com.clms.api.common.security.currentUser;
 
 import com.clms.api.common.web.BaseAnnotationArgumentResolver;
-import com.clms.api.common.domain.User;
+import com.clms.api.users.api.User;
 import com.clms.api.common.security.CurrentUserContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

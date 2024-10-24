@@ -1,7 +1,7 @@
 package com.clms.api.users;
 
-import com.clms.api.common.domain.User;
-import com.clms.api.common.domain.UserProjection;
+import com.clms.api.users.api.User;
+import com.clms.api.users.api.projections.UserProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,15 +41,5 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.getUsers();
     }
-
-    public UserProjection convertToUserProjection(User user) {
-        UserProjection userProjection = new UserProjection();
-        userProjection.setId(user.getId());
-        userProjection.setUsername(user.getUsername());
-        userProjection.setRoles(user.getRoles());
-        userProjection.setPermissions(user.getPermissions());
-        return userProjection;
-    }
-
 
 }
