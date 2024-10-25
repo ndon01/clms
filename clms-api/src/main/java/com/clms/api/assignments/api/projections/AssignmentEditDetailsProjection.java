@@ -1,4 +1,4 @@
-package com.clms.api.assignments.projections;
+package com.clms.api.assignments.api.projections;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.courses.api.projections.CourseDetailsProjection;
