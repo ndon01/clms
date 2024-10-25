@@ -1,7 +1,7 @@
 package com.clms.api.courses;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.projections.AssignmentDetailsProjection;
+import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.courses.api.Course;
 import com.clms.api.users.api.User;

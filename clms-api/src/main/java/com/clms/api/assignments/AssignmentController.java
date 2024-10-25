@@ -1,7 +1,7 @@
 package com.clms.api.assignments;
 
-import com.clms.api.assignments.projections.AssignmentDetailsProjection;
-import com.clms.api.assignments.projections.AssignmentEditDetailsProjection;
+import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
+import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
 import com.clms.api.common.web.projections.GenericProjectionConverter;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;

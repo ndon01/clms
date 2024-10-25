@@ -1,4 +1,4 @@
-package com.clms.api.assignments.projections;
+package com.clms.api.assignments.api.projections;
 
 import lombok.Builder;
 import lombok.Getter;
