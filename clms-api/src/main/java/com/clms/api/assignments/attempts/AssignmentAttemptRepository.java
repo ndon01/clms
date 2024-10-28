@@ -18,7 +18,7 @@ import java.util.UUID;
 @Repository
 public interface AssignmentAttemptRepository extends JpaRepository<AssignmentAttempt, UUID> {
     List<AssignmentAttempt> findByUser(User user);
-    List<AssignmentAttempt> findAssignmentAttemptByUserAndAssignment(User user, Assignment assignment);
+    List<AssignmentAttempt> findAssignmentAttemptsByUserAndAssignment(User user, Assignment assignment);
 
     List<AssignmentAttempt> findAssignmentAttemptsByStatus(AssignmentAttemptStatus status);
 
