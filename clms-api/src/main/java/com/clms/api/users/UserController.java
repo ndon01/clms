@@ -6,6 +6,7 @@ import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +18,24 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
     private final GenericConverter<User, UserProjection> userProjectionConverterService;
     @GetMapping
-    public List<UserProjection> getUsersV1(@CurrentUser User user) {
-        return userService.getUsers()
+    public List<UserProjection> getUsersV1(@CurrentUser User user, @RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        if (page == null) {
+            page = 0;
+        }
+
+        if (size == null) {
+            size = 10;
+        }
+
+        return userRepository.findAll(PageRequest.of(page, size))
                 .stream()
                 .map(userProjectionConverterService::convert)
                 .toList();
     }
+
 
     @GetMapping("/client")
     public User getClient(@CurrentUser User user) {
