@@ -190,8 +190,16 @@ export class UserDashboardComponent implements OnInit {
     }
   }
 
-  onUserPageChange(event: PaginatorState) {
+  onUserPageChange(event: TablePageEvent) {
     console.log(event)
+    this.httpClient.get<UserProjection[]>('/api/admin/users', {
+      params: {
+        page: event.first,
+        size: event.rows
+      }
+    }).subscribe(users => {
+      this.users = users;
+    });
   }
 
 }

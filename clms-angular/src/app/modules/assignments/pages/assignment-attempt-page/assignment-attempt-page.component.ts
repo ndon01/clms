@@ -121,7 +121,7 @@ fetchAssignmentAttempt(){
   handleNextQuestion() {
     this.saveQuestionAttempt()
     if (this.currentQuestionIndex < this.questions.length - 1) {
-      this.currentQuestionIndex++;
+      this.currentQuestionIndex = this.currentQuestionIndex + 1;
       this.currentQuestion = this.questions[this.currentQuestionIndex];
     }
     this.updateSelectedAnswer();
@@ -130,7 +130,7 @@ fetchAssignmentAttempt(){
   handlePreviousQuestion() {
     this.saveQuestionAttempt()
     if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
+      this.currentQuestionIndex = this.currentQuestionIndex - 1;
       this.currentQuestion = this.questions[this.currentQuestionIndex];
     }
     this.updateSelectedAnswer();
