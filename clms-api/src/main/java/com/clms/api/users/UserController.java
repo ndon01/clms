@@ -1,6 +1,6 @@
 package com.clms.api.users;
 
-import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.common.security.currentUser.CurrentUser;
@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final GenericProjectionConverter<User, UserProjection> userProjectionConverterService;
+    private final GenericConverter<User, UserProjection> userProjectionConverterService;
     @GetMapping
     public List<UserProjection> getUsersV1(@CurrentUser User user) {
         return userService.getUsers()

@@ -6,11 +6,10 @@ import com.clms.api.authentication.RegistrationService;
 import com.clms.api.authorization.RoleCRUDService;
 import com.clms.api.authorization.RoleUpdateService;
 import com.clms.api.authorization.Role;
-import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.users.UserService;
-import com.clms.api.users.api.projections.converters.UserProjectionConverter;
 import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class AdminController {
     private final AdminUserService adminUserService;
     private final RoleUpdateService roleUpdateService;
     private final RoleCRUDService roleCRUDService;
-    private final GenericProjectionConverter<User, UserProjection> userProjectionConverterService;
+    private final GenericConverter<User, UserProjection> userProjectionConverterService;
 
     @GetMapping("/users")
     public List<UserProjection> getUsers() {

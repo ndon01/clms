@@ -7,7 +7,7 @@ import com.clms.api.courses.api.Course;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
-import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.courses.members.CourseMemberInsertService;
 import com.clms.api.courses.members.CourseMemberRemoveService;
 import com.clms.api.courses.members.CourseMemberRepository;
@@ -29,7 +29,7 @@ public class CourseController {
     private final CourseMemberRemoveService courseMemberRemoveService;
     private final CourseMemberRepository courseMemberRepository;
     private final AssignmentRepository assignmentRepository;
-    private final GenericProjectionConverter<Course, CourseDetailsProjection> courseDetailsProjectionConverter;
+    private final GenericConverter<Course, CourseDetailsProjection> courseDetailsProjectionConverter;
 
     @GetMapping()
     public List<CourseDetailsProjection> getCourses() {

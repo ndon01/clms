@@ -2,7 +2,7 @@ package com.clms.api.assignments;
 
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
-import com.clms.api.common.web.projections.GenericProjectionConverter;
+import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
@@ -33,8 +33,9 @@ public class AssignmentController {
     private final FileMetadataRepository fileMetadataRepository;
     private final AssignmentFileRepository assignmentFileRepository;
 
-    private final GenericProjectionConverter<Assignment, AssignmentDetailsProjection> assignmentDetailsProjectionConverter;
-    private final GenericProjectionConverter<Assignment, AssignmentEditDetailsProjection> assignmentEditDetailsProjectionConverter;
+    private final GenericConverter<Assignment, AssignmentDetailsProjection> assignmentDetailsProjectionConverter;
+    private final GenericConverter<Assignment, AssignmentEditDetailsProjection> assignmentEditDetailsProjectionConverter;
+
     private final ObjectMapper mapper = new ObjectMapper();
     @GetMapping
     public List<AssignmentDetailsProjection> getAllAssignments() {
