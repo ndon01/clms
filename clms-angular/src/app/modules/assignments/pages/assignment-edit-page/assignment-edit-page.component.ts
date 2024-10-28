@@ -5,6 +5,7 @@ import {Location} from "@angular/common";
 import {QuestionProjection} from "@modules/assignments/model/question.model";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -107,14 +108,14 @@ export class AssignmentEditPageComponent implements OnInit {
     }
 
     const url = `/api/assignments/${this.assignment.id}`;
-    this.httpClient.put(url, this.assignment).subscribe(
-      response => {
-        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Assignment updated successfully.'})
-      },
-      error => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the assignment.'})
-      }
-    ).add(() => {
+    this.httpClient.put(url, this.assignment, { observe: 'response' })
+      .pipe(tap((response) => {
+        if (response.status === 200) {
+          this.messageService.add({severity: 'success', summary: 'Success', detail: 'Assignment updated successfully.'})
+        } else {
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the assignment.'})
+        }
+      })).subscribe().add( () => {
       this.fetchAssignment();
     });
   }
