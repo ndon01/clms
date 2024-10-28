@@ -7,6 +7,7 @@ import {AssignmentProjection} from "@modules/assignments/model/assignment.model"
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {Course, CourseProjection} from "@modules/courses/model/course.model";
 import {AssignmentAttemptAnswerProjection} from "@modules/assignments/model/assignment-attempt-answer.modal";
+import {tap} from "rxjs";
 
 @Component({
   selector: 'app-assignment-attempt-page',
@@ -41,8 +42,8 @@ export class AssignmentAttemptPageComponent {
     });
   }
   fetchAssignment(){
-    this.httpClient.get<AssignmentAttemptAnswerProjection[]>(`/api/assignments/${this.assignmentId}`).subscribe(assignmentAttemptAnswers=> {
-      this.assignmentAttemptAnswers = assignmentAttemptAnswers;
+    this.httpClient.get<AssignmentProjection>(`/api/assignments/${this.assignmentId}`).subscribe(assignmentAttemptAnswers=> {
+      this.assignment = assignmentAttemptAnswers;
       console.log("Assignment: ", this.assignment)
     });
   }
@@ -67,10 +68,16 @@ export class AssignmentAttemptPageComponent {
 
 }
 fetchAssignmentAttempt(){
-    this.httpClient.get(`/api/assignments/attempts/get-assignment-attempt-answers`,{
-    params: {assignmentId: this.assignmentId?.toString() || ""}}).subscribe(attempt=> {
-    console.log("Attempt: ", attempt)
-    })
+    this.httpClient.get<AssignmentAttemptAnswerProjection[]>(`/api/assignments/attempts/get-assignment-attempt-answers`,{
+    params: {assignmentId: this.assignmentId?.toString() || ""}, observe: 'response'})
+      .pipe(tap(response => {
+        if (response.status === 404) {
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Assignment attempt not found'});
+        }
+      })).subscribe((response) => {
+      this.assignmentAttemptAnswers = response.body;
+      this.updateSelectedAnswer();
+    });
 }
   sanitizeHtml(html: string | undefined): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(<string>html);
@@ -101,7 +108,7 @@ fetchAssignmentAttempt(){
   saveQuestionAttempt() {
     this.httpClient.post(`/api/assignments/attempts/update-question-attempt`, {
       questionId: this.currentQuestion?.id,
-      answer: this.selectedAnswer,
+      selectedAnswerId: this.selectedAnswer,
       assignmentId: this.assignmentId
     }).subscribe(response => {
       console.log(response);

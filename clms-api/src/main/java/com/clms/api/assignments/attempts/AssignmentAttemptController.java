@@ -38,7 +38,7 @@ public class AssignmentAttemptController {
     @PostMapping("/start-attempt")
     public ResponseEntity<?> startAttempt(@CurrentUser User user, @RequestBody StartAssignmentAttemptRequest startAssignmentRequest) {
         Assignment assignment = assignmentRepository.findById(startAssignmentRequest.getAssignmentId()).orElse(null);
-        List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptByUserAndAssignment(user, assignment);
+        List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(user, assignment);
 
         if (assignment == null) {
             return ResponseEntity.notFound().build();

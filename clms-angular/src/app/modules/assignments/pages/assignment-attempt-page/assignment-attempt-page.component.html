@@ -20,9 +20,11 @@
         <div *ngFor="let answer of currentQuestion.answers; let i = index" class="mb-4 flex items-center space-x-2">
           <p-radioButton
             [inputId]="answer.id"
-            [value]="selectedAnswer == answer.id"
+            [(ngModel)]="selectedAnswer"
+            [value]="answer.id"
             name="'option-' + currentQuestion.id + '-' + i"
-            (onClick)="handleAnswerSelect(answer.id)">
+            (onClick)="handleAnswerSelect(answer.id)"
+          >
           </p-radioButton>
           <label
             [for]="'option-' + answer.text"
