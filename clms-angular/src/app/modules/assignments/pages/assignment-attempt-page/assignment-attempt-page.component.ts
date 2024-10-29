@@ -37,8 +37,8 @@ export class AssignmentAttemptPageComponent {
       this.assignmentId = parseInt(id, 10);
       this.fetchQuestions();
       this.fetchAssignment();
-      this.fetchCourse();
       this.fetchAssignmentAttempt();
+      this.fetchCourse();
     });
   }
   fetchAssignment(){
@@ -76,6 +76,11 @@ fetchAssignmentAttempt(){
         }
       })).subscribe((response) => {
       this.assignmentAttemptAnswers = response.body;
+      this.assignmentAttemptAnswers?.forEach(answer =>{
+        if (answer.selectedAnswerId){
+          this.completedQuestions.push(<number>answer.questionId);
+        }
+      })
       this.updateSelectedAnswer();
     });
 }
@@ -88,20 +93,23 @@ fetchAssignmentAttempt(){
   selectedAnswer: string | null = null;
   completedQuestions: number[] = [];
 
+
   handleAnswerSelect(value: string | undefined) {
+    console.log("Completed Questions: ", this.completedQuestions)
     this.selectedAnswer = value || null;
     if (!this.currentQuestion){return}
     if (!this.assignmentAttemptAnswers){
       return
+    }
+    if (this.currentQuestion.id && !this.completedQuestions.includes(this.currentQuestion.id)) {
+      this.completedQuestions = [...this.completedQuestions, this.currentQuestion.id];
+      console.log('INSIDE OF IF STATEMENT : Completed questions', this.completedQuestions)
     }
     for(let answer of Object.values(this.assignmentAttemptAnswers)){
       if(answer.questionId === this.currentQuestion.id){
         answer.selectedAnswerId = this.selectedAnswer || "";
         return;
       }
-    }
-    if (this.currentQuestion.id && !this.completedQuestions.includes(this.currentQuestion.id)) {
-      this.completedQuestions = [...this.completedQuestions, this.currentQuestion.id];
     }
   }
 
@@ -148,7 +156,9 @@ fetchAssignmentAttempt(){
 
 
   setQuestionIndex(index: number) {
+    this.saveQuestionAttempt();
+    this.currentQuestion = this.questions[index];
     this.currentQuestionIndex = index;
-    this.selectedAnswer = null;
+    this.updateSelectedAnswer();
   }
 }
