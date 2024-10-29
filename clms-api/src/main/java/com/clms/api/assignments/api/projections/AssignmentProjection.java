@@ -19,7 +19,7 @@ public class AssignmentProjection {
     private Integer id;
     private String name;
     private String description;
-    private List<AssignmentQuestion> questions;
+    private List<AssignmentQuestionProjection> questions;
     private CourseProjection course;
     private Integer maxAttempts;
     private Integer timeLimitMinutes;

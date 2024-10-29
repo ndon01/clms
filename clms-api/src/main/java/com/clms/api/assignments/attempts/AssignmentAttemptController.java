@@ -3,6 +3,7 @@ package com.clms.api.assignments.attempts;
 import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.assignments.attempts.DTO.AssignmentQuestionUpdateRequest;
 import com.clms.api.assignments.attempts.DTO.SubmitAssignmentAttemptRequest;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
@@ -91,6 +92,24 @@ public class AssignmentAttemptController {
         return ResponseEntity.ok(assignmentAttempt.getAnswers());
 
     }
+
+
+    private static class res {
+    private AssignmentAttempt assignmentAttempt;
+    private AssignmentProjection assignment;
+    }
+    @GetMapping("/get-assignment-attempt")
+    public ResponseEntity<?> getAssignmentAttempt(@CurrentUser User user, @RequestParam int assignmentId){
+        AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,assignmentId);
+        if(assignmentAttempt == null){
+            return ResponseEntity.notFound().build();
+        }
+
+
+        return ResponseEntity.ok(assignmentAttempt);
+
+    }
+
     @PostMapping("/update-question-attempt")
     public ResponseEntity<?> updateQuestionAnswer(@CurrentUser User user ,@RequestBody AssignmentQuestionUpdateRequest updateAssignmentRequest){
         AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,updateAssignmentRequest.getAssignmentId());
@@ -98,7 +117,7 @@ public class AssignmentAttemptController {
             return ResponseEntity.notFound().build();
         }
         //TODO UPDATE ANSWER
-        List<AttemptQuestionAnswer> attemptQuestionAnswers = assignmentAttempt.getAnswers();
+            List<AttemptQuestionAnswer> attemptQuestionAnswers = assignmentAttempt.getAnswers();
         boolean replacedAnswer = false;
         for(AttemptQuestionAnswer answer : attemptQuestionAnswers){
             if(answer.getQuestionId() == (updateAssignmentRequest.getQuestionId())){
