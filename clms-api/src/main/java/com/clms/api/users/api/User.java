@@ -3,18 +3,15 @@ package com.clms.api.users.api;
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.Role;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.Set;
 
-@EqualsAndHashCode
 @Entity
 @Table(name = "users")
-@Data
-@ToString(exclude = {"roles","permissions"})
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -45,5 +42,5 @@ public class User {
     )
     private Set<Permission> permissions;
 
-    
+
 }

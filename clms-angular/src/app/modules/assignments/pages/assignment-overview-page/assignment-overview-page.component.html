@@ -1,27 +1,54 @@
 <app-sidebar-page-wrapper>
-  <div class="w-full h-full bg-surface-b" *ngIf="assignment">
+  <div class="w-full min-h-full h-max bg-surface-b" *ngIf="assignment">
+    <!-- Assignment Details -->
     <div class="flex flex-col">
       <div class="w-full h-max pt-4 pb-4 pl-10 flex flex-row">
-          <div class="text-color-primary w-full" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
-            <div class="text-3xl font-bold text-center">
-              {{ assignment.name }}
-            </div>
-            <div class="text-center">
-              {{ assignment.description }}
-            </div>
-          </div>
-
-          <div class="flex-1 pl-5 pr-5 gap-3" style="display: flex; flex-direction: row; justify-content: end; align-items: center;">
-            <p-button label="Start Assignment" outlined="true" class="text-color-primary" styleClass="p-2 pl-4 pr-4 bg-surface-e w-max" (click)="startAssignment()"></p-button>
-            <p-button label="Edit Assignment" outlined="true" class="text-color-primary" styleClass="p-2 pl-4 pr-4 bg-surface-e w-max"  (click)="editAssignment()"></p-button>
-          </div>
+        <div class="text-color-primary w-full" style="display: flex; flex-direction: column; justify-content: center; align-items: start;">
+          <div class="text-3xl font-bold text-center">{{ assignment.name }}</div>
+          <div class="text-center">{{ assignment.description }}</div>
+        </div>
+        <div class="flex-1 pl-5 pr-5 gap-3" style="display: flex; flex-direction: row; justify-content: end; align-items: center;">
+          <p-button label="Start Assignment" outlined="true" class="text-color-primary" styleClass="p-2 pl-4 pr-4 bg-surface-e w-max" (click)="startAssignment()"></p-button>
+          <p-button label="Edit Assignment" outlined="true" class="text-color-primary" styleClass="p-2 pl-4 pr-4 bg-surface-e w-max" (click)="editAssignment()"></p-button>
+        </div>
       </div>
+
+      <!-- Start and Due Dates -->
       <div class="w-full h-max pt-4 pb-4 pl-10 flex flex-row bg-surface-e">
         <div>
-          <span class="text-color-secondary"><span class="font-bold">Start Date</span> {{ assignment.startDate | date: 'MM/dd/yyyy HH:mm a'   }}</span>
+          <span class="text-color-secondary"><span class="font-bold">Start Date</span> {{ assignment.startDate | date: 'MM/dd/yyyy HH:mm a' }}</span>
         </div>
         <div class="pl-4">
-          <span class="text-color-secondary"> <span class="font-bold">Due Date</span> {{ assignment.dueDate | date: 'MM/dd/yyyy HH:mm a' }}</span>
+          <span class="text-color-secondary"><span class="font-bold">Due Date</span> {{ assignment.dueDate | date: 'MM/dd/yyyy HH:mm a' }}</span>
+        </div>
+      </div>
+
+      <!-- Attempts and Selected Attempt View Container -->
+      <div class="flex pt-4">
+
+        <!-- Attempts List on the Left -->
+        <div class="w-1/4 bg-surface-e p-4 rounded-md">
+          <h3 class="text-lg font-semibold">Attempts:</h3>
+          <ul *ngIf="attempts.length > 0" class="pt-2">
+            <li *ngFor="let attempt of attempts" (click)="viewAttempt(attempt)" class="cursor-pointer mb-2 p-2 rounded hover:bg-surface-d">
+              <a *ngIf="attempt" class="text-color-primary">{{ attempt.startedAt | date: 'MM/dd/yyyy HH:mm a' }} - Status: {{ attempt.status }}</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Selected Attempt Questions on the Right -->
+        <div class="w-3/4 p-4 rounded-md">
+          <div *ngIf="selectedAttempt" class="scrollable-container flex flex-col gap-3 mt-2">
+            <ng-container *ngFor="let answer of selectedAttempt.answers">
+              <ng-container *ngIf="answer && answer.questionId">
+                <assignments-question-view-component
+                  [question]="GetQuestionFromQuestionId(answer.questionId) || {}"
+                  [selectedAnswer]="answer.selectedAnswerId || ''"
+                  [isReadOnly]="true">
+                </assignments-question-view-component>
+              </ng-container>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>

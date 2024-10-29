@@ -2,6 +2,7 @@ package com.clms.api.users;
 
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -4,6 +4,8 @@ import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.common.security.currentUser.CurrentUser;
+import com.clms.api.users.api.projections.converters.UserProjectionConverter;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -38,8 +40,9 @@ public class UserController {
 
 
     @GetMapping("/client")
-    public User getClient(@CurrentUser User user) {
-        return user;
+    @Transactional
+    public UserProjection getClient(@CurrentUser User user) {
+        return userProjectionConverterService.convert(user);
     }
 
     @GetMapping("/{userId}")
