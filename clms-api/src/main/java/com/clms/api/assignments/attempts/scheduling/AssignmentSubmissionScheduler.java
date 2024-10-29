@@ -1,7 +1,8 @@
 package com.clms.api.assignments.attempts.scheduling;
 
 import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.attempts.AssignmentAttemptGradingService;
+import com.clms.api.assignments.api.services.AssignmentAttemptGradingEventPublisher;
+import com.clms.api.assignments.grader.AssignmentGradingService;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
@@ -20,7 +21,9 @@ import java.util.List;
 public class AssignmentSubmissionScheduler {
 
     private final AssignmentAttemptRepository assignmentAttemptRepository;
-    private final AssignmentAttemptGradingService assignmentAttemptGradingService;
+    private final AssignmentGradingService assignmentAttemptGradingService;
+    private final AssignmentAttemptGradingEventPublisher assignmentAttemptGradingEventPublisher;
+
     @Scheduled(fixedRate = 30000)
     @Transactional
     public void scheduleFixedRateTask() {
@@ -57,7 +60,7 @@ public class AssignmentSubmissionScheduler {
             }
             //grade the assignment
             if(submitted) {
-                assignmentAttemptGradingService.grade(assignmentAttempt);
+                assignmentAttemptGradingEventPublisher.publish(assignmentAttempt.getId().toString());
                 log.info("Assignment attempt {} graded.", assignmentAttempt.getId());
             }
 

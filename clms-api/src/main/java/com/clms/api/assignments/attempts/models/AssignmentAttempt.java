@@ -45,7 +45,7 @@ public class AssignmentAttempt {
     private Double scorePercentage;
 
     @Column(name = "answers_correct")
-    private int answersCorrect;
+    private Integer answersCorrect;
 
 }
 

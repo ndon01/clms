@@ -4,6 +4,7 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
+import com.clms.api.assignments.api.services.AssignmentAttemptGradingEventPublisher;
 import com.clms.api.assignments.attempts.DTO.AssignmentQuestionUpdateRequest;
 import com.clms.api.assignments.attempts.DTO.SubmitAssignmentAttemptRequest;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
@@ -11,6 +12,7 @@ import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
 import com.clms.api.assignments.attempts.DTO.StartAssignmentAttemptRequest;
 import com.clms.api.assignments.attempts.DTO.StartAssignmentAttemptResponse;
 import com.clms.api.assignments.attempts.models.AttemptQuestionAnswer;
+import com.clms.api.assignments.grader.AssignmentGradingService;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
@@ -35,7 +37,7 @@ public class AssignmentAttemptController {
     private final AssignmentRepository assignmentRepository;
     private final AssignmentAttemptRepository assignmentAttemptRepository;
     private final AssignmentAttemptService assignmentAttemptService;
-    private final AssignmentAttemptGradingService assignmentAttemptGradingService;
+    private final AssignmentAttemptGradingEventPublisher assignmentAttemptGradingEventPublisher;
 
     @PostMapping("/start-attempt")
     public ResponseEntity<?> startAttempt(@CurrentUser User user, @RequestBody StartAssignmentAttemptRequest startAssignmentRequest) {
@@ -151,7 +153,7 @@ public class AssignmentAttemptController {
         currentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
         assignmentAttemptRepository.saveAndFlush(currentAttempt);
 
-        assignmentAttemptGradingService.grade(currentAttempt);
+        assignmentAttemptGradingEventPublisher.publish(currentAttempt.getId().toString());
 
         return ResponseEntity.ok().build();
     }
