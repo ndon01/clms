@@ -1,6 +1,7 @@
 package com.clms.api.assignments.attempts.scheduling;
 
 import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.attempts.AssignmentAttemptGradingService;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
@@ -19,25 +20,27 @@ import java.util.List;
 public class AssignmentSubmissionScheduler {
 
     private final AssignmentAttemptRepository assignmentAttemptRepository;
-
+    private final AssignmentAttemptGradingService assignmentAttemptGradingService;
     @Scheduled(fixedRate = 30000)
     @Transactional
     public void scheduleFixedRateTask() {
-        log.info("Checking for assignment attempts that are past due date");
+        log.info("Checking for assignment attempts that are past due date and grading");
 
         List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByStatus(AssignmentAttemptStatus.IN_PROGRESS);
 
         Date now = new Date();
+        //looping through all in progress attempts
         for (AssignmentAttempt assignmentAttempt : assignmentAttempts) {
             log.info("Checking assignment attempt {}", assignmentAttempt.getId());
             Assignment assignment = assignmentAttempt.getAssignment();
-
+            boolean submitted = false;
             // past due date
             if (assignment.getDueDate().before(now)) {
                 log.info("Assignment attempt {} is past due.", assignmentAttempt.getId());
 
                 assignmentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
                 assignmentAttemptRepository.saveAndFlush(assignmentAttempt);
+                submitted = true;
             }
 
             // time limit exceeded
@@ -48,8 +51,16 @@ public class AssignmentSubmissionScheduler {
                     log.info("Assignment attempt {} exceeded time limit.", assignmentAttempt.getId());
                     assignmentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
                     assignmentAttemptRepository.saveAndFlush(assignmentAttempt);
+                    submitted = true;
                 }
+
             }
+            //grade the assignment
+            if(submitted) {
+                assignmentAttemptGradingService.grade(assignmentAttempt);
+                log.info("Assignment attempt {} graded.", assignmentAttempt.getId());
+            }
+
         }
     }
 }

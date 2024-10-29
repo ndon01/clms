@@ -35,6 +35,7 @@ public class AssignmentAttemptController {
     private final AssignmentRepository assignmentRepository;
     private final AssignmentAttemptRepository assignmentAttemptRepository;
     private final AssignmentAttemptService assignmentAttemptService;
+    private final AssignmentAttemptGradingService assignmentAttemptGradingService;
 
     @PostMapping("/start-attempt")
     public ResponseEntity<?> startAttempt(@CurrentUser User user, @RequestBody StartAssignmentAttemptRequest startAssignmentRequest) {
@@ -137,26 +138,22 @@ public class AssignmentAttemptController {
 
     @PostMapping("/submit-attempt")
     public ResponseEntity<?> submitCurrentAttempt(@CurrentUser User user, @RequestBody SubmitAssignmentAttemptRequest submitAssignmentRequest) {
-        int userId = user.getId();
         Assignment assignment = assignmentRepository.findById(submitAssignmentRequest.getAssignmentId()).orElse(null);
-
         if (assignment == null) {
             return ResponseEntity.notFound().build();
         }
+        List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(user, assignment);
 
-
-        Course courseAssignment = null;
-
-        if (courseAssignment == null) {
+        AssignmentAttempt currentAttempt = assignmentAttempts.stream().filter(attempt -> attempt.getStatus() == AssignmentAttemptStatus.IN_PROGRESS).findFirst().orElse(null);
+        if(currentAttempt == null){
             return ResponseEntity.notFound().build();
-            //TODO FIX THIS ONCE WE CAN MAKE AN ASSIGNMENT OUTSIDE OF A COURSE
         }
+        currentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
+        assignmentAttemptRepository.saveAndFlush(currentAttempt);
 
+        assignmentAttemptGradingService.grade(currentAttempt);
 
-        //TODO CHANGE STATE FROM 'IN PROGRESS' TO 'COMPLETED'
-        //TODO SEND TO REPORT CONTROLLER
-        return ResponseEntity.status(201).build();
+        return ResponseEntity.ok().build();
     }
-
 }
 
