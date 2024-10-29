@@ -64,6 +64,7 @@
           <p-checkbox
             [inputId]="'question-' + question.id"
             [binary]="true"
+            [disabled]="true"
             [ngModel]="completedQuestions.includes(question.id || -1) ">
           </p-checkbox>
           <label
