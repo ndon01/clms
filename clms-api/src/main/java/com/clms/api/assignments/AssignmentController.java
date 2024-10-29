@@ -2,6 +2,7 @@ package com.clms.api.assignments;
 
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
+import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
@@ -35,7 +36,7 @@ public class AssignmentController {
 
     private final GenericConverter<Assignment, AssignmentDetailsProjection> assignmentDetailsProjectionConverter;
     private final GenericConverter<Assignment, AssignmentEditDetailsProjection> assignmentEditDetailsProjectionConverter;
-
+    private final GenericConverter<Assignment, AssignmentProjection> assignmentProjectionConverter;
     private final ObjectMapper mapper = new ObjectMapper();
     @GetMapping
     public List<AssignmentDetailsProjection> getAllAssignments() {
@@ -56,10 +57,10 @@ public class AssignmentController {
 
     @GetMapping("/{id}")
     @Transactional
-    public ResponseEntity<Assignment> getAssignmentById(@PathVariable int id) {
+    public ResponseEntity<AssignmentDetailsProjection> getAssignmentById(@PathVariable int id) {
         Optional<Assignment> assignment = assignmentRepository.findById(id);
         if (assignment.isPresent()) {
-            return ResponseEntity.ok(assignment.get());
+            return ResponseEntity.ok(assignmentDetailsProjectionConverter.convert(assignment.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -85,47 +86,15 @@ public class AssignmentController {
     }
 
     @GetMapping("/{id}/attempt")
-    public ResponseEntity<AssignmentQuestionAttemptResponse> getAssignmentForAttemptById(@PathVariable int id) {
+    public ResponseEntity<AssignmentProjection> getAssignmentForAttemptById(@PathVariable int id) {
         log.info("Fetching assignment with id: {}", id);
 
-        Optional<Assignment> assignmentOptional = assignmentRepository.findById(id);
-
-        if (assignmentOptional.isPresent()) {
-            Assignment assignment = assignmentOptional.get();
-            log.info("Assignment found: {}", assignment);
-
-            AssignmentQuestionAttemptResponse response = new AssignmentQuestionAttemptResponse();
-            response.setAssignmentId(assignment.getId());
-            response.setQuestions(assignment.getQuestions());
-
-            List<AssignmentQuestionAnswerAttempt> filteredAnswers = new ArrayList<>();
-
-            // Process each question in the assignment
-            for (AssignmentQuestion question : assignment.getQuestions()) {
-                log.info("Processing question with id: {}", question.getId());
-                try {
-                    List<AssignmentQuestionAnswerAttempt> filteredAnswerAttempts = new ArrayList<>();
-                    for (AssignmentQuestionAnswer answer : question.getAnswers()) {
-                        AssignmentQuestionAnswerAttempt answerAttempt = new AssignmentQuestionAnswerAttempt();
-                        answerAttempt.setText(answer.getText());
-                        filteredAnswerAttempts.add(answerAttempt);
-                    }
-
-                    // Set the filtered answers to the response
-                    response.setAnswers(filteredAnswerAttempts);
-
-                } catch (Exception e) {
-                    log.error("Error parsing answers JSON for question id: {}", question.getId(), e);
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-                }
-            }
-
-            log.info("Returning response for assignment id: {}", assignment.getId());
-            return ResponseEntity.ok(response);
-        } else {
-            log.warn("Assignment with id {} not found", id);
+        Assignment assignment = assignmentRepository.findById(id).orElse(null);
+        if (assignment == null) {
             return ResponseEntity.notFound().build();
         }
+
+        return ResponseEntity.ok(assignmentProjectionConverter.convert(assignment));
     }
 
     // Utility method to save answers as JSON
