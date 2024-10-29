@@ -20,7 +20,7 @@ spring:
       region:
         static: us-east-1
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: update
     properties:
@@ -29,6 +29,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 clms:
   security:
     access-token:

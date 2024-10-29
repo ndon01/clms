@@ -3,7 +3,9 @@ package com.clms.api.assignments.attempts;
 import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.projections.AssignmentAttemptProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
+import com.clms.api.assignments.api.projections.converters.AssignmentAttemptProjectionConverter;
 import com.clms.api.assignments.api.services.AssignmentAttemptGradingEventPublisher;
 import com.clms.api.assignments.attempts.DTO.AssignmentQuestionUpdateRequest;
 import com.clms.api.assignments.attempts.DTO.SubmitAssignmentAttemptRequest;
@@ -38,6 +40,21 @@ public class AssignmentAttemptController {
     private final AssignmentAttemptRepository assignmentAttemptRepository;
     private final AssignmentAttemptService assignmentAttemptService;
     private final AssignmentAttemptGradingEventPublisher assignmentAttemptGradingEventPublisher;
+    private final AssignmentAttemptProjectionConverter assignmentAttemptProjectionConverter;
+
+    @GetMapping("/client")
+    public ResponseEntity<List<AssignmentAttemptProjection>> getAssignmentAttemptsForUserById(@CurrentUser User user, @RequestParam int assignmentId) {
+        // if assignment is not found, return 404
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // get all assignment attempts for the user
+        List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(user, assignment);
+        return ResponseEntity.ok(assignmentAttempts.stream().map(assignmentAttemptProjectionConverter::convert).toList());
+    }
+
 
     @PostMapping("/start-attempt")
     public ResponseEntity<?> startAttempt(@CurrentUser User user, @RequestBody StartAssignmentAttemptRequest startAssignmentRequest) {
@@ -157,5 +174,7 @@ public class AssignmentAttemptController {
 
         return ResponseEntity.ok().build();
     }
+
+
 }
 

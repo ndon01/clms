@@ -1,38 +1,22 @@
-<div *ngIf="questionsLoaded && currentQuestion != null" xmlns="http://www.w3.org/1999/html"
-     class="flex min-h-screen flex-col bg-gray-100">
+<div *ngIf="questionsLoaded && currentQuestion != null" class="flex min-h-screen flex-col bg-gray-100">
   <header class="bg-white p-4 shadow-sm">
-    <ng-container *ngIf="course == null ; else full_title" >
+    <ng-container *ngIf="course == null; else full_title">
       <h1 class="text-lg font-semibold">Assignments &gt; {{assignment?.name}}</h1>
     </ng-container>
     <ng-template #full_title>
       <h1 class="text-lg font-semibold">{{course?.name}} &gt; Assignments &gt; {{assignment?.name}}</h1>
     </ng-template>
   </header>
+
   <div class="flex flex-1 flex-col md:flex-row">
     <main class="flex-1 p-6">
-      <div class="mx-auto max-w-3xl rounded-lg bg-white p-6 shadow-md">
-        <div class="mb-4 flex items-center justify-between">
-          <h2 class="text-xl font-bold">{{ currentQuestion.title}}:</h2>
-        </div>
-        <p-editor [(ngModel)]="currentQuestion.question" [readonly] = "true" [modules]="{}" [style]="{'height':'320px'}"></p-editor>
+      <!-- Use the QuestionViewComponent here for current question -->
+      <assignments-question-view-component
+        [question]="currentQuestion"
+        [(selectedAnswer)]="selectedAnswer"
+        [isReadOnly]="false">
+      </assignments-question-view-component>
 
-
-        <div *ngFor="let answer of currentQuestion.answers; let i = index" class="mb-4 flex items-center space-x-2">
-          <p-radioButton
-            [inputId]="answer.id"
-            [(ngModel)]="selectedAnswer"
-            [value]="answer.id"
-            name="'option-' + currentQuestion.id + '-' + i"
-            (onClick)="handleAnswerSelect(answer.id)"
-          >
-          </p-radioButton>
-          <label
-            [for]="'option-' + answer.text"
-            class="flex-1 cursor-pointer rounded-md border p-4 hover:bg-gray-50"
-            [innerHTML]="sanitizeHtml(answer.text)">
-          </label>
-        </div>
-      </div>
       <div class="mt-6 flex justify-between">
         <button
           pButton
@@ -42,21 +26,23 @@
           (click)="handlePreviousQuestion()"
           [disabled]="currentQuestionIndex === 0">
         </button>
-        <ng-container *ngIf = "!(currentQuestionIndex == questions.length -1 ); else submit_button">
+
+        <ng-container *ngIf="!(currentQuestionIndex === questions.length - 1); else submit_button">
           <button
-                  pButton
-                  (click)="handleNextQuestion()"
-                  label="Next Question"
-                  icon="pi pi-chevron-right"
-                  iconPos="right">
+            pButton
+            (click)="handleNextQuestion()"
+            label="Next Question"
+            icon="pi pi-chevron-right"
+            iconPos="right">
           </button>
         </ng-container>
-        <ng-template #submit_button>
-          <button pButton (click)="handleSubmit()" label = "Submit"></button>
-        </ng-template>
 
+        <ng-template #submit_button>
+          <button pButton (click)="handleSubmit()" label="Submit"></button>
+        </ng-template>
       </div>
     </main>
+
     <aside class="w-full bg-white p-6 shadow-md md:w-64">
       <h2 class="mb-4 text-xl font-semibold">All Questions:</h2>
       <p-scrollPanel [style]="{height: 'calc(100vh - 12rem)'}">
@@ -65,7 +51,7 @@
             [inputId]="'question-' + question.id"
             [binary]="true"
             [disabled]="true"
-            [ngModel]="completedQuestions.includes(question.id || -1) ">
+            [ngModel]="completedQuestions.includes(question.id || -1)">
           </p-checkbox>
           <label
             [for]="'question-' + question.id"

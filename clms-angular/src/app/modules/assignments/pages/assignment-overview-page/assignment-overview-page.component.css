@@ -1,0 +1,5 @@
+.scrollable-container {
+  max-height: 800px; /* Set a fixed height for the scrollable area */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 8px; /* Optional padding to avoid content touching the scrollbar */
+}

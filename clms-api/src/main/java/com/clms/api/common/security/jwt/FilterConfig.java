@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class FilterConfig {
 
-    private final JwtAuthenticationHttpFilter jwtAuthenticationHttpFilter;
+    private final AuthenticationHttpFilter jwtAuthenticationHttpFilter;
 
     @Bean
-    public FilterRegistrationBean<JwtAuthenticationHttpFilter> jwtFilter() {
-        FilterRegistrationBean<JwtAuthenticationHttpFilter> registrationBean = new FilterRegistrationBean<>();
+    public FilterRegistrationBean<AuthenticationHttpFilter> jwtFilter() {
+        FilterRegistrationBean<AuthenticationHttpFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(jwtAuthenticationHttpFilter);
         registrationBean.addUrlPatterns("/api/*");  // Apply to certain URL patterns
         return registrationBean;
     }
+
 }
