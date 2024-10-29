@@ -41,6 +41,12 @@ public class AssignmentAttempt {
     @Convert(converter = AttemptQuestionAnswersConverter.class)
     private List<AttemptQuestionAnswer> answers;
 
+    @Column(name ="score_percentage")
+    private Double scorePercentage;
+
+    @Column(name = "answers_correct")
+    private int answersCorrect;
+
 }
 
 class AttemptQuestionAnswersConverter implements AttributeConverter<List<AttemptQuestionAnswer>, String> {

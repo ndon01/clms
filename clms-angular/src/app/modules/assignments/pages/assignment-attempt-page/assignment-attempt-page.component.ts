@@ -152,6 +152,11 @@ fetchAssignmentAttempt(){
   }
   handleSubmit(){
     this.saveQuestionAttempt()
+    this.httpClient.post(`/api/assignments/attempts/submit-attempt`, {
+      assignmentId: this.assignmentId,
+    }).subscribe(response => {
+      console.log(response);
+    })
   }
 
 
