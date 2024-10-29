@@ -35,6 +35,9 @@ public class AssignmentGradingService {
                 continue;
             }
             if(correctAnswer.toString().equals(questionAnswer.getSelectedAnswerId())){
+                if (attempt.getAnswersCorrect() == null) {
+                    attempt.setAnswersCorrect(0);
+                }
                 attempt.setAnswersCorrect(attempt.getAnswersCorrect()+1);
                 questionAnswer.setSelectedAnswerCorrect(true);
             }else{
