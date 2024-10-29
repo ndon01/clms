@@ -1,8 +1,9 @@
-package com.clms.api.assignments.attempts;
+package com.clms.api.assignments.grader;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentQuestionAnswer;
 import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AttemptQuestionAnswer;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class AssignmentAttemptGradingService {
+public class AssignmentGradingService {
     private final AssignmentAttemptRepository attemptRepository;
     private final AssignmentQuestionRepository questionRepository;
 
@@ -42,7 +42,7 @@ public class AssignmentAttemptGradingService {
             }
 
         }
-        attempt.setScorePercentage((double)attempt.getAnswersCorrect()/questionAnswers.size()*100);
+        attempt.setScorePercentage((double)(attempt.getAnswersCorrect() == null ? 0 : attempt.getAnswersCorrect())/questionAnswers.size()*100);
         attemptRepository.save(attempt);
     }
 }
