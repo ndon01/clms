@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,6 +70,17 @@ public class FileStorageService {
         }
     }
 
+    public Resource getFileById(UUID fileId) {
+        FileMetadata fileMetadata = fileMetadataRepository.findById(fileId)
+                .orElseThrow(() -> new RuntimeException("File not found"));
+
+        return getFile(fileMetadata);
+    }
+
+    public Resource getFileById(String fileId) {
+        return getFileById(UUID.fromString(fileId));
+    }
+
     public Resource getFile(FileMetadata fileMetadata) {
         try {
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
@@ -97,3 +108,4 @@ public class FileStorageService {
         }
     }
 }
+

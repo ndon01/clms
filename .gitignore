@@ -3,15 +3,7 @@
 target
 *.class
 *-local.yaml
-/clms-api/src/main/resources/static
-/node_modules
 .gitconfig
 *.css.map
-
-teamiq-spa/node_modules
-teamiq-spa/node
-teamiq-spa/.angular
-
-teamiq-api/src/main/resources/static/*
 
 docker/localstack/data/*
