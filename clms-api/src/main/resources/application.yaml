@@ -1,22 +1,22 @@
 spring:
   application:
-    name: clms-api
+    name: api
   servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
   datasource:
     url: jdbc:postgresql://localhost:5001/clms
-    username: admin
-    password: changeme
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:changeme}
   cloud:
     aws:
       s3:
         endpoint: http://s3.localhost.localstack.cloud:4566
         region: us-east-1
       credentials:
-        access-key: localstack
-        secret-key: localstack
+        access-key: ${AWS_ACCESS_KEY:localstack}
+        secret-key: ${AWS_SECRET_KEY:localstack}
       region:
         static: us-east-1
   jpa:
@@ -36,6 +36,14 @@ clms:
   security:
     access-token:
       expiration-time: 86400000
-      secret: changeme
+      secret: ${ACCESS_TOKEN_SECRET:changeme}
   password:
     strength: 10
+
+gemini-configuration:
+  enabled: ${GEMINI_ENABLED:false}
+  api-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
+  api-key: ${GEMINI_API_KEY:''}
+
+question-generation-configuration:
+  enabled: ${QUESTION_GENERATION_ENABLED:false}

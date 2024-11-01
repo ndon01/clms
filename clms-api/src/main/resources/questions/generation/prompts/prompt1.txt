@@ -1,0 +1,18 @@
+Please create a question set based on this video transcript:
+--------------------------------------------
+{{transcript}}
+--------------------------------------------
+
+Questions and answers should be in this format as a JSON object:
+{
+  "questions": [
+    {
+      "title": "Question title",
+      "question": "The question text",
+      "answers": [
+        { "text": "Answer text", "correct": true },
+        { "text": "Answer text", "correct": false }
+      ]
+    }
+  ]
+}
