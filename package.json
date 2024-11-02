@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "generate-openapi:docs": "cd clms-api && mvn springdoc-openapi:generate",
+    "generate-openapi:angular-apis": "cd clms-angular && npm run generate:apis",
+    "generate-openapi:react-native-apis": "cd clms-mobile && npm run generate:apis",
+    "generate-openapi:all": "npm run generate-openapi:docs && npm run generate-openapi:angular-apis && npm run generate-openapi:react-native-apis"
+  }
+}

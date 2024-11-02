@@ -64,7 +64,7 @@ export class AssignmentEditPageComponent implements OnInit {
   }
 
   bulkUpdateQuestions(questions: QuestionProjection[]) {
-    const url = '/api/assignment-questions/bulk-update';
+    const url = '/api/assignments/questions/bulk-update';
     this.httpClient.post(url, questions).subscribe(
       response => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Questions updated successfully.'})
@@ -122,7 +122,7 @@ export class AssignmentEditPageComponent implements OnInit {
 
 
   saveEditQuestionModal() {
-    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    const url = `/api/assignments/questions/${this.selectedQuestion.id}`;
     this.selectedQuestion.assignmentId = this.assignment.id;
     console.log('selected question assignment id', this.selectedQuestion.assignmentId)
     this.httpClient.put(url,this.selectedQuestion).subscribe(
@@ -140,7 +140,7 @@ export class AssignmentEditPageComponent implements OnInit {
     });
   }
   deleteQuestion() {
-    const url = `/api/assignment-questions/${this.selectedQuestion.id}`;
+    const url = `/api/assignments/questions/${this.selectedQuestion.id}`;
     this.httpClient.delete(url).subscribe(
       response => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question deleted successfully.'})
@@ -182,7 +182,7 @@ export class AssignmentEditPageComponent implements OnInit {
 
 
     // Example URL for the endpoint
-    const url = '/api/assignment-questions';
+    const url = '/api/assignments/questions';
     // Send the POST request
     this.httpClient.post<QuestionProjection>(url, this.newQuestion).subscribe(
       response => {

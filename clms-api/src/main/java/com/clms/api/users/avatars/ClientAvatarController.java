@@ -3,6 +3,7 @@ package com.clms.api.users.avatars;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1/users/client/avatar")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Users", description = "User endpoints")
 public class ClientAvatarController {
 
     private final ClientAvatarService clientAvatarService;

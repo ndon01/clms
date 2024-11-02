@@ -2,6 +2,7 @@ package com.clms.api.questions;
 
 import com.clms.api.questions.api.events.QuestionGenerationOrderEvent;
 import com.clms.api.questions.dto.QuestionsFromYoutubeVideoRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 @RequestMapping("/api/questions")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Questions", description = "Endpoints for generating questions")
 public class QuestionsController {
 
     private final QuestionGenerationService questionGenerationService;

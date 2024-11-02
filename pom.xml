@@ -18,6 +18,7 @@
     <modules>
         <module>clms-api</module>
         <module>clms-angular</module>
+        <module>clms-mobile</module>
     </modules>
 
     <properties>

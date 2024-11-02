@@ -3,6 +3,7 @@ package com.clms.api.authorization.roles;
 import com.clms.api.authorization.Role;
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.permissions.PermissionRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/api/authorization/roles")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Authorization", description = "Endpoints for Authorization")
 public class RolesController {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
