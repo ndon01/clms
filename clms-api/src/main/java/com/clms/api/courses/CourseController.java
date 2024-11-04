@@ -12,6 +12,7 @@ import com.clms.api.courses.members.CourseMemberInsertService;
 import com.clms.api.courses.members.CourseMemberRemoveService;
 import com.clms.api.courses.members.CourseMemberRepository;
 import com.clms.api.courses.api.projections.CourseDetailsProjection;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
+@Tag(name = "Course", description = "Endpoints for managing courses")
 public class CourseController {
     private final CourseRepository courseRepository;
     private final CourseMemberInsertService courseMemberInsertService;

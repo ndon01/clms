@@ -5,6 +5,7 @@ import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.users.api.projections.converters.UserProjectionConverter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Users", description = "User endpoints")
 public class UserController {
 
     private final UserService userService;

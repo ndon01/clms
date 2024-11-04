@@ -1,4 +1,5 @@
 package com.clms.api.assignments;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -15,7 +16,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/assignment-questions")
+@RequestMapping("/api/assignments/questions")
+@Tag(name = "Assignments", description = "Endpoints for managing assignments")
 public class AssignmentQuestionController {
 
     @Autowired

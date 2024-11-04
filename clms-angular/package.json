@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "generate:apis": "npx openapi-generator-cli generate -i ..\\clms-api\\target\\openapi.json -g typescript-angular -o .\\src\\app\\core\\modules\\openapi --additional-properties fileNaming=kebab-case,withInterfaces=true --generate-alias-as-model"
   },
   "private": true,
   "dependencies": {

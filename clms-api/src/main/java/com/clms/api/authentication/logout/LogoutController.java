@@ -1,5 +1,6 @@
 package com.clms.api.authentication.logout;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth/logout")
+@Tag(name = "Authentication", description = "Endpoints for user authentication and registration")
 public class LogoutController {
     @PostMapping
     public ResponseEntity<?> logout() {

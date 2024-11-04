@@ -32,6 +32,15 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+
 clms:
   security:
     access-token:
@@ -47,3 +56,5 @@ gemini-configuration:
 
 question-generation-configuration:
   enabled: ${QUESTION_GENERATION_ENABLED:false}
+
+

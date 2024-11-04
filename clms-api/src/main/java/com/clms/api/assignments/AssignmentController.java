@@ -8,6 +8,7 @@ import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/assignments")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Assignments", description = "Endpoints for managing assignments")
 public class AssignmentController {
 
     private final AssignmentRepository assignmentRepository;

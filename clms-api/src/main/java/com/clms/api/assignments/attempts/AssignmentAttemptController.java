@@ -19,6 +19,7 @@ import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import com.clms.api.courses.api.Course;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @RequiresUser
+@Tag(name = "Assignments", description = "Endpoints for managing assignments")
 public class AssignmentAttemptController {
 
     private final AssignmentRepository assignmentRepository;

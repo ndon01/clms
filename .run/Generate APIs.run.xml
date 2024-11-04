@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Frontend" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/clms-angular/package.json" />
+  <configuration default="false" name="Generate APIs" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="watch" />
+      <script value="generate-openapi:all" />
     </scripts>
     <node-interpreter value="project" />
     <envs />

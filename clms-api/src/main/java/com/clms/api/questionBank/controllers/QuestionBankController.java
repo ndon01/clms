@@ -4,6 +4,7 @@ import com.clms.api.questionBank.models.QuestionBankCategory;
 import com.clms.api.questionBank.models.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/questionBank")
 @RequiredArgsConstructor
+@Tag(name = "Question Bank", description = "Endpoints for managing questions and categories")
 public class QuestionBankController {
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
