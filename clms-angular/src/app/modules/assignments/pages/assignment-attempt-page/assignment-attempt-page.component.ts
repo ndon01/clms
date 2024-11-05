@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {QuestionProjection} from "@modules/assignments/model/question.model";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -120,6 +120,7 @@ export class AssignmentAttemptPageComponent implements OnInit{
       return;
     }
     this.handleAnswerSelect(this.selectedAnswer);
+
     this.httpClient.post(`/api/assignments/attempts/update-question-attempt`, {
       questionId: this.currentQuestion?.id,
       selectedAnswerId: this.selectedAnswer,
