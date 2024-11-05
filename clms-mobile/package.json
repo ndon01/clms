@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "generate:apis": "npx openapi-generator-cli generate -i ..\\clms-api\\target\\openapi.json -g typescript-axios -o .\\core\\modules\\openapi"
+    "generate:apis": "npx openapi-generator-cli generate -i ../clms-api/target/openapi.json -g typescript-axios -o ./core/modules/openapi"
   },
   "jest": {
     "preset": "jest-expo"

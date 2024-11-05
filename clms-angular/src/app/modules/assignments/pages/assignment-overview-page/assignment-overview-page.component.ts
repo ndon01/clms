@@ -43,15 +43,11 @@ export class AssignmentOverviewPageComponent implements OnInit {
     this.httpClient.get<AssignmentAttemptProjection[]>(`/api/assignments/attempts/client`, {
       params: { assignmentId: this.assignmentId.toString() }
     }).subscribe(attempts => {
-      this.attempts = attempts.map(attempt => ({
-        id: attempt.id,
-        assignment: attempt.assignment,
-        user: attempt.user,
-        status: attempt.status,
-        startedAt: attempt.startedAt ? new Date(attempt?.startedAt) : null,
-        answers: attempt.answers,
-        questions: attempt
-      } as AssignmentAttemptProjection));
+       attempts.forEach(attempt =>{
+        attempt.startedAt = attempt.startedAt ? new Date(attempt?.startedAt) : undefined
+         attempt.scorePercentage = attempt.scorePercentage ? parseInt(attempt.scorePercentage.toFixed(2)) : 0;
+      });
+       this.attempts = attempts;
 
       if (this.attempts.length > 0) {
         this.selectedAttempt = this.attempts[0];

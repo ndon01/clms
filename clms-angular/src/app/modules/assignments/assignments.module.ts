@@ -39,14 +39,17 @@ import {ScrollPanelModule} from "primeng/scrollpanel";
 import {
     QuestionViewComponentComponent
 } from "@modules/assignments/components/question-view-component/question-view-component.component";
+import {GradeComponentComponent} from "@modules/assignments/components/grade-component/grade-component.component";
+import {ProgressBarModule} from "primeng/progressbar";
+import {CardModule} from "primeng/card";
 
 
 
 @NgModule({
-  declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent, AssignmentAttemptPageComponent],
-  exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent,AssignmentAttemptPageComponent],
-    imports: [
-        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule, RadioButtonModule, ScrollPanelModule, QuestionViewComponentComponent
-    ]
+  declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent, AssignmentAttemptPageComponent,GradeComponentComponent],
+  exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent,AssignmentAttemptPageComponent,GradeComponentComponent],
+  imports: [
+    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule, RadioButtonModule, ScrollPanelModule, QuestionViewComponentComponent, ProgressBarModule, CardModule
+  ]
 })
 export class AssignmentsModule { }
