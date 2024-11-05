@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -170,6 +171,7 @@ public class AssignmentAttemptController {
             return ResponseEntity.notFound().build();
         }
         currentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);
+        currentAttempt.setSubmittedAt(Instant.now());
         assignmentAttemptRepository.saveAndFlush(currentAttempt);
 
         assignmentAttemptGradingEventPublisher.publish(currentAttempt.getId().toString());

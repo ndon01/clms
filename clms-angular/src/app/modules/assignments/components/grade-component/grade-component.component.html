@@ -1,17 +1,17 @@
-<p-card [style]="{'width': '100%', 'maxWidth': '28rem'}">
-  <div class="space-y-4">
+<p-card *ngIf="assignmentAttemptProjection" [style]="{'width': '100%', 'maxWidth': '28rem'}" class = "shadow-lg">
+  <div class="space-y-2">
     <div class="flex items-center justify-between">
-      <span class="text-3xl font-bold">{{ grade }}/{{ maxGrade }}</span>
+      <span class="text-3xl font-bold">{{ assignmentAttemptProjection.scorePercentage}}/{{ maxGrade }}</span>
     </div>
-    <p-progressBar [value]="grade"></p-progressBar>
-    <div class="flex justify-between text-sm text-muted">
+    <p-progressBar [value]="assignmentAttemptProjection.scorePercentage"></p-progressBar>
+    <div class="flex flex-col text-sm text-muted">
       <div class="flex items-center">
         <i class="pi pi-calendar-plus mr-2" style="width: 1rem; height: 1rem;"></i>
-        <span>Due: {{ formattedDueDate }}</span>
+        <span>Time Taken {{ calculateTimeToTakeAttempt(assignmentAttemptProjection.startedAt!,assignmentAttemptProjection.submittedAt!)}}</span>
       </div>
       <div class="flex items-center">
         <i class="pi pi-file mr-2" style="width: 1rem; height: 1rem;"></i>
-        <span>Submitted: {{ formattedSubmissionDate }}</span>
+        <span>Submitted: {{assignmentAttemptProjection.submittedAt!| date: 'MM/dd/YYYY'}}</span>
       </div>
     </div>
   </div>

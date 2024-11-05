@@ -44,10 +44,10 @@ export class AssignmentOverviewPageComponent implements OnInit {
       params: { assignmentId: this.assignmentId.toString() }
     }).subscribe(attempts => {
        attempts.forEach(attempt =>{
-        attempt.startedAt = attempt.startedAt ? new Date(attempt?.startedAt) : undefined
          attempt.scorePercentage = attempt.scorePercentage ? parseInt(attempt.scorePercentage.toFixed(2)) : 0;
       });
        this.attempts = attempts;
+       this.sortAttempts();
 
       if (this.attempts.length > 0) {
         this.selectedAttempt = this.attempts[0];
@@ -79,5 +79,13 @@ export class AssignmentOverviewPageComponent implements OnInit {
   GetQuestionFromQuestionId(questionId: number) {
     if (!this.selectedAttempt || !this.selectedAttempt.assignment || !this.selectedAttempt.assignment.questions) return null;
     return this.selectedAttempt.assignment.questions.find(question => question.id === questionId);
+  }
+  sortAttempts() {
+    this.attempts.sort((a, b) => {
+      if (!a.submittedAt && !b.submittedAt) return 0;
+      if(!a.submittedAt) return 1;
+      if(!b.submittedAt) return -1;
+      return new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
+      });
   }
 }

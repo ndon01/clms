@@ -28,6 +28,7 @@ public class AssignmentAttemptProjectionConverter implements GenericConverter<As
                 .answers(source.getAnswers() != null ? source.getAnswers().stream().map(assignmentQuestionAnswerConverter::convert).toList() : null)
                 .scorePercentage(source.getScorePercentage())
                 .answersCorrect(source.getAnswersCorrect())
+                .submittedAt(source.getSubmittedAt())
                 .build();
     }
 }

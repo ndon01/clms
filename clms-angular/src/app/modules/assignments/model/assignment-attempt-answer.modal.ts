@@ -14,10 +14,11 @@ export type AssignmentAttempt = {
   assignment: AssignmentProjection
   user: UserProjection;
   status: 'IN_PROGRESS' | 'SUBMITTED' | 'COMPLETED' | 'PAST_DUE';
-  startedAt: Date;
+  startedAt: string;
   answers: AssignmentAttemptAnswerProjection[]; // Array of answers for the attempt
   scorePercentage?: number; // Optional score percentage if available
   answersCorrect?: number; // Optional count of correct answers if tracked
+  submittedAt?: string; // Optional date of submission
 };
 
 export type AssignmentAttemptProjection = Partial<AssignmentAttempt>;
