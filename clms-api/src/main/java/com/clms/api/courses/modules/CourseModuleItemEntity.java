@@ -1,9 +1,19 @@
 package com.clms.api.courses.modules;
 
 import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.expression.spel.ast.Assign;
 
+@Entity
+@Table(name = "course_modules_items")
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CourseModuleItemEntity {
 
     @Id
@@ -21,3 +31,4 @@ public class CourseModuleItemEntity {
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
 }
+

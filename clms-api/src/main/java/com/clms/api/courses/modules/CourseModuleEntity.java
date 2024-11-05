@@ -2,12 +2,18 @@ package com.clms.api.courses.modules;
 
 
 import com.clms.api.courses.api.Course;
+import com.clms.api.courses.api.projections.CourseDetailsProjection;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Entity
+@Table(name = "course_modules")
+@Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CourseModuleEntity {
 
     @Id
@@ -22,5 +28,6 @@ public class CourseModuleEntity {
     private Course course;
 
     @Column(name = "module_order")
-    private int moduleOrder;
+    private Integer moduleOrder;
 }
+
