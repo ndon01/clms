@@ -13,7 +13,8 @@
       <!-- Use the QuestionViewComponent here for current question -->
       <assignments-question-view-component
         [question]="currentQuestion"
-        [(selectedAnswer)]="selectedAnswer"
+        [selectedAnswer]="selectedAnswer"
+        (selectedAnswerChange)="onSelectAnswer($event)"
         [isReadOnly]="false">
       </assignments-question-view-component>
 

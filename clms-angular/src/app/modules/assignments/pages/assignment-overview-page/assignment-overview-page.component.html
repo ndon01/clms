@@ -31,7 +31,13 @@
           <h3 class="text-lg font-semibold">Attempts:</h3>
           <ul *ngIf="attempts.length > 0" class="pt-2">
             <li *ngFor="let attempt of attempts" (click)="viewAttempt(attempt)" class="cursor-pointer mb-2 p-2 rounded hover:bg-surface-d">
-              <a *ngIf="attempt" class="text-color-primary">{{ attempt.startedAt | date: 'MM/dd/yyyy HH:mm a' }} - Status: {{ attempt.status }}</a>
+              <app-grade-component *ngIf="attempt"
+                                   [grade]="attempt.scorePercentage!"
+                                   [assignmentName]="attempt.assignment?.name!"
+                                    [status]="attempt.status!"
+              ></app-grade-component>
+              <span>{{attempt.scorePercentage}}</span>
+              <!--<a *ngIf="attempt" class="text-color-primary">{{ attempt.startedAt | date: 'MM/dd/yyyy HH:mm a' }} - Status: {{ attempt.status }}</a>-->
             </li>
           </ul>
         </div>
