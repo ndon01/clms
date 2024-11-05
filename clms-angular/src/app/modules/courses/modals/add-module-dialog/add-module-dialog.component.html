@@ -1,0 +1,12 @@
+<div class="flex flex-col">
+  <div class="flex flex-col">
+    <div class="p-field" style="margin-bottom: 1rem;">
+      <label for="moduleTitle" style="font-weight: bold;">Module Title<span class="text-red-600">*</span></label>
+      <input id="moduleTitle" type="text" pInputText [(ngModel)]="newModuleTitle" style="width: 100%; padding: 0.5rem; border-radius: 4px;" placeholder="Default Module Name">
+    </div>
+  </div>
+  <div class="flex justify-end" style="margin-top: 1.5rem; gap: 1.5rem;">
+    <p-button label="Create Module" icon="pi pi-check" class="p-button-success" (click)="addModule()" [disabled]="!newModuleTitle"></p-button>
+    <p-button label="Cancel" icon="pi pi-times" class="p-button-secondary" (click)="cancel()"></p-button>
+  </div>
+</div>

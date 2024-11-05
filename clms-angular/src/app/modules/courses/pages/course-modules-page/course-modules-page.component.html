@@ -1,5 +1,33 @@
 <app-course-side-bar>
   <div class="lms-page-container">
-    
+    <p-menubar [model]="menuItems" class="mb-4">
+    </p-menubar>
+    <p-accordion *ngIf="courseModules" class="w-full" [multiple]="true" (activeIndexChange)="onActiveIndeciesChanged($event)" expandIcon="" collapseIcon="">
+      <p-accordionTab *ngFor="let module of courseModules; index as moduleIdx">
+        <ng-template pTemplate="icon">
+          <ng-container *ngIf="activeModuleIndecies[moduleIdx] == true; else moduleClosed">
+            <span class="pi pi-angle-down text-color-primary"></span>
+          </ng-container>
+          <ng-template #moduleClosed>
+            <span class="pi pi-angle-right text-color-primary"></span>
+          </ng-template>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <span class="flex align-items-center w-full text-color-primary">
+            <span class="white-space-nowrap text-color-primary" style="color: var(--text-color); margin-left: 1.25rem;">
+              {{ module?.title }}
+            </span>
+            <button pButton type="button" label="Add Assignment" icon="pi pi-plus" class="ml-auto" (click)="showAddAssignmentModal(module); $event.stopPropagation()"></button>
+          </span>
+        </ng-template>
+        <div>
+          <h4>Module Details</h4>
+          <p><strong>Module ID:</strong> {{ module.id }}</p>
+          <p><strong>Course Title:</strong> {{ module.course?.name }}</p>
+          <p><strong>Module Order:</strong> {{ module.moduleOrder }}</p>
+          <button pButton type="button" label="Add Assignment" icon="pi pi-plus" (click)="showAddAssignmentModal(module)"></button>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
   </div>
 </app-course-side-bar>
