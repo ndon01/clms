@@ -32,13 +32,17 @@ import {MenuModule} from "primeng/menu";
 import {CourseCardComponent} from "@modules/dashboard/pages/components/course-card/course-card.component";
 import {SkeletonModule} from "primeng/skeleton";
 import {CourseModulesPageComponent} from "@modules/courses/pages/course-modules-page/course-modules-page.component";
+import {AccordionModule} from "primeng/accordion";
+import {BadgeModule} from "primeng/badge";
+import {MenubarModule} from "primeng/menubar";
+import {StyleClassModule} from "primeng/styleclass";
 
 
 @NgModule({
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule,
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule,
   ]
 })
 export class CoursesModule {}
