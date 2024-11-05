@@ -25,16 +25,14 @@
 
       <!-- Attempts and Selected Attempt View Container -->
       <div class="flex pt-4">
-
         <!-- Attempts List on the Left -->
-        <div class="w-1/4 bg-surface-e p-4 rounded-md">
+        <div class="w-1/4 bg-surface-e p-4 rounded-md overflow-y-auto max-h-full min-h-full">
           <h3 class="text-lg font-semibold">Attempts:</h3>
           <ul *ngIf="attempts.length > 0" class="pt-2">
             <li *ngFor="let attempt of attempts" (click)="viewAttempt(attempt)" class="cursor-pointer mb-2 p-2 rounded hover:bg-surface-d">
               <app-grade-component *ngIf="attempt"
-                                   [grade]="attempt.scorePercentage!"
-                                   [assignmentName]="attempt.assignment?.name!"
-                                    [status]="attempt.status!"
+                                   [assignmentAttemptProjection] = "attempt"
+                                   [attemptNumber]="attempts.indexOf(attempt) + 1"
               ></app-grade-component>
               <span>{{attempt.scorePercentage}}</span>
               <!--<a *ngIf="attempt" class="text-color-primary">{{ attempt.startedAt | date: 'MM/dd/yyyy HH:mm a' }} - Status: {{ attempt.status }}</a>-->

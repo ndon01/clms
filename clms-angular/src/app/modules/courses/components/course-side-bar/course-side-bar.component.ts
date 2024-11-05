@@ -90,11 +90,17 @@ export class CourseSideBarComponent implements OnInit {
           this.router.navigate(["courses", this.courseId, "modules"])
         }
       },
+      {
+        label: 'Gradebook',
+        icon: 'pi pi-book',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "gradebook"])
+        }
+      },
 
       {
         separator: true
       },
-
       {
         label: 'Settings',
         icon: 'pi pi-cog',

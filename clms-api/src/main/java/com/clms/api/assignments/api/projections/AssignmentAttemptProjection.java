@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -21,4 +22,5 @@ public class AssignmentAttemptProjection {
     private List<AttemptQuestionAnswerProjection> answers;
     private Double scorePercentage;
     private Integer answersCorrect;
+    private Instant submittedAt;
 }

@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -50,6 +51,9 @@ public class AssignmentAttempt {
 
     @Column(name = "answers_correct")
     private Integer answersCorrect;
+
+    @Column(name = "submitted_at")
+    private Instant submittedAt;
 
 }
 

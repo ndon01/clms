@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CardModule} from "primeng/card";
 import {BadgeModule} from "primeng/badge";
 import {FileUploadModule} from "primeng/fileupload";
+import {AssignmentAttemptProjection} from "@modules/assignments/model/assignment-attempt-answer.modal";
 
 @Component({
   selector: 'app-grade-component',
@@ -10,31 +11,34 @@ import {FileUploadModule} from "primeng/fileupload";
 })
 export class GradeComponentComponent implements OnInit{
   ngOnInit() {
-    console.log("GRADE"+ this.grade)
-    console.log("STATUS"+ this.status)
   }
 
-  @Input() studentName: string = "John Doe";
-  @Input() assignmentName: string = "Introduction to React";
-  @Input() grade: number = 85;
-  maxGrade: number = 100;
-  @Input() dueDate: string = "2023-11-15";
-  @Input() submissionDate: string = "2023-11-14";
-  @Input() status:string = "";
+  @Input() assignmentAttemptProjection?: AssignmentAttemptProjection;
+  @Input() attemptNumber?:Number;
+  maxGrade :number = 100;
+  calculateTimeToTakeAttempt(startTime: string, endTime: string): string {
+    const start = new Date(startTime);
+    const end = new Date(endTime);
 
-
-  get formattedDueDate(): string {
-    return new Date(this.dueDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    return this.timeDifference(start, end)
   }
+  timeDifference(startTime, endTime) {
+    // Calculate the difference in milliseconds
+    const diffMs = Math.abs(endTime - startTime);
 
-  get formattedSubmissionDate(): string {
-    return new Date(this.submissionDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
+    // Convert milliseconds to days, hours, minutes, and seconds
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
 
-  getGradeColor(percentage: number): string {
-    if (percentage >= 90) return "green";
-    if (percentage >= 80) return "blue";
-    if (percentage >= 70) return "yellow";
-    return "red";
+    // Build the result string dynamically based on non-zero values
+    let result: string[] = [];
+    if (days > 0) result.push(`${days}D`);
+    if (hours > 0) result.push(`${hours}H`);
+    if (minutes > 0) result.push(`{MINUTES}m`);
+    if (seconds > 0) result.push(`${seconds}S`);
+
+    return result.join(' ') || "0S"; // Return "0S" if all values are zero
   }
 }
