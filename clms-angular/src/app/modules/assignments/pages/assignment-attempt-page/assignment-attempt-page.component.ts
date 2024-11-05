@@ -102,7 +102,6 @@ export class AssignmentAttemptPageComponent {
   }
 
   handleAnswerSelect(value: string | undefined) {
-    this.selectedAnswer = value || null;
     if (!this.currentQuestion) { return; }
     if (!this.assignmentAttemptAnswers) { return; }
     if (this.currentQuestion.id && !this.completedQuestions.includes(this.currentQuestion.id)) {
@@ -111,13 +110,18 @@ export class AssignmentAttemptPageComponent {
     for (let answer of Object.values(this.assignmentAttemptAnswers)) {
       if (answer.questionId === this.currentQuestion.id) {
         answer.selectedAnswerId = this.selectedAnswer || "";
-        this.triggerAutoSave();
         return;
       }
     }
   }
 
   saveQuestionAttempt() {
+    if (!this.currentQuestion || !this.selectedAnswer) {
+      return;
+    }
+
+    this.handleAnswerSelect(this.selectedAnswer)
+
     this.httpClient.post(`/api/assignments/attempts/update-question-attempt`, {
       questionId: this.currentQuestion?.id,
       selectedAnswerId: this.selectedAnswer,
@@ -140,7 +144,7 @@ export class AssignmentAttemptPageComponent {
   }
 
   handleNextQuestion() {
-    this.triggerAutoSave();
+    this.saveQuestionAttempt();
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex += 1;
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -149,7 +153,7 @@ export class AssignmentAttemptPageComponent {
   }
 
   handlePreviousQuestion() {
-    this.triggerAutoSave();
+    this.saveQuestionAttempt();
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex -= 1;
       this.currentQuestion = this.questions[this.currentQuestionIndex];
@@ -158,7 +162,7 @@ export class AssignmentAttemptPageComponent {
   }
 
   handleSubmit() {
-    this.triggerAutoSave();
+    this.saveQuestionAttempt();
     this.httpClient.post(`/api/assignments/attempts/submit-attempt`, {
       assignmentId: this.assignmentId,
     }, { observe: 'response' }).subscribe(response => {
@@ -169,7 +173,7 @@ export class AssignmentAttemptPageComponent {
   }
 
   setQuestionIndex(index: number) {
-    this.triggerAutoSave();
+    this.saveQuestionAttempt();
     this.currentQuestion = this.questions[index];
     this.currentQuestionIndex = index;
     this.updateSelectedAnswer();
@@ -178,5 +182,10 @@ export class AssignmentAttemptPageComponent {
   // Function to trigger auto-save
   private triggerAutoSave() {
     this.autoSaveSubject.next();
+  }
+
+  onSelectAnswer($event: string | null) {
+    this.selectedAnswer = $event;
+    this.saveQuestionAttempt();
   }
 }

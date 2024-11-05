@@ -1,0 +1,28 @@
+<div class="flex flex-col">
+  <div class="flex flex-col">
+    <p-table [value]="assignments" selectionMode="multiple" [(selection)]="selectedAssignments">
+      <ng-template pTemplate="header">
+        <tr>
+          <th><p-tableHeaderCheckbox/></th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Start Date</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-assignment>
+        <tr>
+          <td><p-tableCheckbox [value]="assignment"/></td>
+          <td>{{ assignment.name }}</td>
+          <td>{{ assignment.description }}</td>
+          <td>{{ assignment.dueDate }}</td>
+          <td>{{ assignment.startDate }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="flex justify-end mt-4 gap-4">
+    <button pButton type="button" label="{{selectedAssignments.length <= 1 ? 'Add Assignment' : 'Add Assignments'}}{{selectedAssignments.length > 1 ? ' (' + selectedAssignments.length + ')' : ''}}" icon="pi pi-check" (click)="addAssignmentsToModule()" [disabled]="selectedAssignments.length == 0"></button>
+    <button pButton type="button" label="Cancel" icon="pi pi-times" (click)="cancel()"></button>
+  </div>
+</div>
