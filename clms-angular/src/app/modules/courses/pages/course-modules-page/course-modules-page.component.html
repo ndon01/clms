@@ -9,23 +9,44 @@
             <span class="pi pi-angle-down text-color-primary"></span>
           </ng-container>
           <ng-template #moduleClosed>
-            <span class="pi pi-angle-right text-color-primary"></span>
+            <span class="pi pi-angle-right text-color-primary max-h-f"></span>
           </ng-template>
         </ng-template>
         <ng-template pTemplate="header">
-          <span class="flex align-items-center w-full text-color-primary">
+          <span class="flex justify-between w-full text-color-primary">
             <span class="white-space-nowrap text-color-primary" style="color: var(--text-color); margin-left: 1.25rem;">
               {{ module?.title }}
             </span>
-            <button pButton type="button" label="Add Assignment" icon="pi pi-plus" class="ml-auto" (click)="showAddAssignmentModal(module); $event.stopPropagation()"></button>
+            <div class="flex flex-row gap-3">
+              <!-- todo: figure out how to get this to show up \\\ or just remove it -->
+              <button pButton type="button" label="Add Item" icon="pi pi-plus" class="ml-auto" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false" ></button>
+              <button pButton type="button" label="Remove Item" icon="pi pi-minus" class="ml-auto" (click)="showRemoveModuleItemsModal(module); $event.stopPropagation()"></button>
+            </div>
           </span>
         </ng-template>
         <div>
-          <h4>Module Details</h4>
-          <p><strong>Module ID:</strong> {{ module.id }}</p>
-          <p><strong>Course Title:</strong> {{ module.course?.name }}</p>
-          <p><strong>Module Order:</strong> {{ module.moduleOrder }}</p>
-          <button pButton type="button" label="Add Assignment" icon="pi pi-plus" (click)="showAddAssignmentModal(module)"></button>
+          <ng-container *ngIf="module.id">
+            <p-table [value]="moduleItems[module.id]" responsiveLayout="scroll" styleClass="p-datatable-striped" selectionMode="single">
+              <ng-template pTemplate="body" let-moduleItem>
+                <tr *ngIf="moduleItem" (click)="openModuleItem(moduleItem)" class="cursor-pointer">
+                  <td>{{ moduleItem.assignment?.name }}</td>
+                  <td>{{ moduleItem.assignment?.description }}</td>
+                  <td>{{ moduleItem.assignment?.dueDate | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+                  <td>{{ moduleItem.assignment?.startDate | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+                  <td><div class="flex justify-end"><span class="pi pi-angle-double-right text-color-primary"></span></div></td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <div class="flex flex-col gap-5 justify-center items-center">
+                  <span class="text-color-primary">No items found.</span>
+                  <div class="flex flex-row gap-3">
+                  <p-button label="Add Item" icon="pi pi-plus" class="ml-4" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false"></p-button>
+                  <p-button label="Refresh" icon="pi pi-refresh" class="ml-4" (click)="loadModuleItems(module); $event.stopPropagation()"></p-button>
+                  </div>
+                </div>
+              </ng-template>
+            </p-table>
+          </ng-container>
         </div>
       </p-accordionTab>
     </p-accordion>

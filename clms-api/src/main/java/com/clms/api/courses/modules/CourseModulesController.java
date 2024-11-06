@@ -1,12 +1,16 @@
 package com.clms.api.courses.modules;
 
+import com.clms.api.courses.api.projections.CourseModuleItemProjection;
 import com.clms.api.courses.api.projections.CourseModuleProjection;
 import com.clms.api.courses.api.projections.converters.CourseDetailsProjectionConverter;
+import com.clms.api.courses.api.projections.converters.CourseModuleItemProjectionConverter;
+import com.clms.api.courses.modules.dto.CourseModuleAddAssignmentsDto;
 import com.clms.api.courses.modules.dto.CourseModuleCreationDto;
-import com.clms.api.courses.modules.services.CourseModuleCreationService;
-import com.clms.api.courses.modules.services.CourseModuleUpdateService;
+import com.clms.api.courses.modules.services.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +28,7 @@ public class CourseModulesController {
     private final CourseDetailsProjectionConverter courseDetailsProjectionConverter;
     private final CourseModuleCreationService courseModuleCreationService;
     private final CourseModuleUpdateService courseModuleUpdateService;
+    private final CourseModuleItemsInsertService courseModuleItemsInsertService;
 
     @GetMapping("/getById")
     private ResponseEntity<CourseModuleProjection> getCourseModuleById(@RequestPart Integer id) {
@@ -85,6 +90,38 @@ public class CourseModulesController {
         courseModuleRepository.deleteAll(courseModules);
         return ResponseEntity.noContent().build();
     }
+
+
+    // todo: validate user can add items to modules
+    @PostMapping("/insert-assignments")
+    private ResponseEntity<Void> addItemsToCourseModules(@RequestBody CourseModuleAddAssignmentsDto courseModuleAddAssignmentsDto) {
+        courseModuleItemsInsertService.insertAssignments(courseModuleAddAssignmentsDto);
+        return ResponseEntity.ok().build();
+    }
+
+    private final CourseModuleItemsRemoveService courseModuleItemsRemoveService;
+
+    @PostMapping("/remove-items")
+    private ResponseEntity<Void> removeItemsFromCourseModules(@RequestBody List<Integer> itemIds) {
+        courseModuleItemsRemoveService.removeItems(itemIds);
+        return ResponseEntity.ok().build();
+    }
+
+    private final CourseModuleItemsSearchService courseModuleItemsSearchService;
+    private final CourseModuleItemProjectionConverter courseModuleItemProjectionConverter;
+
+    @GetMapping("/get-module-items")
+    private ResponseEntity<List<CourseModuleItemProjection>> getModuleItems(@RequestParam Integer moduleId) {
+        CourseModuleEntity courseModule = courseModuleRepository.findById(moduleId).orElse(null);
+        if (courseModule == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(courseModuleItemsSearchService.findByCourseModule(courseModule).stream()
+                .map(courseModuleItemProjectionConverter::convert)
+                .collect(Collectors.toList()));
+    }
+
 
     private CourseModuleProjection convertToCourseModuleProjection(CourseModuleEntity courseModule) {
         return CourseModuleProjection.builder()
