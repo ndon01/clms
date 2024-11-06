@@ -1,0 +1,6 @@
+.always-active-button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  color: var(--text-color) !important;
+  opacity: 1 !important;
+}

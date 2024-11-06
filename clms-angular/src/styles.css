@@ -1,4 +1,4 @@
-@import "primeng/resources/primeng.css";
+  @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 
 @import "../node_modules/quill/dist/quill.core.css";
@@ -14,7 +14,8 @@
 .lms-page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
+  height: max-content;
   background-color: var(--surface-d);
   padding: 25px
 }

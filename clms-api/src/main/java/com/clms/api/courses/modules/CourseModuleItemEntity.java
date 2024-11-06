@@ -30,5 +30,6 @@ public class CourseModuleItemEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assignment_id")
     private Assignment assignment;
+
 }
 
