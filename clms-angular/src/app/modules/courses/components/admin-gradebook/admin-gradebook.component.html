@@ -3,7 +3,9 @@
   <h1 class="text-3xl font-bold mb-6">Gradebook</h1>
   <div >
     <p-scrollPanel styleClass="w-full">
-      <p-table [value]="students" styleClass="p-datatable-striped" >
+      <p-table [value]="students"
+               selectionMode="single"
+               styleClass="p-datatable-striped" >
         <ng-template pTemplate="header">
           <tr>
             <th class="w-[200px] bg-muted/50">Student Name</th>
