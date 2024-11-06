@@ -53,5 +53,11 @@ public class UserController {
         return userService.getUserById(userId)
                 .orElse(null);  // Handle null case appropriately
     }
-
+    @GetMapping("/batch")
+    public List<User> getUsersByIds(@RequestParam List<Integer> userIds) {
+        log.info("Fetching users with IDs: {}", userIds);
+        return userService.getUsersByIds(userIds)
+                .stream()
+                .toList();
+    }
 }

@@ -3,22 +3,13 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AssignmentAttemptProjection} from "@modules/assignments/model/assignment-attempt-answer.modal";
-import {UserDetails, UserDetailsProjection} from "@modules/courses/model/assignment-user.model";
+import {UserDetailsProjection} from "@modules/courses/model/assignment-user.model";
 import {TutorGradebookProjection} from "@modules/courses/model/tutor-gradebook";
 interface Student {
   id: number;
   name: string;
 }
 
-interface Assignment {
-  id: number;
-  name: string;
-}
-
-interface Grade {
-  studentId: number;
-  grades: { assignmentId: number; grade: number }[];
-}
 type Severity = "success" | "secondary" | "info" | "warning" | "danger" | "contrast" | undefined;
 
 @Component({
@@ -48,6 +39,7 @@ export class AdminGradebookComponent implements OnInit{
     });
   }
 
+
   fetchAllAssignmentAndAllAttempts() {
     if (!this.courseId) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Course ID not found' });
@@ -65,7 +57,6 @@ export class AdminGradebookComponent implements OnInit{
         console.log("User name to Assignment Attempts map", userAttemptMapWithNames);
       });
   }
-
   async fetchUserDetails(userId: number): Promise<UserDetailsProjection | {}> {
     try {
       const response: UserDetailsProjection | undefined = await this.httpClient.get<UserDetailsProjection>(`/api/v1/users/${userId}`).toPromise();
@@ -75,16 +66,36 @@ export class AdminGradebookComponent implements OnInit{
       return {}; // Return an empty object if there was an error
     }
   }
+  async fetchAllUserDetails(userIds: (number | undefined)[]): Promise<UserDetailsProjection[]> {
+    const params = new HttpParams().set('userIds', userIds.join(','));
+    return this.httpClient.get<UserDetailsProjection[]>('/api/v1/users/batch', { params }).toPromise()
+      .then(response => response || [])  // Fallback to an empty array if response is undefined
+      .catch(error => {
+        console.error("Error fetching user details:", error);
+        return [];  // Return an empty array in case of an error
+      });
+  }
+
 
   async mapUsersToAssignmentAttemptsWithNames(tutorGradebookView: TutorGradebookProjection): Promise<Map<string, AssignmentAttemptProjection[]>> {
     const userAttemptMap = new Map<string, AssignmentAttemptProjection[]>();
 
+    // Collect all unique user IDs
+    const userIds = Array.from(new Set(tutorGradebookView.allAttempts?.map(attempt => attempt.user?.id).filter(Boolean)));
+
+    // Fetch all user details in a single request
+    const userDetailsList: UserDetailsProjection[] = await this.fetchAllUserDetails(userIds);
+
+    // Create a map of user ID to user details
+    const userDetailsMap = new Map(userDetailsList.map(user => [user.id, user]));
+
+    // Populate the userAttemptMap using the userDetailsMap
     for (const attempt of tutorGradebookView.allAttempts || []) {
       const userId = attempt.user?.id;
       if (!userId) continue;
 
-      const userDetails: UserDetailsProjection = await this.fetchUserDetails(userId);
-      if (!userDetails.firstName || !userDetails.lastName) continue;
+      const userDetails = userDetailsMap.get(userId);
+      if (!userDetails?.firstName || !userDetails?.lastName) continue;
 
       const userKey = `${userDetails.firstName} ${userDetails.lastName}`;
       if (!userAttemptMap.has(userKey)) {
@@ -95,6 +106,7 @@ export class AdminGradebookComponent implements OnInit{
 
     return userAttemptMap;
   }
+
 
   populateGradebook(userAttemptMapWithNames: Map<string, AssignmentAttemptProjection[]>) {
     this.students = Array.from(userAttemptMapWithNames.keys()).map((name, index) => ({ id: index + 1, name }));

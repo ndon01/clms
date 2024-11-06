@@ -48,7 +48,7 @@ import {StyleClassModule} from "primeng/styleclass";
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent],
   imports: [
-    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule,
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule, TagModule,
   ]
 })
 export class CoursesModule {}
