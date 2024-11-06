@@ -97,7 +97,6 @@ export class CourseSideBarComponent implements OnInit {
           this.router.navigate(["courses", this.courseId, "gradebook"])
         }
       },
-
       {
         separator: true
       },

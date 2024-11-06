@@ -12,6 +12,9 @@ import {
 } from "@modules/courses/pages/course-assignments-page/course-assignments-page.component";
 import {CourseModulesPageComponent} from "@modules/courses/pages/course-modules-page/course-modules-page.component";
 import {AdminGradebookComponent} from "@modules/courses/components/admin-gradebook/admin-gradebook.component";
+import {
+  CourseGradebookAdminPageComponent
+} from "@modules/courses/pages/course-gradebook-admin-page/course-gradebook-admin-page.component";
 
 const routes: Routes = [
   {
@@ -29,7 +32,7 @@ const routes: Routes = [
           { path: 'assignments', component: CourseAssignmentsPageComponent },
           { path: 'modules', component: CourseModulesPageComponent },
           { path: 'settings', component: CourseSettingsPageComponent },
-          {path:'gradebook',component:AdminGradebookComponent},
+          {path:'gradebook',component:CourseGradebookAdminPageComponent},
           { path: '**', redirectTo: 'home' }
         ]
       },

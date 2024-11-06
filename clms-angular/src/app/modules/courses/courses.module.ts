@@ -34,6 +34,10 @@ import {SkeletonModule} from "primeng/skeleton";
 import {CourseModulesPageComponent} from "@modules/courses/pages/course-modules-page/course-modules-page.component";
 
 import {AdminGradebookComponent} from "@modules/courses/components/admin-gradebook/admin-gradebook.component";
+import {
+  CourseGradebookAdminPageComponent
+} from "@modules/courses/pages/course-gradebook-admin-page/course-gradebook-admin-page.component";
+import {TagModule} from "primeng/tag";
 import {AccordionModule} from "primeng/accordion";
 import {BadgeModule} from "primeng/badge";
 import {MenubarModule} from "primeng/menubar";
@@ -41,8 +45,8 @@ import {StyleClassModule} from "primeng/styleclass";
 
 
 @NgModule({
-  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent],
-  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent],
+  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent],
+  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent],
   imports: [
     CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule,
   ]

@@ -1,1 +1,26 @@
-<p>admin-gradebook works!</p>
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6">Gradebook</h1>
+  <div>
+    <p-scrollPanel styleClass="w-full">
+      <p-table [value]="students" selectionMode="single" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="w-[200px] bg-muted/50">Student Name</th>
+            <th *ngFor="let assignment of assignments" class="text-center">{{ assignment.name }}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+          <tr>
+            <td class="font-medium">{{ student.name }}</td>
+            <td *ngFor="let assignment of assignments" class="text-center">
+              <p-tag styleClass="ml-2"
+                     [severity]="getGradeColor(getGrade(student.id,assignment.id))"
+                     [value]="getGrade(student.id, assignment.id)">
+              </p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-scrollPanel>
+  </div>
+</div>

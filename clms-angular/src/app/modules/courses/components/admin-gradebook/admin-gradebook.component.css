@@ -1,0 +1,32 @@
+:host ::ng-deep .table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:host ::ng-deep .table th, :host ::ng-deep .table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+:host ::ng-deep .table th {
+  background-color: var(--surface-b);
+}
+:host ::ng-deep .table td{
+  background-color: var(--surface-a)
+}
+:host ::ng-deep .bg-green-100 { background-color: #d4edda; color: #155724; }
+:host ::ng-deep .bg-blue-100 { background-color: #d1ecf1; color: #0c5460; }
+:host ::ng-deep .bg-yellow-100 { background-color: #fff3cd; color: #856404; }
+:host ::ng-deep .bg-red-100 { background-color: #f8d7da; color: #721c24; }
+
+:host ::ng-deep .scroll-area {
+  overflow-y: auto;
+}
+
+:host ::ng-deep .hover\:bg-muted\/50:hover {
+  background-color: #f7f7f7;
+}
+:host ::ng-deep .p-datatable-striped{
+  border-radius:10px;
+  overflow: hidden;   /* Ensures the radius is respected */
+}
