@@ -40,8 +40,8 @@
                 <div class="flex flex-col gap-5 justify-center items-center">
                   <span class="text-color-primary">No items found.</span>
                   <div class="flex flex-row gap-3">
-                  <p-button label="Add Item" icon="pi pi-plus" class="ml-4" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false"></p-button>
-                  <p-button label="Refresh" icon="pi pi-refresh" class="ml-4" (click)="loadModuleItems(module); $event.stopPropagation()"></p-button>
+                  <p-button label="Add Item" icon="pi pi-plus" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false"></p-button>
+                  <p-button label="Refresh" icon="pi pi-refresh" (click)="loadModuleItems(module); $event.stopPropagation()"></p-button>
                   </div>
                 </div>
               </ng-template>
