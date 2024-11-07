@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {AssignmentAttemptProjection} from "@modules/assignments/model/assignment-attempt-answer.modal";
 import {UserDetailsProjection} from "@modules/courses/model/assignment-user.model";
@@ -28,7 +28,8 @@ export class AdminGradebookComponent implements OnInit{
   constructor(
     private httpClient: HttpClient,
     private activatedRoute: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -133,7 +134,6 @@ export class AdminGradebookComponent implements OnInit{
     const grade = this.grades
       .find(g => g.studentId === studentId)
       ?.grades.find(g => g.assignmentId === assignmentId)?.grade;
-
     return grade !== null && grade !== undefined ? grade.toString() : "N/A";
   }
 
@@ -151,6 +151,11 @@ export class AdminGradebookComponent implements OnInit{
     if (numericGrade >= 70) return 'warning';
     if (numericGrade >= 60) return 'warning';
     return 'danger';
+  }
+  navigateToAssignmentOverview(assignmnetId:number | undefined,grade:string){
+    if(grade !== "N/A" && assignmnetId){
+      this.router.navigate([`/assignments/${assignmnetId}/overview`]);
+    }
   }
 
 }

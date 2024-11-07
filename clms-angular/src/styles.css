@@ -14,7 +14,7 @@
 .lms-page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--surface-d);
   padding: 25px
 }

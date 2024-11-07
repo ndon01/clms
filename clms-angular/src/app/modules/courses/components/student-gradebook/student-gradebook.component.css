@@ -1,0 +1,4 @@
+:host ::ng-deep .p-datatable-gridlines{
+  border-radius:10px;
+  overflow: hidden;   /* Ensures the radius is respected */
+}
