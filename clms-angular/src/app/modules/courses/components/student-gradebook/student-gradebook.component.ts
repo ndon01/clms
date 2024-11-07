@@ -40,15 +40,18 @@ export class StudentGradebookComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const courseId = params['id'];
       this.courseId = parseInt(courseId, 10);
-      this.getCurrentUser();
-      this.fetchStudentGradebook(this.courseId, this.studentId!);
+      this.getCurrentUser().then(() =>{
+        this.fetchStudentGradebook(this.courseId!, this.studentId!);
+      });
     });
   }
-  getCurrentUser():number | undefined{
-    this.httpClient.get<any>('/api/v1/users/client').subscribe(data => {
-      this.studentId = data.id;
-    });
-    return this.studentId;
+  getCurrentUser():Promise<void>{
+    return new Promise((resolve)=>{
+      this.httpClient.get<any>('/api/v1/users/client').subscribe(data => {
+        this.studentId = data.id;
+        resolve();
+      });
+    })
   }
 
   fetchStudentGradebook(courseId: number, studentId: number) {

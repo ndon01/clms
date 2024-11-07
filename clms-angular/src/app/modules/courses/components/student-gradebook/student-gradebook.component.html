@@ -18,10 +18,7 @@
             <td class="font-medium">{{ assignment.name }}</td>
             <td class="text-center">{{ assignment.dueDate | date:'shortDate' }}</td>
             <td class="text-center">
-              <p-tag styleClass="ml-2"
-                     severity = "contrast"
-                     [value]="getStatus(assignment.id)">
-              </p-tag>
+              <app-student-status [status]="getStatus(assignment.id)"></app-student-status>
             </td>
             <td class="text-center">
               <p-tag *ngIf="getGrade(assignment.id) !== 'N/A'"
@@ -32,7 +29,7 @@
               <p-tag *ngIf="getGrade(assignment.id) === 'N/A'"
                      styleClass="ml-2"
                      severity="info"
-                     value="N/A"
+                     value="-"
               ></p-tag>
             </td>
           </tr>
