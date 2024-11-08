@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AnswerProjection, QuestionProjection } from "@modules/assignments/model/question.model";
+import {AssignmentQuestion} from "@core/modules/openapi";
 
 @Component({
   selector: 'app-question-editor-view',
@@ -9,7 +10,7 @@ import { AnswerProjection, QuestionProjection } from "@modules/assignments/model
 export class QuestionEditorViewComponent implements OnInit {
 
   // Default answers with the 'order' field
-  @Input() question: QuestionProjection | undefined = undefined;
+  @Input() question: AssignmentQuestion | undefined = undefined;
 
   @Input() assignmentId: number | undefined = undefined;
 
