@@ -5,7 +5,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {FormsModule} from "@angular/forms";
 import {EditorModule} from "primeng/editor";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'assignments-question-view-component',
@@ -16,7 +16,8 @@ import {NgForOf, NgIf} from "@angular/common";
     FormsModule,
     EditorModule,
     NgForOf,
-    NgIf
+    NgIf,
+    NgClass
   ],
   templateUrl: './question-view-component.component.html',
   styleUrl: './question-view-component.component.css'
@@ -26,6 +27,7 @@ export class QuestionViewComponentComponent {
   @Input() selectedAnswer: string | null = null;
   @Output() selectedAnswerChange = new EventEmitter<string | null>();
   @Input() isReadOnly = false;
+  @Input() isSelectedAnswerCorrect: boolean | null = null;
 
   constructor(private sanitizer: DomSanitizer) {}
 

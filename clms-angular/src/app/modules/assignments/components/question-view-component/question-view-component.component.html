@@ -26,8 +26,16 @@
         [inputId]="'answer-' + answer.id"
         [ngModel]="selectedAnswer === answer.id"
         [binary]="true"
+        [ngClass] = "{'selected-wrong-answer': isSelectedAnswerCorrect === false && selectedAnswer === answer.id}"
         disabled>
+        <ng-container *ngIf="isSelectedAnswerCorrect === false && selectedAnswer === answer.id">
+          <ng-template pTemplate = "icon">
+            <span class="pi pi-times text-white" ></span>
+          </ng-template>
+
+        </ng-container>
       </p-checkbox>
+
     </ng-template>
     <label
       [for]="'option-' + answer.text"

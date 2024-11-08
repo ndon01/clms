@@ -1,0 +1,4 @@
+::ng-deep .selected-wrong-answer .p-checkbox{
+  background-color: #ff0000;
+  border-radius: 6px;
+}
