@@ -12,7 +12,6 @@ import lombok.Setter;
 @Builder
 public class CourseModuleItemProjection {
     private Integer id;
-    private CourseModuleEntity courseModule;
     private Integer itemOrder;
     private AssignmentDetailsProjection assignment;
 }
