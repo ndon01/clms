@@ -1,0 +1,10 @@
+.status-tag {
+  padding: 4px 6px;
+  font-size: 12px;
+  color: var(--surface-a);
+  font-weight:bold;
+  border-radius: 5px;
+  display: inline-block;
+  text-align: center;
+  min-width: 60px;
+}

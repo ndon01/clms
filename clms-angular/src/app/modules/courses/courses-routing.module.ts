@@ -15,6 +15,9 @@ import {AdminGradebookComponent} from "@modules/courses/components/admin-gradebo
 import {
   CourseGradebookAdminPageComponent
 } from "@modules/courses/pages/course-gradebook-admin-page/course-gradebook-admin-page.component";
+import {
+  CourseGradebookStudentPageComponent
+} from "@modules/courses/pages/course-gradebook-student-page/course-gradebook-student-page.component";
 
 const routes: Routes = [
   {
@@ -33,6 +36,7 @@ const routes: Routes = [
           { path: 'modules', component: CourseModulesPageComponent },
           { path: 'settings', component: CourseSettingsPageComponent },
           {path:'gradebook',component:CourseGradebookAdminPageComponent},
+          {path:'studentGradebook', component:CourseGradebookStudentPageComponent},
           { path: '**', redirectTo: 'home' }
         ]
       },

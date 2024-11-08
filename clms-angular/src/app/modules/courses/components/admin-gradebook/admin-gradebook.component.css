@@ -26,7 +26,8 @@
 :host ::ng-deep .hover\:bg-muted\/50:hover {
   background-color: #f7f7f7;
 }
-:host ::ng-deep .p-datatable-striped{
+
+:host ::ng-deep .p-datatable-gridlines{
   border-radius:10px;
   overflow: hidden;   /* Ensures the radius is respected */
 }

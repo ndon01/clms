@@ -1,0 +1,40 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-color-primary">My Gradebook</h1>
+  <div>
+    <p-scrollPanel styleClass="w-full">
+      <p-table [value]="assignments"
+               selectionMode="single"
+               styleClass="p-datatable-gridlines">
+        <ng-template pTemplate="header" class = "text-color-primary">
+          <tr>
+            <th class="w-[200px] bg-muted/50">Assignment Name</th>
+            <th class="text-center">Due Date</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Grade</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-assignment class = "text-color-primary">
+          <tr (click)="navigateToAssignmentOverview(assignment.id,getGrade(assignment.id))">
+            <td class="font-medium">{{ assignment.name }}</td>
+            <td class="text-center">{{ assignment.dueDate | date:'shortDate' }}</td>
+            <td class="text-center">
+              <app-student-status [status]="getStatus(assignment.id)"></app-student-status>
+            </td>
+            <td class="text-center">
+              <p-tag *ngIf="getGrade(assignment.id) !== 'N/A'"
+                     styleClass="ml-2"
+                     [severity]="getGradeColor(getGrade(assignment.id))"
+                     [value]="getGrade(assignment.id)">
+              </p-tag>
+              <p-tag *ngIf="getGrade(assignment.id) === 'N/A'"
+                     styleClass="ml-2"
+                     severity="info"
+                     value="-"
+              ></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-scrollPanel>
+  </div>
+</div>
