@@ -1,20 +1,31 @@
 package com.clms.api.questionBank.models;
 
+import com.clms.api.assignments.AssignmentQuestion;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "question_bank_questions")
 @Data
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuestionBankQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "question_name")
     private String questionName;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source_question_id", referencedColumnName = "id")
+    private AssignmentQuestion sourceQuestion;
 
     @Column
     @ManyToMany(fetch = FetchType.EAGER)

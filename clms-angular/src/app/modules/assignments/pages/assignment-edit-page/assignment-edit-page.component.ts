@@ -2,10 +2,10 @@ import {assertInInjectionContext, Component, OnInit} from '@angular/core';
 import {AssignmentProjection} from "@modules/assignments/model/assignment.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Location} from "@angular/common";
-import {QuestionProjection} from "@modules/assignments/model/question.model";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {tap} from "rxjs";
+import {AssignmentQuestion} from "@core/modules/openapi";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -30,11 +30,11 @@ export class AssignmentEditPageComponent implements OnInit {
 
   fetchAssignment() {
     this.httpClient.get<AssignmentProjection>(`/api/assignments/getAssignmentEditDetails`, {
-      params: { assignmentId: this.assignmentId }
+      params: {assignmentId: this.assignmentId}
     }).subscribe(assignment => {
       this.assignment = assignment;
       this.assignment.startDate = assignment.startDate ? new Date(assignment.startDate) : null;
-      this.assignment.dueDate= assignment.dueDate? new Date(assignment.dueDate) : null;
+      this.assignment.dueDate = assignment.dueDate ? new Date(assignment.dueDate) : null;
       this.sortQuestionsByOrder();
       console.log("Assignment after fetching", this.assignment);
     });
@@ -43,7 +43,7 @@ export class AssignmentEditPageComponent implements OnInit {
   // Sort the questions by the 'order' field
   sortQuestionsByOrder() {
     if (this.assignment.questions) {
-      this.assignment.questions.sort((a: QuestionProjection, b: QuestionProjection) => {
+      this.assignment.questions.sort((a: AssignmentQuestion, b: AssignmentQuestion) => {
         if (a.order && b.order) {
           return a.order - b.order;
         }
@@ -55,7 +55,7 @@ export class AssignmentEditPageComponent implements OnInit {
   onQuestionsReordered(event: any) {
     if (!this.assignment.questions) return;
     // Update the order of the questions based on their new index
-    this.assignment.questions.forEach((question: QuestionProjection, index: number) => {
+    this.assignment.questions.forEach((question: AssignmentQuestion, index: number) => {
       question.order = index + 1; // Start order from 1
     });
 
@@ -63,25 +63,30 @@ export class AssignmentEditPageComponent implements OnInit {
     this.sortQuestionsByOrder();
   }
 
-  bulkUpdateQuestions(questions: QuestionProjection[]) {
+  bulkUpdateQuestions(questions: AssignmentQuestion[]) {
     const url = '/api/assignments/questions/bulk-update';
     this.httpClient.post(url, questions).subscribe(
       response => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Questions updated successfully.'})
       },
       error => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the questions.'})
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while updating the questions.'
+        })
       }
     ).add(() => {
       this.fetchAssignment();
     });
   }
 
-  selectQuestion(q: QuestionProjection) {
+  selectQuestion(q: AssignmentQuestion) {
     this.selectedQuestion = q;
     this.openEditQuestionModal()
   }
-  selectDeleteQuestion(q: QuestionProjection) {
+
+  selectDeleteQuestion(q: AssignmentQuestion) {
     this.selectedQuestion = q;
     this.deleteQuestion();
   }
@@ -89,7 +94,7 @@ export class AssignmentEditPageComponent implements OnInit {
   // Edit question modal
 
   isEditQuesitonModalVisible = false;
-  selectedQuestion!: QuestionProjection;
+  selectedQuestion!: AssignmentQuestion;
 
   openEditQuestionModal() {
     this.isEditQuesitonModalVisible = true;
@@ -102,20 +107,25 @@ export class AssignmentEditPageComponent implements OnInit {
   cancelEditQuestionModal() {
     this.closeEditQuestionModal();
   }
-  saveAssignment(assignment : AssignmentProjection){
+
+  saveAssignment(assignment: AssignmentProjection) {
     if (this.assignment.questions) {
       this.bulkUpdateQuestions(this.assignment.questions);
     }
 
     const url = `/api/assignments/${this.assignment.id}`;
-    this.httpClient.put(url, this.assignment, { observe: 'response' })
+    this.httpClient.put(url, this.assignment, {observe: 'response'})
       .pipe(tap((response) => {
         if (response.status === 200) {
           this.messageService.add({severity: 'success', summary: 'Success', detail: 'Assignment updated successfully.'})
         } else {
-          this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the assignment.'})
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'An error occurred while updating the assignment.'
+          })
         }
-      })).subscribe().add( () => {
+      })).subscribe().add(() => {
       this.fetchAssignment();
     });
   }
@@ -123,22 +133,27 @@ export class AssignmentEditPageComponent implements OnInit {
 
   saveEditQuestionModal() {
     const url = `/api/assignments/questions/${this.selectedQuestion.id}`;
-    this.selectedQuestion.assignmentId = this.assignment.id;
-    console.log('selected question assignment id', this.selectedQuestion.assignmentId)
-    this.httpClient.put(url,this.selectedQuestion).subscribe(
+    //this.selectedQuestion.assignmentId = this.assignment.id;
+    //console.log('selected question assignment id', this.selectedQuestion.assignmentId)
+    this.httpClient.put(url, this.selectedQuestion).subscribe(
       response => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question updated successfully.'})
       },
       error => {
-        console.error('Error Details',error)
-        console.log('selected question',this.selectedQuestion)
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while updating the question.'})
+        console.error('Error Details', error)
+        console.log('selected question', this.selectedQuestion)
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while updating the question.'
+        })
       }
     ).add(() => {
       this.fetchAssignment();
       this.closeEditQuestionModal();
     });
   }
+
   deleteQuestion() {
     const url = `/api/assignments/questions/${this.selectedQuestion.id}`;
     this.httpClient.delete(url).subscribe(
@@ -146,7 +161,11 @@ export class AssignmentEditPageComponent implements OnInit {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question deleted successfully.'})
       },
       error => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while deleting the question.'})
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while deleting the question.'
+        })
       }
     ).add(() => {
       this.fetchAssignment();
@@ -157,7 +176,7 @@ export class AssignmentEditPageComponent implements OnInit {
   // Add question modal
 
   isAddQuestionModalVisible = false;
-  newQuestion: QuestionProjection = {};
+  newQuestion: AssignmentQuestion = {};
 
   openAddQuestionModal() {
     this.resetAddQuestionModal();
@@ -182,17 +201,22 @@ export class AssignmentEditPageComponent implements OnInit {
 
 
     // Example URL for the endpoint
-    const url = '/api/assignments/questions';
+    const newQuestion = structuredClone(this.newQuestion) as any;
+    newQuestion.assignmentId = this.assignmentId;
     // Send the POST request
-    this.httpClient.post<QuestionProjection>(url, this.newQuestion).subscribe(
+    this.httpClient.post<AssignmentQuestion>('/api/assignments/questions', newQuestion).subscribe(
       response => {
         // Close the modal and reset the form
         this.closeAddQuestionModal();
         this.resetAddQuestionModal();
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question saved successfully.'})
-        },
+      },
       error => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'An error occurred while saving the question.'})
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while saving the question.'
+        })
       }
     ).add(() => {
       // Do something after the request is complete.
@@ -204,7 +228,6 @@ export class AssignmentEditPageComponent implements OnInit {
   resetAddQuestionModal() {
     this.newQuestion = {
       id: 0,
-      assignmentId: this.assignment.id,
       question: '',
       answers: [],
       questionType: 'single-choice',
@@ -220,5 +243,29 @@ export class AssignmentEditPageComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  isQuestionFromQuestionBank(question: AssignmentQuestion) {
+    return question.sourceQuestionBankQuestion !== null;
+  }
+
+  exportQuestion(question: AssignmentQuestion) {
+    this.httpClient.post<AssignmentQuestion>(`/api/questions/export`, question.id).subscribe(response => {
+        this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question exported successfully.'});
+        this.fetchAssignment()
+      },
+      error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'An error occurred while exporting the question.'
+        })
+      }
+    );
+
+  }
+
+  convertToQuestionProjection(selectedQuestion: AssignmentQuestion) {
+    return undefined;
   }
 }

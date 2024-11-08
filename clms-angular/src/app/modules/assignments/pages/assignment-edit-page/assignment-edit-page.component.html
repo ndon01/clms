@@ -94,6 +94,7 @@
                 <td>
                   <button pButton pRipple icon = "pi pi-pencil" type="button" (click)="(selectQuestion(question))"></button>
                   <button pButton pRipple icon = "pi pi-trash" type="button" (click)="(selectDeleteQuestion(question))"></button>
+                  <button pButton pRipple icon = "pi pi-upload" type="button" (click)="(exportQuestion(question))" *ngIf="isQuestionFromQuestionBank(question) == false"></button>
                 </td>
               </tr>
             </ng-template>

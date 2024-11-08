@@ -1,8 +1,9 @@
 package com.clms.api.assignments;
 
+import com.clms.api.questionBank.models.QuestionBankQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
@@ -17,8 +18,12 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Entity()
-@Data
 @Table(name = "questions")
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AssignmentQuestion {
 
     @Id
@@ -44,6 +49,11 @@ public class AssignmentQuestion {
 
     @Column(name = "assignment_order")
     private int order = 0;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source_question_bank_question_id", referencedColumnName = "id")
+    private QuestionBankQuestion sourceQuestionBankQuestion;
 
     /*
     export type Answer = {
