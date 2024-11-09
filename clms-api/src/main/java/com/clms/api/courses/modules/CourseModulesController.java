@@ -6,11 +6,10 @@ import com.clms.api.courses.api.projections.converters.CourseDetailsProjectionCo
 import com.clms.api.courses.api.projections.converters.CourseModuleItemProjectionConverter;
 import com.clms.api.courses.modules.dto.CourseModuleAddAssignmentsDto;
 import com.clms.api.courses.modules.dto.CourseModuleCreationDto;
+import com.clms.api.courses.modules.dto.CourseModuleUpdateTitleRequestDto;
 import com.clms.api.courses.modules.services.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -141,9 +140,3 @@ public class CourseModulesController {
     }
 }
 
-@Getter
-@Setter
-class CourseModuleUpdateTitleRequestDto {
-    private Integer moduleId;
-    private String title;
-}
