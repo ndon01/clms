@@ -122,6 +122,14 @@ public class CourseModulesController {
                 .collect(Collectors.toList()));
     }
 
+    private final CourseModuleUpdateTitleService courseModuleUpdateTitleService;
+
+    @PostMapping("/update-title")
+    private ResponseEntity<?> updateModuleTitle(@RequestBody CourseModuleUpdateTitleRequestDto requestDto) {
+        assert requestDto.getModuleId() != null;
+        courseModuleUpdateTitleService.updateCourseModuleTitle(requestDto.getModuleId(), requestDto.getTitle());
+        return ResponseEntity.ok().build();
+    }
 
     private CourseModuleProjection convertToCourseModuleProjection(CourseModuleEntity courseModule) {
         return CourseModuleProjection.builder()
@@ -131,4 +139,11 @@ public class CourseModulesController {
                 .course(courseModule.getCourse() != null ? courseDetailsProjectionConverter.convert(courseModule.getCourse()) : null)
                 .build();
     }
+}
+
+@Getter
+@Setter
+class CourseModuleUpdateTitleRequestDto {
+    private Integer moduleId;
+    private String title;
 }

@@ -4,3 +4,11 @@
   color: var(--text-color) !important;
   opacity: 1 !important;
 }
+
+::ng-deep .edit-module-title-button .p-button {
+  background-color: var(--second) !important;
+  color: var(--text-color) !important;
+  width: max-content !important;
+  height: max-content !important;
+  padding: 0.5rem .65rem !important;
+}

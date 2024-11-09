@@ -9,7 +9,7 @@ export interface SelectModulesItemsDialogData {
 }
 
 @Component({
-  selector: 'app-select-modules-dialog',
+  selector: 'app-select-module-items-dialog',
   templateUrl: './select-module-items-dialog.component.html',
   imports: [
     TableModule,
