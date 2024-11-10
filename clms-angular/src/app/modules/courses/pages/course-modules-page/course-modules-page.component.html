@@ -13,16 +13,14 @@
           </ng-template>
         </ng-template>
         <ng-template pTemplate="header">
-          <span class="flex justify-between w-full text-color-primary">
-            <span class="white-space-nowrap text-color-primary" style="color: var(--text-color); margin-left: 1.25rem;">
-              {{ module?.title }}
-            </span>
+          <div class="flex justify-between items-center w-full text-color-primary">
+            <div class="flex flex-row gap-3 items-center justify-center"><span>{{ module.title }}</span><p-button severity="contrast" class="edit-module-title-button" icon="pi pi-file-edit" (click)="showEditTitleModal(module); $event.stopPropagation()"></p-button></div>
             <div class="flex flex-row gap-3">
               <!-- todo: figure out how to get this to show up \\\ or just remove it -->
               <button pButton type="button" label="Add Item" icon="pi pi-plus" class="ml-auto" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false" ></button>
               <button pButton type="button" label="Remove Item" icon="pi pi-minus" class="ml-auto" (click)="showRemoveModuleItemsModal(module); $event.stopPropagation()"></button>
             </div>
-          </span>
+          </div>
         </ng-template>
         <div>
           <ng-container *ngIf="module.id">

@@ -37,9 +37,7 @@ public class ClientAvatarController {
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(avatarResource.getFile().getAbsolutePath());
-        } catch (Exception e) {
-            log.error("Could not determine file type.", e);
-        }
+        } catch (Exception e) {}
 
         // Fallback to a default content type if not able to determine
         if (contentType == null) {

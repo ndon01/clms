@@ -6,11 +6,10 @@ import com.clms.api.courses.api.projections.converters.CourseDetailsProjectionCo
 import com.clms.api.courses.api.projections.converters.CourseModuleItemProjectionConverter;
 import com.clms.api.courses.modules.dto.CourseModuleAddAssignmentsDto;
 import com.clms.api.courses.modules.dto.CourseModuleCreationDto;
+import com.clms.api.courses.modules.dto.CourseModuleUpdateTitleRequestDto;
 import com.clms.api.courses.modules.services.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -122,6 +121,14 @@ public class CourseModulesController {
                 .collect(Collectors.toList()));
     }
 
+    private final CourseModuleUpdateTitleService courseModuleUpdateTitleService;
+
+    @PostMapping("/update-title")
+    private ResponseEntity<?> updateModuleTitle(@RequestBody CourseModuleUpdateTitleRequestDto requestDto) {
+        assert requestDto.getModuleId() != null;
+        courseModuleUpdateTitleService.updateCourseModuleTitle(requestDto.getModuleId(), requestDto.getTitle());
+        return ResponseEntity.ok().build();
+    }
 
     private CourseModuleProjection convertToCourseModuleProjection(CourseModuleEntity courseModule) {
         return CourseModuleProjection.builder()
@@ -132,3 +139,4 @@ public class CourseModulesController {
                 .build();
     }
 }
+

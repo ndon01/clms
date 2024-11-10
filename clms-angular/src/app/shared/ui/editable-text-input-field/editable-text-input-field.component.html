@@ -1,0 +1,12 @@
+<ng-container *ngIf="!editing; else editMode">
+  <div class="flex flex-row justify-center gap-3">
+    {{ value }}
+    <span class="pi pi-file-edit" (click)="editClickedCallback($event)"></span>
+  </div>
+</ng-container>
+<ng-template #editMode>
+  <div class="flex flex-row justify-center gap-3" pFocusTrap>
+    <input type="text" (blur)="editClickedCallback($event)">
+    <span class="pi pi-check" (click)="saveClickedCallback($event)"></span>
+  </div>
+</ng-template>

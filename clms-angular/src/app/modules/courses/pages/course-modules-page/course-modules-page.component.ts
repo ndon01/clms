@@ -23,6 +23,7 @@ import {
 import {
   SelectModuleItemsDialogComponent
 } from "@modules/courses/modals/select-module-items-dialog/select-module-items-dialog.component";
+import {EditTitleModalComponent} from "@modules/courses/modals/edit-title-modal/edit-title-modal.component";
 
 @Component({
   selector: 'app-course-modules-page',
@@ -36,6 +37,7 @@ export class CourseModulesPageComponent implements OnInit {
   menuItems: MenuItem[] = [];
   activeModuleIndecies: { [key: number]: boolean } = {};
   moduleItems: { [key: number]: CourseModuleItemProjection[] } = {};
+
 
   constructor(
     private httpClient: HttpClient,
@@ -275,5 +277,30 @@ export class CourseModulesPageComponent implements OnInit {
     if (!module.id) return false;
     const moduleId = module.id;
     return this.moduleItems[moduleId]?.length > 0;
+  }
+
+  updateModuleTitle(module: CourseModuleProjection, title: string) {
+    if (!module.id) return;
+    this.httpClient.post('/api/courses/modules/update-title', {
+      moduleId: module.id,
+      title: title
+    }).subscribe(() => {
+      this.fetchModules();
+    });
+  }
+
+  showEditTitleModal(courseModule: CourseModuleProjection) {
+    this.dialogService.open(EditTitleModalComponent, {
+      header: 'Edit Module Title',
+      width: '50%',
+      closable: false,
+      data: {
+        title: courseModule.title
+      }
+    }).onClose.subscribe((newTitle) => {
+      if (newTitle) {
+        this.updateModuleTitle(courseModule, newTitle.title);
+      }
+    });
   }
 }
