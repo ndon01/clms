@@ -1,8 +1,10 @@
 <app-course-side-bar>
   <div class="lms-page-container">
-    <p-menubar [model]="menuItems" class="mb-4">
-    </p-menubar>
-    <p-accordion *ngIf="courseModules" class="w-full" [multiple]="true" (activeIndexChange)="onActiveIndeciesChanged($event)" expandIcon="" collapseIcon="">
+    <app-tutor-visible-view>
+      <p-menubar [model]="menuItems" class="mb-4"></p-menubar>
+    </app-tutor-visible-view>
+    <p-accordion *ngIf="courseModules" class="w-full" [multiple]="true"
+                 (activeIndexChange)="onActiveIndeciesChanged($event)" expandIcon="" collapseIcon="">
       <p-accordionTab *ngFor="let module of courseModules; index as moduleIdx">
         <ng-template pTemplate="icon">
           <ng-container *ngIf="activeModuleIndecies[moduleIdx] == true; else moduleClosed">
@@ -14,32 +16,50 @@
         </ng-template>
         <ng-template pTemplate="header">
           <div class="flex justify-between items-center w-full text-color-primary">
-            <div class="flex flex-row gap-3 items-center justify-center"><span>{{ module.title }}</span><p-button severity="contrast" class="edit-module-title-button" icon="pi pi-file-edit" (click)="showEditTitleModal(module); $event.stopPropagation()"></p-button></div>
+            <div class="flex flex-row gap-3 items-center justify-center"><span>{{ module.title }}</span>
+              <app-tutor-visible-view>
+                <p-button severity="contrast" class="edit-module-title-button" icon="pi pi-file-edit"
+                          (click)="showEditTitleModal(module); $event.stopPropagation()"></p-button>
+              </app-tutor-visible-view>
+            </div>
             <div class="flex flex-row gap-3">
               <!-- todo: figure out how to get this to show up \\\ or just remove it -->
-              <button pButton type="button" label="Add Item" icon="pi pi-plus" class="ml-auto" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false" ></button>
-              <button pButton type="button" label="Remove Item" icon="pi pi-minus" class="ml-auto" (click)="showRemoveModuleItemsModal(module); $event.stopPropagation()"></button>
+              <app-tutor-visible-view>
+                <button pButton type="button" label="Add Item" icon="pi pi-plus" class="ml-auto"
+                        (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false"></button>
+                <button pButton type="button" label="Remove Item" icon="pi pi-minus" class="ml-auto"
+                        (click)="showRemoveModuleItemsModal(module); $event.stopPropagation()"></button>
+              </app-tutor-visible-view>
             </div>
           </div>
         </ng-template>
         <div>
           <ng-container *ngIf="module.id">
-            <p-table [value]="moduleItems[module.id]" responsiveLayout="scroll" styleClass="p-datatable-striped" selectionMode="single">
+            <p-table [value]="moduleItems[module.id]" responsiveLayout="scroll" styleClass="p-datatable-striped"
+                     selectionMode="single">
               <ng-template pTemplate="body" let-moduleItem>
                 <tr *ngIf="moduleItem" (click)="openModuleItem(moduleItem)" class="cursor-pointer">
                   <td>{{ moduleItem.assignment?.name }}</td>
                   <td>{{ moduleItem.assignment?.description }}</td>
                   <td>{{ moduleItem.assignment?.dueDate | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
                   <td>{{ moduleItem.assignment?.startDate | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
-                  <td><div class="flex justify-end"><span class="pi pi-angle-double-right text-color-primary"></span></div></td>
+                  <td>
+                    <div class="flex justify-end"><span class="pi pi-angle-double-right text-color-primary"></span>
+                    </div>
+                  </td>
                 </tr>
               </ng-template>
               <ng-template pTemplate="emptymessage">
                 <div class="flex flex-col gap-5 justify-center items-center">
                   <span class="text-color-primary">No items found.</span>
                   <div class="flex flex-row gap-3">
-                  <p-button label="Add Item" icon="pi pi-plus" (click)="showAddAssignmentModal(module); $event.stopPropagation()" [disabled]="false"></p-button>
-                  <p-button label="Refresh" icon="pi pi-refresh" (click)="loadModuleItems(module); $event.stopPropagation()"></p-button>
+                    <app-tutor-visible-view>
+                      <p-button label="Add Item" icon="pi pi-plus"
+                                (click)="showAddAssignmentModal(module); $event.stopPropagation()"
+                                [disabled]="false"></p-button>
+                      <p-button label="Refresh" icon="pi pi-refresh"
+                                (click)="loadModuleItems(module); $event.stopPropagation()"></p-button>
+                    </app-tutor-visible-view>
                   </div>
                 </div>
               </ng-template>

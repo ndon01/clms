@@ -12,4 +12,6 @@ public class CourseMember {
     private CourseMemberId id;
 
     // You can add any additional fields if needed, like a role in the course
+    @Column(name = "is_tutor")
+    private boolean isTutor;
 }

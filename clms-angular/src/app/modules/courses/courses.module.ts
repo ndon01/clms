@@ -50,13 +50,14 @@ import {StatusComponent} from "@modules/courses/components/status-component/stat
 import {
     EditableTextInputFieldComponent
 } from "@shared/ui/editable-text-input-field/editable-text-input-field.component";
+import {TutorVisibleViewComponent} from "@modules/courses/components/tutor-visible-view/tutor-visible-view.component";
 
 
 @NgModule({
   declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent],
   exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent],
-    imports: [
-        CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule, TagModule, EditableTextInputFieldComponent,
-    ]
+  imports: [
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule, TagModule, EditableTextInputFieldComponent, TutorVisibleViewComponent,
+  ]
 })
 export class CoursesModule {}

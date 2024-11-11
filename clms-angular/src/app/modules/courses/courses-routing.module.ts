@@ -18,6 +18,7 @@ import {
 import {
   CourseGradebookStudentPageComponent
 } from "@modules/courses/pages/course-gradebook-student-page/course-gradebook-student-page.component";
+import {CourseGuardService} from "@modules/courses/guards/course-guard.service";
 
 const routes: Routes = [
   {
@@ -29,6 +30,7 @@ const routes: Routes = [
       // Individual Courses
       {
         path: ':id',
+        canActivate: [CourseGuardService],
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full'},
           { path: 'home', component: IndividualCourseHomepageComponent},
