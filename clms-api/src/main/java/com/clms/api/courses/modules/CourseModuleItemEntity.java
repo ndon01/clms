@@ -8,7 +8,7 @@ import lombok.*;
 import org.springframework.expression.spel.ast.Assign;
 
 @Entity
-@Table(name = "course_modules_items")
+@Table(name = "course_module_items")
 @Builder
 @Getter
 @Setter
