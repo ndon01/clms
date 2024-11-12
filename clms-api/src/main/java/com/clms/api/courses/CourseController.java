@@ -4,13 +4,11 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.courses.api.Course;
+import com.clms.api.courses.members.*;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
 import com.clms.api.common.interfaces.GenericConverter;
-import com.clms.api.courses.members.CourseMemberInsertService;
-import com.clms.api.courses.members.CourseMemberRemoveService;
-import com.clms.api.courses.members.CourseMemberRepository;
 import com.clms.api.courses.api.projections.CourseDetailsProjection;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
@@ -191,6 +189,18 @@ public class CourseController {
 
         assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("members/getClientMembership")
+    public ClientCourseMemberDetailsProjection getClientMembership(@CurrentUser User user, @RequestParam Integer courseId){
+        CourseMember courseMember = courseMemberRepository.getCourseMemberByCourseIdAndUserId(courseId,user.getId());
+        if(courseMember == null){
+            return null;
+        }
+        return ClientCourseMemberDetailsProjection.builder()
+                .courseId(courseMember.getId().getCourse().getId())
+                .userId(courseMember.getId().getUser().getId())
+                .isTutor(courseMember.isTutor())
+                .build();
     }
 }
 

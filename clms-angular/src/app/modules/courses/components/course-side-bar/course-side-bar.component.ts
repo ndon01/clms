@@ -7,6 +7,7 @@ import {ClientService} from "@core/services/client/client.service";
 import {ClientDataSourceService} from "@core/services/client-data-source.service";
 import {GetPermissionsFromUserAsMap} from "@core/util/UserUtil";
 import {MenuItem, MenuItemCommandEvent} from "primeng/api";
+import {CurrentCourseContextService} from "@modules/courses/services/current-course-context.service";
 
 @Component({
   selector: 'app-course-side-bar',
@@ -21,7 +22,12 @@ export class CourseSideBarComponent implements OnInit {
   Client: UserProjection | null = null;
 
   hasAdminPageAccess: boolean = false;
-  constructor(private clientService: ClientService, private clientDataSourceService: ClientDataSourceService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private clientService: ClientService,
+              private clientDataSourceService: ClientDataSourceService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private currentCourseContextService: CurrentCourseContextService
+  ) {}
   ngOnInit() {
     this.clientDataSourceService.get().subscribe(newUser => {
       this.Client = newUser
@@ -93,6 +99,7 @@ export class CourseSideBarComponent implements OnInit {
       {
         label: 'Gradebook',
         icon: 'pi pi-book',
+        visible: this.currentCourseContextService.isCourseTutor(),
         command: () => {
           this.router.navigate(["courses", this.courseId, "gradebook"])
         }
@@ -110,6 +117,7 @@ export class CourseSideBarComponent implements OnInit {
       {
         label: 'Settings',
         icon: 'pi pi-cog',
+        visible: this.currentCourseContextService.isCourseTutor(),
         command: () => {
           this.router.navigate(["courses", this.courseId, "settings"])
         }
@@ -126,7 +134,6 @@ export class CourseSideBarComponent implements OnInit {
   logout() {
     this.clientService.logout();
   }
-
   usernameToInitials(username: string) {
     if (username.length === 0 || username === null) {
       return ""
