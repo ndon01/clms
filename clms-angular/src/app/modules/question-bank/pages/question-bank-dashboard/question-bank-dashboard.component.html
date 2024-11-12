@@ -1,0 +1,9 @@
+<app-sidebar-page-wrapper>
+  <div class="lms-page-container">
+    <app-category-tree-view
+      [categories]="categories"
+      [allowDragAndDrop]="true"
+      (categoryReparented)="onCategoryReparented($event)"
+    ></app-category-tree-view>
+  </div>
+</app-sidebar-page-wrapper>

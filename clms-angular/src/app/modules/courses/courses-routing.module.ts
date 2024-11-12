@@ -29,6 +29,7 @@ const routes: Routes = [
       // Individual Courses
       {
         path: ':id',
+        canActivate: [],
         children: [
           { path: '', redirectTo: 'home', pathMatch: 'full'},
           { path: 'home', component: IndividualCourseHomepageComponent},

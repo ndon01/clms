@@ -11,7 +11,7 @@ import java.util.List;
 public class QuestionBankCategory{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Integer id;
     private String categoryName;
+    private Integer parentId;
 }

@@ -1,0 +1,36 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-between items-center p-6">
+      <h3 class="text-lg font-bold">Question Bank Categories</h3>
+      <div>
+        <div *ngIf="allowDragAndDrop" class="flex flex-col justify-center items-center gap-3">
+          <span class="mr-2">Drag and Drop</span>
+          <p-inputSwitch [(ngModel)]="dragAndDropEnabled" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="!dragAndDropEnabled; else dragAndDropTemplate">
+    <p-tree class="w-full md:w-30rem"
+            [value]="categoryTree"
+            [indentation]="20"
+            (onNodeExpand)="onNodeExpand($event)"
+            (onNodeCollapse)="onNodeCollapse($event)"
+    />
+  </ng-container>
+
+  <ng-template #dragAndDropTemplate>
+    <p-tree class="w-full md:w-30rem"
+            [value]="categoryTree"
+            [draggableNodes]="true"
+            [droppableNodes]="true"
+            draggableScope="self"
+            droppableScope="self"
+            (onNodeDrop)="onNodeDrop($event)"
+            (onNodeExpand)="onNodeExpand($event)"
+            (onNodeCollapse)="onNodeCollapse($event)"
+            [indentation]="20"
+    />
+  </ng-template>
+</p-card>

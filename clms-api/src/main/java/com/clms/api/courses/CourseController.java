@@ -4,6 +4,7 @@ import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.courses.api.Course;
+import com.clms.api.courses.members.CourseMember;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
@@ -192,5 +193,6 @@ public class CourseController {
         assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();
     }
+
 }
 

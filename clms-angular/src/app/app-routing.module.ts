@@ -48,6 +48,11 @@ routes = [
       {
         path: 'assignments',
         loadChildren: () => import('./modules/assignments/assignments.module').then(m => m.AssignmentsModule)
+      },
+
+      {
+        path: 'question-bank',
+        loadChildren: () => import('./modules/question-bank/question-bank.module').then(m => m.QuestionBankModule)
       }
 
     ]

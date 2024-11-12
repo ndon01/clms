@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DashboardPageComponent} from "@modules/dashboard/pages/dashboard-page/dashboard-page.component";
 import {CoreModule} from "@core/core.module";
 import {DashboardRoutingModule} from "@modules/dashboard/dashboard-routing.module";
 import {Header} from "primeng/api";
@@ -15,17 +14,25 @@ import {SkeletonModule} from "primeng/skeleton";
 import {
   AssignmentsListComponent
 } from "@modules/dashboard/pages/components/assignments-list/assignments-list.component";
+import {
+  QuestionBankDashboardComponent
+} from "@modules/question-bank/pages/question-bank-dashboard/question-bank-dashboard.component";
+import {QuestionBankRoutingModule} from "@modules/question-bank/question-bank-routing.module";
+import {TreeModule} from "primeng/tree";
+import {
+  CategoryTreeViewComponent
+} from "@modules/question-bank/components/category-tree-view/category-tree-view.component";
 
 
 
 
 @NgModule({
-  declarations: [DashboardPageComponent],
-  exports: [DashboardPageComponent],
+  declarations: [QuestionBankDashboardComponent],
+  exports: [QuestionBankDashboardComponent],
   imports: [
     CommonModule,
     CoreModule,
-    DashboardRoutingModule,
+    QuestionBankRoutingModule,
     Header,
     CardModule,
     CalendarModule,
@@ -36,6 +43,8 @@ import {
     CourseCardComponent,
     SkeletonModule,
     AssignmentsListComponent,
+    TreeModule,
+    CategoryTreeViewComponent,
   ]
 })
-export class DashboardModule { }
+export class QuestionBankModule { }
