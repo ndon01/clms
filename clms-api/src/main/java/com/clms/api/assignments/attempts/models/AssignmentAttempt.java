@@ -42,7 +42,7 @@ public class AssignmentAttempt {
 
     private Date startedAt;
 
-    @Column(name = "question_answers",columnDefinition = "TEXT", length = 1024)
+    @Column(name = "question_answers",columnDefinition = "JSONB", length = 1024)
     @Convert(converter = AttemptQuestionAnswersConverter.class)
     private List<AttemptQuestionAnswer> answers;
 
