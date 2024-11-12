@@ -17,7 +17,7 @@ import java.util.List;
 public class QuestionBankQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "question_name")
     private String questionName;
@@ -26,13 +26,4 @@ public class QuestionBankQuestion {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "source_question_id", referencedColumnName = "id")
     private AssignmentQuestion sourceQuestion;
-
-    @Column
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "question_bank_question_category_mapping",
-            joinColumns = @JoinColumn(name = "question_bank_question_id"),
-            inverseJoinColumns = @JoinColumn(name = "question_bank_category_id")
-    )
-    private List<QuestionBankCategory> categories;
 }
