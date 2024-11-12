@@ -20,8 +20,8 @@ import java.util.UUID;
 public class QuestionGenerationOrderEntity {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @JoinColumn(name = "ordered_by")
     @OneToOne
