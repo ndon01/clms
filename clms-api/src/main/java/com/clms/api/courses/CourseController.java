@@ -190,6 +190,7 @@ public class CourseController {
         assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();
     }
+
     @GetMapping("members/getClientMembership")
     public ClientCourseMemberDetailsProjection getClientMembership(@CurrentUser User user, @RequestParam Integer courseId){
         CourseMember courseMember = courseMemberRepository.getCourseMemberByCourseIdAndUserId(courseId,user.getId());

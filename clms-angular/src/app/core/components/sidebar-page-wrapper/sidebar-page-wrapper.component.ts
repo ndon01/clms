@@ -20,11 +20,15 @@ export class SidebarPageWrapperComponent implements OnInit, OnChanges {
   Client: UserProjection | null = null;
 
   hasAdminPageAccess: boolean = false;
+  hasQuestionBankPageAccess: boolean = false;
+
   constructor(private clientService: ClientService, private clientDataSourceService: ClientDataSourceService, private router: Router) {}
   ngOnInit() {
     this.clientDataSourceService.get().subscribe(newUser => {
       this.Client = newUser
-      this.hasAdminPageAccess = GetPermissionsFromUserAsMap(this.Client as UserProjection).has("ADMIN_PAGE_ACCESS")
+      const permissions = GetPermissionsFromUserAsMap(this.Client as UserProjection)
+      this.hasAdminPageAccess = permissions.has("ADMIN_PAGE_ACCESS")
+      this.hasQuestionBankPageAccess = permissions.has("QUESTION_BANK_PAGE_ACCESS")
     })
 
     this.loadItems();
@@ -45,6 +49,15 @@ export class SidebarPageWrapperComponent implements OnInit, OnChanges {
         icon: 'pi pi-book',
         command: () => {
           this.router.navigate(["courses"])
+        }
+      },
+
+      {
+        label: 'Question Bank',
+        icon: 'pi pi-question-circle',
+        visible: this.hasQuestionBankPageAccess,
+        command: () => {
+          this.router.navigate(["question-bank"])
         }
       },
 

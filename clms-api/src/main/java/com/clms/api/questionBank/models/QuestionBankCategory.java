@@ -1,17 +1,21 @@
 package com.clms.api.questionBank.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Table(name = "question_bank_categories")
-@Data
-public class QuestionBankCategory{
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class QuestionBankCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Integer id;
     private String categoryName;
+    private Integer parentId;
 }

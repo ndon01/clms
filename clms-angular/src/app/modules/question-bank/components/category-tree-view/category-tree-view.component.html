@@ -1,0 +1,25 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-between items-center p-6">
+      <h3 class="text-lg font-bold">Question Bank Categories</h3>
+      <div>
+        <p-button label="Add Category" icon="pi pi-plus" class="p-button-sm p-button-outlined"
+                (click)="this.createNewRootCategory()"></p-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <p-tree class="w-full md:w-30rem"
+          [value]="categoryTree"
+          [indentation]="20"
+          (onNodeExpand)="onNodeExpand($event)"
+          (onNodeCollapse)="onNodeCollapse($event)"
+          (onNodeContextMenuSelect)="onNodeContextMenuSelect($event)"
+          [contextMenu]="contextMenu"
+  />
+
+
+
+  <!-- Context Menu for Category Options -->
+  <p-contextMenu #contextMenu [model]="contextMenuItems"></p-contextMenu>
+</p-card>

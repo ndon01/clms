@@ -35,13 +35,13 @@ export class IndividualCourseHomepageComponent implements OnInit {
 
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id'); // Get the value of 'id' parameter
-      if (!id) {
-        return;
-      }
-      this.courseId = parseInt(id, 10); // Convert the value to a number
-    });
+      this.activatedRoute.paramMap.subscribe(params => {
+        const id = params.get('id'); // Get the value of 'id' parameter
+        if (!id) {
+          return;
+        }
+        this.courseId = parseInt(id, 10); // Convert the value to a number
+      });
     this.fetchAssignments(); // Fetch assignments from the backend
     this.fetchOverallProgress();
   }
