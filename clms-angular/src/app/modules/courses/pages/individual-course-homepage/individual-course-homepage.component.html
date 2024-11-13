@@ -1,61 +1,60 @@
 <app-course-side-bar>
-  <div class="flex h-screen bg-gray-900 text-gray-100">
+  <div class = "lms-page-container">
+  <div class="flex h-screen ">
     <main class="flex-1 p-6 overflow-auto">
-      <h1 class="text-3xl font-bold mb-2">Hello, Josh</h1>
-      <h2 class="text-xl text-gray-400 mb-6">June 2024 Math Prep Course</h2>
+      <h1 class="text-3xl font-bold mb-2 text-color-primary">Hello, Josh</h1>
+      <h2 class="text-xl text-gray-400 mb-6 text-color-secondary">June 2024 Math Prep Course</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <p-card>
           <p-header>
             <div class="p-3">
-              <i class="pi pi-graduation-cap mr-2 text-red-500"></i> Overall Progress
+              <i class="pi pi-graduation-cap mr-2 card-color-border"></i> Overall Progress
             </div>
           </p-header>
-          <p><span class="text-4xl font-bold text-red-500">78%</span></p>
+          <p><span class="text-4xl font-bold card-color-border">{{overallProgress?.overallPercentage}}%</span></p>
           <p class="text-gray-400">Keep up the good work!</p>
         </p-card>
 
           <p-card>
             <p-header>
               <div class="p-3">
-                <i class="pi pi-book mr-2 text-red-500"></i> Study Time
+                <i class="pi pi-book mr-2 card-color-border"></i> Study Time
               </div>
             </p-header>
-            <p><span class="text-4xl font-bold text-red-500">12.5 hrs</span></p>
+            <p><span class="text-4xl font-bold card-color-border">{{overallProgress?.overallStudyTimeHours}} hrs</span></p>
             <p class="text-gray-400">This week</p>
           </p-card>
 
         <p-card>
           <p-header>
             <div class="p-3">
-              <i class="pi pi-pencil mr-2 text-red-500"></i> Practice Tests
+              <i class="pi pi-pencil mr-2 card-color-border"></i> Practice Tests
             </div>
           </p-header>
-          <p><span class="text-4xl font-bold text-red-500">3 / 5</span></p>
+          <p><span class="text-4xl font-bold card-color-border">{{overallProgress?.totalAssignmentsCompleted}}/ {{overallProgress?.totalAssignments}}</span></p>
           <p class="text-gray-400">Completed</p>
         </p-card>
       </div>
 
-      <!-- Flex container for the header and multiSelect -->
       <div class="flex justify-between items-center mb-4">
-        <h3 class="text-2xl font-bold">{{ headerText }}</h3>
+        <h3 class="text-2xl font-bold text-color-primary">{{ headerText }}</h3>
 
-        <!-- PrimeNG MultiSelect for filtering assignments by month of due date -->
         <p-multiSelect
           [options]="months"
           [(ngModel)]="selectedMonths"
           optionLabel="label"
           placeholder="Select Months"
           (onChange)="onMonthSelectionChange()"
-          class="w-64"
+          class="w-64 text-color-secondary"
         ></p-multiSelect>
       </div>
 
       <div *ngFor="let group of groupedAssignments | keyvalue">
-        <h4 class="text-xl font-semibold mb-2">Week of {{ group.key | date: 'longDate' }}</h4>
+        <h4 class="text-xl font-semibold mb-2 text-color-secondary">Week of {{ group.key | date: 'longDate' }}</h4>
         <div class="flex overflow-x-auto pb-2 space-x-4">
           <p-card *ngFor="let assignment of group.value; trackBy: trackByAssignmentId"
-                  class="bg-gray-800 border-red-800 flex-shrink-0 w-64 cursor-pointer"
+                  class="bg-gray-800 rounded-xl border-red-800 flex-shrink-0 w-64 cursor-pointer"
                   (click) = "navigateToAssignment(assignment.id)"
           >
 
@@ -75,6 +74,7 @@
       </div>
 
     </main>
+  </div>
   </div>
 </app-course-side-bar>
 

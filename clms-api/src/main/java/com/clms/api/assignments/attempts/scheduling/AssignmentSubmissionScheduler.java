@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -48,8 +50,8 @@ public class AssignmentSubmissionScheduler {
 
             // time limit exceeded
             if (assignment.getTimeLimitMinutes() > 0) {
-                long timeElapsedMs = now.getTime() - assignmentAttempt.getStartedAt().getTime();
-                long timeElapsed = timeElapsedMs / 60000;
+                Duration differenceBetween = Duration.between(Instant.now(), assignmentAttempt.getStartedAt());
+                long timeElapsed = differenceBetween.toSeconds();
                 if (timeElapsed > assignment.getTimeLimitMinutes()) {
                     log.info("Assignment attempt {} exceeded time limit.", assignmentAttempt.getId());
                     assignmentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);

@@ -40,7 +40,7 @@ public class AssignmentAttempt {
     @Enumerated(EnumType.STRING)
     private AssignmentAttemptStatus status;
 
-    private Date startedAt;
+    private Instant startedAt;
 
     @Column(name = "question_answers",columnDefinition = "TEXT", length = 1024)
     @Convert(converter = AttemptQuestionAnswersConverter.class)

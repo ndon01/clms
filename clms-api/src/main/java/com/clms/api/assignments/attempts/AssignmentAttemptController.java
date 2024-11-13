@@ -7,12 +7,9 @@ import com.clms.api.assignments.api.projections.AssignmentAttemptProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.assignments.api.projections.converters.AssignmentAttemptProjectionConverter;
 import com.clms.api.assignments.api.services.AssignmentAttemptGradingEventPublisher;
-import com.clms.api.assignments.attempts.DTO.AssignmentQuestionUpdateRequest;
-import com.clms.api.assignments.attempts.DTO.SubmitAssignmentAttemptRequest;
+import com.clms.api.assignments.attempts.DTO.*;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
-import com.clms.api.assignments.attempts.DTO.StartAssignmentAttemptRequest;
-import com.clms.api.assignments.attempts.DTO.StartAssignmentAttemptResponse;
 import com.clms.api.assignments.attempts.models.AttemptQuestionAnswer;
 import com.clms.api.assignments.grader.AssignmentGradingService;
 import com.clms.api.users.api.User;
@@ -23,9 +20,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +55,36 @@ public class AssignmentAttemptController {
         // get all assignment attempts for the user
         List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(user, assignment);
         return ResponseEntity.ok(assignmentAttempts.stream().map(assignmentAttemptProjectionConverter::convert).toList());
+    }
+
+    @GetMapping("client/getOverallProgress")
+    public ResponseEntity<OverallProgressDTO> getOverallProgress(@CurrentUser User user) {
+        List<Assignment> assignments = assignmentRepository.findAll();
+        List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findByUser(user);
+        int totalAttempts = assignmentAttempts.size();
+        //get submmitted attempts
+        assignmentAttempts = assignmentAttempts.stream().filter(attempt -> attempt.getStatus() == AssignmentAttemptStatus.SUBMITTED).toList();
+        int totalAssignmentCompleted = assignmentAttempts.size();
+        //sum up the scores and the time and set it to the dto
+        Double totalPercentage = 0.0;
+        double totalHours = 0.0;
+        for (AssignmentAttempt assignmentAttempt : assignmentAttempts) {
+            if (assignmentAttempt.getScorePercentage() == null ||
+                    assignmentAttempt.getSubmittedAt() == null ||
+                    assignmentAttempt.getStartedAt() == null) {
+                continue;
+            }
+            totalPercentage += assignmentAttempt.getScorePercentage();
+            Duration durationTakenToCompleteAssignment = Duration.between(assignmentAttempt.getStartedAt(), assignmentAttempt.getSubmittedAt());
+            double fractionalHours = durationTakenToCompleteAssignment.toMinutes() / 60.0;
+            totalHours += fractionalHours;
+        }
+        return ResponseEntity.ok(OverallProgressDTO.builder()
+                .overallPercentage(totalPercentage / totalAttempts)
+                .overallStudyTimeHours(totalHours)
+                .totalAssignments(assignments.size())
+                .totalAssignmentsCompleted(totalAssignmentCompleted)
+                .build());
     }
 
 
@@ -90,7 +119,7 @@ public class AssignmentAttemptController {
         newAssignmentAttempt.setAssignment(assignment);
         newAssignmentAttempt.setUser(user);
         newAssignmentAttempt.setStatus(AssignmentAttemptStatus.IN_PROGRESS);
-        newAssignmentAttempt.setStartedAt(new Date());
+        newAssignmentAttempt.setStartedAt(new Date().toInstant());
         newAssignmentAttempt.setAnswers(new ArrayList<>());
         for (AssignmentQuestion question : assignment.getQuestions()) {
             AttemptQuestionAnswer attemptQuestionAnswer = new AttemptQuestionAnswer();
@@ -105,11 +134,12 @@ public class AssignmentAttemptController {
 
 
     }
+
     @Transactional
     @GetMapping("/get-assignment-attempt-answers")
-    public ResponseEntity<?> getAssignmentAttemptAnswers(@CurrentUser User user, @RequestParam int assignmentId){
-        AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,assignmentId);
-        if(assignmentAttempt == null){
+    public ResponseEntity<?> getAssignmentAttemptAnswers(@CurrentUser User user, @RequestParam int assignmentId) {
+        AssignmentAttempt assignmentAttempt = assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user, assignmentId);
+        if (assignmentAttempt == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(assignmentAttempt.getAnswers());
@@ -118,13 +148,14 @@ public class AssignmentAttemptController {
 
 
     private static class res {
-    private AssignmentAttempt assignmentAttempt;
-    private AssignmentProjection assignment;
+        private AssignmentAttempt assignmentAttempt;
+        private AssignmentProjection assignment;
     }
+
     @GetMapping("/get-assignment-attempt")
-    public ResponseEntity<?> getAssignmentAttempt(@CurrentUser User user, @RequestParam int assignmentId){
-        AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,assignmentId);
-        if(assignmentAttempt == null){
+    public ResponseEntity<?> getAssignmentAttempt(@CurrentUser User user, @RequestParam int assignmentId) {
+        AssignmentAttempt assignmentAttempt = assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user, assignmentId);
+        if (assignmentAttempt == null) {
             return ResponseEntity.notFound().build();
         }
 
@@ -134,22 +165,22 @@ public class AssignmentAttemptController {
     }
 
     @PostMapping("/update-question-attempt")
-    public ResponseEntity<?> updateQuestionAnswer(@CurrentUser User user ,@RequestBody AssignmentQuestionUpdateRequest updateAssignmentRequest){
-        AssignmentAttempt assignmentAttempt =  assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user,updateAssignmentRequest.getAssignmentId());
-        if(assignmentAttempt == null){
+    public ResponseEntity<?> updateQuestionAnswer(@CurrentUser User user, @RequestBody AssignmentQuestionUpdateRequest updateAssignmentRequest) {
+        AssignmentAttempt assignmentAttempt = assignmentAttemptService.getActiveAttemptsForUserByAssignmentID(user, updateAssignmentRequest.getAssignmentId());
+        if (assignmentAttempt == null) {
             return ResponseEntity.notFound().build();
         }
         //TODO UPDATE ANSWER
-            List<AttemptQuestionAnswer> attemptQuestionAnswers = assignmentAttempt.getAnswers();
+        List<AttemptQuestionAnswer> attemptQuestionAnswers = assignmentAttempt.getAnswers();
         boolean replacedAnswer = false;
-        for(AttemptQuestionAnswer answer : attemptQuestionAnswers){
-            if(answer.getQuestionId() == (updateAssignmentRequest.getQuestionId())){
+        for (AttemptQuestionAnswer answer : attemptQuestionAnswers) {
+            if (answer.getQuestionId() == (updateAssignmentRequest.getQuestionId())) {
                 replacedAnswer = true;
                 answer.setSelectedAnswerId(updateAssignmentRequest.getSelectedAnswerId());
                 break;
             }
         }
-        if(!replacedAnswer){
+        if (!replacedAnswer) {
             return ResponseEntity.notFound().build();
         }
         assignmentAttempt.setAnswers(attemptQuestionAnswers);
@@ -167,7 +198,7 @@ public class AssignmentAttemptController {
         List<AssignmentAttempt> assignmentAttempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(user, assignment);
 
         AssignmentAttempt currentAttempt = assignmentAttempts.stream().filter(attempt -> attempt.getStatus() == AssignmentAttemptStatus.IN_PROGRESS).findFirst().orElse(null);
-        if(currentAttempt == null){
+        if (currentAttempt == null) {
             return ResponseEntity.notFound().build();
         }
         currentAttempt.setStatus(AssignmentAttemptStatus.SUBMITTED);

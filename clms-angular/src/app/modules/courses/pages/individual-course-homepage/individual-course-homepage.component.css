@@ -1,7 +1,7 @@
 /* Styling the PrimeNG Card component */
 :host ::ng-deep .p-card {
   background-color: #2d3748; /* Equivalent to bg-gray-800 */
-  border: 1px solid #822727; /* Equivalent to border-red-800 */
+  border: 2px solid var(--primary-color); /* Equivalent to border-red-800 */
   color: #f7fafc; /* Equivalent to text-gray-100 */
 }
 
@@ -34,8 +34,8 @@
 /* Style the outer container of the p-multiSelect */
 :host ::ng-deep.p-multiselect {
   background-color: #1e293b; /* Dark background color */
-  border: 1px solid #822727; /* Equivalent to border-red-800 */
-  color: white;
+  color: var(--text-color); /* Equivalent to /
+  border: 1px solid var(--primary-color); /* Equivalent to border-red-800 */
   padding: 0.5rem;
   border-radius: 0.375rem; /* Rounded corners */
 }
@@ -49,7 +49,7 @@
 /* Style the dropdown panel */
 :host ::ng-deep.p-multiselect-panel ::ng-deep{
   background-color: #111827; /* Dark background for dropdown */
-  border: 1px solid #822727; /* Equivalent to border-red-800 */
+  border: 1px solid var(--primary-color); /* Equivalent to border-red-800 */
 }
 
 /* Style each item in the dropdown */
@@ -65,14 +65,14 @@
 }
 :host ::ng-deep.p-multiselect-filter{
   background-color: #1e293b; /* Dark background for filter input */
-  border: 1px solid #822727; /* Equivalent to border-red-800 */
+  border: 1px solid var(--primary-color); /* Equivalent to border-red-800 */
   color: #e2e8f0; /* Light text color */
   padding: 0.5rem;
   border-radius: 0.375rem; /* Rounded corners */
 }
 /* Style tokens (selected values) */
 :host ::ng-deep.p-multiselect-token {
-  background-color: #ef4444 ; /* Blue background for tokens */
+  background-color: var(--primary-color); /* Blue background for tokens */
   color: white;
   border-radius: 0.25rem;
   padding: 0.2rem 0.4rem;

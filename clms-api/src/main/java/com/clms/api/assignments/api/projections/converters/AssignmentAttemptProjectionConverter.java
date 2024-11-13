@@ -10,6 +10,8 @@ import com.clms.api.users.api.projections.UserProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 public class AssignmentAttemptProjectionConverter implements GenericConverter<AssignmentAttempt, AssignmentAttemptProjection> {
@@ -24,7 +26,7 @@ public class AssignmentAttemptProjectionConverter implements GenericConverter<As
                 .assignment(source.getAssignment() != null ? assignmentProjectionConverter.convert(source.getAssignment()) : null)
                 .user(source.getUser() != null ? userProjectionConverter.convert(source.getUser()) : null)
                 .status(source.getStatus())
-                .startedAt(source.getStartedAt())
+                .startedAt(Date.from(source.getStartedAt()))
                 .answers(source.getAnswers() != null ? source.getAnswers().stream().map(assignmentQuestionAnswerConverter::convert).toList() : null)
                 .scorePercentage(source.getScorePercentage())
                 .answersCorrect(source.getAnswersCorrect())
