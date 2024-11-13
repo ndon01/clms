@@ -43,14 +43,15 @@ import {GradeComponentComponent} from "@modules/assignments/components/grade-com
 import {ProgressBarModule} from "primeng/progressbar";
 import {CardModule} from "primeng/card";
 import {DataViewModule} from "primeng/dataview";
+import {IsTutorViewDirective} from "@modules/courses/directives/is-tutor-view.directive";
 
 
 
 @NgModule({
   declarations: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent, AssignmentAttemptPageComponent,GradeComponentComponent],
   exports: [AssignmentOverviewPageComponent, AssignmentEditPageComponent, QuestionEditorViewComponent,AssignmentAttemptPageComponent,GradeComponentComponent],
-  imports: [
-    CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule, RadioButtonModule, ScrollPanelModule, QuestionViewComponentComponent, ProgressBarModule, CardModule, DataViewModule
-  ]
+    imports: [
+        CommonModule, AssignmentsRoutingModule, CoreModule, DatePipe, ButtonDirective, Button, CourseCardComponent, SkeletonModule, OrderListModule, InputGroupModule, FormsModule, CalendarModule, DialogModule, CheckboxModule, EditorModule, DropdownModule, QuillEditorComponent, QuillViewComponent, QuillViewHTMLComponent, QuestionQuillEditorComponent, TableModule, Ripple, InputNumberModule, RadioButtonModule, ScrollPanelModule, QuestionViewComponentComponent, ProgressBarModule, CardModule, DataViewModule, IsTutorViewDirective
+    ]
 })
 export class AssignmentsModule { }

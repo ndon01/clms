@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AssignmentProjection } from "@modules/assignments/model/assignment.model";
-import { UserProjection } from "@core/model/User.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { tap } from "rxjs";
@@ -20,7 +19,7 @@ export class AssignmentOverviewPageComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
   ) {}
 
   ngOnInit(): void {

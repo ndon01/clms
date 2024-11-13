@@ -9,7 +9,9 @@
         </ng-template>
         <div class="flex flex-col gap-3">
           <div class="flex justify-start">
-            <button pButton pRipple type="button" label="New Assignment" icon="pi pi-plus" class="p-button-success" (click)="setAddAssignmentModalVisibility(true)"></button>
+            <app-tutor-visible-view>
+              <button pButton pRipple type="button" label="New Assignment" icon="pi pi-plus" class="p-button-success" (click)="setAddAssignmentModalVisibility(true)"></button>
+            </app-tutor-visible-view>
           </div>
           <p-table [value]="courseAssignments" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
@@ -17,7 +19,9 @@
             <ng-template pTemplate="header">
               <tr>
                 <th>Name</th>
-                <th>Actions</th>
+                <app-tutor-visible-view>
+                  <th>Actions</th>
+                </app-tutor-visible-view>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-assignment let-editing="editing" let-ri="rowIndex">
@@ -25,6 +29,7 @@
                 <td>
                   {{ assignment.name }}
                 </td>
+                <app-tutor-visible-view>
                 <td>
                   <div class="flex align-items-center justify-content-center gap-2">
                     <button
@@ -64,6 +69,7 @@
                     </button>
                   </div>
                 </td>
+                </app-tutor-visible-view>
               </tr>
             </ng-template>
           </p-table>

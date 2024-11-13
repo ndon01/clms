@@ -1,0 +1,1 @@
+Alter Table course_members add column IF NOT EXISTS is_tutor boolean default false;
