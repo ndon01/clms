@@ -7,6 +7,8 @@ import com.clms.api.questionBank.models.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.transaction.Transactional;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -56,6 +58,47 @@ public class QuestionBankController {
 
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/categories/create")
+    public ResponseEntity createCategory(@RequestBody CategoryCreateRequestDto category) {
+        questionBankCategoryRepository.save(QuestionBankCategory.builder()
+                .categoryName(category.getCategoryName())
+                .parentId(category.getParentId())
+                .build());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/categories/update-name")
+    public ResponseEntity updateCategoryName(@RequestBody CategoryUpdateNameRequestDto request) {
+        QuestionBankCategory category = questionBankCategoryRepository.findById(request.getCategoryId()).orElse(null);
+        if (category == null) {
+            throw new RuntimeException("Category not found");
+        }
+
+        category.setCategoryName(request.getCategoryName());
+        questionBankCategoryRepository.save(category);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/categories/delete")
+    @Transactional
+    public ResponseEntity deleteCategory(@RequestBody CategoryDeleteRequestDto request) {
+        QuestionBankCategory category = questionBankCategoryRepository.findById(request.getCategoryId()).orElse(null);
+        if (category == null) {
+            throw new RuntimeException("Category not found");
+        }
+
+        List<QuestionBankCategory> children = questionBankCategoryRepository.findAllByParentId(category.getId());
+
+        for (QuestionBankCategory child : children) {
+            child.setParentId(category.getParentId());
+            questionBankCategoryRepository.save(child);
+        }
+
+        questionBankCategoryRepository.delete(category);
+
+        return ResponseEntity.ok().build();
+    }
 
 }
 
@@ -64,4 +107,20 @@ public class QuestionBankController {
 class CategoryReparentRequestDto {
     private Integer categoryId;
     private Integer newParentId;
+}
+
+@Getter
+@Setter
+class CategoryCreateRequestDto {
+    private String categoryName;
+    private Integer parentId;
+}
+@Data
+class CategoryUpdateNameRequestDto {
+    private Integer categoryId;
+    private String categoryName;
+}
+@Data
+class CategoryDeleteRequestDto {
+    private Integer categoryId;
 }

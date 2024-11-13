@@ -3,6 +3,7 @@ import {QuestionBankCategory} from "@core/modules/openapi";
 import {TreeNode} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {
+  CategoryCreatedEvent,
   CategoryReparentedEvent
 } from "@modules/question-bank/components/category-tree-view/category-tree-view.component";
 
@@ -29,9 +30,37 @@ export class QuestionBankDashboardComponent implements OnInit {
   }
 
   onCategoryReparented(event: CategoryReparentedEvent) {
+    console.log(event);
     this.httpClient.post("/api/question-bank/categories/reparent", {
       categoryId: event.categoryId,
       newParentId: event.newParentId
+    }).subscribe(() => {
+      this.fetchCategories();
+    })
+  }
+
+  onCategoryCreated($event: CategoryCreatedEvent) {
+    console.log($event);
+    this.httpClient.post("/api/question-bank/categories/create", {
+      categoryName: $event.categoryName,
+      parentId: $event.parentId
+    }).subscribe(() => {
+      this.fetchCategories();
+    })
+  }
+
+  onCategoryTitleChanged($event: { categoryId: number; newTitle: string }) {
+    this.httpClient.post("/api/question-bank/categories/update-name", {
+      categoryId: $event.categoryId,
+      categoryName: $event.newTitle
+    }).subscribe(() => {
+      this.fetchCategories();
+    })
+  }
+
+  onCategoryDeleted($event: number) {
+    this.httpClient.post("/api/question-bank/categories/delete", {
+      categoryId: $event
     }).subscribe(() => {
       this.fetchCategories();
     })
