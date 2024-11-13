@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { format } from 'date-fns';
 import { AssignmentService } from './assignment.service';
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router"; // Import the service
+import {ActivatedRoute, Router} from "@angular/router";
+import {OverallProgressDTO} from "@core/modules/openapi"; // Import the service
 
 interface Assignment {
   id: number;
@@ -18,7 +19,7 @@ interface Assignment {
 })
 export class IndividualCourseHomepageComponent implements OnInit {
   courseId!: number;
-
+  overallProgress: OverallProgressDTO | null = null;
   constructor(private http: HttpClient, private activatedRoute: ActivatedRoute,private router: Router) {
   }
   date: Date = new Date();
@@ -42,6 +43,7 @@ export class IndividualCourseHomepageComponent implements OnInit {
       this.courseId = parseInt(id, 10); // Convert the value to a number
     });
     this.fetchAssignments(); // Fetch assignments from the backend
+    this.fetchOverallProgress();
   }
 
   // Fetch assignments from the backend
@@ -55,6 +57,13 @@ export class IndividualCourseHomepageComponent implements OnInit {
       console.log("Assignments: ", this.assignments)
     });
 
+  }
+  fetchOverallProgress() {
+    this.http.get<OverallProgressDTO>("http://localhost:8080/api/assignments/attempts/client/getOverallProgress").subscribe(
+      overallProgress => {
+        this.overallProgress = overallProgress;
+      }
+    );
   }
   navigateToAssignment(assignmentId: number){
     this.router.navigate([`/assignments/${assignmentId}/overview`]);

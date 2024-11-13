@@ -47,3 +47,7 @@
 .text-color-secondary {
   color: var(--text-color-secondary);
 }
+.card-color-border{
+  color:var(--primary-color)
+}
+
