@@ -2,14 +2,13 @@ package com.clms.api.questions;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentQuestionRepository;
-import com.clms.api.questionBank.models.QuestionBankQuestion;
+import com.clms.api.questionBank.entity.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
 import com.clms.api.questions.api.events.QuestionGenerationOrderEvent;
 import com.clms.api.questions.dto.QuestionsFromYoutubeVideoRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;

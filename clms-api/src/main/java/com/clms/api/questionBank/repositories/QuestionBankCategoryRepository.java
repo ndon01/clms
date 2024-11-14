@@ -1,6 +1,6 @@
 package com.clms.api.questionBank.repositories;
 
-import com.clms.api.questionBank.models.QuestionBankCategory;
+import com.clms.api.questionBank.entity.QuestionBankCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

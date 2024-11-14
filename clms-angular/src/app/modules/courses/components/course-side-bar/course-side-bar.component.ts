@@ -99,7 +99,7 @@ export class CourseSideBarComponent implements OnInit {
       {
         label: 'Gradebook',
         icon: 'pi pi-book',
-        visible: this.currentCourseContextService.isCourseTutor(),
+        visible: this.currentCourseContextService.isCourseTutor() || this.hasAdminPageAccess,
         command: () => {
           this.router.navigate(["courses", this.courseId, "gradebook"])
         }
@@ -117,7 +117,7 @@ export class CourseSideBarComponent implements OnInit {
       {
         label: 'Settings',
         icon: 'pi pi-cog',
-        visible: this.currentCourseContextService.isCourseTutor(),
+        visible: this.currentCourseContextService.isCourseTutor() || this.hasAdminPageAccess,
         command: () => {
           this.router.navigate(["courses", this.courseId, "settings"])
         }

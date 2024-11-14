@@ -1,21 +1,12 @@
 package com.clms.api.assignments;
 
-import com.clms.api.questionBank.models.QuestionBankQuestion;
+import com.clms.api.questionBank.entity.QuestionBankQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
-
-import java.io.IOException;
-import java.util.UUID;
 
 @Entity()
 @Table(name = "questions")
