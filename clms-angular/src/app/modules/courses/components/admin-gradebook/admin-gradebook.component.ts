@@ -134,7 +134,7 @@ export class AdminGradebookComponent implements OnInit{
     const grade = this.grades
       .find(g => g.studentId === studentId)
       ?.grades.find(g => g.assignmentId === assignmentId)?.grade;
-    return grade !== null && grade !== undefined ? grade.toString() : "N/A";
+    return grade !== null && grade !== undefined ? grade.toString() : "-";
   }
 
 
@@ -143,7 +143,6 @@ export class AdminGradebookComponent implements OnInit{
     const numericGrade = grade ? parseInt(grade) : NaN;
     console.log("numeric grade", numericGrade)
     if (isNaN(numericGrade)) {
-      console.log("numeric grade NAN")
       return 'info';
     }
     if (numericGrade >= 90) return 'success';
@@ -153,7 +152,7 @@ export class AdminGradebookComponent implements OnInit{
     return 'danger';
   }
   navigateToAssignmentOverview(assignmnetId:number | undefined,grade:string){
-    if(grade !== "N/A" && assignmnetId){
+    if(assignmnetId){
       this.router.navigate([`/assignments/${assignmnetId}/overview`]);
     }
   }

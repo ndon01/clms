@@ -112,7 +112,7 @@ export class StudentGradebookComponent implements OnInit {
     return 'danger';
   }
   navigateToAssignmentOverview(assignmnetId:number | undefined,grade:string){
-    if(grade !== "N/A" && assignmnetId){
+    if(assignmnetId){
       this.router.navigate([`/assignments/${assignmnetId}/overview`]);
     }
   }

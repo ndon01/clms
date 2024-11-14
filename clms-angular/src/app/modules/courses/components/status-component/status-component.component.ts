@@ -9,9 +9,10 @@ export class StatusComponent  {
   @Input() status: string | undefined;
 
   constructor() {}
-
   getBackgroundColor(): string {
     switch (this.status) {
+      case 'COMPLETED':
+        return '#4ade80'; // Green for Completed
       case 'Submitted':
         return '#4ade80'; // Green for Submitted
       case 'IN_PROGRESS':
