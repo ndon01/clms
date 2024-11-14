@@ -1,11 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {QuestionBankCategory} from "@core/modules/openapi";
+import {
+  AssignmentQuestion,
+  QuestionBankCategory,
+  QuestionBankQuestionProjection
+} from "@core/modules/openapi";
 import {TreeNode} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {
   CategoryCreatedEvent,
   CategoryReparentedEvent
 } from "@modules/question-bank/components/category-tree-view/category-tree-view.component";
+import {DialogService} from "primeng/dynamicdialog";
+import {QuestionEditModalComponent} from "@modules/questions/modals/question-edit-modal/question-edit-modal.component";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -15,13 +21,34 @@ import {
 })
 export class QuestionBankDashboardComponent implements OnInit {
   categories: QuestionBankCategory[] = []
-
-  constructor(private httpClient: HttpClient) {
+  questions: QuestionBankQuestionProjection[] = [];
+  totalRecords?: number = 0;
+  pageSize?: number = 5; // Default page size
+  currentPage?: number = 0; // Default page number
+  constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
   ngOnInit() {
     this.fetchCategories();
+    this.fetchQuestions(this.currentPage, this.pageSize)
   }
+
+  onPageChange(event: any) {
+    this.currentPage = event.page;
+    this.pageSize = event.rows;
+    this.fetchQuestions(this.currentPage, this.pageSize);
+  }
+
+  fetchQuestions(page: number = 0, size: number = 5) {
+    this.httpClient
+      .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable?page=${page}&size=${size}`)
+      .subscribe((questions) => {
+        this.questions = questions
+        this.totalRecords = questions.length; // Save total records for pagination
+      });
+  }
+
+
 
   fetchCategories() {
     this.httpClient.get<QuestionBankCategory[]>("/api/question-bank/categories").subscribe(data => {
@@ -63,6 +90,32 @@ export class QuestionBankDashboardComponent implements OnInit {
       categoryId: $event
     }).subscribe(() => {
       this.fetchCategories();
+    })
+  }
+
+  protected readonly JSON = JSON;
+
+  editQuestion(question: QuestionBankQuestionProjection) {
+    const ref = this.dialogService.open(QuestionEditModalComponent, {
+      header: "Edit Question",
+      width: '50vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      data: {
+        question: question.question as AssignmentQuestion
+      }
+    })
+
+    ref.onClose.subscribe(res => {
+      if (!res) {
+        console.log("Cancel")
+        return
+      }
+
+      console.log(res)
     })
   }
 }
