@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/question-bank/questions")
 @RequiredArgsConstructor
@@ -24,9 +26,10 @@ public class QuestionBankQuestionController {
     private final QuestionBankQuestionProejctionConverter questionBankQuestionProejctionConverter;
 
     @GetMapping("/pageable")
-    public Page<QuestionBankQuestionProjection> getQuestions(PaginationRequest paginationRequest) {
+    public List<QuestionBankQuestionProjection> getQuestions(PaginationRequest paginationRequest) {
         return questionBankQuestionRepository
-                .findAll(paginationRequest.toPageRequest())
-                .map(questionBankQuestionProejctionConverter::convert);
+                .findAll(paginationRequest.toPageRequest()).stream()
+                .map(questionBankQuestionProejctionConverter::convert)
+                .toList();
     }
 }

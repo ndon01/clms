@@ -25,12 +25,12 @@ public class QuestionBankCategoriesController {
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
     private final AssignmentQuestionRepository assignmentQuestionRepository;
 
-    @GetMapping("/categories")//gets all categories
+    @GetMapping
     public List<QuestionBankCategory> getCategories() {
         return questionBankCategoryRepository.findAll();
     }
 
-    @PostMapping("/categories/reparent")//reparent a category
+    @PostMapping("/reparent")//reparent a category
     public ResponseEntity reparentCategory(@RequestBody CategoryReparentRequestDto request) {
         QuestionBankCategory category = questionBankCategoryRepository.findById(request.getCategoryId()).orElse(null);
         if (category == null) {
@@ -43,7 +43,7 @@ public class QuestionBankCategoriesController {
 
         return ResponseEntity.ok().build();
     }
-    @PostMapping("/categories/create")
+    @PostMapping("/create")
     public ResponseEntity createCategory(@RequestBody CategoryCreateRequestDto category) {
         questionBankCategoryRepository.save(QuestionBankCategory.builder()
                 .categoryName(category.getCategoryName())
@@ -52,7 +52,7 @@ public class QuestionBankCategoriesController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/categories/update-name")
+    @PostMapping("/update-name")
     public ResponseEntity updateCategoryName(@RequestBody CategoryUpdateNameRequestDto request) {
         QuestionBankCategory category = questionBankCategoryRepository.findById(request.getCategoryId()).orElse(null);
         if (category == null) {
@@ -65,7 +65,7 @@ public class QuestionBankCategoriesController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/categories/delete")
+    @PostMapping("/delete")
     @Transactional
     public ResponseEntity deleteCategory(@RequestBody CategoryDeleteRequestDto request) {
         QuestionBankCategory category = questionBankCategoryRepository.findById(request.getCategoryId()).orElse(null);

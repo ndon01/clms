@@ -1,5 +1,5 @@
 <app-sidebar-page-wrapper>
-  <div class="lms-page-container">
+  <div class="lms-page-container flex flex-col gap-5">
     <app-category-tree-view
       [categories]="categories"
       [allowDragAndDrop]="true"
@@ -9,6 +9,23 @@
       (categoryDeleted)="onCategoryDeleted($event)"
     ></app-category-tree-view>
 
-
+    <p-dataView
+      #dv
+      [value]="questions"
+      [rows]="pageSize"
+      [paginator]="true"
+      [totalRecords]="totalRecords"
+      [lazy]="true"
+      (onPage)="onPageChange($event)"
+    >
+      <ng-template pTemplate="list" let-questions>
+        <div *ngFor="let question of questions" class="question-item">
+          <h3>{{ question.question.title }}</h3>
+          <p>{{ question.question.description }}</p>
+          <p-button label="open" (click)="editQuestion(question)" />
+          <!-- Display additional question properties as needed -->
+        </div>
+      </ng-template>
+    </p-dataView>
   </div>
 </app-sidebar-page-wrapper>

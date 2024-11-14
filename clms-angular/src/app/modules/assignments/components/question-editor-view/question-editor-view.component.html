@@ -1,11 +1,11 @@
 <div class="w-full h-full flex flex-col gap-3" *ngIf="question">
   <div class="w-full flex flex-col gap-3">
     <h2 class="font-semibold">Title</h2>
-    <input [(ngModel)]="question.title" />
+    <input [ngModel]="question.title" (ngModelChange)="question.title = $event" />
   </div>
   <div class="w-full flex flex-col gap-3">
     <h2 class="font-semibold">Content</h2>
-    <app-question-quill-editor [(text)]="question.question" [assignmentId]="assignmentId" class="w-full"/>
+    <app-question-quill-editor [text]="question.question" (textChange)="question.question = $event" [assignmentId]="assignmentId || undefined" class="w-full"/>
   </div>
 
   <div class="flex flex-wrap justify-between gap-3">
@@ -22,7 +22,7 @@
         <ng-template let-answer let-i="index" pTemplate="item">
           <div class="flex flex-row gap-3 w-full h-full">
             <p-checkbox [(ngModel)]="answer.isCorrect"  [binary]="true"></p-checkbox>
-            <app-question-quill-editor [(text)]="answer.text" [assignmentId]="assignmentId" class="w-full h-full" />
+            <app-question-quill-editor [(text)]="answer.text" [assignmentId]="assignmentId || undefined" class="w-full h-full" />
             <button class="btn btn-danger" (click)="removeAnswer(i)">Remove</button>
           </div>
         </ng-template>
