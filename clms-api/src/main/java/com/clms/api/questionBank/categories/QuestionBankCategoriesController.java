@@ -1,48 +1,33 @@
-package com.clms.api.questionBank.controllers;
+package com.clms.api.questionBank.categories;
 
-import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentQuestionRepository;
-import com.clms.api.questionBank.models.QuestionBankCategory;
-import com.clms.api.questionBank.models.QuestionBankQuestion;
+import com.clms.api.questionBank.categories.dto.CategoryCreateRequestDto;
+import com.clms.api.questionBank.categories.dto.CategoryDeleteRequestDto;
+import com.clms.api.questionBank.categories.dto.CategoryReparentRequestDto;
+import com.clms.api.questionBank.categories.dto.CategoryUpdateNameRequestDto;
+import com.clms.api.questionBank.entity.QuestionBankCategory;
 import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
-import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/question-bank")
+@RequestMapping("/api/question-bank/categories")
 @RequiredArgsConstructor
 @Tag(name = "Question Bank", description = "Endpoints for managing questions and categories")
-public class QuestionBankController {
+public class QuestionBankCategoriesController {
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
     private final AssignmentQuestionRepository assignmentQuestionRepository;
-    @GetMapping("/questions")//gets all questions
-    public List<QuestionBankQuestion> getQuestions() {
-        return questionBankQuestionRepository.findAll();
-    }
-
-    @RequestMapping(value = "/questions", method = {RequestMethod.POST, RequestMethod.PUT})
-    public QuestionBankQuestion addQuestion(@RequestBody QuestionBankQuestion question) {
-        return questionBankQuestionRepository.save(question);
-    }
 
     @GetMapping("/categories")//gets all categories
     public List<QuestionBankCategory> getCategories() {
         return questionBankCategoryRepository.findAll();
-    }
-
-    @RequestMapping(value = "/categories", method = {RequestMethod.POST, RequestMethod.PUT})
-    public QuestionBankCategory addCategory(@RequestBody QuestionBankCategory category) {
-        return questionBankCategoryRepository.save(category);
     }
 
     @PostMapping("/categories/reparent")//reparent a category
@@ -102,25 +87,3 @@ public class QuestionBankController {
 
 }
 
-@Getter
-@Setter
-class CategoryReparentRequestDto {
-    private Integer categoryId;
-    private Integer newParentId;
-}
-
-@Getter
-@Setter
-class CategoryCreateRequestDto {
-    private String categoryName;
-    private Integer parentId;
-}
-@Data
-class CategoryUpdateNameRequestDto {
-    private Integer categoryId;
-    private String categoryName;
-}
-@Data
-class CategoryDeleteRequestDto {
-    private Integer categoryId;
-}

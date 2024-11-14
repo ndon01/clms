@@ -1,10 +1,8 @@
-package com.clms.api.questionBank.models;
+package com.clms.api.questionBank.entity;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "question_bank_questions")
