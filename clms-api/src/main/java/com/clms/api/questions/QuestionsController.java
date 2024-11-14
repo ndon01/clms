@@ -2,18 +2,28 @@ package com.clms.api.questions;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.questionBank.entity.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questions.api.entity.QuestionGenerationOrderEntity;
+import com.clms.api.questions.api.entity.QuestionGenerationOrderRepository;
+import com.clms.api.questions.api.entity.QuestionGenerationOrderState;
 import com.clms.api.questions.api.events.QuestionGenerationOrderEvent;
 import com.clms.api.questions.dto.QuestionsFromYoutubeVideoRequest;
+import com.clms.api.users.api.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/questions")
@@ -27,6 +37,7 @@ public class QuestionsController {
     private final QuestionGenerationConfiguration questionGenerationConfiguration;
     private final AssignmentQuestionRepository assignmentQuestionRepository;
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
+    private final QuestionGenerationOrderRepository questionGenerationOrderRepository;
 
     @PostMapping("/generate-from-youtube-video")
     public ResponseEntity<String> generateQuestions(@RequestBody QuestionsFromYoutubeVideoRequest request) {
@@ -38,6 +49,19 @@ public class QuestionsController {
 
         questionGenerationService.generateFromYoutubeVideo(videoUrl);
         return ResponseEntity.ok("Questions are being generated from the video. This may take a while.");
+    }
+    @GetMapping("/getCompletedOrders")
+    public ResponseEntity<List<QuestionGenerationOrderEntity>> getCompletedOrders(@CurrentUser User user) {
+        List<QuestionGenerationOrderEntity> completedOrders = questionGenerationOrderRepository.findAllByOrderedBy(user)
+                .stream()
+                .filter(order -> order.getOrderState() == QuestionGenerationOrderState.COMPLETED)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(completedOrders);
+    }
+    @GetMapping("getCompletedOrders/{id}")
+    public ResponseEntity<QuestionGenerationOrderEntity> getCompletedOrder(@PathVariable int id) {
+        QuestionGenerationOrderEntity order = questionGenerationOrderRepository.findById(id).orElseThrow();
+        return ResponseEntity.ok(order);
     }
 
     @Transactional(rollbackOn = Exception.class)

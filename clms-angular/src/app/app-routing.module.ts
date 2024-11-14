@@ -53,7 +53,13 @@ routes = [
       {
         path: 'question-bank',
         loadChildren: () => import('./modules/question-bank/question-bank.module').then(m => m.QuestionBankModule)
+      },
+      {
+        path: 'question-generation',
+
+        loadChildren: () => import('./modules/question-generation/question-generation.module').then(m => m.QuestionGenerationModule)
       }
+
 
     ]
   },

@@ -16,6 +16,12 @@ import {MessageService} from "primeng/api";
 import {ToastModule} from "primeng/toast";
 import {QuillModule} from "ngx-quill";
 import {ApiModule} from "@core/modules/openapi";
+import {
+  QuestionGenerationComponent
+} from "@modules/question-generation/components/question-generation/question-generation.component";
+import {
+  QuestionGenerationPageComponent
+} from "@modules/question-generation/pages/question-generation-page/question-generation-page.component";
 
 @NgModule({
   declarations: [AppComponent],

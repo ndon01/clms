@@ -1,0 +1,35 @@
+<div class="min-h-screen flex items-center justify-center bg-background">
+  <div class="w-full max-w-md space-y-4">
+    <form (ngSubmit)="handleSubmit($event)" class="space-y-4">
+      <input type="url" placeholder="Enter YouTube URL" [(ngModel)]="url" required class="w-full">
+      <div class="flex justify-center">
+        <p-button label="Generate" type="submit" class="w-32"></p-button>
+      </div>
+    </form>
+
+    <p-scrollPanel styleClass="w-full">
+      <p-table [value]="completedOrders"
+               selectionMode="single"
+               styleClass="p-datatable-gridlines">
+        <ng-template pTemplate="header" class = "text-color-primary">
+          <tr>
+            <th class="w-[200px] bg-muted/50">Ordered By</th>
+            <th class="text-center">Order State</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order
+                     class = "text-color-primary"
+        >
+
+          <tr [routerLink]="['/question-generation', order.id]">
+            <td class="font-medium">{{order.orderedBy.username}}</td>
+            <td class="text-center">
+              <app-student-status [status]="order.orderState"></app-student-status>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-scrollPanel>
+  </div>
+
+</div>

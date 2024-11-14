@@ -1,0 +1,52 @@
+<div class="w-full min-h-screen h-full bg-surface-b flex flex-col" *ngIf="order" >
+  <div class="w-full h-12 bg-surface-e flex flex-row p-5">
+    <div class="text-color-primary w-full flex justify-start items-center"><span (click)="goBack()" class="cursor-pointer"><span class="pi pi-arrow-left"></span> Back</span></div>
+    <div class="text-color-primary w-full flex justify-center items-center">Order Number {{order.id}}</div>
+  </div>
+  <div class="w-full h-full flex flex-col p-5 bg-surface-b">
+    <div>
+      <h1 class="text-3xl font-bold text-on-surface text-color-primary">Order Details</h1>
+    </div>
+    <div class="w-full">
+      <h1 class="text-3xl font-bold text-on-surface text-color-primary">Questions</h1>
+      <div class="flex flex-col w-full gap-3 pt-5">
+        <div class="flex w-full">
+          <p-table *ngIf = "questions"
+                   [value]="questions"
+                   [reorderableColumns]="true"
+                   class="w-full"
+          >
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th style = "width:3rem"></th>
+                <th pReorderableColumn>Question</th>
+                <th pReorderableColumn>Actions</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body"
+                         let-question
+                         let-index="rowIndex"
+            >
+              <tr [pReorderableRow]="index">
+                <td>
+                  <span class = "pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                <td>
+                  <span>{{question.title}}</span>
+                </td>
+
+                <td>
+                  <button pButton pRipple icon = "pi pi-pencil" type="button" (click) = "(selectQuestion(question))"></button>
+                  <button pButton pRipple icon = "pi pi-trash" type="button" ></button>
+                  <button pButton pRipple icon = "pi pi-upload" type="button" ></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
