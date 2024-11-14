@@ -11,6 +11,8 @@ import {TableModule} from "primeng/table";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {AssignmentQuestion, AssignmentQuestionProjection, QuestionGenerationOrderEntity} from "@core/modules/openapi";
+import {DialogService} from "primeng/dynamicdialog";
+import {QuestionEditModalComponent} from "@modules/questions/modals/question-edit-modal/question-edit-modal.component";
 interface OrderOutput {
   questions: {
     title: string;
@@ -42,7 +44,8 @@ export class OrderOverviewPageComponent implements OnInit{
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private httpClient: HttpClient,
-              private location: Location
+              private location: Location,
+              private dialogService: DialogService
   ) {}
   orderId!: number;
   order: QuestionGenerationOrderEntity | undefined;
@@ -84,10 +87,25 @@ export class OrderOverviewPageComponent implements OnInit{
 
   selectQuestion(q: AssignmentQuestionProjection){
     this.selectedQuestion = q;
-    this.openEditQuestionModal();
+    this.dialogService.open(
+        QuestionEditModalComponent,
+        {
+          header: "Edit Question",
+          width: '50vw',
+          contentStyle: { overflow: 'auto' },
+          breakpoints: {
+            '960px': '75vw',
+            '640px': '90vw'
+          },
+          data: {
+            question: this.selectedQuestion as AssignmentQuestion
+          }}
+    ).onClose.subscribe((response: AssignmentQuestion | null) => {
+        if (response) {
+            this.selectedQuestion = response;
+        }
+    })
   }
 
-  private openEditQuestionModal() {
 
-  }
 }
