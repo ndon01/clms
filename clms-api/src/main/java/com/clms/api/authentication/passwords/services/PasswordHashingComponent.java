@@ -1,7 +1,7 @@
-package com.clms.api.authentication.api.services;
+package com.clms.api.authentication.passwords.services;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.clms.api.authentication.api.services.PasswordConfiguration;
+import com.clms.api.authentication.passwords.configuration.PasswordConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
