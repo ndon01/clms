@@ -2,7 +2,7 @@ package com.clms.api.authentication.login;
 
 import com.clms.api.authentication.api.entity.AuthenticationProfile;
 import com.clms.api.authentication.api.entity.AuthenticationProfileRepository;
-import com.clms.api.authentication.api.services.PlainTextAndHashedPasswordMatchingService;
+import com.clms.api.authentication.passwords.services.PlainTextAndHashedPasswordMatchingService;
 import com.clms.api.authentication.tokens.AuthenticationProfileToAccessTokenConverterService;
 import com.clms.api.users.UserSearchService;
 import com.clms.api.users.api.User;

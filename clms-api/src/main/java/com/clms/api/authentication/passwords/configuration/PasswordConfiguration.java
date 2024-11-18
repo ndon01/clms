@@ -1,4 +1,4 @@
-package com.clms.api.authentication.api.services;
+package com.clms.api.authentication.passwords.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
