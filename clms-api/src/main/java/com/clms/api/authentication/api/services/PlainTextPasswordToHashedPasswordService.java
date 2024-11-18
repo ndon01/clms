@@ -1,6 +1,6 @@
-package com.clms.api.authentication.passwords;
+package com.clms.api.authentication.api.services;
 
-import com.clms.api.authentication.passwords.PasswordHashingComponent;
+import com.clms.api.authentication.api.services.PasswordHashingComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,7 +2,7 @@ package com.clms.api.authentication.tokens;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.clms.api.authentication.domain.AuthenticationProfile;
+import com.clms.api.authentication.api.entity.AuthenticationProfile;
 import com.clms.api.common.security.SecurityApplicationProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

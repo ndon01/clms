@@ -1,6 +1,6 @@
 package com.clms.api.authentication.registration.services;
 
-import com.clms.api.authentication.domain.AuthenticationProfile;
+import com.clms.api.authentication.api.entity.AuthenticationProfile;
 import com.clms.api.common.events.AuthenticationProfileRegisteredEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
