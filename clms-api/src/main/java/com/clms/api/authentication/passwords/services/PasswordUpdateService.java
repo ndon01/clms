@@ -31,5 +31,6 @@ public class PasswordUpdateService {
         }
 
         authenticationProfile.setPasswordHash(passwordHashingComponent.hash(newPassword));
+        authenticationProfileRepository.save(authenticationProfile);
     }
 }
