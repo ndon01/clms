@@ -1,4 +1,4 @@
-package com.clms.api.authentication.domain;
+package com.clms.api.authentication.api.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

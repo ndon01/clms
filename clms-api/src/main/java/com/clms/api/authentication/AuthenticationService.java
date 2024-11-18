@@ -1,12 +1,12 @@
 package com.clms.api.authentication;
 
-import com.clms.api.authentication.domain.AuthenticationProfile;
-import com.clms.api.authentication.domain.AuthenticationProfileRepository;
+import com.clms.api.authentication.api.entity.AuthenticationProfile;
+import com.clms.api.authentication.api.entity.AuthenticationProfileRepository;
 import com.clms.api.authentication.login.LoginService;
-import com.clms.api.authentication.passwords.PlainTextPasswordToHashedPasswordService;
+import com.clms.api.authentication.api.services.PlainTextPasswordToHashedPasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {

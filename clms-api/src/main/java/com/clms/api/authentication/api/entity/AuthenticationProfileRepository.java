@@ -1,5 +1,6 @@
-package com.clms.api.authentication.domain;
+package com.clms.api.authentication.api.entity;
 
+import com.clms.api.authentication.api.entity.AuthenticationProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

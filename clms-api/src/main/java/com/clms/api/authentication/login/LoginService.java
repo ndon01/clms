@@ -1,13 +1,12 @@
 package com.clms.api.authentication.login;
 
-import com.clms.api.authentication.domain.AuthenticationProfile;
-import com.clms.api.authentication.domain.AuthenticationProfileRepository;
-import com.clms.api.authentication.passwords.PlainTextAndHashedPasswordMatchingService;
+import com.clms.api.authentication.api.entity.AuthenticationProfile;
+import com.clms.api.authentication.api.entity.AuthenticationProfileRepository;
+import com.clms.api.authentication.api.services.PlainTextAndHashedPasswordMatchingService;
 import com.clms.api.authentication.tokens.AuthenticationProfileToAccessTokenConverterService;
 import com.clms.api.users.UserSearchService;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.converters.UserProjectionConverter;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseCookie;
