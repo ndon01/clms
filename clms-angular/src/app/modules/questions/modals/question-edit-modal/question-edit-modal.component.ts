@@ -48,4 +48,5 @@ export class QuestionEditModalComponent {
   saveEditQuestionModal() {
     this.ref.close(this.selectedQuestion);
   }
+
 }

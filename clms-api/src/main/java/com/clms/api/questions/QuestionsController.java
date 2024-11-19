@@ -47,9 +47,15 @@ public class QuestionsController {
 
         String videoUrl = request.getVideoUrl();
 
-        questionGenerationService.generateFromYoutubeVideo(videoUrl);
+        try {
+            questionGenerationService.generateFromYoutubeVideo(videoUrl);
+        } catch (
+                IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
         return ResponseEntity.ok("Questions are being generated from the video. This may take a while.");
     }
+
     @GetMapping("/getCompletedOrders")
     public ResponseEntity<List<QuestionGenerationOrderEntity>> getCompletedOrders(@CurrentUser User user) {
         List<QuestionGenerationOrderEntity> completedOrders = questionGenerationOrderRepository.findAllByOrderedBy(user)
@@ -58,11 +64,14 @@ public class QuestionsController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(completedOrders);
     }
+
     @GetMapping("getCompletedOrders/{id}")
     public ResponseEntity<QuestionGenerationOrderEntity> getCompletedOrder(@PathVariable int id) {
         QuestionGenerationOrderEntity order = questionGenerationOrderRepository.findById(id).orElseThrow();
         return ResponseEntity.ok(order);
     }
+
+
 
     @Transactional(rollbackOn = Exception.class)
     @Async
@@ -74,7 +83,7 @@ public class QuestionsController {
     @PostMapping("/export")
     public void exportQuestions(@RequestBody int questionId) {
         AssignmentQuestion assignmentQuestion = assignmentQuestionRepository.findById(questionId).orElseThrow();
-        if(assignmentQuestion.getSourceQuestionBankQuestion() != null) {
+        if (assignmentQuestion.getSourceQuestionBankQuestion() != null) {
             throw new RuntimeException("Question is already exported");
         }
         AssignmentQuestion exportedQuestion = AssignmentQuestion.builder()
@@ -99,5 +108,15 @@ public class QuestionsController {
         assignmentQuestion.setSourceQuestionBankQuestion(questionBankQuestion);
         assignmentQuestionRepository.saveAndFlush(assignmentQuestion);
 
+    }
+    @GetMapping("/getByIds")
+    public ResponseEntity<List<AssignmentQuestion>> getQuestionsByIds(@RequestParam List<Integer> ids) {
+        List<AssignmentQuestion> questions = assignmentQuestionRepository.findAllById(ids);
+        return ResponseEntity.ok(questions);
+    }
+    @PostMapping("update-question")
+    public ResponseEntity<AssignmentQuestion> updateQuestion(@RequestBody AssignmentQuestion assignmentQuestion) {
+        AssignmentQuestion updatedQuestion = assignmentQuestionRepository.save(assignmentQuestion);
+        return ResponseEntity.ok(updatedQuestion);
     }
 }

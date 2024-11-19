@@ -38,8 +38,8 @@
 
                 <td>
                   <button pButton pRipple icon = "pi pi-pencil" type="button" (click) = "(selectQuestion(question))"></button>
-                  <button pButton pRipple icon = "pi pi-trash" type="button" ></button>
-                  <button pButton pRipple icon = "pi pi-upload" type="button" ></button>
+                  <button pButton pRipple icon = "pi pi-trash" type="button" (click) = "(deleteQuestion(question))"></button>
+                  <button pButton pRipple icon = "pi pi-upload" type="button" (click) = "(exportQuestionToQuestionBankQuestion(question))"></button>
                 </td>
               </tr>
             </ng-template>
