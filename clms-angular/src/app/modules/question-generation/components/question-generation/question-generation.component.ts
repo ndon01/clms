@@ -11,6 +11,7 @@ import {ScrollPanelModule} from "primeng/scrollpanel";
 import {TableModule} from "primeng/table";
 import {TagModule} from "primeng/tag";
 import {RouterLink} from "@angular/router";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-question-generation',
@@ -26,7 +27,8 @@ import {RouterLink} from "@angular/router";
     ScrollPanelModule,
     TableModule,
     TagModule,
-    RouterLink
+    RouterLink,
+    InputTextModule
   ],
   styleUrl: './question-generation.component.css'
 })
@@ -40,13 +42,22 @@ export class QuestionGenerationComponent implements OnInit{
   completedOrders : QuestionGenerationOrderEntity[] = [];
   handleSubmit(event: Event): void {
     event.preventDefault();
-    this.http.post('/api/questions/generate-from-youtube-video', { url: this.url }).subscribe(
+    this.http.post<string>('/api/questions/generate-from-youtube-video', { videoUrl: this.url },
+    {
+      observe: 'response',
+    }
+    ).subscribe(
       response => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Questions generated successfully' });
-      },
-      error => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions'})
-      },
+        if(response.status === 200) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Questions are being generated' });
+        }
+        else if (response.status === 400){
+          this.messageService.add({severity: 'error', summary: 'Error', detail: response.body || 'Failed to generate questions'});
+        }
+        else{
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions' });
+        }
+      }
     );
   }
   getCompletedOrders():void {

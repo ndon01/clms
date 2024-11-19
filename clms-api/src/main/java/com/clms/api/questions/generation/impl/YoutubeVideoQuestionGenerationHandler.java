@@ -1,5 +1,8 @@
 package com.clms.api.questions.generation.impl;
 
+import com.clms.api.assignments.AssignmentQuestion;
+import com.clms.api.assignments.AssignmentQuestionAnswer;
+import com.clms.api.assignments.AssignmentQuestionRepository;
 import com.clms.api.gemini.GeminiService;
 import com.clms.api.questions.api.dto.GeneratedQuestionDTO;
 import com.clms.api.youtube.YoutubeTranscriptService;
@@ -10,6 +13,7 @@ import com.clms.api.questions.api.entity.QuestionGenerationOrderState;
 import com.clms.api.questions.api.entity.QuestionGenerationOrderType;
 import com.clms.api.questions.generation.QuestionGenerationHandler;
 import com.clms.api.youtube.YoutubeVideoTranscriptEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +21,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -25,8 +30,11 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -41,6 +49,7 @@ public class YoutubeVideoQuestionGenerationHandler implements QuestionGeneration
     private final YoutubeTranscriptService transcriptService;
     private final GeminiService geminiService;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final AssignmentQuestionRepository assignmentQuestionRepository;
 
     @Override
     public boolean canHandle(QuestionGenerationOrderEntity order) {
@@ -87,6 +96,33 @@ public class YoutubeVideoQuestionGenerationHandler implements QuestionGeneration
             throw new RuntimeException("Failed to parse question generation response", e);
         }
 
+        List<AssignmentQuestion> assignmentQuestions = new ArrayList<>();
+        generatedQuestions.forEach(generatedQuestion -> {
+            AtomicInteger i = new AtomicInteger(0);
+            AssignmentQuestion assignmentQuestion = new AssignmentQuestion();
+            assignmentQuestion.setTitle(generatedQuestion.getTitle());
+            assignmentQuestion.setQuestion(generatedQuestion.getQuestion());
+            assignmentQuestion.setAnswers(generatedQuestion.getAnswers().stream()
+                    .map(generatedAnswer ->{
+                        AssignmentQuestionAnswer assignmentQuestionAnswer = new AssignmentQuestionAnswer();
+                        assignmentQuestionAnswer.setOrder(i.getAndIncrement());
+                        assignmentQuestionAnswer.setText(generatedAnswer.getText());
+                        assignmentQuestionAnswer.setCorrect(generatedAnswer.isCorrect());
+                        return assignmentQuestionAnswer;
+                    }).collect(Collectors.toList())
+
+            );
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                String answersJson = objectMapper.writeValueAsString(assignmentQuestion.getAnswers());
+                assignmentQuestion.setAnswers(objectMapper.readValue(answersJson,
+                        objectMapper.getTypeFactory().constructCollectionType(List.class, AssignmentQuestionAnswer.class)));
+            } catch (JsonProcessingException e) {
+            }
+            assignmentQuestionRepository.save(assignmentQuestion);
+            assignmentQuestions.add(assignmentQuestion);
+        });
+
         order.setOrderOutput(
                 Map.of("questions", generatedQuestions.stream()
                         .map(generatedQuestion -> Map.of(
@@ -99,7 +135,10 @@ public class YoutubeVideoQuestionGenerationHandler implements QuestionGeneration
                                         ))
                                         .collect(Collectors.toList())
                         ))
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                        "generatedQuestionIds", assignmentQuestions.stream()
+                                .map(AssignmentQuestion::getId)
+                                .collect(Collectors.toList())
                 )
         );
 
