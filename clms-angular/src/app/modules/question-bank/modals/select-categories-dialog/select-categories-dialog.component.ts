@@ -10,6 +10,8 @@ import {NgIf} from "@angular/common";
 export interface SelectCategoriesDialogData {
   categories: QuestionBankCategory[];
   multiple: boolean;
+  selectedCategories: QuestionBankCategory[];
+  noneSelectedAllowed: boolean;
 }
 
 @Component({
@@ -28,12 +30,15 @@ export class SelectCategoriesDialogComponent implements OnInit {
   categoryTree: TreeNode[] = []; // Tree representation of categories
   multiple = false; // Whether multiple categories can be selected
   selectedCategories: TreeNode[] | TreeNode = []; // Selected categories
-
+  selectedQBCategories: QuestionBankCategory[] | QuestionBankCategory = []; // Selected category
+  noneSelectedAllowed = false; // Whether no category can be selected
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig<SelectCategoriesDialogData>) {
     // Load the categories and settings from config if provided
     if (config.data) {
       this.multiple = config.data.multiple || false;
       this.categories = config.data.categories || [];
+      this.selectedQBCategories = config.data.selectedCategories || [];
+      this.noneSelectedAllowed = config.data.noneSelectedAllowed || false;
     }
   }
 
@@ -55,6 +60,16 @@ export class SelectCategoriesDialogComponent implements OnInit {
         selectable: true
       };
       idToNodeMap.set(category.id!, treeNode);
+
+      if (this.selectedQBCategories) {
+        if (Array.isArray(this.selectedQBCategories)) {
+          if (this.selectedQBCategories.find(selectedCategory => selectedCategory.id === category.id)) {
+            if (Array.isArray(this.selectedCategories)) {
+              this.selectedCategories.push(treeNode);
+            }
+          }
+        }
+      }
 
       if (category.parentId) {
         const parent = idToNodeMap.get(category.parentId);
@@ -87,4 +102,29 @@ export class SelectCategoriesDialogComponent implements OnInit {
   }
 
   protected readonly Array = Array;
+
+  getContinueButtonText(): string {
+    const selectedCount = Array.isArray(this.selectedCategories) ? this.selectedCategories.length : 1;
+
+    if (selectedCount === 0 && this.noneSelectedAllowed) {
+      return 'Select None';
+    } else if (selectedCount <= 1) {
+      return 'Select Category';
+    } else {
+      return `Select Categories (${selectedCount})`;
+    }
+  }
+
+  getContinueButtonDisabled(): boolean {
+    if (this.noneSelectedAllowed) {
+      return false; // Button is never disabled if noneSelectedAllowed is true
+    }
+
+    if (Array.isArray(this.selectedCategories)) {
+      return this.selectedCategories.length === 0; // Disabled if no category is selected
+    }
+
+    return !this.selectedCategories; // Disabled if no single category is selected
+  }
+
 }

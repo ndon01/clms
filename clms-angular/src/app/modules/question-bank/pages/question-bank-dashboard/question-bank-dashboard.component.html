@@ -9,23 +9,45 @@
       (categoryDeleted)="onCategoryDeleted($event)"
     ></app-category-tree-view>
 
-    <p-dataView
-      #dv
+    <p-table
       [value]="questions"
-      [rows]="pageSize"
       [paginator]="true"
-      [totalRecords]="totalRecords"
+      [rows]="pageSize"
       [lazy]="true"
-      (onPage)="onPageChange($event)"
+      [totalRecords]="totalRecords || 0"
+      (onLazyLoad)="onPageChange($event)"
     >
-      <ng-template pTemplate="list" let-questions>
-        <div *ngFor="let question of questions" class="question-item">
-          <h3>{{ question.question.title }}</h3>
-          <p>{{ question.question.description }}</p>
-          <p-button label="open" (click)="editQuestion(question)" />
-          <!-- Display additional question properties as needed -->
-        </div>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Title</th>
+          <th>Categories</th>
+          <th>Actions</th>
+        </tr>
       </ng-template>
-    </p-dataView>
+      <ng-template pTemplate="body" let-question>
+        <tr>
+          <td>{{ question.question.title }}</td>
+          <td>
+            <ng-container *ngIf="question.categoryIds?.length">
+              <div *ngFor="let categoryId of question.categoryIds">
+                {{ getCategoryPath(categoryId) }}
+              </div>
+            </ng-container>
+            <span *ngIf="!question.categoryIds?.length">-</span>
+          </td>
+          <td class="flex flex-row gap-3">
+            <p-button
+              label="View Question"
+              (click)="editQuestion(question)"
+            ></p-button>
+            <p-button
+              label="Edit Categories"
+              (click)="editQuestionCategories(question)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
   </div>
 </app-sidebar-page-wrapper>

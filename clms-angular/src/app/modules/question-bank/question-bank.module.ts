@@ -23,6 +23,8 @@ import {
   CategoryTreeViewComponent
 } from "@modules/question-bank/components/category-tree-view/category-tree-view.component";
 import {DataViewModule} from "primeng/dataview";
+import {TableModule} from "primeng/table";
+import {TreeSelectModule} from "primeng/treeselect";
 
 
 
@@ -30,23 +32,25 @@ import {DataViewModule} from "primeng/dataview";
 @NgModule({
   declarations: [QuestionBankDashboardComponent],
   exports: [QuestionBankDashboardComponent],
-    imports: [
-        CommonModule,
-        CoreModule,
-        QuestionBankRoutingModule,
-        Header,
-        CardModule,
-        CalendarModule,
-        ScrollPanelModule,
-        CheckboxModule,
-        FormsModule,
-        AvatarModule,
-        CourseCardComponent,
-        SkeletonModule,
-        AssignmentsListComponent,
-        TreeModule,
-        CategoryTreeViewComponent,
-        DataViewModule,
-    ]
+  imports: [
+    CommonModule,
+    CoreModule,
+    QuestionBankRoutingModule,
+    Header,
+    CardModule,
+    CalendarModule,
+    ScrollPanelModule,
+    CheckboxModule,
+    FormsModule,
+    AvatarModule,
+    CourseCardComponent,
+    SkeletonModule,
+    AssignmentsListComponent,
+    TreeModule,
+    CategoryTreeViewComponent,
+    DataViewModule,
+    TableModule,
+    TreeSelectModule,
+  ]
 })
 export class QuestionBankModule { }
