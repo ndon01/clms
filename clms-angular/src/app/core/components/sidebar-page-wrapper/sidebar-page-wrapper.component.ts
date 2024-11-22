@@ -60,6 +60,15 @@ export class SidebarPageWrapperComponent implements OnInit, OnChanges {
           this.router.navigate(["question-bank"])
         }
       },
+      {
+        label: 'AI Question Generator',
+        icon: 'pi pi-microchip-ai',
+        visible: this.hasQuestionBankPageAccess,
+        command: () => {
+          this.router.navigate(["question-generation"])
+        }
+      },
+
 
       {
         label: 'Administration',

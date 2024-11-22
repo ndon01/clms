@@ -2,6 +2,8 @@ package com.clms.api.questions;
 
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
+import com.clms.api.assignments.api.projections.converters.AssignmentQuestionProjectionConverter;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.questionBank.entity.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
@@ -38,6 +40,7 @@ public class QuestionsController {
     private final AssignmentQuestionRepository assignmentQuestionRepository;
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
     private final QuestionGenerationOrderRepository questionGenerationOrderRepository;
+    private final AssignmentQuestionProjectionConverter assignmentQuestionProjectionConverter;
 
     @PostMapping("/generate-from-youtube-video")
     public ResponseEntity<String> generateQuestions(@RequestBody QuestionsFromYoutubeVideoRequest request) {
@@ -110,8 +113,9 @@ public class QuestionsController {
 
     }
     @GetMapping("/getByIds")
-    public ResponseEntity<List<AssignmentQuestion>> getQuestionsByIds(@RequestParam List<Integer> ids) {
-        List<AssignmentQuestion> questions = assignmentQuestionRepository.findAllById(ids);
+    public ResponseEntity<List<AssignmentQuestionProjection>> getQuestionsByIds(@RequestParam List<Integer> ids) {
+        List<AssignmentQuestionProjection> questions = assignmentQuestionRepository.findAllById(ids).stream().map(
+                assignmentQuestionProjectionConverter::convert).collect(Collectors.toList());
         return ResponseEntity.ok(questions);
     }
     @PostMapping("update-question")

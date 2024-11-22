@@ -141,16 +141,18 @@ export class OrderOverviewPageComponent implements OnInit {
     exportQuestionToQuestionBankQuestion(selectedQuestion: AssignmentQuestionProjection) {
         const questionBankQuestion: QuestionBankQuestion = {
             id: selectedQuestion.id,
-            questionName: selectedQuestion.title,
-            sourceQuestion: selectedQuestion as AssignmentQuestion
         }
-        this.httpClient.post<QuestionBankQuestion>(`/api/question-bank/questions/create`,questionBankQuestion).subscribe(
+        this.httpClient.post(`/api/question-bank/questions/create`,questionBankQuestion,
+            {observe: 'response', responseType: 'text'}
+            ).subscribe(
             (response)  =>{
-                this.messageService.add({severity: "success", summary: "Success", detail: "Question exported successfully."})
-            },
-            error => {
-                this.messageService.add({severity: "error", summary: "Error", detail: "An error occurred while exporting the question."})
+                if(response.status === 200) {
+                    this.messageService.add({severity: "success", summary: "Success", detail: response?.body?.toString() || "Question exported successfully."})
+                }
+            },error => {
+                this.messageService.add({severity: "error", summary: "Error", detail: error?.error || "An error occurred while exporting the question."})
             }
+
         )
     }
 
