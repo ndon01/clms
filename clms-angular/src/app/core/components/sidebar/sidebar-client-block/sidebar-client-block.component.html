@@ -18,7 +18,7 @@
     <span class="pi pi-ellipsis-h" (click)="op.toggle($event)">
       <p-overlayPanel #op>
         <div class="flex flex-col m-1 gap-2">
-          <button class="p-button p-button-text p-2 transition-all duration-300 hover:scale-110" [routerLink]="['client/settings']">Settings</button>
+          <button class="p-button p-button-text p-2 transition-all duration-300 hover:scale-110" [routerLink]="['/client/settings']">Settings</button>
           <button class="p-button p-button-text p-2 transition-all duration-300 hover:scale-110" (click)="displayAvatarDialog = true">Change Avatar</button>
           <button class="p-button p-button-text p-2 transition-all duration-300 hover:scale-110" (click)="logout()">Logout</button>
         </div>
