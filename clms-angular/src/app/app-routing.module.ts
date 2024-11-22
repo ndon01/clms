@@ -58,6 +58,10 @@ routes = [
         path: 'question-generation',
 
         loadChildren: () => import('./modules/question-generation/question-generation.module').then(m => m.QuestionGenerationModule)
+      },
+      {
+        path: 'client',
+        loadChildren: () => import('./modules/client/client.module').then(m => m.ClientModule)
       }
 
 
