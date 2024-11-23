@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {
-  AssignmentQuestion,
+  AssignmentQuestion, PageinationInformationDto,
   QuestionBankCategory,
   QuestionBankQuestionProjection
 } from "@core/modules/openapi";
@@ -12,6 +12,9 @@ import {
 } from "@modules/question-bank/components/category-tree-view/category-tree-view.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {QuestionEditModalComponent} from "@modules/questions/modals/question-edit-modal/question-edit-modal.component";
+import {
+  SelectCategoriesDialogComponent
+} from "@modules/question-bank/modals/select-categories-dialog/select-categories-dialog.component";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -25,18 +28,31 @@ export class QuestionBankDashboardComponent implements OnInit {
   totalRecords?: number = 0;
   pageSize?: number = 5; // Default page size
   currentPage?: number = 0; // Default page number
+  categoriesTree: TreeNode[] = [];
   constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
   ngOnInit() {
     this.fetchCategories();
+    this.fetchQuestionHead();
     this.fetchQuestions(this.currentPage, this.pageSize)
   }
 
   onPageChange(event: any) {
-    this.currentPage = event.page;
+    if (event.first === 0) {
+      this.currentPage = 0;
+    } else {
+      this.currentPage = event.first / event.rows;
+    }
     this.pageSize = event.rows;
+    this.fetchQuestionHead();
     this.fetchQuestions(this.currentPage, this.pageSize);
+  }
+
+  fetchQuestionHead() {
+    this.httpClient.get<PageinationInformationDto>('api/question-bank/questions/pageable/head').subscribe((data) => {
+      this.totalRecords = data.totalRecords;
+    })
   }
 
   fetchQuestions(page: number = 0, size: number = 5) {
@@ -44,7 +60,6 @@ export class QuestionBankDashboardComponent implements OnInit {
       .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable?page=${page}&size=${size}`)
       .subscribe((questions) => {
         this.questions = questions
-        this.totalRecords = questions.length; // Save total records for pagination
       });
   }
 
@@ -53,6 +68,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   fetchCategories() {
     this.httpClient.get<QuestionBankCategory[]>("/api/question-bank/categories").subscribe(data => {
       this.categories = data;
+      this.categoriesTree = this.mapCategoriesToTree(data);
     })
   }
 
@@ -118,4 +134,88 @@ export class QuestionBankDashboardComponent implements OnInit {
       console.log(res)
     })
   }
+
+  mapCategoriesToTree(categories: QuestionBankCategory[]): TreeNode[] {
+    const idToNodeMap = new Map<number, TreeNode>();
+    const tree: TreeNode[] = [];
+
+    categories.forEach(category => {
+      const treeNode: TreeNode = {
+        label: category.categoryName,
+        data: category,
+        children: [],
+      };
+      idToNodeMap.set(category.id!, treeNode);
+
+      if (category.parentId) {
+        const parent = idToNodeMap.get(category.parentId);
+        if (parent) {
+          parent.children!.push(treeNode);
+        }
+      } else {
+        tree.push(treeNode);
+      }
+    });
+
+    return tree;
+  }
+
+  editQuestionCategories(question: QuestionBankQuestionProjection) {
+    const selectedCategories: QuestionBankCategory[] = []
+    question.categoryIds?.forEach(id => {
+      const category = this.categories.find(c => c.id === id);
+      if (category) {
+        selectedCategories.push(category);
+      }
+    })
+
+    const ref = this.dialogService.open(SelectCategoriesDialogComponent, {
+      header: "Edit Question Categories",
+      width: '50vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      data: {
+        categories: this.categories,
+        multiple: true,
+        selectedCategories: selectedCategories,
+        noneSelectedAllowed: true
+      }
+    })
+
+    ref.onClose.subscribe(selectedCategoryIds => {
+      if (selectedCategoryIds === undefined) {
+        console.log("Cancel")
+        return
+      }
+
+      this.httpClient.post("/api/question-bank/questions/categories/update", {
+        questionId: question.id,
+        categoryIds: selectedCategoryIds
+      }, {
+        observe: 'response'
+      }).subscribe().add(() => {
+        this.fetchCategories();
+        this.fetchQuestions(this.currentPage, this.pageSize);
+      })
+    })
+  }
+
+  getCategoryPath(categoryId: number): string {
+    const categoryMap = new Map<number, QuestionBankCategory>();
+    this.categories.forEach((category) => categoryMap.set(category.id!, category));
+
+    const buildPath = (id: number): string => {
+      const category = categoryMap.get(id);
+      if (category) {
+        return category.parentId ? `${buildPath(category.parentId)} -> ${category.categoryName}` : (category?.categoryName || 'FAILED TO LOAD');
+      }
+      return '';
+    };
+
+    return buildPath(categoryId);
+  }
+
 }
