@@ -6,7 +6,7 @@ spring:
       max-file-size: ${SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE:100MB}
       max-request-size: ${SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE:100MB}
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/clms}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5001/clms}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:changeme}
   cloud:
