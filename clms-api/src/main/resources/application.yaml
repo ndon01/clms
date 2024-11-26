@@ -51,6 +51,7 @@ clms:
         client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
         client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
         redirect-uri: ${GOOGLE_OAUTH_REDIRECT_URI:}
+        enabled: ${GOOGLE_OAUTH_ENABLED:false}
   password:
     strength: ${CLMS_PASSWORD_STRENGTH:10}
 
