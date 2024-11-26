@@ -18,13 +18,13 @@ public class CategoryReccomendationData
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @Column(name="category_frequency")
     private Long categoryFrequency = 0L;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="category_id")
     private QuestionBankCategory category;
 
