@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../../../core/components/navbar/navbar.component';
@@ -9,25 +9,28 @@ import { AsyncPipe, Location, NgClass } from '@angular/common';
 import { RegistrationService } from '@modules/authentication/pages/registration/registration.service';
 import { LoadingAmbianceService, LoadingAmbianceState } from '@core/services/loading-ambiance/loading-ambiance.service';
 import { PasswordInputFieldComponent } from '@shared/ui/password-input-field/password-input-field.component';
-import {catchError, map, tap} from 'rxjs';
+import {catchError, map, Observable, tap} from 'rxjs';
 import { AbstractControl } from '@angular/forms';
 import {LoginService} from "@modules/authentication/pages/login/login.service";
 import {MessageService} from "primeng/api";
 import {ClientService} from "@core/services/client/client.service";
 import {ClientDataSourceService} from "@core/services/client-data-source.service";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'authentication-login-page',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  isGoogleLoginEnabled = false;
 
   username = new FormControl<String>("");
 
   password = new FormControl<String>("");
 
-  constructor(private router: Router, public location: Location, private loginService: LoginService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService, private clientDataSourceService: ClientDataSourceService) {
+  constructor(private router: Router, public location: Location, private loginService: LoginService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService, private clientDataSourceService: ClientDataSourceService, private httpClient: HttpClient) {
     const passwordCharacterLimiter = map((newString: String | null) => {
       if (newString == null) return null;
       return newString.substring(0, 64);
@@ -70,5 +73,39 @@ export class LoginComponent {
         this.messageService.add({severity:'success', summary:'Success', detail:'Welcome back!'});
     })
 
+  }
+
+  onLoginWithGoogle() {
+    this.getGoogleAuthUrl().subscribe({
+      next: (url: string) => {
+        window.location.href = url; // Redirect the user to the Google login page
+      },
+      error: (err) => {
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to initiate Google login' });
+        console.error(err);
+      }
+    });
+  }
+
+  getGoogleAuthUrl(): Observable<string> {
+    return this.httpClient.get(`/api/v1/authentication/oauth/google/url`, { responseType: 'text' });
+  }
+
+  ngOnInit() {
+    // Check if Google login is enabled
+    this.httpClient.get(`/api/v1/authentication/oauth/google/enabled`, { responseType: 'text' })
+      .subscribe({
+        next: (enabled: string) => {
+          this.isGoogleLoginEnabled = enabled === 'true';
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to check if Google login is enabled'
+          });
+          console.error(err);
+        }
+      });
   }
 }

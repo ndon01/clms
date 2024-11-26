@@ -7,6 +7,7 @@ import com.clms.api.authorization.RoleCRUDService;
 import com.clms.api.authorization.RoleUpdateService;
 import com.clms.api.authorization.Role;
 import com.clms.api.common.interfaces.GenericConverter;
+import com.clms.api.common.security.authorization.requiresPermission.RequiresPermission;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.UserProjection;
 import com.clms.api.users.UserService;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
+@RequiresPermission("ADMIN_PAGE_ACCESS")
 @Tag(name = "Admin", description = "Admin endpoints for managing users and roles")
 public class AdminController {
 

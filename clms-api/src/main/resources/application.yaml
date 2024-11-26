@@ -1,60 +1,64 @@
 spring:
   application:
-    name: api
+    name: ${SPRING_APPLICATION_NAME:api}
   servlet:
     multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+      max-file-size: ${SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE:100MB}
+      max-request-size: ${SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE:100MB}
   datasource:
-    url: jdbc:postgresql://localhost:5001/clms
-    username: ${DB_USERNAME:admin}
-    password: ${DB_PASSWORD:changeme}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/clms}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:changeme}
   cloud:
     aws:
       s3:
-        endpoint: http://s3.localhost.localstack.cloud:4566
-        region: us-east-1
+        endpoint: ${SPRING_CLOUD_AWS_S3_ENDPOINT:https://s3.us-east-2.amazonaws.com}
+        region: ${SPRING_CLOUD_AWS_S3_REGION:us-east-1}
       credentials:
-        access-key: ${AWS_ACCESS_KEY:localstack}
-        secret-key: ${AWS_SECRET_KEY:localstack}
+        access-key: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESS_KEY:default-access-key}
+        secret-key: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRET_KEY:default-secret-key}
       region:
-        static: us-east-1
+        static: ${SPRING_CLOUD_AWS_REGION_STATIC:us-east-1}
   jpa:
-    show-sql: false
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
     hibernate:
-      ddl-auto: validate
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:validate}
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: ${SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ${SPRING_MVC_PATHMATCH_MATCHING_STRATEGY:ant_path_matcher}
   jackson:
     serialization:
-      fail-on-empty-beans: false
+      fail-on-empty-beans: ${SPRING_JACKSON_SERIALIZATION_FAIL_ON_EMPTY_BEANS:false}
 
 springdoc:
   api-docs:
-    enabled: true
-    path: /api-docs
+    enabled: ${SPRINGDOC_API_DOCS_ENABLED:true}
+    path: ${SPRINGDOC_API_DOCS_PATH:/api-docs}
   swagger-ui:
-    enabled: true
-    path: /swagger-ui.html
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED:true}
+    path: ${SPRINGDOC_SWAGGER_UI_PATH:/swagger-ui.html}
 
 clms:
   security:
     access-token:
-      expiration-time: 86400000
-      secret: ${ACCESS_TOKEN_SECRET:changeme}
+      expiration-time: ${CLMS_SECURITY_ACCESS_TOKEN_EXPIRATION_TIME:86400000}
+      secret: ${CLMS_SECURITY_ACCESS_TOKEN_SECRET:changeme}
+    oauth2:
+      google:
+        client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+        client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+        redirect-uri: ${GOOGLE_OAUTH_REDIRECT_URI:}
+        enabled: ${GOOGLE_OAUTH_ENABLED:false}
   password:
-    strength: 10
+    strength: ${CLMS_PASSWORD_STRENGTH:10}
 
 gemini-configuration:
-  enabled: ${GEMINI_ENABLED:false}
-  api-url: https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent
-  api-key: ${GEMINI_API_KEY:''}
+  enabled: ${GEMINI_CONFIGURATION_ENABLED:false}
+  api-url: ${GEMINI_CONFIGURATION_API_URL:https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent}
+  api-key: ${GEMINI_CONFIGURATION_API_KEY:''}
 
 question-generation-configuration:
-  enabled: ${QUESTION_GENERATION_ENABLED:false}
-
-
+  enabled: ${QUESTION_GENERATION_CONFIGURATION_ENABLED:false}

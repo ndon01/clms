@@ -15,9 +15,6 @@ public class AuthenticationProfileToAccessTokenConverterService {
 
     private final SecurityApplicationProperties securityApplicationProperties;
 
-
-
-
     public String convert(AuthenticationProfile authenticationProfile) {
         Algorithm algorithm = Algorithm.HMAC256(securityApplicationProperties.getAccessToken().getSecret()); // Using HMAC with SHA-256
 
