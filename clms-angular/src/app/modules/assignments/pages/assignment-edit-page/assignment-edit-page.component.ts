@@ -5,7 +5,7 @@ import {Location} from "@angular/common";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {tap} from "rxjs";
-import {AssignmentQuestion} from "@core/modules/openapi";
+import {AssignmentQuestion, AssignmentQuestionRequest} from "@core/modules/openapi";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -94,7 +94,7 @@ export class AssignmentEditPageComponent implements OnInit {
   // Edit question modal
 
   isEditQuesitonModalVisible = false;
-  selectedQuestion!: AssignmentQuestion;
+  selectedQuestion!: AssignmentQuestionRequest;
 
   openEditQuestionModal() {
     this.isEditQuesitonModalVisible = true;
@@ -133,8 +133,7 @@ export class AssignmentEditPageComponent implements OnInit {
 
   saveEditQuestionModal() {
     const url = `/api/assignments/questions/${this.selectedQuestion.id}`;
-    //this.selectedQuestion.assignmentId = this.assignment.id;
-    //console.log('selected question assignment id', this.selectedQuestion.assignmentId)
+    this.selectedQuestion.assignmentId = this.assignment.id;
     this.httpClient.put(url, this.selectedQuestion).subscribe(
       response => {
         this.messageService.add({severity: 'success', summary: 'Success', detail: 'Question updated successfully.'})
