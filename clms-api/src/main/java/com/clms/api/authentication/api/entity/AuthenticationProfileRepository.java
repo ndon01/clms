@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface AuthenticationProfileRepository extends JpaRepository<AuthenticationProfile, Integer> {
     @Query("SELECT a FROM AuthenticationProfile a WHERE LOWER(a.username) = LOWER(:username)")
     Optional<AuthenticationProfile> getByUsername(@Param("username") String username);
+
+    Optional<AuthenticationProfile> findByGoogleId(String googleId);
 }
