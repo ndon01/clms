@@ -96,6 +96,15 @@ public class AssignmentQuestionController {
             question.setUpdatedAt(request.getUpdatedAt());
             question.setKeepAnswersOrdered(request.getKeepAnswersOrdered() || false);
             question.setOrder(request.getOrder());
+            //asssignment id is null
+            //below is the quesonid
+            Integer assignmentId = id;
+
+            if (assignmentId == null) {
+                System.out.println("Assignment ID is null");
+                logger.error("Assignment ID is null");
+                return ResponseEntity.badRequest().body(null);
+            }
 
             // Check if the assignment ID is valid
             Optional<Assignment> assignmentOptional = assignmentRepository.findById(request.getAssignmentId());

@@ -12,6 +12,7 @@ import {TableModule} from "primeng/table";
 import {TagModule} from "primeng/tag";
 import {RouterLink} from "@angular/router";
 import {InputTextModule} from "primeng/inputtext";
+import {CoreModule} from "@core/core.module";
 
 @Component({
   selector: 'app-question-generation',
@@ -28,7 +29,8 @@ import {InputTextModule} from "primeng/inputtext";
     TableModule,
     TagModule,
     RouterLink,
-    InputTextModule
+    InputTextModule,
+    CoreModule
   ],
   styleUrl: './question-generation.component.css'
 })
