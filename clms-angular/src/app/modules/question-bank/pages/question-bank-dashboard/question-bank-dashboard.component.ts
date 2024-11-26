@@ -57,7 +57,12 @@ export class QuestionBankDashboardComponent implements OnInit {
 
   fetchQuestions(page: number = 0, size: number = 5) {
     this.httpClient
-      .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable?page=${page}&size=${size}`)
+      .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable`,{
+        params:{
+          page: page.toString(),
+          size: size.toString()
+        }
+      })
       .subscribe((questions) => {
         this.questions = questions
       });
@@ -110,6 +115,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   }
 
   protected readonly JSON = JSON;
+
 
   editQuestion(question: QuestionBankQuestionProjection) {
     const ref = this.dialogService.open(QuestionEditModalComponent, {
@@ -218,4 +224,46 @@ export class QuestionBankDashboardComponent implements OnInit {
     return buildPath(categoryId);
   }
 
+
+
+  openSelectCategory(page: number = 0, size: number = 5) {
+    const selectedCategories: QuestionBankCategory[] = []
+    const ref = this.dialogService.open(SelectCategoriesDialogComponent, {
+      header: "Filter by Categories",
+      width: '50vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      data: {
+        categories: this.categories,
+        multiple: true,
+        selectedCategories: selectedCategories,
+        noneSelectedAllowed: true
+      }
+    })
+
+    ref.onClose.subscribe(selectedCategoryIds => {
+      if (selectedCategoryIds === undefined) {
+        console.log("Cancel")
+        return
+      }else{
+        this.httpClient
+          .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable`,{
+            params:{
+              page: page.toString(),
+              size: size.toString(),
+              filterByCategoryIds: selectedCategoryIds
+            }
+          })
+          .subscribe((questions) => {
+            this.questions = questions
+          });
+      }
+    })
+    }
+  clear(){
+
+  }
 }
