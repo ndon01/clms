@@ -4,6 +4,8 @@ import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.common.interfaces.GenericConverter;
+import com.clms.api.courses.CourseRepository;
+import com.clms.api.courses.api.Course;
 import com.clms.api.filestorage.FileMetadata;
 import com.clms.api.filestorage.FileMetadataRepository;
 import com.clms.api.filestorage.FileStorageService;
@@ -20,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,6 +38,9 @@ public class AssignmentController {
     private final FileStorageService fileStorageService;
     private final FileMetadataRepository fileMetadataRepository;
     private final AssignmentFileRepository assignmentFileRepository;
+    private final CourseRepository courseRepository;
+    private final AssignmentQuestionRepository assignmentQuestionRepository;
+
 
     private final GenericConverter<Assignment, AssignmentDetailsProjection> assignmentDetailsProjectionConverter;
     private final GenericConverter<Assignment, AssignmentEditDetailsProjection> assignmentEditDetailsProjectionConverter;
@@ -203,5 +209,55 @@ public class AssignmentController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileResource.getFilename() + "\"")
                 .body(fileResource);
     }
+    @PostMapping("/upsert")
+    public ResponseEntity<Integer> upsertAssignment(@RequestParam Boolean cloneQuestions ,@RequestBody CreateAssignmentRequestDTO createAssignmentRequestDTO) {
+        Assignment assignment = createAssignmentRequestDTO.getAssignmentInfo();
+        List<Integer> listOfQuestionIds = createAssignmentRequestDTO.getQuestionIds();
+        Integer courseId = createAssignmentRequestDTO.getCourseId();
+
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (assignment == null || assignment.getId() != null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        assignment.setCourse(currentCourse);
+        assignmentRepository.save(assignment);
+
+        if(cloneQuestions) {
+            List<AssignmentQuestion> clonedQuestions = assignmentQuestionRepository.findAllById(listOfQuestionIds).stream().map(
+                    question -> {
+                        AssignmentQuestion assignmentQuestion = new AssignmentQuestion();
+                        assignmentQuestion.setAssignment(assignment);
+                        assignmentQuestion.setQuestion(question.getQuestion());
+                        assignmentQuestion.setTitle(question.getTitle());
+                        assignmentQuestion.setCreatedAt(new Date());
+                        assignmentQuestion.setUpdatedAt(new Date());
+                        assignmentQuestion.setOrder(question.getOrder());
+                        assignmentQuestion.setQuestionType(question.getQuestionType());
+                        assignmentQuestion.setKeepAnswersOrdered(question.getKeepAnswersOrdered());
+                        assignmentQuestion.setAnswers(question.getAnswers().stream().map(
+                                answer -> {
+                                    AssignmentQuestionAnswer assignmentQuestionAnswer = new AssignmentQuestionAnswer();
+                                    assignmentQuestionAnswer.setText(answer.getText());
+                                    assignmentQuestionAnswer.setOrder(answer.getOrder());
+                                    assignmentQuestionAnswer.setCorrect(answer.isCorrect());
+                                    return assignmentQuestionAnswer;
+                                }
+                        ).collect(Collectors.toList()));
+                        return assignmentQuestion;
+                    }
+            ).collect(Collectors.toList());
+
+            assignmentQuestionRepository.saveAll(clonedQuestions);
+        }
+
+
+        return ResponseEntity.ok(assignment.getId());
+    }
 }
+
 

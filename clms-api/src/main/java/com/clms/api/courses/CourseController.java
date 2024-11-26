@@ -1,6 +1,7 @@
 package com.clms.api.courses;
 
 import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.AssignmentRepository;
 import com.clms.api.courses.api.Course;
@@ -13,6 +14,8 @@ import com.clms.api.courses.api.projections.CourseDetailsProjection;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.ILoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/courses")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Course", description = "Endpoints for managing courses")
 public class CourseController {
     private final CourseRepository courseRepository;
@@ -175,7 +179,7 @@ public class CourseController {
     }
 
     @PostMapping("/{courseId}/assignments/create")
-    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment) {
+    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment, @RequestBody AssignmentQuestion[] questions) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -186,6 +190,32 @@ public class CourseController {
         }
 
         assignment.setCourse(currentCourse);
+
+        for (AssignmentQuestion question : questions) {
+            question.setAssignment(assignment);
+        }
+
+        assignmentRepository.saveAndFlush(assignment);
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("{courseId}/assignments/updateAssignment")
+    public ResponseEntity<?> updateAssignmentWithQuestions(@PathVariable int courseId,@RequestBody UpdateAssignmentQuestionsDto updateAssignmentQuestionsDto){
+        Course currentCourse = courseRepository.findById(courseId).orElse(null);
+        Assignment assignment = updateAssignmentQuestionsDto.getAssignment();
+        List<AssignmentQuestion> questions = List.of(updateAssignmentQuestionsDto.getQuestions());
+        if (currentCourse == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (assignment == null) {
+            return ResponseEntity.status(400).build();
+        }
+
+        assignment.setCourse(currentCourse);
+
+        for (AssignmentQuestion question : questions) {
+            question.setAssignment(assignment);
+        }
 
         assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();

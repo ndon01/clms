@@ -1,9 +1,9 @@
 <div class="min-h-screen flex items-center justify-center bg-background">
   <div class="w-full max-w-md space-y-4">
     <div class="space-y-4">
-      <input type="url" pInputText placeholder="Enter YouTube URL" [(ngModel)]="url" required class="w-full">
+      <input type="url" pInputText placeholder="Enter YouTube URL" [(ngModel)]="url" required class="w-full p-1 m-1">
       <div class="flex justify-center">
-        <p-button (onClick)="handleSubmit($event)" label="Generate" type="submit" class="w-32"></p-button>
+        <p-button (onClick)="handleSubmit($event)" label="Generate" type="submit" class="w-32 pb-1"></p-button>
       </div>
     </div>
 
@@ -31,5 +31,4 @@
       </p-table>
     </p-scrollPanel>
   </div>
-
 </div>
