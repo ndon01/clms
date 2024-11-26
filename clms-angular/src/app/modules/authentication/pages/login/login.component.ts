@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { NavbarComponent } from '../../../../core/components/navbar/navbar.component';
@@ -22,7 +22,9 @@ import {HttpClient} from "@angular/common/http";
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+
+  isGoogleLoginEnabled = false;
 
   username = new FormControl<String>("");
 
@@ -87,5 +89,23 @@ export class LoginComponent {
 
   getGoogleAuthUrl(): Observable<string> {
     return this.httpClient.get(`/api/v1/authentication/oauth/google/url`, { responseType: 'text' });
+  }
+
+  ngOnInit() {
+    // Check if Google login is enabled
+    this.httpClient.get(`/api/v1/authentication/oauth/google/enabled`, { responseType: 'text' })
+      .subscribe({
+        next: (enabled: string) => {
+          this.isGoogleLoginEnabled = enabled === 'true';
+        },
+        error: (err) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to check if Google login is enabled'
+          });
+          console.error(err);
+        }
+      });
   }
 }

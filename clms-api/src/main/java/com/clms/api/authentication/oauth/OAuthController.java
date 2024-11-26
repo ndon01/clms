@@ -16,9 +16,18 @@ import java.security.GeneralSecurityException;
 @Slf4j
 public class OAuthController {
     private final OAuthService oAuthService;
+    private final OAuthConfiguration oAuthConfiguration;
+
+    @GetMapping("/google/enabled")
+    public ResponseEntity<Boolean> isGoogleOAuthEnabled() {
+        return ResponseEntity.ok(oAuthConfiguration.isEnabled() == true);
+    }
 
     @GetMapping("/google/url")
     public ResponseEntity<String> getGoogleOAuthUrl() {
+        if (!oAuthConfiguration.isEnabled()) {
+            return ResponseEntity.badRequest().body("Google OAuth is not enabled.");
+        }
         String googleUrl = oAuthService.generateGoogleOAuthUrl();
         log.info("Generated Google OAuth URL: {}", googleUrl);
         return ResponseEntity.ok(googleUrl);
@@ -28,6 +37,9 @@ public class OAuthController {
     public ResponseEntity<?> handleGoogleCallback(
             @RequestParam("code") String authorizationCode,
             @RequestParam("state") String state) {
+        if (!oAuthConfiguration.isEnabled()) {
+            return ResponseEntity.badRequest().body("Google OAuth is not enabled.");
+        }
         try {
             log.info("Received Google OAuth callback with code: {}", authorizationCode);
             oAuthService.handleGoogleCallback(authorizationCode);
