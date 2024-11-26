@@ -58,12 +58,15 @@ public class AssignmentGradingService {
                             .findByCategoryAndUser(category, attempt.getUser())
                             .orElse(CategoryReccomendationData
                                     .builder()
+                                    .categoryFrequency(0L)
+                                    .categoryScore(0L)
                                     .category(category)
                                     .user(attempt.getUser()).build()));
                     data.setCategoryFrequency(data.getCategoryFrequency() + 1);
                     if(questionAnswer.isSelectedAnswerCorrect()){
                         data.setCategoryScore(data.getCategoryScore() + 1);
                     }
+                    categoryReccomendationDataHashMap.put(category.getId(), data);
 
                 });
 

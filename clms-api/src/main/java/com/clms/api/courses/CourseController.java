@@ -179,7 +179,7 @@ public class CourseController {
     }
 
     @PostMapping("/{courseId}/assignments/create")
-    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment, @RequestBody AssignmentQuestion[] questions) {
+    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -191,9 +191,6 @@ public class CourseController {
 
         assignment.setCourse(currentCourse);
 
-        for (AssignmentQuestion question : questions) {
-            question.setAssignment(assignment);
-        }
 
         assignmentRepository.saveAndFlush(assignment);
         return ResponseEntity.ok().build();
