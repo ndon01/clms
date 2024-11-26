@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,12 +34,22 @@ public class QuestionBankQuestionController {
     private final QuestionBankQuestionProejctionConverter questionBankQuestionProejctionConverter;
     private final AssignmentQuestionRepository assignmentQuestionRepository;
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
+
     @GetMapping("/pageable")
-    public List<QuestionBankQuestionProjection> getQuestions(PaginationRequest paginationRequest) {
-        return questionBankQuestionRepository
-                .findAll(paginationRequest.toPageRequest()).stream()
-                .map(questionBankQuestionProejctionConverter::convert)
-                .toList();
+    public List<QuestionBankQuestionProjection> getQuestions(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                                             @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                             @RequestParam(required = false) List<Integer> filterByCategoryIds) {
+        PageRequest paginationRequest = PageRequest.of(page, size);
+        List<QuestionBankQuestion> questions = null;
+        if (filterByCategoryIds != null && !filterByCategoryIds.isEmpty()) {
+
+            questions = questionBankQuestionRepository.findAllByCategoriesIn(
+                    filterByCategoryIds.stream().map(id -> QuestionBankCategory.builder().id(id).build()).toList(),
+                    paginationRequest);
+        }else{
+            questions = questionBankQuestionRepository.findAll(paginationRequest).toList();
+        }
+        return questions.stream().map(questionBankQuestionProejctionConverter::convert).toList();
     }
 
     @GetMapping(value = "/pageable/head")
