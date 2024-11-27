@@ -1,0 +1,24 @@
+<div class="flex flex-col gap-4 mb-4">
+  <ng-container *ngIf="!multiple; else multiple">
+    <p-dropdown
+      [options]="assignments"
+      optionLabel="name"
+      placeholder="Select Assignments"
+      [ngModel] = "selectedAssignments"
+      (ngModelChange)="onCourseChange($event)"
+      appendTo="body"
+    >
+    </p-dropdown>
+  </ng-container>
+  <ng-template #multiple>
+    <p-multiSelect
+      [options]="assignments"
+      optionLabel="name"
+      placeholder="Select Assignments"
+      [ngModel] = "selectedAssignments"
+      (ngModelChange)="onCourseChange($event)"
+      appendTo="body"
+    >
+    </p-multiSelect>
+  </ng-template>
+</div>

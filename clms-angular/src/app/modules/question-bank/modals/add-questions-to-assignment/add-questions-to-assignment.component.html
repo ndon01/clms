@@ -1,0 +1,69 @@
+<div class="flex flex-col p-4">
+  <!-- Dropdown for selecting courses -->
+  <app-my-course-selection
+    [multiple]="false"
+    [selectedCourses]="selectedCourse"
+    (selectedCoursesChange)="onCourseSelection($event)"/>
+  <app-assignment-selection
+    [course]="assignmentCourse"
+    [multiple]="false"
+    [selectedAssignments]="selectedAssignments"
+    (selectedAssignmentsChange)="selectedAssignments = $event"/>
+  <!-- Name input -->
+  <div class="flex flex-col gap-1 mb-4">
+    <label for="name">Name</label>
+    <input id="name" type="text" pInputText [(ngModel)]="newAssignment.name">
+  </div>
+  <!-- Description input -->
+  <div class="flex flex-col gap-1 mb-4">
+    <label for="description">Description</label>
+    <textarea id="description" pInputTextarea [(ngModel)]="newAssignment.description"></textarea>
+  </div>
+
+  <!-- Start Date input -->
+  <div class="flex flex-col gap-1 mb-4">
+    <label for="startDate">Start Date</label>
+    <p-calendar id="startDate" [(ngModel)]="newAssignment.startDate" [showTime]="true" appendTo="body"></p-calendar>
+  </div>
+
+  <!-- Due Date input -->
+  <div class="flex flex-col gap-1 mb-4">
+    <label for="dueDate">Due Date</label>
+    <p-calendar id="dueDate" [(ngModel)]="newAssignment.dueDate" [showTime]="true" appendTo="body"></p-calendar>
+  </div>
+
+  <!-- Buttons at the bottom -->
+  <div class="flex justify-end mt-4 gap-4">
+    <ng-container *ngIf="multiple && Array.isArray(selectedCourse); else singleSelect">
+      <button
+        pButton
+        type="button"
+        label="{{selectedCourse.length <= 1 ? 'Select Course' : 'Select Courses'}}{{selectedCourse.length > 1 ? ' (' + selectedCourse.length + ')' : ''}}"
+        icon="pi pi-check"
+        (click)="confirmSelection()"
+        [disabled]="selectedCourse.length == 0"
+      >
+      </button>
+    </ng-container>
+    <ng-template #singleSelect>
+      <button
+        pButton
+        type="button"
+        label="Create Assignment"
+        icon="pi pi-check"
+        (click)="confirmSelection()"
+        [disabled]="!selectedCourse"
+      >
+      </button>
+    </ng-template>
+
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      icon="pi pi-times"
+      (click)="cancel()"
+    >
+    </button>
+  </div>
+</div>

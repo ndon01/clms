@@ -11,6 +11,7 @@
 
     <p-table
       [value]="questions"
+      [(selection)]="selectedQuestion"
       [paginator]="true"
       [rows]="pageSize"
       [lazy]="true"
@@ -20,13 +21,28 @@
       <ng-template pTemplate="caption">
         <div class="flex">
           <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear()" />
-          <span class="p-input-icon-left ml-auto">
-            <button pButton type="button" icon="pi pi-search" class="p-button-text" (click)="openSelectCategory()"></button>
-            </span>
+          <span class="p-input-icon-left ml-auto flex items-center gap-2">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-plus"
+              label="Create Assignment"
+              class="p-button-outlined"
+              (click)="createAssignment()"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-search"
+              class="p-button-text"
+              (click)="openSelectCategory()"
+            ></button>
+          </span>
         </div>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
+          <th style="width: 4rem"><p-tableHeaderCheckbox/></th>
           <th>Title</th>
           <th>Categories</th>
           <th>Actions</th>
@@ -34,6 +50,9 @@
       </ng-template>
       <ng-template pTemplate="body" let-question>
         <tr>
+          <td>
+            <p-tableCheckbox [value]="question" />
+          </td>
           <td>{{ question.question.title }}</td>
           <td>
             <ng-container *ngIf="question.categoryIds?.length">
@@ -56,6 +75,5 @@
         </tr>
       </ng-template>
     </p-table>
-
   </div>
 </app-sidebar-page-wrapper>

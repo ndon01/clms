@@ -15,6 +15,13 @@ import {QuestionEditModalComponent} from "@modules/questions/modals/question-edi
 import {
   SelectCategoriesDialogComponent
 } from "@modules/question-bank/modals/select-categories-dialog/select-categories-dialog.component";
+import {
+  SelectCoursesDialogComponent
+} from "@modules/question-generation/modal/select-courses-dialog/select-courses-dialog.component";
+import {CreateAssignmentComponent} from "@modules/question-bank/modals/create-assignment/create-assignment.component";
+import {
+  AddQuestionsToAssignmentComponent
+} from "@modules/question-bank/modals/add-questions-to-assignment/add-questions-to-assignment.component";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -29,8 +36,8 @@ export class QuestionBankDashboardComponent implements OnInit {
   pageSize?: number = 5; // Default page size
   currentPage?: number = 0; // Default page number
   categoriesTree: TreeNode[] = [];
-
   selectedCategories: QuestionBankCategory[] = []
+  selectedQuestion: QuestionBankQuestionProjection | null = null;
   constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
@@ -261,5 +268,21 @@ export class QuestionBankDashboardComponent implements OnInit {
     this.selectedCategories = [];
     this.fetchQuestions(this.currentPage, this.pageSize);
     this.fetchQuestionHead();
+  }
+
+  createAssignment() {
+    const ref = this.dialogService.open(AddQuestionsToAssignmentComponent,{
+      header: "Import Questions to Assignment",
+      width: '50vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      data: {
+        selectedCourses: []
+      }
+    })
+
   }
 }
