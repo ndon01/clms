@@ -98,7 +98,7 @@ export class SelectCategoriesDialogComponent implements OnInit {
 
   // Close the dialog without any selection
   cancel() {
-    this.ref.close();
+    this.ref.close(null);
   }
 
   protected readonly Array = Array;
