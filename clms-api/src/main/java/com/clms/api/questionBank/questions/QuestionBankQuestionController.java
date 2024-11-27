@@ -53,8 +53,17 @@ public class QuestionBankQuestionController {
     }
 
     @GetMapping(value = "/pageable/head")
-    public ResponseEntity<PageinationInformationDto> getQuestionsHead(PaginationRequest paginationRequest) {
-        long totalRecords = questionBankQuestionRepository.count();
+    public ResponseEntity<PageinationInformationDto> getQuestionsHead(@RequestParam(required = false, defaultValue = "1") Integer page,
+                                                                      @RequestParam(required = false, defaultValue = "10") Integer size,
+                                                                      @RequestParam(required = false) List<Integer> filterByCategoryIds) {
+        long totalRecords = 0;
+        if (filterByCategoryIds == null || filterByCategoryIds.isEmpty()) {
+            totalRecords = questionBankQuestionRepository.count();
+        }
+        else{
+            totalRecords = questionBankQuestionRepository.countAllByCategoriesIn(filterByCategoryIds.stream().map(id -> QuestionBankCategory.builder().id(id).build()).toList());
+        }
+
         PageinationInformationDto pageinationInformationDto = new PageinationInformationDto();
         pageinationInformationDto.setTotalRecords(totalRecords);
         return ResponseEntity.ok(pageinationInformationDto);

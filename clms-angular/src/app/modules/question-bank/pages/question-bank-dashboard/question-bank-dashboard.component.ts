@@ -29,6 +29,8 @@ export class QuestionBankDashboardComponent implements OnInit {
   pageSize?: number = 5; // Default page size
   currentPage?: number = 0; // Default page number
   categoriesTree: TreeNode[] = [];
+
+  selectedCategories: QuestionBankCategory[] = []
   constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
@@ -50,7 +52,12 @@ export class QuestionBankDashboardComponent implements OnInit {
   }
 
   fetchQuestionHead() {
-    this.httpClient.get<PageinationInformationDto>('api/question-bank/questions/pageable/head').subscribe((data) => {
+    this.httpClient.get<PageinationInformationDto>('api/question-bank/questions/pageable/head', {
+        params: {
+          filterByCategoryIds: this.selectedCategories.map(c => c.id).join(',')
+        }
+      }
+    ).subscribe((data) => {
       this.totalRecords = data.totalRecords;
     })
   }
@@ -60,7 +67,8 @@ export class QuestionBankDashboardComponent implements OnInit {
       .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable`,{
         params:{
           page: page.toString(),
-          size: size.toString()
+          size: size.toString(),
+          filterByCategoryIds: this.selectedCategories.map(c => c.id).join(',')
         }
       })
       .subscribe((questions) => {
@@ -205,6 +213,7 @@ export class QuestionBankDashboardComponent implements OnInit {
       }).subscribe().add(() => {
         this.fetchCategories();
         this.fetchQuestions(this.currentPage, this.pageSize);
+
       })
     })
   }
@@ -227,7 +236,6 @@ export class QuestionBankDashboardComponent implements OnInit {
 
 
   openSelectCategory(page: number = 0, size: number = 5) {
-    const selectedCategories: QuestionBankCategory[] = []
     const ref = this.dialogService.open(SelectCategoriesDialogComponent, {
       header: "Filter by Categories",
       width: '50vw',
@@ -239,31 +247,19 @@ export class QuestionBankDashboardComponent implements OnInit {
       data: {
         categories: this.categories,
         multiple: true,
-        selectedCategories: selectedCategories,
+        selectedCategories: this.selectedCategories,
         noneSelectedAllowed: true
       }
     })
-
     ref.onClose.subscribe(selectedCategoryIds => {
-      if (selectedCategoryIds === undefined) {
-        console.log("Cancel")
-        return
-      }else{
-        this.httpClient
-          .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable`,{
-            params:{
-              page: page.toString(),
-              size: size.toString(),
-              filterByCategoryIds: selectedCategoryIds
-            }
-          })
-          .subscribe((questions) => {
-            this.questions = questions
-          });
-      }
+        this.selectedCategories = selectedCategoryIds;
+        this.fetchQuestions(page, size);
+        this.fetchQuestionHead();
     })
     }
   clear(){
-
+    this.selectedCategories = [];
+    this.fetchQuestions(this.currentPage, this.pageSize);
+    this.fetchQuestionHead();
   }
 }

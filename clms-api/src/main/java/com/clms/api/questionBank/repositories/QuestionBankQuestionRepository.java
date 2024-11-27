@@ -14,4 +14,5 @@ import java.util.List;
 public interface QuestionBankQuestionRepository extends JpaRepository<QuestionBankQuestion,Integer> {
     long count();
     List<QuestionBankQuestion> findAllByCategoriesIn(List<QuestionBankCategory> categories, PageRequest pageable);
+    long countAllByCategoriesIn(List<QuestionBankCategory> categories);
 }
