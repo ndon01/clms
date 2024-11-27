@@ -15,6 +15,9 @@ import {QuestionEditModalComponent} from "@modules/questions/modals/question-edi
 import {
   SelectCategoriesDialogComponent
 } from "@modules/question-bank/modals/select-categories-dialog/select-categories-dialog.component";
+import {
+  SelectCoursesDialogComponent
+} from "@modules/question-generation/modal/select-courses-dialog/select-courses-dialog.component";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -29,6 +32,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   pageSize?: number = 5; // Default page size
   currentPage?: number = 0; // Default page number
   categoriesTree: TreeNode[] = [];
+  selectedQuestion: QuestionBankQuestionProjection | null = null;
   constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
@@ -265,5 +269,8 @@ export class QuestionBankDashboardComponent implements OnInit {
     }
   clear(){
 
+  }
+
+  openCreateQuestion() {
   }
 }
