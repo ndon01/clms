@@ -218,17 +218,5 @@ public class CourseController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("members/getClientMembership")
-    public ClientCourseMemberDetailsProjection getClientMembership(@CurrentUser User user, @RequestParam Integer courseId){
-        CourseMember courseMember = courseMemberRepository.getCourseMemberByCourseIdAndUserId(courseId,user.getId());
-        if(courseMember == null){
-            return null;
-        }
-        return ClientCourseMemberDetailsProjection.builder()
-                .courseId(courseMember.getId().getCourse().getId())
-                .userId(courseMember.getId().getUser().getId())
-                .isTutor(courseMember.isTutor())
-                .build();
-    }
 }
 

@@ -18,11 +18,14 @@
 
           <p-table [value]="courseMembers" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
-                   dataKey="id" editMode="row">
+                   dataKey="id" editMode="row"
+
+          >
             <ng-template pTemplate="header">
               <tr>
                 <th>ID</th>
                 <th>Username</th>
+                <th>Is Tutor?</th>
                 <th>Actions</th>
               </tr>
             </ng-template>
@@ -35,32 +38,18 @@
                   {{ user.username }}
                 </td>
                 <td>
+                  {{ user.isTutor ? 'Yes' : 'No' }}
+                </td>
+                <td>
                   <div class="flex align-items-center justify-content-center gap-2">
                     <button
-                      *ngIf="!editing"
                       pButton
                       pRipple
                       type="button"
-                      pInitEditableRow
                       icon="pi pi-pencil"
-                      class="p-button-rounded p-button-text">
-                    </button>
-                    <button
-                      *ngIf="editing"
-                      pButton
-                      pRipple
-                      type="button"
-                      pSaveEditableRow
-                      icon="pi pi-check"
-                      class="p-button-rounded p-button-text p-button-success mr-2">
-                    </button>
-                    <button
-                      *ngIf="editing"
-                      pButton pRipple
-                      type="button"
-                      pCancelEditableRow
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-danger">
+                      class="p-button-rounded p-button-text"
+                      (click)="editCourseMember(user)"
+                    >
                     </button>
                   </div>
                 </td>

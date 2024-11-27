@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {UserProjection} from "@core/model/User.model";
 import {filter, map} from "rxjs";
+import {CourseMemberProjection} from "@core/modules/openapi";
 
 @Component({
   selector: 'courses-course-settings-page',
@@ -13,6 +14,7 @@ export class CourseSettingsPageComponent implements OnInit{
 
   courseId !: number;
   courseMembers: UserProjection[] = [];
+  courseMembersNew: CourseMemberProjection[] = [];
   constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
   }
 
@@ -35,6 +37,15 @@ export class CourseSettingsPageComponent implements OnInit{
     this.httpClient.get<UserProjection[]>(`/api/courses/${this.courseId}/members`).subscribe(data =>
     {
       this.courseMembers = data;
+    });
+
+    this.httpClient.get<CourseMemberProjection[]>(`/api/courses/members/getCourseMembers`, {
+      params: {
+        courseId: this.courseId.toString()
+      }
+    }).subscribe(data =>
+    {
+      this.courseMembersNew = data;
     });
   }
 
@@ -104,4 +115,8 @@ export class CourseSettingsPageComponent implements OnInit{
   }
 
   protected readonly Object = Object;
+
+  editCourseMember(user) {
+
+  }
 }

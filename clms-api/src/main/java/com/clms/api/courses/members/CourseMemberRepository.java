@@ -21,5 +21,8 @@ public interface CourseMemberRepository extends JpaRepository<CourseMember, Cour
     @Query(nativeQuery = true, value = "select * from course_members where course_id = ?1 and user_id = ?2")
     CourseMember getCourseMemberByCourseIdAndUserId(int courseId, int userId);
 
+    @Query(nativeQuery = true, value = "select * from course_members where course_id = ?1")
+    List<CourseMember> getCourseMembersByCourseId(int courseId);
+
 
 }
