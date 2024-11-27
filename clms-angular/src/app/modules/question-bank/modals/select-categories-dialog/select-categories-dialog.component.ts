@@ -90,9 +90,9 @@ export class SelectCategoriesDialogComponent implements OnInit {
       this.ref.close();
     }
     if (Array.isArray(this.selectedCategories)) {
-      this.ref.close(this.selectedCategories.map(node => (node.data as QuestionBankCategory).id));
+      this.ref.close(this.selectedCategories.map(category => category.data))
     } else {
-      this.ref.close(this.selectedCategories.data.id)
+      this.ref.close(this.selectedCategories.data)
     }
   }
 
