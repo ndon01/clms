@@ -1,2 +1,3 @@
-package com.clms.api.courses.assignments;public class CourseAssignmentsController {
+package com.clms.api.courses.assignments;
+public class CourseAssignmentsController {
 }
