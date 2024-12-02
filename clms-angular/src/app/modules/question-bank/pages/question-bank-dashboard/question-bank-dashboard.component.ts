@@ -237,7 +237,7 @@ export class QuestionBankDashboardComponent implements OnInit {
 
       this.httpClient.post("/api/question-bank/questions/categories/update", {
         questionId: question.id,
-        categoryIds: selectedCategoryIds
+        categoryIds: selectedCategoryIds.map(c => c.id)
       }, {
         observe: 'response'
       }).subscribe().add(() => {

@@ -4,12 +4,13 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgIf} from "@angular/common";
 import {Footer} from "primeng/api";
 import {Button} from "primeng/button";
-import {ClientCourseMemberDetailsProjection, UserProjection} from "@core/modules/openapi";
+import {ClientCourseMemberDetailsProjection, CourseMemberProjection, UserProjection} from "@core/modules/openapi";
 import {HttpClient} from "@angular/common/http";
+import {CheckboxModule} from "primeng/checkbox";
 
 export interface EditTitleModalData {
   title: string;
-  member: ClientCourseMemberDetailsProjection;
+  member: CourseMemberProjection;
 }
 
 @Component({
@@ -19,14 +20,15 @@ export interface EditTitleModalData {
     ReactiveFormsModule,
     NgIf,
     Footer,
-    Button
+    Button,
+    CheckboxModule
   ],
   templateUrl: './course-member-update-modal.component.html',
   styleUrls: ['./course-member-update-modal.component.css']
 })
 export class CourseMemberUpdateModalComponent implements OnInit {
   editTitleForm: FormGroup;
-  courseMember?: ClientCourseMemberDetailsProjection;
+  courseMember?: CourseMemberProjection;
   courseMemberUser: UserProjection | null = null;
 
   constructor(
@@ -36,13 +38,15 @@ export class CourseMemberUpdateModalComponent implements OnInit {
     private httpClient: HttpClient
   ) {
     this.editTitleForm = this.fb.group({
-      title: [config.data?.title || '', [Validators.required, Validators.maxLength(255)]]
+      tutor:  [config.data?.member?.tutor || false, []]
     });
     this.courseMember = config.data?.member;
   }
 
   submit() {
     if (this.editTitleForm.valid) {
+
+
       this.ref.close(this.editTitleForm.value);  // Pass the form value back on submit
     }
   }
@@ -52,7 +56,7 @@ export class CourseMemberUpdateModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get('/api/v1/users/' + this.courseMember?.userId).subscribe((res: any) => {
+    this.httpClient.get('/api/v1/users/' + this.courseMember?.user?.id).subscribe((res: any) => {
       this.courseMemberUser = res;
     });
   }

@@ -1,16 +1,15 @@
 <form [formGroup]="editTitleForm" (ngSubmit)="submit()">
   <div class="flex flex-col">
-    <div class= "flex flex-row justify-between items-center">
-      <h2 class="text-lg font-semibold">{{this.courseMemberUser?.username}}</h2>
-    </div>
     <div class="p-field">
-      <input id="title" pInputText formControlName="title" maxlength="255" placeholder="Enter title here..." class="w-1/2 titleTextField"/>
-      <small *ngIf="editTitleForm.get('title')?.hasError('maxlength') === true" class="p-error">
-        Title cannot exceed 255 characters.
-      </small>
-      <small *ngIf="editTitleForm.get('title')?.hasError('required') === true" class="p-error">
-        Title is required.
-      </small>
+      <div class="p-field-checkbox" style="padding-top: 15px">
+        <p-checkbox
+          formControlName="tutor"
+          binary="true"
+          [label]="'Tutor'"
+          inputId="tutorCheckbox"
+          id = "tutorCheckbox"
+        ></p-checkbox>
+      </div>
     </div>
     <div class="flex flex-row justify-end items-center gap-5" style="padding-top: 25px">
       <p-button type="button" label="Cancel" (click)="close()"></p-button>

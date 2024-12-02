@@ -1,3 +1,5 @@
 .lms-dashboard-container{
-  background-color: var(--surface-d);
+  background-color: var(--surface-e);
+  min-height: 100vh;
+  height: max-content;
 }
