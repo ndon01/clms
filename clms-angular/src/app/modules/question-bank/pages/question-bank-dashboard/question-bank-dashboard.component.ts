@@ -4,7 +4,7 @@ import {
   QuestionBankCategory,
   QuestionBankQuestionProjection
 } from "@core/modules/openapi";
-import {TreeNode} from "primeng/api";
+import {MessageService, TreeNode} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {
   CategoryCreatedEvent,
@@ -22,6 +22,7 @@ import {CreateAssignmentComponent} from "@modules/question-bank/modals/create-as
 import {
   AddQuestionsToAssignmentComponent
 } from "@modules/question-bank/modals/add-questions-to-assignment/add-questions-to-assignment.component";
+import {observable} from "rxjs";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -37,8 +38,8 @@ export class QuestionBankDashboardComponent implements OnInit {
   currentPage?: number = 0; // Default page number
   categoriesTree: TreeNode[] = [];
   selectedCategories: QuestionBankCategory[] = []
-  selectedQuestion: QuestionBankQuestionProjection | null = null;
-  constructor(private httpClient: HttpClient, private dialogService: DialogService) {
+  selectedQuestions: QuestionBankQuestionProjection | QuestionBankQuestionProjection[]= [];
+  constructor(private httpClient: HttpClient, private dialogService: DialogService,private messageService:MessageService) {
   }
 
   ngOnInit() {
@@ -283,6 +284,33 @@ export class QuestionBankDashboardComponent implements OnInit {
         selectedCourses: []
       }
     })
+      ref.onClose.subscribe(res => {
+      if (!res) {
+        console.log("Cancel")
+        return
+      }
+      console.log("Result", res)
+        if (!this.selectedQuestions){
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'No questions selected'});
+        }
+        this.httpClient.post("/api/assignments/questions/bulk-upload",this.selectedQuestions,
+          {
+            observe: 'response',
+          }).subscribe(
+            res => {
+              if(res.status === 200) {
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Questions are being generated' });
+              }
+              else if (res.status === 400){
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions'});
+              }
+              else{
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions' });
+              }
+            }
+        )
+    } )
+
 
   }
 }

@@ -1,4 +1,6 @@
 package com.clms.api.assignments;
+import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
+import com.clms.api.questionBank.api.projections.QuestionBankQuestionProjection;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -158,6 +160,15 @@ public class AssignmentQuestionController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @PostMapping("/bulk-upload")
+    public ResponseEntity<Void> bulkUploadQuestions(@RequestBody  List<QuestionBankQuestionProjection> questions,@RequestParam Integer assignmentId ) {
+        List<AssignmentQuestion> assignmentQuestions = new ArrayList<>();
+        for (QuestionBankQuestionProjection question : questions){
+            AssignmentQuestionProjection assignmentQuestion = question.getQuestion();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
 }

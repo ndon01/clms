@@ -27,6 +27,7 @@ import {
 } from "@modules/question-bank/components/assignment-selection/assignment-selection";
 import {ChipsModule} from "primeng/chips";
 import {InputTextareaModule} from "primeng/inputtextarea";
+import {HttpClient} from "@angular/common/http";
 
 export interface SelectCoursesDialogData{
   courses: CourseProjection[];
@@ -64,7 +65,9 @@ export class AddQuestionsToAssignmentComponent {
     startDate: new Date().toDateString(),
     dueDate: new Date().toDateString()
   };
-  constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig<SelectCoursesDialogData>) {
+  constructor(public ref: DynamicDialogRef,
+              public http: HttpClient,
+              public config: DynamicDialogConfig<SelectCoursesDialogData>) {
     // Load the categories and settings from config if provided
     if (config.data) {
       this.multiple = config.data.multiple || false;
