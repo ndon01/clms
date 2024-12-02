@@ -1,5 +1,5 @@
 <app-course-side-bar>
-  <div class="p-5">
+  <div class="p-5 bg-surface-e min-h-screen h-max">
     <div style="padding-bottom: 1.25rem">
       <h1 style="font-size: 2rem;">Member Management</h1>
     </div>
@@ -16,57 +16,45 @@
             <button pButton pRipple type="button" label="Remove Members" icon="pi pi-minus" class="p-button-success" (click)="setRemoveMemberModalVisibility(true)"></button>
           </div>
 
-          <p-table [value]="courseMembers" styleClass="p-datatable-striped"
+          <p-table [value]="courseMembersNew" styleClass="p-datatable-striped"
                    [tableStyle]="{'min-width': '50rem'}"
-                   dataKey="id" editMode="row">
+                   dataKey="id" editMode="row"
+          >
             <ng-template pTemplate="header">
               <tr>
                 <th>ID</th>
                 <th>Username</th>
+                <th>Is Tutor?</th>
                 <th>Actions</th>
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-user let-editing="editing" let-ri="rowIndex">
-              <tr [pEditableRow]="user">
+            <ng-template pTemplate="body" let-member let-editing="editing" let-ri="rowIndex">
+              <tr [pEditableRow]="member">
                 <td>
-                  {{ user.id }}
+                  {{ member?.user?.id}}
                 </td>
                 <td>
-                  {{ user.username }}
+                  {{ member?.user?.username }}
+                </td>
+                <td>
+                  {{ member?.tutor ? 'Yes' : 'No' }}
                 </td>
                 <td>
                   <div class="flex align-items-center justify-content-center gap-2">
                     <button
-                      *ngIf="!editing"
                       pButton
                       pRipple
                       type="button"
-                      pInitEditableRow
                       icon="pi pi-pencil"
-                      class="p-button-rounded p-button-text">
-                    </button>
-                    <button
-                      *ngIf="editing"
-                      pButton
-                      pRipple
-                      type="button"
-                      pSaveEditableRow
-                      icon="pi pi-check"
-                      class="p-button-rounded p-button-text p-button-success mr-2">
-                    </button>
-                    <button
-                      *ngIf="editing"
-                      pButton pRipple
-                      type="button"
-                      pCancelEditableRow
-                      icon="pi pi-times"
-                      class="p-button-rounded p-button-text p-button-danger">
-                    </button>
+                      class="p-button-rounded p-button-text"
+                      (click)="editCourseMember(member)"
+                    ></button>
                   </div>
                 </td>
               </tr>
             </ng-template>
           </p-table>
+
         </div>
       </p-card>
     </div>

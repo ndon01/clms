@@ -3,17 +3,24 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {UserProjection} from "@core/model/User.model";
 import {filter, map} from "rxjs";
+import {CourseMemberProjection} from "@core/modules/openapi";
+import {DialogService} from "primeng/dynamicdialog";
+import {
+  CourseMemberUpdateModalComponent
+} from "@modules/courses/modals/course-member-update-modal/course-member-update-modal.component";
 
 @Component({
   selector: 'courses-course-settings-page',
   templateUrl: './course-settings-page.component.html',
   styleUrl: './course-settings-page.component.css'
 })
-export class CourseSettingsPageComponent implements OnInit{
+export class CourseSettingsPageComponent implements OnInit {
 
   courseId !: number;
   courseMembers: UserProjection[] = [];
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
+  courseMembersNew: CourseMemberProjection[] = [];
+
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -32,9 +39,16 @@ export class CourseSettingsPageComponent implements OnInit{
   }
 
   loadMembers() {
-    this.httpClient.get<UserProjection[]>(`/api/courses/${this.courseId}/members`).subscribe(data =>
-    {
+    this.httpClient.get<UserProjection[]>(`/api/courses/${this.courseId}/members`).subscribe(data => {
       this.courseMembers = data;
+    });
+
+    this.httpClient.get<CourseMemberProjection[]>(`/api/courses/members/getCourseMembers`, {
+      params: {
+        courseId: this.courseId.toString()
+      }
+    }).subscribe(data => {
+      this.courseMembersNew = data;
     });
   }
 
@@ -53,8 +67,8 @@ export class CourseSettingsPageComponent implements OnInit{
           .filter(user => !this.courseMembers.some(member => member.id === user.id))
       }))
       .subscribe(data => {
-      this.allUsers = data;
-    })
+        this.allUsers = data;
+      })
   }
 
   addMemberModalCancel() {
@@ -73,11 +87,12 @@ export class CourseSettingsPageComponent implements OnInit{
     console.log(ids)
 
     this.httpClient.post(`/api/courses/${this.courseId}/members`, ids).subscribe(() => {
-        this.loadMembers();
+      this.loadMembers();
     });
 
     this.selectedUsers = [];
   }
+
   setRemoveMemberModalVisibility(visibility: boolean) {
     this.isRemoveMemberModalVisible = visibility;
     this.httpClient.get<UserProjection[]>('/api/admin/users')
@@ -89,8 +104,8 @@ export class CourseSettingsPageComponent implements OnInit{
         this.unenrolledUsers = data;
       })
   }
-  removeMemberModalSubmit()
-  {
+
+  removeMemberModalSubmit() {
     this.isRemoveMemberModalVisible = false;
     let ids = this.selectedUsers.map(user => user.id);
 
@@ -104,4 +119,22 @@ export class CourseSettingsPageComponent implements OnInit{
   }
 
   protected readonly Object = Object;
+
+  editCourseMember(courseMember: CourseMemberProjection) {
+
+    console.log(courseMember)
+    this.dialogService.open(CourseMemberUpdateModalComponent, {
+      data: {
+        title: `Manage: ${courseMember?.user?.username || "-"}`,
+        member: structuredClone(courseMember)
+      },
+      header: 'Edit Course Member',
+      width: '70%'
+    }).onClose.subscribe((data) => {
+      if (data) {
+        console.log(data);
+      }
+    });
+  }
 }
+

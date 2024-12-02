@@ -1,0 +1,19 @@
+<form [formGroup]="editTitleForm" (ngSubmit)="submit()">
+  <div class="flex flex-col">
+    <div class="p-field">
+      <div class="p-field-checkbox" style="padding-top: 15px">
+        <p-checkbox
+          formControlName="tutor"
+          binary="true"
+          [label]="'Tutor'"
+          inputId="tutorCheckbox"
+          id = "tutorCheckbox"
+        ></p-checkbox>
+      </div>
+    </div>
+    <div class="flex flex-row justify-end items-center gap-5" style="padding-top: 25px">
+      <p-button type="button" label="Cancel" (click)="close()"></p-button>
+      <p-button type="submit" label="Save" [disabled]="editTitleForm.invalid"></p-button>
+    </div>
+  </div>
+</form>

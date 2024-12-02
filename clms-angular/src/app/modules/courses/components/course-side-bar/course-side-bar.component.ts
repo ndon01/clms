@@ -105,10 +105,17 @@ export class CourseSideBarComponent implements OnInit {
         }
       },
       {
-        label: 'Student Gradebook',
+        label: this.currentCourseContextService.isCourseTutor() || this.hasAdminPageAccess ? 'Student Gradebook' : 'Gradebook',
         icon: 'pi pi-book',
         command: () => {
           this.router.navigate(["courses", this.courseId, "studentGradebook"])
+        }
+      },
+      {
+        label: 'Performance',
+        icon: 'pi pi-chart-bar',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "performance"])
         }
       },
       {
