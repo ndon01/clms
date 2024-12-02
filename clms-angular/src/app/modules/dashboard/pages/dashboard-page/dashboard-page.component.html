@@ -1,6 +1,6 @@
 <app-sidebar-page-wrapper>
   <div class = "lms-dashboard-container">
-  <div class="w-full h-max bg-surface-c flex flex-col p-5 gap-10 overflow-y-scroll">
+  <div class="w-full h-max flex flex-col p-5 gap-10 overflow-y-scroll">
     <div>
       <h1 class="text-3xl font-bold text-on-surface text-color-primary">My Courses</h1>
       <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <div class="w-full h-full bg-surface-c flex flex-col p-5 gap-10 overflow-y-scroll">
+  <div class="w-full h-full flex flex-col p-5 gap-10 overflow-y-scroll">
     <div *ngIf="myAssignments.length === 0"> No Assignments available </div>
     <app-assignments-list *ngIf="myAssignments.length > 0" [assignments]="myAssignments"></app-assignments-list>
   </div>

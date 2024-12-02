@@ -39,7 +39,10 @@ export class QuestionBankDashboardComponent implements OnInit {
   categoriesTree: TreeNode[] = [];
   selectedCategories: QuestionBankCategory[] = []
   selectedQuestions: QuestionBankQuestionProjection | QuestionBankQuestionProjection[]= [];
-  constructor(private httpClient: HttpClient, private dialogService: DialogService,private messageService:MessageService) {
+  categoryIdToTreeNodeMap = new Map<number, TreeNode>();
+
+
+  constructor(private httpClient: HttpClient, private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -62,7 +65,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   fetchQuestionHead() {
     this.httpClient.get<PageinationInformationDto>('api/question-bank/questions/pageable/head', {
         params: {
-          filterByCategoryIds: this.selectedCategories.map(c => c.id).join(',')
+          filterByCategoryIds: this.generateSelectedCategories().join(',')
         }
       }
     ).subscribe((data) => {
@@ -71,17 +74,44 @@ export class QuestionBankDashboardComponent implements OnInit {
   }
 
   fetchQuestions(page: number = 0, size: number = 5) {
+
     this.httpClient
       .get<QuestionBankQuestionProjection[]>(`/api/question-bank/questions/pageable`,{
         params:{
           page: page.toString(),
           size: size.toString(),
-          filterByCategoryIds: this.selectedCategories.map(c => c.id).join(',')
+          filterByCategoryIds: this.generateSelectedCategories().join(',')
         }
       })
       .subscribe((questions) => {
         this.questions = questions
       });
+  }
+
+  generateSelectedCategories(): number[] {
+    let searchSelectedCategories: number[] = [];
+    const applyQBC = (c: QuestionBankCategory) => {
+      if (c.id != undefined) {
+        const treeNode = this.categoryIdToTreeNodeMap.get(c.id);
+        if (treeNode) {
+          if (treeNode.children) {
+            treeNode.children.forEach(child => {
+              applyQBC(child.data);
+            });
+          }
+          if (treeNode.data) {
+            searchSelectedCategories.push(treeNode.data.id);
+          }
+        }
+      }
+
+    }
+    if (Array.isArray(this.selectedCategories)) {
+      this.selectedCategories.forEach(selectedCategory => {
+        applyQBC(selectedCategory);
+      });
+    }
+    return searchSelectedCategories;
   }
 
 
@@ -158,7 +188,8 @@ export class QuestionBankDashboardComponent implements OnInit {
   }
 
   mapCategoriesToTree(categories: QuestionBankCategory[]): TreeNode[] {
-    const idToNodeMap = new Map<number, TreeNode>();
+    this.categoryIdToTreeNodeMap.clear();
+    const idToNodeMap = this.categoryIdToTreeNodeMap;
     const tree: TreeNode[] = [];
 
     categories.forEach(category => {
@@ -215,7 +246,7 @@ export class QuestionBankDashboardComponent implements OnInit {
 
       this.httpClient.post("/api/question-bank/questions/categories/update", {
         questionId: question.id,
-        categoryIds: selectedCategoryIds
+        categoryIds: selectedCategoryIds.map(c => c.id)
       }, {
         observe: 'response'
       }).subscribe().add(() => {
@@ -260,6 +291,11 @@ export class QuestionBankDashboardComponent implements OnInit {
       }
     })
     ref.onClose.subscribe(selectedCategoryIds => {
+        if (selectedCategoryIds === null) {
+          console.log("Cancel")
+          return
+        }
+
         this.selectedCategories = selectedCategoryIds;
         this.fetchQuestions(page, size);
         this.fetchQuestionHead();
