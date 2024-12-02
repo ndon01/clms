@@ -42,7 +42,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   categoryIdToTreeNodeMap = new Map<number, TreeNode>();
 
 
-  constructor(private httpClient: HttpClient, private dialogService: DialogService) {
+  constructor(private httpClient: HttpClient, private dialogService: DialogService,private messageService : MessageService) {
   }
 
   ngOnInit() {
