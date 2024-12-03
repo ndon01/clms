@@ -21,7 +21,7 @@ public class CourseMemberProjectionConverter implements GenericConverter<CourseM
         return CourseMemberProjection.builder()
                 .course(courseDetailsProjectionConverter.convert(entity.getId().getCourse()))
                 .user(userProjectionConverter.convert(entity.getId().getUser()))
-                .isTutor(entity.isTutor())
+                .tutor(entity.isTutor())
                 .build();
     }
 }

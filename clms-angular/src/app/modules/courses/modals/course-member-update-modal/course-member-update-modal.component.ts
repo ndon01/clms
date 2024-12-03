@@ -6,7 +6,7 @@ import {Footer} from "primeng/api";
 import {Button} from "primeng/button";
 import {ClientCourseMemberDetailsProjection, CourseMemberProjection, UserProjection} from "@core/modules/openapi";
 import {HttpClient} from "@angular/common/http";
-import {CheckboxModule} from "primeng/checkbox";
+import {CheckboxChangeEvent, CheckboxModule} from "primeng/checkbox";
 
 export interface EditTitleModalData {
   title: string;
@@ -44,11 +44,7 @@ export class CourseMemberUpdateModalComponent implements OnInit {
   }
 
   submit() {
-    if (this.editTitleForm.valid) {
-
-
-      this.ref.close(this.editTitleForm.value);  // Pass the form value back on submit
-    }
+    this.ref.close(this.courseMember);  // Pass the form value back on submit
   }
 
   close() {
@@ -59,5 +55,12 @@ export class CourseMemberUpdateModalComponent implements OnInit {
     this.httpClient.get('/api/v1/users/' + this.courseMember?.user?.id).subscribe((res: any) => {
       this.courseMemberUser = res;
     });
+  }
+
+  updateIsTutor($event: CheckboxChangeEvent) {
+    if (this.courseMember){
+      this.courseMember.tutor = $event.checked == true
+    }
+
   }
 }

@@ -8,6 +8,7 @@ import {DialogService} from "primeng/dynamicdialog";
 import {
   CourseMemberUpdateModalComponent
 } from "@modules/courses/modals/course-member-update-modal/course-member-update-modal.component";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'courses-course-settings-page',
@@ -20,7 +21,7 @@ export class CourseSettingsPageComponent implements OnInit {
   courseMembers: UserProjection[] = [];
   courseMembersNew: CourseMemberProjection[] = [];
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private dialogService: DialogService) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private dialogService: DialogService, private messageService: MessageService) {
   }
 
   ngOnInit() {
@@ -133,6 +134,16 @@ export class CourseSettingsPageComponent implements OnInit {
     }).onClose.subscribe((data) => {
       if (data) {
         console.log(data);
+        this.httpClient.post('/api/courses/members/merge', data, {
+          observe: "response"
+        }).subscribe(res => {
+          if (res.status == 200) {
+            this.messageService.add({severity: 'success', summary: 'Success', detail: 'course member updated successfully.'})
+            this.loadMembers();
+          } else {
+            this.messageService.add({severity: 'failure', summary: 'Error', detail: 'failed to update course member.'})
+          }
+        })
       }
     });
   }

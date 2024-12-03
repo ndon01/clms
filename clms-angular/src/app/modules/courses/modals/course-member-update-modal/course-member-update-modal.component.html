@@ -8,12 +8,13 @@
           [label]="'Tutor'"
           inputId="tutorCheckbox"
           id = "tutorCheckbox"
+          (onChange)="updateIsTutor($event)"
         ></p-checkbox>
       </div>
     </div>
     <div class="flex flex-row justify-end items-center gap-5" style="padding-top: 25px">
       <p-button type="button" label="Cancel" (click)="close()"></p-button>
-      <p-button type="submit" label="Save" [disabled]="editTitleForm.invalid"></p-button>
+      <p-button type="submit" label="Save" [disabled]="editTitleForm.invalid || editTitleForm.dirty == false"></p-button>
     </div>
   </div>
 </form>

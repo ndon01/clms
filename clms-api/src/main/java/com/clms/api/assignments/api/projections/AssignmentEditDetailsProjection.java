@@ -21,5 +21,5 @@ public class AssignmentEditDetailsProjection {
     private CourseDetailsProjection course;
     private Integer maxAttempts;
     private Integer timeLimitMinutes;
-    private List<AssignmentQuestion> questions;
+    private List<AssignmentQuestionProjection> questions;
 }
