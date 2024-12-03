@@ -8,11 +8,14 @@ import com.clms.api.courses.api.projections.CourseDetailsProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class AssignmentEditDetailsProjectionConverter implements GenericConverter<Assignment, AssignmentEditDetailsProjection> {
 
     private final GenericConverter<Course, CourseDetailsProjection> courseDetailsProjectionConverter;
+    private final AssignmentQuestionProjectionConverter assignmentQuestionProjectionConverter;
 
     @Override
     public AssignmentEditDetailsProjection convert(Assignment assignment) {
@@ -22,7 +25,7 @@ public class AssignmentEditDetailsProjectionConverter implements GenericConverte
                 .description(assignment.getDescription())
                 .dueDate(assignment.getDueDate())
                 .startDate(assignment.getStartDate())
-                .questions(assignment.getQuestions())
+                .questions(assignment.getQuestions().stream().map(assignmentQuestionProjectionConverter::convert).collect(Collectors.toList()))
                 .timeLimitMinutes(assignment.getTimeLimitMinutes())
                 .maxAttempts(assignment.getMaxAttempts())
                 .course(courseDetailsProjectionConverter.convert(assignment.getCourse()))

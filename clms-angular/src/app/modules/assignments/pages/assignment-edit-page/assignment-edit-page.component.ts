@@ -282,8 +282,29 @@ export class AssignmentEditPageComponent implements OnInit {
         questionBankQuestions: [],
       }
     }).onClose.subscribe((selectedQuestions: AssignmentQuestion[]) => {
+      const selectedQuestionsIds = {}
       console.log(selectedQuestions)
       if (selectedQuestions) {
+        this.httpClient.post("/api/assignments/questions/bulk-import-question-bank-questions", selectedQuestions.map(question => question.id),
+            {
+              params:{
+                assignmentId : this.assignmentId
+              },
+              observe: 'response',
+            }).subscribe(
+            res => {
+              if(res.status === 200) {
+                this.fetchAssignment()
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Questions are being generated' });
+              }
+              else if (res.status === 400){
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions'});
+              }
+              else{
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions' });
+              }
+            }
+        )
       }
     })
   }
