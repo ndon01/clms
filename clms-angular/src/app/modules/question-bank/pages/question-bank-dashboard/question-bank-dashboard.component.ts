@@ -4,7 +4,7 @@ import {
   QuestionBankCategory,
   QuestionBankQuestionProjection
 } from "@core/modules/openapi";
-import {TreeNode} from "primeng/api";
+import {MessageService, TreeNode} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {
   CategoryCreatedEvent,
@@ -15,6 +15,13 @@ import {QuestionEditModalComponent} from "@modules/questions/modals/question-edi
 import {
   SelectCategoriesDialogComponent
 } from "@modules/question-bank/modals/select-categories-dialog/select-categories-dialog.component";
+import {
+  SelectCoursesDialogComponent
+} from "@modules/question-generation/modal/select-courses-dialog/select-courses-dialog.component";
+import {
+  AddQuestionsToAssignmentComponent
+} from "@modules/question-bank/modals/add-questions-to-assignment/add-questions-to-assignment.component";
+import {observable} from "rxjs";
 
 @Component({
   selector: 'app-question-bank-dashboard',
@@ -30,10 +37,11 @@ export class QuestionBankDashboardComponent implements OnInit {
   currentPage?: number = 0; // Default page number
   categoriesTree: TreeNode[] = [];
   selectedCategories: QuestionBankCategory[] = []
+  selectedQuestions: QuestionBankQuestionProjection | QuestionBankQuestionProjection[]= [];
   categoryIdToTreeNodeMap = new Map<number, TreeNode>();
 
 
-  constructor(private httpClient: HttpClient, private dialogService: DialogService) {
+  constructor(private httpClient: HttpClient, private dialogService: DialogService,private messageService : MessageService) {
   }
 
   ngOnInit() {
@@ -296,5 +304,66 @@ export class QuestionBankDashboardComponent implements OnInit {
     this.selectedCategories = [];
     this.fetchQuestions(this.currentPage, this.pageSize);
     this.fetchQuestionHead();
+  }
+
+  createAssignment() {
+    const ref = this.dialogService.open(AddQuestionsToAssignmentComponent,{
+      header: "Import Questions to Assignment",
+      width: '50vw',
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+      data: {
+        selectedCourses: []
+      }
+    })
+      ref.onClose.subscribe(res => {
+      if (!res) {
+        console.log("Cancel")
+        return
+      }
+      console.log("Result", res)
+        if (!this.selectedQuestions){
+          this.messageService.add({severity: 'error', summary: 'Error', detail: 'No questions selected'});
+        }
+        const selectedQuestionsIds : number[]=  []
+        if (Array.isArray(this.selectedQuestions)){
+          this.selectedQuestions.forEach(q => {
+            if(!q.id){
+              return
+            }
+            selectedQuestionsIds.push(q.id)
+          })
+        }else{
+          if (!this.selectedQuestions.id){
+            return
+          }
+          selectedQuestionsIds.push(this.selectedQuestions.id)
+        }
+        console.log(res)
+        this.httpClient.post("/api/assignments/questions/bulk-import-question-bank-questions",selectedQuestionsIds,
+          {
+            params:{
+              assignmentId : res.selectedAssignment?.id
+            },
+            observe: 'response',
+          }).subscribe(
+            res => {
+              if(res.status === 200) {
+                this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Questions are being generated' });
+              }
+              else if (res.status === 400){
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions'});
+              }
+              else{
+                this.messageService.add({severity: 'error', summary: 'Error', detail: 'Failed to generate questions' });
+              }
+            }
+        )
+    } )
+
+
   }
 }
