@@ -18,7 +18,6 @@ import {
 import {
   SelectCoursesDialogComponent
 } from "@modules/question-generation/modal/select-courses-dialog/select-courses-dialog.component";
-import {CreateAssignmentComponent} from "@modules/question-bank/modals/create-assignment/create-assignment.component";
 import {
   AddQuestionsToAssignmentComponent
 } from "@modules/question-bank/modals/add-questions-to-assignment/add-questions-to-assignment.component";
@@ -329,8 +328,26 @@ export class QuestionBankDashboardComponent implements OnInit {
         if (!this.selectedQuestions){
           this.messageService.add({severity: 'error', summary: 'Error', detail: 'No questions selected'});
         }
-        this.httpClient.post("/api/assignments/questions/bulk-upload",this.selectedQuestions,
+        const selectedQuestionsIds : number[]=  []
+        if (Array.isArray(this.selectedQuestions)){
+          this.selectedQuestions.forEach(q => {
+            if(!q.id){
+              return
+            }
+            selectedQuestionsIds.push(q.id)
+          })
+        }else{
+          if (!this.selectedQuestions.id){
+            return
+          }
+          selectedQuestionsIds.push(this.selectedQuestions.id)
+        }
+        console.log(res)
+        this.httpClient.post("/api/assignments/questions/bulk-import-question-bank-questions",selectedQuestionsIds,
           {
+            params:{
+              assignmentId : res.selectedAssignment?.id
+            },
             observe: 'response',
           }).subscribe(
             res => {

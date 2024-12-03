@@ -36,8 +36,8 @@ export class AssignmentSelection implements OnInit,OnChanges{
   @Input() selectedAssignments : AssignmentSelectionOutput = null; // Selected categories
   @Output() selectedAssignmentsChange= new EventEmitter<AssignmentSelectionOutput>();
 
-  onCourseChange(event: CourseProjection | CourseProjection[]){
-    this.selectedAssignmentsChange.emit(this.selectedAssignments);
+  onAssignmentSelectionChange(event: AssignmentSelectionOutput){
+    this.selectedAssignmentsChange.emit(event);
     this.fetchAssignments();
   }
   constructor(private httpClient: HttpClient, private dialogService: DialogService) {

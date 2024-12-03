@@ -21,6 +21,7 @@ import {
 export interface SelectCoursesDialogData{
   courses: CourseProjection[];
   multiple: boolean;
+  canSelectCourse: boolean;
 }
 @Component({
   selector: 'app-create-assignment-dialog',

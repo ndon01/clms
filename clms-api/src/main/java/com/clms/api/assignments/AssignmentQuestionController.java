@@ -1,6 +1,8 @@
 package com.clms.api.assignments;
 import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
 import com.clms.api.questionBank.api.projections.QuestionBankQuestionProjection;
+import com.clms.api.questionBank.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +30,8 @@ public class AssignmentQuestionController {
 
     @Autowired
     private AssignmentRepository assignmentRepository;  // Add Assignment repository for fetching Assignment by ID
+    @Autowired
+    private QuestionBankQuestionRepository questionBankQuestionRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(AssignmentQuestionController.class);
 
@@ -161,12 +166,38 @@ public class AssignmentQuestionController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/bulk-upload")
-    public ResponseEntity<Void> bulkUploadQuestions(@RequestBody  List<QuestionBankQuestionProjection> questions,@RequestParam Integer assignmentId ) {
-        List<AssignmentQuestion> assignmentQuestions = new ArrayList<>();
-        for (QuestionBankQuestionProjection question : questions){
-            AssignmentQuestionProjection assignmentQuestion = question.getQuestion();
+    @PostMapping("/bulk-import-question-bank-questions")
+    public ResponseEntity<Void> bulkUploadQuestions(@RequestBody  List<Integer> questions,@RequestParam Integer assignmentId ) {
+        List<AssignmentQuestion> clonedQuestions= new ArrayList<>();
+        Assignment assignment = assignmentRepository.findById(assignmentId).orElse(null);
+        if (assignment == null){
+            return ResponseEntity.badRequest().build();
         }
+        for (Integer questionId : questions){
+            QuestionBankQuestion questionBankQuestion = questionBankQuestionRepository.findById(questionId).orElse(null);
+            if (questionBankQuestion == null){
+                continue;
+            }
+            AssignmentQuestion assignmentQuestion = questionBankQuestion.getSourceQuestion();
+            if(assignmentQuestion == null){
+                continue;
+            }
+            AssignmentQuestion exportedQuestion = AssignmentQuestion.builder()
+                    .title(assignmentQuestion.getTitle())
+                    .question(assignmentQuestion.getQuestion())
+                    .createdAt(assignmentQuestion.getCreatedAt())
+                    .updatedAt(assignmentQuestion.getUpdatedAt())
+                    .questionType(assignmentQuestion.getQuestionType())
+                    .keepAnswersOrdered(assignmentQuestion.getKeepAnswersOrdered())
+                    .order(assignmentQuestion.getOrder())
+                    .answers(assignmentQuestion.getAnswers())
+                    .assignment(assignment)
+                    .sourceQuestionBankQuestion(questionBankQuestion)
+                    .build();
+            clonedQuestions.add(exportedQuestion);
+
+        }
+        questionRepository.saveAll(clonedQuestions);
 
         return ResponseEntity.ok().build();
     }

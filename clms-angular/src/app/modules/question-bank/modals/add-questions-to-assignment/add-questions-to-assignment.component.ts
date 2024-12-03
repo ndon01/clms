@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import {DynamicDialogRef, DynamicDialogConfig, DialogService} from 'primeng/dynamicdialog';
 import {
   AssignmentProjection,
   CourseModuleProjection,
@@ -28,6 +28,7 @@ import {
 import {ChipsModule} from "primeng/chips";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {HttpClient} from "@angular/common/http";
+import {CreateAssignmentComponent} from "@modules/question-bank/modals/create-assignment/create-assignment.component";
 
 export interface SelectCoursesDialogData{
   courses: CourseProjection[];
@@ -67,7 +68,8 @@ export class AddQuestionsToAssignmentComponent {
   };
   constructor(public ref: DynamicDialogRef,
               public http: HttpClient,
-              public config: DynamicDialogConfig<SelectCoursesDialogData>) {
+              public config: DynamicDialogConfig<SelectCoursesDialogData>,
+              public dialogService: DialogService) {
     // Load the categories and settings from config if provided
     if (config.data) {
       this.multiple = config.data.multiple || false;
@@ -79,7 +81,7 @@ export class AddQuestionsToAssignmentComponent {
     if (!this.selectedCourse|| !this.newAssignment) {
       this.ref.close();
     }
-    this.ref.close({selectedCourses: this.selectedCourse,newAssignment:this.newAssignment});
+    this.ref.close({selectedCourses: this.selectedCourse, selectedAssignment: this.selectedAssignments});
   }
 
   // Close the dialog without any selection
@@ -98,4 +100,22 @@ export class AddQuestionsToAssignmentComponent {
     }
     this.assignmentCourse = this.selectedCourse;
     }
+
+  getContinueButtonText(): string {
+    return "Export"
+  }
+  getContinueButtonDisabled(): boolean {
+    return this.selectedAssignments == null;
+  }
+
+  createNewAssignment() {
+    this.dialogService.open(CreateAssignmentComponent, {
+      data: {
+      },
+      header: 'Create Assignment',
+      width: '70%',
+    }).onClose.subscribe((result) => {
+      console.log(result);
+    });
+  }
 }
