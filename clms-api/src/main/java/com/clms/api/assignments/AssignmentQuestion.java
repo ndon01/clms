@@ -43,8 +43,11 @@ public class AssignmentQuestion {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "source_question_bank_question_id", referencedColumnName = "id")
+    @JoinColumn(name = "source_question_bank_question_id")
     private QuestionBankQuestion sourceQuestionBankQuestion;
+
+    @Column(name = "source_question_bank_question_id", insertable = false, updatable = false)
+    private Integer sourceQuestionBankQuestionId;
 
     /*
     export type Answer = {

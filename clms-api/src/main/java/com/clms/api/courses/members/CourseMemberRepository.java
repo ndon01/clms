@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CourseMemberRepository extends JpaRepository<CourseMember, CourseMemberId> {
@@ -20,6 +21,9 @@ public interface CourseMemberRepository extends JpaRepository<CourseMember, Cour
 
     @Query(nativeQuery = true, value = "select * from course_members where course_id = ?1 and user_id = ?2")
     CourseMember getCourseMemberByCourseIdAndUserId(int courseId, int userId);
+
+    @Query("SELECT cm FROM CourseMember cm WHERE cm.id.course = ?1 AND cm.id.user = ?2")
+    Optional<CourseMember> findCourseMemberByCourseAndUser(Course course, User user);
 
     @Query(nativeQuery = true, value = "select * from course_members where course_id = ?1")
     List<CourseMember> getCourseMembersByCourseId(int courseId);

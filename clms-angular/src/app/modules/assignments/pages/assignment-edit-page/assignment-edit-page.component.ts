@@ -6,6 +6,10 @@ import {HttpClient} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {tap} from "rxjs";
 import {AssignmentQuestion, AssignmentQuestionRequest} from "@core/modules/openapi";
+import {DialogService} from "primeng/dynamicdialog";
+import {
+  SelectQuestionBankQuestionsDialogComponent
+} from "@modules/assignments/modals/select-question-bank-questions-dialog/select-question-bank-questions-dialog.component";
 
 @Component({
   selector: 'assignment-edit-page',
@@ -16,7 +20,7 @@ export class AssignmentEditPageComponent implements OnInit {
   assignmentId!: number;
   assignment!: AssignmentProjection;
 
-  constructor(private router: Router, private location: Location, private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
+  constructor(private router: Router, private location: Location, private activatedRoute: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -266,5 +270,21 @@ export class AssignmentEditPageComponent implements OnInit {
 
   convertToQuestionProjection(selectedQuestion: AssignmentQuestion) {
     return undefined;
+  }
+
+  openImportQuestionsModal() {
+    this.dialogService.open(SelectQuestionBankQuestionsDialogComponent, {
+      header: 'Select Questions for Importing',
+      width: '70%',
+      data: {
+        multiple: true,
+        noneSelectedAllowed: false,
+        questionBankQuestions: [],
+      }
+    }).onClose.subscribe((selectedQuestions: AssignmentQuestion[]) => {
+      console.log(selectedQuestions)
+      if (selectedQuestions) {
+      }
+    })
   }
 }

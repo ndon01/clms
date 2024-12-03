@@ -10,11 +10,13 @@ import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/question-bank/categories")
@@ -83,6 +85,17 @@ public class QuestionBankCategoriesController {
         questionBankCategoryRepository.delete(category);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/get-bulk")
+    public List<QuestionBankCategoryProjection> getBulkCategories(@RequestParam List<Integer> categoryIds) {
+        return questionBankCategoryRepository.findAllById(categoryIds).stream()
+                .map(category -> QuestionBankCategoryProjection.builder()
+                        .id(category.getId())
+                        .categoryName(category.getCategoryName())
+                        .parentId(category.getParentId())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

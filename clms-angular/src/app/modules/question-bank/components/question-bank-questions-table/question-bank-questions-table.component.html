@@ -1,0 +1,64 @@
+<p-table
+  [value]="questions"
+  [paginator]="true"
+  [rows]="pageSize"
+  [lazy]="true"
+  [totalRecords]="totalRecords || 0"
+  (onLazyLoad)="onPageChange($event)"
+  [selectionMode]="selectionMode"
+  [selection]="selectedQuestions"
+  (selectionChange)="onSelectionChange($event)"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex">
+      <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clear()" />
+      <p-button type="button" icon="pi pi-search" class="p-button-text" (click)="openSelectCategory()"></p-button>
+
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngIf="selectionMode">
+        <ng-container *ngIf="selectionMode == 'multiple'">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </ng-container>
+      </th>
+      <th>Title</th>
+      <th>Categories</th>
+      <th *ngIf="showEditQuestionButton || showEditQuestionCategoriesButton">Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-question>
+    <tr>
+      <td *ngIf="selectionMode">
+        <ng-container *ngIf="selectionMode == 'multiple' else singleSelectionCell">
+          <p-tableCheckbox [value]="question"></p-tableCheckbox>
+        </ng-container>
+        <ng-template #singleSelectionCell>
+          <p-tableRadioButton [value]="question"></p-tableRadioButton>
+        </ng-template>
+      </td>
+      <td>{{ question.question.title }}</td>
+      <td>
+        <ng-container *ngIf="question.categoryIds?.length">
+          <div *ngFor="let categoryId of question.categoryIds">
+            {{ getCategoryPath(categoryId) }}
+          </div>
+        </ng-container>
+        <span *ngIf="!question.categoryIds?.length">-</span>
+      </td>
+      <td class="flex flex-row gap-3" *ngIf="showEditQuestionButton || showEditQuestionCategoriesButton">
+        <p-button
+          label="View Question"
+          (click)="editQuestion(question)"
+          *ngIf="showEditQuestionButton"
+        ></p-button>
+        <p-button
+          label="Edit Categories"
+          (click)="editQuestionCategories(question)"
+          *ngIf="showEditQuestionCategoriesButton"
+        ></p-button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

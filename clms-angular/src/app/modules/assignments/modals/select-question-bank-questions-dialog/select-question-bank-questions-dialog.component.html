@@ -1,0 +1,29 @@
+<div class="flex flex-col p-4">
+  <!-- Question Bank Table -->
+  <app-question-bank-questions-table
+    selectionMode="multiple"
+    [selectedQuestions]="selectedQuestionBankQuestions"
+    (selectedQuestionsChange)="selectedQuestionBankQuestions = $event"
+    [showEditQuestionButton]="true"
+  />
+
+  <!-- Buttons for confirming or canceling selection -->
+  <div class="flex justify-end mt-4 gap-4">
+    <button
+      pButton
+      type="button"
+      [label]="getContinueButtonText()"
+      icon="pi pi-check"
+      (click)="confirmSelection()"
+      [disabled]="getContinueButtonDisabled()">
+    </button>
+
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      icon="pi pi-times"
+      (click)="cancel()">
+    </button>
+  </div>
+</div>
