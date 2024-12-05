@@ -1,6 +1,8 @@
 package com.clms.api.questionBank.categories;
 
 import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.questionBank.api.projections.QuestionBankCategoryProjection;
+import com.clms.api.questionBank.api.projections.converters.QuestionBankCategoryProjectionConverter;
 import com.clms.api.questionBank.categories.dto.CategoryCreateRequestDto;
 import com.clms.api.questionBank.categories.dto.CategoryDeleteRequestDto;
 import com.clms.api.questionBank.categories.dto.CategoryReparentRequestDto;
@@ -26,10 +28,10 @@ public class QuestionBankCategoriesController {
     private final QuestionBankQuestionRepository questionBankQuestionRepository;
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
     private final AssignmentQuestionRepository assignmentQuestionRepository;
-
+    private final QuestionBankCategoryProjectionConverter questionBankCategoryProjectionConverter;
     @GetMapping
-    public List<QuestionBankCategory> getCategories() {
-        return questionBankCategoryRepository.findAll();
+    public List<QuestionBankCategoryProjection> getCategories() {
+        return questionBankCategoryRepository.findAll().stream().map(questionBankCategoryProjectionConverter::convert).collect(Collectors.toList());
     }
 
     @PostMapping("/reparent")//reparent a category
@@ -89,13 +91,7 @@ public class QuestionBankCategoriesController {
 
     @GetMapping("/get-bulk")
     public List<QuestionBankCategoryProjection> getBulkCategories(@RequestParam List<Integer> categoryIds) {
-        return questionBankCategoryRepository.findAllById(categoryIds).stream()
-                .map(category -> QuestionBankCategoryProjection.builder()
-                        .id(category.getId())
-                        .categoryName(category.getCategoryName())
-                        .parentId(category.getParentId())
-                        .build())
-                .collect(Collectors.toList());
+        return questionBankCategoryRepository.findAllById(categoryIds).stream().map(questionBankCategoryProjectionConverter::convert).collect(Collectors.toList());
     }
 
 }

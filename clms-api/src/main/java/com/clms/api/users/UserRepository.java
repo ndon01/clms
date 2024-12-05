@@ -15,6 +15,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> getUserByUsernameIgnoreCase(String username);
 
+    @Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
+    User findByUsername(String username);
+
     boolean existsByUsername(String username);
 
     @Query("SELECT u FROM User u")
