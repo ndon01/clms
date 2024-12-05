@@ -1,128 +1,93 @@
+/* Background and general container styles */
 .login-page-background {
-
+  background-color: var(--surface-e); /* Uniform background */
+  color: var(--text-color); /* Text color */
+  min-height: 100vh; /* Full-screen height */
+  display: flex;
+  flex-direction: column;
 }
 
-
-.login-page-topbar {
-  height: 60px;
+/* Centering the main content vertically and horizontally */
+.flex-grow {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
 }
 
-.login-page-topbar-backarrow {
-  position: absolute;
-  left: 20px;
-  top: 20px;
-}
-
-
+/* Title styles */
 .login-page-title-text {
-  /* Sign in to TeamIQ */
-
   font-family: 'Inter';
-  font-style: normal;
-
-  background: linear-gradient(0deg, rgba(25,25,25, 0.9) 0%, rgba(50, 50, 50, 0.2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-
-
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-color); /* Use the white text color from your theme */
+  text-align: center; /* Center align the title */
+  animation: fadeIn 1.5s ease-out;
 }
 
-
-.input-question-container {
-
-}
-
-.input-question-title {
-
-}
-
-.input-question-title-text {
-  /* Email Address */
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  line-height: 12px;
-
-  color: #191919;
-}
-
-.input-question-response-container {
-  /* Rectangle 83 */
-  width: 347px;
-  height: 26px;
-
-  background: #FFFFFF;
-  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.input-question-response-text {
-  /* donahuenick03@gmail.com */
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 300;
-  font-size: 12px;
-  line-height: 15px;
-  display: flex;
-  align-items: center;
-
-  color: #000000;
-
+/* Input fields */
+.input-field {
   width: 100%;
-  height: 100%;
-
-  text-decoration: none;
-  background: transparent;
-
-  padding-inline: 2px;
-
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--surface-b);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  transition: box-shadow 0.3s ease-in-out;
 }
 
-.input-question-response-text:focus {
+.input-field:focus {
   outline: none;
-}
-.input-question-response-text:focus .input-question-response-container {
-  box-shadow: 0px 0px 5px rgb(0, 0, 0);
-
+  box-shadow: 0 0 4px var(--primary-color);
 }
 
-
-@keyframes floatUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Buttons */
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.appear-first, .appear-second, .appear-third {
-  opacity: 0; /* Ensure elements are initially hidden */
-  animation-fill-mode: forwards; /* Keep the final state after animation ends */
+.btn-primary:hover {
+  background-color: rgba(52, 211, 153, 0.8);
 }
 
-.appear-first {
-  animation: floatUp 1s ease-out .4s forwards;
+.btn-secondary {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid var(--surface-border);
+  background-color: transparent;
+  color: var(--text-color-secondary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
 }
 
-.appear-second {
-  animation: floatUp 1s ease-out .8s forwards; /* Delay to start after first */
+.btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  border: none;
 }
 
-.appear-third {
-  animation: floatUp 1s ease-out 1.1s forwards; /* Delay to start after second */
+/* Divider line */
+.bg-surface-border {
+  background-color: var(--surface-border);
 }
 
+/* Fade-in animation for text */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -130,25 +95,4 @@
   100% {
     opacity: 1;
   }
-}
-
-.fade-in {
-  opacity: 0;
-  animation-fill-mode: forwards;
-  animation: fadeIn 1.5s ease-out .5s forwards;
-}
-
-.hover-shadow {
-  transition: box-shadow 1s;
-}
-
-.hover-shadow:hover {
-  box-shadow: 0px 1px 2px rgba(0, 0, 0,.5);
-  transition: box-shadow .25s;
-}
-
-
-.text-xxs {
-  font-size: .65rem;
-  line-height: 1rem;
 }
