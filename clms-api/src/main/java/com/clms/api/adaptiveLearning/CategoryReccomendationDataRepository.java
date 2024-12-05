@@ -13,4 +13,5 @@ public interface CategoryReccomendationDataRepository extends JpaRepository<Cate
 
     Optional<CategoryReccomendationData> findByCategoryAndUser(QuestionBankCategory category, User user);
     List<CategoryReccomendationData> findAllByUserId(int userId);
+
 }

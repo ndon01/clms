@@ -119,6 +119,13 @@ export class CourseSideBarComponent implements OnInit {
         }
       },
       {
+        label: 'Reinforcement',
+        icon: 'pi pi-chart-bar',
+        command: () => {
+          this.router.navigate(["courses", this.courseId, "reinforcement"])
+        }
+      },
+      {
         separator: true
       },
       {

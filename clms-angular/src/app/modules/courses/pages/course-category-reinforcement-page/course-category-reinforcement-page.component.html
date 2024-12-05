@@ -1,0 +1,32 @@
+<app-course-side-bar>
+  <div class="lms-page-container">
+    <div *ngIf="questionsLoaded && currentQuestion != null" class="flex min-h-screen flex-col bg-gray-100">
+      <header class="bg-white p-4 shadow-sm">
+        <ng-container *ngIf="course == null; else full_title">
+          <h1 class="text-lg font-semibold">Category Reinforcement</h1>
+        </ng-container>
+        <ng-template #full_title>
+          <h1 class="text-lg font-semibold">{{course?.name}} Category Reinforcement</h1>
+        </ng-template>
+      </header>
+
+      <div class="flex flex-1 flex-col md:flex-row">
+        <main class="flex-1 p-6">
+          <!-- Use the QuestionViewComponent here for current question -->
+          <assignments-question-view-component
+            [question]="currentQuestion"
+            [selectedAnswer]="selectedAnswer"
+            (selectedAnswerChange)="onSelectAnswer($event)"
+            [isReadOnly]="false">
+          </assignments-question-view-component>
+
+          <div class="mt-6 flex justify-between">
+            <div></div>
+
+            <button pButton (click)="handleSubmit()" label="Submit"></button>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</app-course-side-bar>
