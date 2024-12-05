@@ -1,8 +1,8 @@
 package com.clms.api.assignments.attempts;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.assignments.api.projections.AssignmentAttemptProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.assignments.api.projections.converters.AssignmentAttemptProjectionConverter;
@@ -11,7 +11,6 @@ import com.clms.api.assignments.attempts.DTO.*;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
 import com.clms.api.assignments.attempts.models.AttemptQuestionAnswer;
-import com.clms.api.assignments.grader.AssignmentGradingService;
 import com.clms.api.users.api.User;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.common.security.requiresUser.RequiresUser;
@@ -20,7 +19,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

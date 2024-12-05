@@ -1,5 +1,6 @@
-package com.clms.api.assignments;
+package com.clms.api.assignments.api.entity;
 
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.filestorage.FileMetadata;
 import jakarta.persistence.*;
 import lombok.Data;

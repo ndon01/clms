@@ -1,12 +1,12 @@
 package com.clms.api.questions;
 
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
 import com.clms.api.assignments.api.projections.converters.AssignmentQuestionProjectionConverter;
 import com.clms.api.common.security.currentUser.CurrentUser;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import com.clms.api.questions.api.entity.QuestionGenerationOrderEntity;
 import com.clms.api.questions.api.entity.QuestionGenerationOrderRepository;
 import com.clms.api.questions.api.entity.QuestionGenerationOrderState;
@@ -17,13 +17,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.coyote.Response;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

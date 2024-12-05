@@ -1,6 +1,6 @@
-package com.clms.api.questionBank.entity;
+package com.clms.api.questionBank.api.entity;
 
-import com.clms.api.assignments.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import jakarta.persistence.*;
 import lombok.*;
 

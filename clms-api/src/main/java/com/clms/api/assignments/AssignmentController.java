@@ -1,8 +1,14 @@
 package com.clms.api.assignments;
 
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.entity.AssignmentFile;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
+import com.clms.api.assignments.api.repository.AssignmentFileRepository;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;
@@ -17,12 +23,10 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import java.util.*;
 import java.util.stream.Collectors;

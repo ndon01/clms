@@ -1,6 +1,7 @@
-package com.clms.api.assignments;
+package com.clms.api.assignments.api.entity;
 
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
+import com.clms.api.assignments.AssignmentQuestionAnswerConverter;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

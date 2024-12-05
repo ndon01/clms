@@ -2,9 +2,9 @@ package com.clms.api.assignments.grader;
 
 import com.clms.api.adaptiveLearning.CategoryReccomendationData;
 import com.clms.api.adaptiveLearning.CategoryReccomendationDataRepository;
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentQuestionAnswer;
-import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AttemptQuestionAnswer;

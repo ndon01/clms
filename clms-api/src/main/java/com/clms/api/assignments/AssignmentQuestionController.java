@@ -1,8 +1,10 @@
 package com.clms.api.assignments;
-import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
-import com.clms.api.questionBank.api.projections.QuestionBankQuestionProjection;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,15 +12,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.ast.Assign;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/assignments/questions")

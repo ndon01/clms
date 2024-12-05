@@ -1,6 +1,6 @@
 package com.clms.api.assignments.attempts.scheduling;
 
-import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.services.AssignmentAttemptGradingEventPublisher;
 import com.clms.api.assignments.grader.AssignmentGradingService;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;

@@ -1,25 +1,21 @@
 package com.clms.api.courses.performance.service;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
-import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
-import com.clms.api.courses.api.Course;
 import com.clms.api.courses.members.CourseMember;
 import com.clms.api.courses.performance.dto.CourseCategoryPerformanceDto;
 import com.clms.api.courses.performance.dto.TimestampedCategoryPerformanceDto;
-import com.clms.api.questionBank.entity.QuestionBankCategory;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.antlr.v4.runtime.misc.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

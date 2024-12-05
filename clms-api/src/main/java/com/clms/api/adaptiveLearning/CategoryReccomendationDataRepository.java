@@ -1,6 +1,6 @@
 package com.clms.api.adaptiveLearning;
 
-import com.clms.api.questionBank.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
 import com.clms.api.users.api.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

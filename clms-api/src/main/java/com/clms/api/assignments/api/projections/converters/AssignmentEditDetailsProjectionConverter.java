@@ -1,6 +1,6 @@
 package com.clms.api.assignments.api.projections.converters;
 
-import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
 import com.clms.api.courses.api.Course;
 import com.clms.api.common.interfaces.GenericConverter;

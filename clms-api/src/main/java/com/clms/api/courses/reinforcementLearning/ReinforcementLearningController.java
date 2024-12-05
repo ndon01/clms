@@ -1,10 +1,7 @@
 package com.clms.api.courses.reinforcementLearning;
 
-import com.clms.api.adaptiveLearning.CategoryReccomendationData;
-import com.clms.api.adaptiveLearning.CategoryReccomendationDataRepository;
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;
@@ -15,10 +12,10 @@ import com.clms.api.courses.performance.dto.TimestampedCategoryPerformanceDto;
 import com.clms.api.courses.performance.service.CourseCategoryPerformanceCalculationService;
 import com.clms.api.courses.reinforcementLearning.repository.CategoryReinforcementAssignedQuestionRepository;
 import com.clms.api.courses.reinforcementLearning.repository.CategoryReinforcementQuestionAttemptRepository;
-import com.clms.api.questionBank.entity.QuestionBankCategory;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankCategoryRepository;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import com.clms.api.questions.api.projections.QuestionAnswerProjection;
 import com.clms.api.questions.api.projections.QuestionProjection;
 import com.clms.api.users.UserRepository;
@@ -26,11 +23,9 @@ import com.clms.api.users.api.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

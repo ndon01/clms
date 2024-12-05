@@ -1,6 +1,6 @@
 package com.clms.api.assignments.attempts;
 
-import com.clms.api.assignments.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import jakarta.persistence.*;
 import lombok.Data;

@@ -1,10 +1,9 @@
-package com.clms.api.questionBank.entity;
+package com.clms.api.questionBank.api.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "question_bank_categories")

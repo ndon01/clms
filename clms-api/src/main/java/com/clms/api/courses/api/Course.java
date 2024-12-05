@@ -1,6 +1,6 @@
 package com.clms.api.courses.api;
 
-import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.users.api.User;
 import jakarta.persistence.*;
 import lombok.Getter;

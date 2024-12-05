@@ -1,9 +1,9 @@
 package com.clms.api.courses;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.courses.api.Course;
 import com.clms.api.courses.members.*;
 import com.clms.api.users.api.User;
@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.ILoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,5 +1,6 @@
 package com.clms.api.assignments;
 
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
 import lombok.Data;
 
 import java.util.Date;
