@@ -1,78 +1,61 @@
-<div class="flex flex-col h-full">
-  <!-- Background -->
-  <div class="login-page-background"></div>
+<div class="flex flex-col h-full login-page-background">
   <!-- Navbar -->
-  <div class="flex flex-row w-full h-10 justify-between align-middle items-center pl-3 pr-3 pt-2">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left cursor-pointer" viewBox="0 0 16 16" (click)="location.back()" >
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+  <div class="flex flex-row w-full h-10 justify-between items-center px-3 pt-2">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left cursor-pointer" viewBox="0 0 16 16" (click)="location.back()">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8" />
     </svg>
-    <div class="login-page-topbar-homeicon cursor-pointer" routerLink="/"><img src="assets/Logo-text-only.svg" width="24" height="24"/></div>
+    <img src="/assets/favicon.png" alt="Logo" class="h-6">
   </div>
 
+  <!-- Main Content -->
+  <div class="flex flex-col justify-center items-center mt-5">
+    <div class="login-page-title-text text-center fade-in">Register an Account</div>
 
-  <div class="flex flex-col justify-center items-center mt-5 mb-10">
-    <!-- Title -->
-    <div class="flex flex-col justify-center items-center align-middle p-10">
-      <span class="login-page-title-text text-center text-2xl pt-2 pb-2 mt-6 fade-in">Register an Account</span>
-    </div>
-    <!-- Form Questions -->
-    <div class="flex flex-col justify-center items-center w-64 appear-second pt-5 pb-5 gap-3">
-      <!-- Username -->
-
-      <div class="flex flex-col gap-1 w-full">
-        <label for="username" class="text-xs" style="font-family: 'Inter'">Username</label>
-        <input id="username" name="username" type="email"
-               placeholder="Enter your Username"
-               [formControl]="username"
-               class="w-full h-7 rounded border border-gray-300 ps-1 pe-1 pt-0.5 pb-0.5 transition-all duration-700 outline-0 text-xs hover:shadow hover:shadow-accent hover:shadow-gray-500 hover:transition-all hover:duration-150 focus:shadow focus:shadow-accent focus:shadow-gray-500 focus:transition-all focus:duration-150"
-               style="font-family: 'Inter'"/>
+    <!-- Form -->
+    <div class="flex flex-col justify-center items-center w-72 gap-5 mt-5 appear-second">
+      <div class="flex flex-col gap-2 w-full">
+        <label for="username" class="text-xs text-color-primary">Username</label>
+        <input id="username" name="username" type="text" placeholder="Enter your Username" class="input-field" [formControl]="username" />
       </div>
 
-
-      <!-- Password -->
-      <div class="w-full">
-        <password-input-field [control]="password" identifier="password" class="w-full" title="Password" placeholder="Pick your Password"/>
-        <div class="flex flex-col text-xxs mt-3 ml-2 font-thin">
-            <span [ngClass]="((password.dirty && password.value != '')) ? {'text-red-600': password.errors?.['uppercase'], 'text-green-600': !password.errors?.['uppercase']} : 'text-gray-500'">
-              1 Uppercase Character
-            </span>
-                    <span [ngClass]="((password.dirty && password.value != '')) ? {'text-red-600': password.errors?.['lowercase'], 'text-green-600': !password.errors?.['lowercase']} : 'text-gray-500'">
-              1 Lowercase Character
-            </span>
-                    <span [ngClass]="((password.dirty && password.value != '')) ? {'text-red-600': password.errors?.['digit'], 'text-green-600': !password.errors?.['digit']} : 'text-gray-500'">
-              1 Numerical Character
-            </span>
-                    <span [ngClass]="((password.dirty && password.value != '')) ? {'text-red-600': password.errors?.['specialChar'], 'text-green-600': !password.errors?.['specialChar']} : 'text-gray-500'">
-              1 Special Character {{"(!@#$%^&*)"}}
-            </span>
-                    <span [ngClass]="((password.dirty && password.value != '')) ? {'text-red-600': password.errors?.['length'], 'text-green-600': !password.errors?.['length']} : 'text-gray-500'">
-              Between 10 and 64 characters long
-            </span>
+      <div class="flex flex-col gap-2 w-full">
+        <label for="password" class="text-xs text-color-primary">Password</label>
+        <input id="password" name="password" type="password" placeholder="Pick your Password" class="input-field" [formControl]="password" />
+        <div class="password-requirements text-xxs mt-2">
+          <span [ngClass]="{ 'text-green-600': !password.errors?.['uppercase'], 'text-red-600': password.errors?.['uppercase'] }">
+            {{ password.errors?.['uppercase'] || !password.dirty ? '✘' : '✔' }} 1 Uppercase Character
+          </span><br />
+          <span [ngClass]="{ 'text-green-600': !password.errors?.['lowercase'], 'text-red-600': password.errors?.['lowercase'] }">
+            {{ password.errors?.['lowercase'] || !password.dirty ? '✘' : '✔' }} 1 Lowercase Character
+          </span><br />
+          <span [ngClass]="{ 'text-green-600': !password.errors?.['digit'], 'text-red-600': password.errors?.['digit'] }">
+            {{ password.errors?.['digit'] || !password.dirty ? '✘' : '✔' }} 1 Numerical Character
+          </span><br />
+          <span [ngClass]="{ 'text-green-600': !password.errors?.['specialChar'], 'text-red-600': password.errors?.['specialChar'] }">
+            {{ password.errors?.['specialChar'] || !password.dirty ? '✘' : '✔' }} 1 Special Character (!&#64;#$%^&*()-_+=)
+          </span><br />
+          <span [ngClass]="{ 'text-green-600': !password.errors?.['length'], 'text-red-600': password.errors?.['length'] }">
+            {{ password.errors?.['length'] || !password.dirty ? '✘' : '✔' }} Between 10 and 64 characters long
+          </span>
         </div>
       </div>
 
-      <div class="w-full">
-        <password-input-field [control]="confirmPassword" identifier="confirmPassword" class="w-full" title="Confirm Password" placeholder="Re-enter your Password"/>
-        <div class="flex flex-col text-xxs mt-3 ml-2 font-thin" *ngIf='(confirmPassword.dirty && confirmPassword.value != "") && (password.dirty && password.value != "") && confirmPassword.value != password.value'>
-            <span [ngClass]="confirmPassword.value != password.value ? 'text-red-600' : 'text-green-600'">
-              {{confirmPassword.value != password.value ? "Password's must match" : "Password's match"}}
-            </span>
+      <div class="flex flex-col gap-2 w-full">
+        <label for="confirm-password" class="text-xs text-color-primary">Confirm Password</label>
+        <input id="confirm-password" name="confirm-password" type="password" placeholder="Re-enter your Password" class="input-field" [formControl]="confirmPassword" />
+        <div *ngIf="password.value !== confirmPassword.value && confirmPassword.dirty" class="text-red-600 text-xxs mt-1">
+          Passwords must match
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col justify-center items-center mt-2 mb-5">
-      <div class="flex justify-center items-center rounded-full w-48 h-7 bg-red-600 cursor-pointer appear-third hover-shadow hover:bg-black hover:text-white hover:transition-colors hover:duration-1000 duration-1000 transition-all appear-second" (click)="onSubmit()">
-        <div class="text-white text-xxs">Register</div>
-      </div>
-
-      <div class="h-2 w-full divider w-52 appear-third"></div>
-
-      <div class="flex justify-center items-center rounded-full w-48 h-7 border-black border-2 cursor-pointer appear-third hover-shadow hover:bg-red-600 hover:border-0 hover:text-white appear-third" routerLink="/login">
-        <div class="text-xxs">Already have an account?</div>
-      </div>
+    <!-- Buttons -->
+    <div class="flex flex-col justify-center items-center gap-3 mt-5 mb-10">
+      <button class="btn-primary" (click)="onSubmit()" [disabled]="password.invalid || username.invalid || confirmPassword.invalid || password.value !== confirmPassword.value">
+        Register
+      </button>
+      <div class="h-px w-full bg-surface-border"></div>
+      <button class="btn-secondary" routerLink="/login">Already have an account?</button>
     </div>
-
-
   </div>
 </div>

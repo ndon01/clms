@@ -1,18 +1,20 @@
-<ng-container *ngIf="course === undefined">
-  <p-card header="No Course Found" [style]="{width: '250px', height: '250px'}">
-    <p>
-      No course found with the given ID.
-    </p>
-  </p-card>
-</ng-container>
+<div class="landing-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar-container bg-surface-d text-color-primary">
+    <!-- Logo and Title -->
+    <div class="navbar-left flex items-center">
+      <img
+        src="/assets/favicon.png"
+        alt="Logo"
+        class="logo"
+      />
+      <span class="navbar-title text-color-primary">Capstone Learning Management System</span>
+    </div>
 
-<ng-container *ngIf="course !== undefined">
-  <p-card header="{{course.name || 'NO NAME FOUND'}}" subheader="{{course.id || 'NO ID FOUND'}}" [style]="{width: '250px', height: '250px'}">
-    <p>
-      {{ course.description || 'NO DESCRIPTION FOUND' }}
-    </p>
-    <ng-template pTemplate="footer">
-      <button pButton pRipple type="button" label="View Course" icon="pi pi-eye" class="p-button-success" (click)="viewCourse()"></button>
-    </ng-template>
-  </p-card>
-</ng-container>
+    <!-- Right Corner: Buttons -->
+    <div class="navbar-buttons flex items-center">
+      <button class="navbar-btn">Login</button>
+      <button class="navbar-btn">Register</button>
+    </div>
+  </nav>
+</div>

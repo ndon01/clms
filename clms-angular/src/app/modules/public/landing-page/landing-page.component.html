@@ -1,21 +1,29 @@
-<nav>
-  <div class="navbar-container">
-    <div class="h-full flex items-center">
-      <img src="assets/Logo-text-only.svg" class="navbar-logo" alt="Logo">
-      <span class="navbar-logo-title">Beta</span>
-      <div class="navbar-vertical-divider"> </div>
-      <div class="flex flex-row justify-center items-center" style="margin-left: 11px; gap: 15px;">
-        <div class="navbar-page-nav-text hover-appear-underline" routerLink="/login" style="color: black;">Purpose</div>
-        <div class="navbar-page-nav-text hover-appear-underline" routerLink="/login">Products</div>
-        <div class="navbar-page-nav-text hover-appear-underline" routerLink="/login">Pricing</div>
+<div class="landing-container">
+  <!-- Navigation Bar -->
+  <nav class="navbar-container">
+    <!-- Left Side: Logo and Title -->
+    <div class="navbar-left">
+      <img src="/assets/favicon.png" alt="Logo" class="navbar-logo" />
+      <div class="navbar-title">
+        Capstone Learning Management System
       </div>
     </div>
+    <!-- Right Side: Login and Register Buttons -->
+    <div class="navbar-buttons">
+      <div class="navbar-btn" routerLink="/login">Login</div>
+      <div class="navbar-btn" routerLink="/register">Register</div>
+    </div>
+  </nav>
 
-    <div class="navbar-right-container">
-      <div class="flex flex-row justify-center items-center gap-3">
-        <div class="navbar-login-container" routerLink="/login"><span class="hover-appear-underline">Sign in</span></div>
-        <div class="navbar-waitlist-container" routerLink="/register">Join the Waitlist</div>
-      </div>
+  <!-- Main Content -->
+  <main class="landing-main">
+    <h1 class="landing-main-title">Welcome to Capstone LMS!</h1>
+    <p class="landing-main-text">
+      Transform your learning experience with a platform tailored for students, educators, and professionals.
+      Sign up today to access resources, track your progress, and manage your assignments with ease.
+    </p>
+    <div class="landing-main-cta">
+      <button class="btn-primary" routerLink="/register">Get Started</button>
     </div>
-  </div>
-</nav>
+  </main>
+</div>

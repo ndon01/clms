@@ -47,9 +47,12 @@ export class ClientService implements OnInit {
   }
 
   public logout() {
+    localStorage.removeItem("client_data")
     this.httpClient.post('/api/auth/logout', {}).subscribe(() => {
       this.clientDataSourceService.refresh();
-      this.router.navigate(['/login'])
+    }).add(()=>{
+      this.router.navigate(['/public/landing'])
+
     })
 
 
