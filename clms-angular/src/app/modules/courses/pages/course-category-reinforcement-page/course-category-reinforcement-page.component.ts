@@ -42,7 +42,21 @@ export class CourseCategoryReinforcementPageComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params['id'];
       this.courseId = parseInt(id, 10);
+      this.fetchReinforcementQuestion();
     });
+  }
+
+  fetchReinforcementQuestion() {
+    if (!this.courseId) return;
+    this.httpClient.get("/api/courses/reinforcementLearning/getReinforcementQuestion", {
+      params: {
+        courseId: this.courseId
+      }
+    }).subscribe(res => {
+      this.currentQuestion = res
+      this.questionsLoaded =true
+      console.log(res)
+    })
   }
 
   onSelectAnswer($event: string | null) {
