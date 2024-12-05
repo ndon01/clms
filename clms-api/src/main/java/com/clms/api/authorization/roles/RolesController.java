@@ -3,6 +3,7 @@ package com.clms.api.authorization.roles;
 import com.clms.api.authorization.Role;
 import com.clms.api.authorization.Permission;
 import com.clms.api.authorization.permissions.PermissionRepository;
+import com.clms.api.common.security.authorization.requiresPermission.RequiresPermission;
 import com.clms.api.common.security.authorization.requiresRole.RequiresRole;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Authorization", description = "Endpoints for Authorization")
-@RequiresRole("Admin")
+@RequiresPermission("ADMIN_PAGE_ACCESS")
 public class RolesController {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
