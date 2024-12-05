@@ -9,7 +9,7 @@ export class RegistrationService {
   constructor(private http: HttpClient) { }
 
   register(username: String, password: String) {
-    return this.http.post<any>("/api/v1/authentication/, {
+    return this.http.post<any>("/api/v1/authentication/register", {
       username: username,
       password: password
     }, {
