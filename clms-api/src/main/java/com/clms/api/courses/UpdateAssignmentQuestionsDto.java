@@ -1,7 +1,7 @@
 package com.clms.api.courses;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import lombok.Getter;
 import lombok.Setter;
 

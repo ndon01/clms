@@ -1,18 +1,17 @@
 package com.clms.api.questionBank.categories;
 
-import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.questionBank.api.projections.QuestionBankCategoryProjection;
 import com.clms.api.questionBank.api.projections.converters.QuestionBankCategoryProjectionConverter;
 import com.clms.api.questionBank.categories.dto.CategoryCreateRequestDto;
 import com.clms.api.questionBank.categories.dto.CategoryDeleteRequestDto;
 import com.clms.api.questionBank.categories.dto.CategoryReparentRequestDto;
 import com.clms.api.questionBank.categories.dto.CategoryUpdateNameRequestDto;
-import com.clms.api.questionBank.entity.QuestionBankCategory;
-import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.repositories.QuestionBankCategoryRepository;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

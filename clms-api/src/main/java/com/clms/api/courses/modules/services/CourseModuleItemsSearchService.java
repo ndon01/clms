@@ -1,14 +1,11 @@
 package com.clms.api.courses.modules.services;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.modules.CourseModuleEntity;
 import com.clms.api.courses.modules.CourseModuleItemEntity;
 import com.clms.api.courses.modules.CourseModuleItemRepository;
 import com.clms.api.courses.modules.CourseModuleRepository;
-import com.clms.api.courses.modules.dto.CourseModuleAddAssignmentsDto;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.OpenApiResourceNotFoundException;

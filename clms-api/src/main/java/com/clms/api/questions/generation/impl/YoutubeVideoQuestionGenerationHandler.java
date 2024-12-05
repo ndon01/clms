@@ -1,8 +1,8 @@
 package com.clms.api.questions.generation.impl;
 
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentQuestionAnswer;
-import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.gemini.GeminiService;
 import com.clms.api.questions.api.dto.GeneratedQuestionDTO;
 import com.clms.api.youtube.YoutubeTranscriptService;
@@ -21,7 +21,6 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -33,7 +32,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

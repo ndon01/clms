@@ -1,5 +1,6 @@
 package com.clms.api.assignments;
 
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;

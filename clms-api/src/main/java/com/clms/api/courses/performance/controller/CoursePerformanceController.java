@@ -1,6 +1,6 @@
 package com.clms.api.courses.performance.controller;
 
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;

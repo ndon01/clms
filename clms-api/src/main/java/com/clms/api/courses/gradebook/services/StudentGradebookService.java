@@ -1,6 +1,6 @@
 package com.clms.api.courses.gradebook.services;
 
-import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service

@@ -1,9 +1,8 @@
 package com.clms.api.assignments;
 
-import lombok.Data;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import lombok.Getter;
 import lombok.Setter;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 
 import java.util.List;
 

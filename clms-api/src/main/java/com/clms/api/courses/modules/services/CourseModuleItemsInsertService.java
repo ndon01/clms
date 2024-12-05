@@ -1,7 +1,7 @@
 package com.clms.api.courses.modules.services;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.modules.CourseModuleEntity;
 import com.clms.api.courses.modules.CourseModuleItemEntity;

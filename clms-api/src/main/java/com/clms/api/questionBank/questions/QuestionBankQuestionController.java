@@ -1,22 +1,19 @@
 package com.clms.api.questionBank.questions;
 
-import com.clms.api.assignments.AssignmentQuestion;
-import com.clms.api.assignments.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.entity.AssignmentQuestion;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.common.web.util.PageinationInformationDto;
-import com.clms.api.common.web.util.PaginationRequest;
 import com.clms.api.questionBank.api.projections.QuestionBankQuestionProjection;
 import com.clms.api.questionBank.api.projections.converters.QuestionBankQuestionProejctionConverter;
-import com.clms.api.questionBank.entity.QuestionBankCategory;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankCategoryRepository;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

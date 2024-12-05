@@ -1,6 +1,6 @@
 package com.clms.api.courses.gradebook.services;
 
-import com.clms.api.assignments.Assignment;
+import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
 import com.clms.api.assignments.api.projections.converters.AssignmentAttemptProjectionConverter;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
@@ -8,10 +8,8 @@ import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;
 import com.clms.api.courses.gradebook.DTO.TutorGradebookProjection;
-import com.clms.api.courses.gradebook.DTO.TutorGradebookRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.api.OpenApiResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

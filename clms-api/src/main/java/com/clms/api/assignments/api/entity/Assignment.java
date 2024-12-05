@@ -1,4 +1,4 @@
-package com.clms.api.assignments;
+package com.clms.api.assignments.api.entity;
 
 
 import com.clms.api.courses.api.Course;

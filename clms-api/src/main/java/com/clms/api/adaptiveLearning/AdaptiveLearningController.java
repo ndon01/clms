@@ -1,31 +1,21 @@
 package com.clms.api.adaptiveLearning;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentQuestionRepository;
-import com.clms.api.assignments.api.projections.AssignmentQuestionProjection;
+import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
 import com.clms.api.assignments.attempts.AssignmentAttemptRepository;
-import com.clms.api.assignments.attempts.models.AssignmentAttempt;
-import com.clms.api.questionBank.api.projections.QuestionBankQuestionProjection;
-import com.clms.api.questionBank.entity.QuestionBankCategory;
-import com.clms.api.questionBank.entity.QuestionBankQuestion;
-import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
-import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
-import com.clms.api.questions.api.dto.GeneratedQuestionDTO;
+import com.clms.api.questionBank.api.entity.QuestionBankCategory;
+import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
+import com.clms.api.questionBank.api.repositories.QuestionBankCategoryRepository;
+import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/adaptive-learning")

@@ -1,7 +1,7 @@
 package com.clms.api.assignments.attempts;
 
-import com.clms.api.assignments.Assignment;
-import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.assignments.api.entity.Assignment;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.assignments.attempts.models.AssignmentAttempt;
 import com.clms.api.assignments.attempts.models.AssignmentAttemptStatus;
 import com.clms.api.users.api.User;

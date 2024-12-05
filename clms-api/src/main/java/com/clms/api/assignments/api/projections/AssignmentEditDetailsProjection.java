@@ -1,6 +1,5 @@
 package com.clms.api.assignments.api.projections;
 
-import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.courses.api.projections.CourseDetailsProjection;
 import lombok.Builder;
 import lombok.Getter;

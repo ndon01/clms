@@ -1,6 +1,6 @@
 package com.clms.api.assignments.api.projections.converters;
 
-import com.clms.api.assignments.AssignmentQuestionAnswer;
+import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
 import com.clms.api.assignments.api.projections.AssignmentQuestionAnswerProjection;
 import com.clms.api.common.interfaces.GenericConverter;
 import org.springframework.stereotype.Service;
