@@ -25,6 +25,6 @@ public class QuestionBankCategory {
             inverseJoinColumns = @JoinColumn(name = "question_bank_question_id"),
             joinColumns = @JoinColumn(name = "question_bank_category_id")
     )
-    private List<QuestionBankQuestion> associatedQuestions; 
+    private List<QuestionBankQuestion> associatedQuestions;
 
 }

@@ -9,9 +9,13 @@ import org.springframework.stereotype.Repository;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface QuestionBankQuestionRepository extends JpaRepository<QuestionBankQuestion,Integer> {
+
+    List<QuestionBankQuestion> findAllByCategories(QuestionBankCategory category);
+
     long count();
     List<QuestionBankQuestion> findAllByCategoriesIn(List<QuestionBankCategory> categories, PageRequest pageable);
     long countAllByCategoriesIn(List<QuestionBankCategory> categories);
