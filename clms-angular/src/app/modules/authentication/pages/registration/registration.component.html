@@ -15,12 +15,34 @@
     <div class="flex flex-col justify-center items-center w-72 gap-5 mt-5 appear-second">
       <div class="flex flex-col gap-2 w-full">
         <label for="username" class="text-xs text-color-primary">Username</label>
-        <input id="username" name="username" type="text" placeholder="Enter your Username" class="input-field" [formControl]="username" />
+        <input
+          pTooltip
+          [tooltipDisabled]="!isInvalidCredentials"
+          pTooltip="Invalid Credentials"
+          id="username"
+          name="username"
+          type="text"
+          placeholder="Enter your Username"
+          class="input-field"
+          [formControl]="username"
+          [class.input-error]="isInvalidCredentials"
+        />
       </div>
 
       <div class="flex flex-col gap-2 w-full">
         <label for="password" class="text-xs text-color-primary">Password</label>
-        <input id="password" name="password" type="password" placeholder="Pick your Password" class="input-field" [formControl]="password" />
+        <input
+          pTooltip
+          [tooltipDisabled]="!isInvalidCredentials"
+          pTooltip="Invalid Credentials"
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Pick your Password"
+          class="input-field"
+          [formControl]="password"
+          [class.input-error]="isInvalidCredentials"
+        />
         <div class="password-requirements text-xxs mt-2">
           <span [ngClass]="{ 'text-green-600': !password.errors?.['uppercase'], 'text-red-600': password.errors?.['uppercase'] }">
             {{ password.errors?.['uppercase'] || !password.dirty ? '✘' : '✔' }} 1 Uppercase Character
@@ -42,7 +64,18 @@
 
       <div class="flex flex-col gap-2 w-full">
         <label for="confirm-password" class="text-xs text-color-primary">Confirm Password</label>
-        <input id="confirm-password" name="confirm-password" type="password" placeholder="Re-enter your Password" class="input-field" [formControl]="confirmPassword" />
+        <input
+          pTooltip
+          [tooltipDisabled]="!isInvalidCredentials"
+          pTooltip="Invalid Credentials"
+          id="confirm-password"
+          name="confirm-password"
+          type="password"
+          placeholder="Re-enter your Password"
+          class="input-field"
+          [formControl]="confirmPassword"
+          [class.input-error]="isInvalidCredentials"
+        />
         <div *ngIf="password.value !== confirmPassword.value && confirmPassword.dirty" class="text-red-600 text-xxs mt-1">
           Passwords must match
         </div>

@@ -27,24 +27,32 @@
       <div class="flex flex-col gap-2 w-full">
         <label for="username" class="text-xs text-color-primary">Username</label>
         <input
+          pTooltip
+          [tooltipDisabled]="!isInvalidCredentials"
+          pTooltip="Invalid Credentials"
           id="username"
           name="username"
           type="text"
           placeholder="Enter your Username"
           class="input-field"
           [formControl]="username"
+          [class.input-error]="isInvalidCredentials"
         />
       </div>
 
       <div class="flex flex-col gap-2 w-full">
         <label for="password" class="text-xs text-color-primary">Password</label>
         <input
+          pTooltip
+          [tooltipDisabled]="!isInvalidCredentials"
+          pTooltip="Invalid Credentials"
           id="password"
           name="password"
           type="password"
           placeholder="Enter your Password"
           class="input-field"
           [formControl]="password"
+          [class.input-error]="isInvalidCredentials"
         />
       </div>
     </div>
@@ -57,6 +65,3 @@
     </div>
   </div>
 </div>
-
-
-
