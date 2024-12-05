@@ -3,6 +3,7 @@ import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import com.clms.api.assignments.api.entity.AssignmentQuestionAnswer;
 import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.questionBank.api.entity.QuestionBankQuestion;
 import com.clms.api.questionBank.api.repositories.QuestionBankQuestionRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;

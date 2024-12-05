@@ -9,6 +9,7 @@ import com.clms.api.assignments.api.projections.AssignmentEditDetailsProjection;
 import com.clms.api.assignments.api.projections.AssignmentProjection;
 import com.clms.api.assignments.api.repository.AssignmentFileRepository;
 import com.clms.api.assignments.api.repository.AssignmentQuestionRepository;
+import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.common.interfaces.GenericConverter;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;
