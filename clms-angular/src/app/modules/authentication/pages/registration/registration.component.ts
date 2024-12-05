@@ -65,6 +65,7 @@ export class RegistrationComponent {
   username = new FormControl<String>("");
   password = new FormControl<String>("", [passwordValidator]);
   confirmPassword = new FormControl<String>("");
+  isInvalidCredentials = false
 
   constructor(private router: Router, public location: Location, private registrationService: RegistrationService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService) {
     const passwordCharacterLimiter = map((newString: String | null) => {
@@ -117,6 +118,9 @@ export class RegistrationComponent {
           this.messageService.add({severity: 'success', summary: 'Registration Successful', detail: 'You have successfully registered. Please login to continue.'});
           this.router.navigate(["/login"])
         }
+      }, () => {
+        this.isInvalidCredentials = true
+        this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
       });
   }
 }

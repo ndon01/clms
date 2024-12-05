@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-course-assignment-page',
   standalone: true,
   imports: [],
-  templateUrl: './course-assignment-page.component.html',
+templateUrl: './course-assignment-page.component.html',
   styleUrl: './course-assignment-page.component.css'
 })
 export class CourseAssignmentPageComponent {

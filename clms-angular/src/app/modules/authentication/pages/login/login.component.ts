@@ -30,6 +30,8 @@ export class LoginComponent implements OnInit {
 
   password = new FormControl<String>("");
 
+  isInvalidCredentials = false;
+
   constructor(private router: Router, public location: Location, private loginService: LoginService, private loadingAmbianceService: LoadingAmbianceService, private messageService: MessageService, private clientDataSourceService: ClientDataSourceService, private httpClient: HttpClient) {
     const passwordCharacterLimiter = map((newString: String | null) => {
       if (newString == null) return null;
@@ -71,7 +73,10 @@ export class LoginComponent implements OnInit {
         this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
         this.router.navigate(["/dashboard"])
         this.messageService.add({severity:'success', summary:'Success', detail:'Welcome back!'});
-    })
+    }, () => {
+        this.isInvalidCredentials = true
+        this.loadingAmbianceService.loadingAmbianceState = LoadingAmbianceState.NONE
+      })
 
   }
 

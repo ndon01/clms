@@ -5,6 +5,8 @@ import {LoginComponent} from "@modules/authentication/pages/login/login.componen
 import {RegistrationComponent} from "@modules/authentication/pages/registration/registration.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "@shared/shared.module";
+import {CardModule} from "primeng/card";
+import {TooltipModule} from "primeng/tooltip";
 
 
 
@@ -14,7 +16,9 @@ import {SharedModule} from "@shared/shared.module";
     CommonModule,
     AuthenticationRoutingModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    CardModule,
+    TooltipModule
   ],
   exports: [RegistrationComponent, LoginComponent]
 })

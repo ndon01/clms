@@ -5,7 +5,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RegistrationService {
-
   constructor(private http: HttpClient) { }
 
   register(username: String, password: String) {
