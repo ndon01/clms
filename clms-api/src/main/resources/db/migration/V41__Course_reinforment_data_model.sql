@@ -20,15 +20,38 @@ CREATE TABLE IF NOT EXISTS category_reinforcement_question_attempts (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP -- Timestamp of the attempt
 );
 
--- Add foreign key constraints
-ALTER TABLE category_reinforcement_assigned_question
-    ADD CONSTRAINT fk_assigned_question_user
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints
+        WHERE constraint_name = 'fk_assigned_question_user'
+        AND table_name = 'category_reinforcement_assigned_question'
+    ) THEN
+        ALTER TABLE category_reinforcement_assigned_question
+            ADD CONSTRAINT fk_assigned_question_user
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+    END IF;
 
-ALTER TABLE category_reinforcement_question_attempts
-    ADD CONSTRAINT fk_question_attempts_user
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints
+        WHERE constraint_name = 'fk_question_attempts_user'
+        AND table_name = 'category_reinforcement_question_attempts'
+    ) THEN
+        ALTER TABLE category_reinforcement_question_attempts
+            ADD CONSTRAINT fk_question_attempts_user
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE;
+    END IF;
 
-ALTER TABLE category_reinforcement_question_attempts
-    ADD CONSTRAINT fk_question_attempts_question
-        FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE;
+    IF NOT EXISTS (
+        SELECT 1
+        FROM information_schema.table_constraints
+        WHERE constraint_name = 'fk_question_attempts_question'
+        AND table_name = 'category_reinforcement_question_attempts'
+    ) THEN
+        ALTER TABLE category_reinforcement_question_attempts
+            ADD CONSTRAINT fk_question_attempts_question
+            FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE;
+    END IF;
+END $$;
