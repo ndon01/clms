@@ -22,6 +22,9 @@ import {CourseGuardService} from "@modules/courses/guards/course-guard.service";
 import {
   CoursePerformancePageComponent
 } from "@modules/courses/pages/course-performance-page/course-performance-page.component";
+import {
+  CourseCategoryReinforcementPageComponent
+} from "@modules/courses/pages/course-category-reinforcement-page/course-category-reinforcement-page.component";
 
 const routes: Routes = [
   {
@@ -43,6 +46,7 @@ const routes: Routes = [
           { path:'gradebook',component:CourseGradebookAdminPageComponent},
           { path:'studentGradebook', component:CourseGradebookStudentPageComponent},
           { path: 'performance', component: CoursePerformancePageComponent },
+          { path: 'reinforcement', component: CourseCategoryReinforcementPageComponent },
           { path: '**', redirectTo: 'home' }
         ]
       },

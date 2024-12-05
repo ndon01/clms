@@ -56,13 +56,19 @@ import {
 } from "@modules/courses/pages/course-performance-page/course-performance-page.component";
 import {InputSwitchModule} from "primeng/inputswitch";
 import {ChartModule} from "primeng/chart";
+import {
+  CourseCategoryReinforcementPageComponent
+} from "@modules/courses/pages/course-category-reinforcement-page/course-category-reinforcement-page.component";
+import {
+  QuestionViewComponentComponent
+} from "@modules/assignments/components/question-view-component/question-view-component.component";
 
 
 @NgModule({
-  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent,CoursePerformancePageComponent],
-  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent,CoursePerformancePageComponent],
-    imports: [
-        CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule, TagModule, EditableTextInputFieldComponent, TutorVisibleViewComponent, InputSwitchModule, ChartModule,
-    ]
+  declarations: [CoursesDashboardPageComponent, CourseSideBarComponent,IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseAssignmentsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent,CoursePerformancePageComponent, CourseCategoryReinforcementPageComponent],
+  exports: [CoursesDashboardPageComponent, CourseSideBarComponent, IndividualCourseHomepageComponent, CourseSettingsPageComponent, CourseModulesPageComponent,AdminGradebookComponent,CourseGradebookAdminPageComponent,StudentGradebookComponent,CourseGradebookStudentPageComponent,StatusComponent,CoursePerformancePageComponent, CourseCategoryReinforcementPageComponent],
+  imports: [
+    CommonModule, CoursesRoutingModule, CoreModule, CardModule, ButtonDirective, OverlayPanelModule, TableModule, DialogModule, Ripple, CheckboxModule, FormsModule, AvatarModule, CalendarModule, ScrollPanelModule, MultiSelectModule, PickListModule, MenuModule, CourseCardComponent, SkeletonModule, AccordionModule, BadgeModule, MenubarModule, StyleClassModule, TagModule, EditableTextInputFieldComponent, TutorVisibleViewComponent, InputSwitchModule, ChartModule, QuestionViewComponentComponent,
+  ]
 })
 export class CoursesModule {}
