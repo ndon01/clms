@@ -44,7 +44,7 @@ public class CourseCategoryPerformanceCalculationService {
 
         List<Assignment> pastStartAssignments = allAssignments
                 .stream()
-                .filter(assignment -> assignment.getStartDate().before(Date.from(Instant.now())))
+                .filter(assignment -> assignment.getStartDate() != null && assignment.getStartDate().before(Date.from(Instant.now())))
                 .toList();
 
         class CalculationHelperObject {
@@ -52,6 +52,8 @@ public class CourseCategoryPerformanceCalculationService {
             Integer correctOccurrences = 0;
             Instant timestamp = null;
         }
+
+        HashMap<QuestionBankCategory, Date> firstCategoryOccurance = new HashMap<>();
 
         pastStartAssignments.forEach(assignment -> {
             List<AssignmentAttempt> attempts = assignmentAttemptRepository.findAssignmentAttemptsByUserAndAssignment(courseMember.getId().getUser(), assignment);
@@ -72,8 +74,27 @@ public class CourseCategoryPerformanceCalculationService {
                 if (categories.isEmpty()) {
                     return;
                 }
+
+                for (QuestionBankCategory category : categories) {
+                    if (firstCategoryOccurance.containsKey(category) && assignment.getStartDate().before(firstCategoryOccurance.get(category))) {
+                        firstCategoryOccurance.put(category, assignment.getStartDate());
+                    } else {
+                        firstCategoryOccurance.put(category, assignment.getStartDate());
+                    }
+                }
                 questionCategoryMap.put(question.getId(), categories);
             });
+
+            firstCategoryOccurance.entrySet().forEach(item -> {
+                TimestampedCategoryPerformanceDto timestampedCategoryPerformanceDto = TimestampedCategoryPerformanceDto
+                        .builder()
+                        .timestamp(item.getValue().toInstant())
+                        .categoryId(item.getKey().getId())
+                        .performanceScore(0)
+                        .build();
+                categoryPerformance.add(timestampedCategoryPerformanceDto);
+            });
+
 
             attempts.forEach(attempt -> {
                 HashMap<QuestionBankCategory, CalculationHelperObject> attemptCategoryPerformanceMap = new HashMap<>();

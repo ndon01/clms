@@ -5,6 +5,7 @@ import com.clms.api.adaptiveLearning.CategoryReccomendationDataRepository;
 import com.clms.api.assignments.Assignment;
 import com.clms.api.assignments.AssignmentQuestion;
 import com.clms.api.assignments.AssignmentRepository;
+import com.clms.api.common.security.currentUser.CurrentUser;
 import com.clms.api.courses.CourseRepository;
 import com.clms.api.courses.api.Course;
 import com.clms.api.courses.members.CourseMember;
@@ -18,6 +19,8 @@ import com.clms.api.questionBank.entity.QuestionBankCategory;
 import com.clms.api.questionBank.entity.QuestionBankQuestion;
 import com.clms.api.questionBank.repositories.QuestionBankCategoryRepository;
 import com.clms.api.questionBank.repositories.QuestionBankQuestionRepository;
+import com.clms.api.questions.api.projections.QuestionAnswerProjection;
+import com.clms.api.questions.api.projections.QuestionProjection;
 import com.clms.api.users.UserRepository;
 import com.clms.api.users.api.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,14 +49,16 @@ public class ReinforcementLearningController
     private final QuestionBankCategoryRepository questionBankCategoryRepository;
     private final CategoryReinforcementAssignedQuestionRepository categoryReinforcementDataRepository;
     private final CategoryReinforcementQuestionAttemptRepository categoryReinforcementQuestionAttemptRepository;
-    @PostMapping("/getReinforcementQuestion")
-    public ResponseEntity<?> getReinforcementQuestion (@RequestParam Integer courseId, @RequestParam int userId)
+
+
+    @GetMapping("/getReinforcementQuestion")
+    public ResponseEntity<QuestionProjection> getReinforcementQuestion (@CurrentUser User user, @RequestParam Integer courseId)
     {
         Course course = courseRepository.findById(courseId).orElse(null);
-        User user = userRepository.findById(userId).orElse(null);
         if (course == null) {
             return ResponseEntity.notFound().build();
         }
+
         if(user == null)
         {
             return ResponseEntity.notFound().build();
@@ -61,12 +66,6 @@ public class ReinforcementLearningController
 
         CourseMember courseMember = courseMemberRepository.findCourseMemberByCourseAndUser(course, user).orElse(null);
         if (courseMember == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<Assignment> allAssignments = assignmentRepository.findAllByCourse(courseMember.getId().getCourse());
-        if(allAssignments.isEmpty())
-        {
             return ResponseEntity.notFound().build();
         }
 
@@ -94,8 +93,25 @@ public class ReinforcementLearningController
         //select a random question from the list
         int randomIndex = (int) (Math.random() * questions.size());
         QuestionBankQuestion question = questions.get(randomIndex);
+        AssignmentQuestion assignmentQuestion = question.getSourceQuestion();
 
-        return ResponseEntity.ok(question);
+
+        return ResponseEntity.ok(QuestionProjection.builder()
+                        .title(assignmentQuestion.getTitle())
+                        .question(assignmentQuestion.getQuestion())
+                        .questionType(assignmentQuestion.getQuestionType())
+                        .answers(assignmentQuestion.getAnswers()
+                                .stream()
+                                .map(
+                                        answer -> QuestionAnswerProjection.builder()
+                                        .id(answer.getId())
+                                        .text(answer.getText())
+                                        .order(answer.getOrder())
+                                        .build()
+                                ).toList()
+                        )
+                        .keepAnswersOrdered(assignmentQuestion.getKeepAnswersOrdered())
+                .build());
     }
 
 }

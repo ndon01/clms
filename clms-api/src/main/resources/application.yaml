@@ -12,11 +12,12 @@ spring:
   cloud:
     aws:
       s3:
-        endpoint: ${SPRING_CLOUD_AWS_S3_ENDPOINT:https://s3.us-east-2.amazonaws.com}
+        endpoint: ${SPRING_CLOUD_AWS_S3_ENDPOINT:http://s3.localhost.localstack.cloud:4566}
         region: ${SPRING_CLOUD_AWS_S3_REGION:us-east-1}
+        path-style-access-enabled: true
       credentials:
-        access-key: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESS_KEY:default-access-key}
-        secret-key: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRET_KEY:default-secret-key}
+        access-key: ${SPRING_CLOUD_AWS_CREDENTIALS_ACCESS_KEY:localstack}
+        secret-key: ${SPRING_CLOUD_AWS_CREDENTIALS_SECRET_KEY:localstack}
       region:
         static: ${SPRING_CLOUD_AWS_REGION_STATIC:us-east-1}
   jpa:
