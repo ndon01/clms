@@ -4,6 +4,7 @@ import com.clms.api.authentication.api.entity.AuthenticationProfile;
 import com.clms.api.authentication.api.entity.AuthenticationProfileRepository;
 import com.clms.api.authentication.passwords.services.PlainTextAndHashedPasswordMatchingService;
 import com.clms.api.authentication.tokens.AuthenticationProfileToAccessTokenConverterService;
+import com.clms.api.users.UserRepository;
 import com.clms.api.users.UserSearchService;
 import com.clms.api.users.api.User;
 import com.clms.api.users.api.projections.converters.UserProjectionConverter;
@@ -23,9 +24,15 @@ public class LoginService {
     private final AuthenticationProfileToAccessTokenConverterService authenticationProfileToAccessTokenConverterService;
     private final UserProjectionConverter userProjectionConverter;
     private final UserSearchService userSearchService;
+    private final UserRepository userRepository;
 
     public AuthenticationProfile loginForAuthenticationProfile(String username, String password) {
-        AuthenticationProfile authenticationProfile = authenticationProfileRepository.getByUsername(username).orElse(null);
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new InvalidCredentialsException("Invalid Credentials");
+        }
+
+        AuthenticationProfile authenticationProfile = authenticationProfileRepository.findById(user.getAuthenticationProfileId()).orElse(null);
         if (authenticationProfile == null) {
             throw new InvalidCredentialsException("Invalid Credentials");
         }
