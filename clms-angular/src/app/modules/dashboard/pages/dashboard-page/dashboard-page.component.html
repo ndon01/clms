@@ -1,25 +1,25 @@
 <app-sidebar-page-wrapper>
-  <div class = "lms-dashboard-container">
-  <div class="w-full h-max flex flex-col p-5 gap-10 overflow-y-scroll">
-    <div>
-      <h1 class="text-3xl font-bold text-on-surface text-color-primary">My Courses</h1>
-      <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
-        <ng-container *ngIf="myCourses === undefined">
-          <ng-container *ngFor="let _ of Array(10)">
-            <div class="w-60 h-60">
-              <p-skeleton width="100%" height="100%"></p-skeleton>
-            </div>
+  <div class = "lms-page-container">
+    <div class="w-full h-max flex flex-col p-5 gap-10 overflow-y-scroll">
+      <div>
+        <h1 class="text-3xl font-bold text-on-surface text-color-primary">My Courses</h1>
+        <div class="flex flex-row overflow-x-scroll w-full gap-5 p-5">
+          <ng-container *ngIf="myCourses === undefined">
+            <ng-container *ngFor="let _ of Array(10)">
+              <div class="w-60 h-60">
+                <p-skeleton width="100%" height="100%"></p-skeleton>
+              </div>
+            </ng-container>
           </ng-container>
-        </ng-container>
-        <ng-container *ngFor="let course of myCourses">
-          <app-course-card [course]="course"></app-course-card>
-        </ng-container>
+          <ng-container *ngFor="let course of myCourses">
+            <app-course-card [course]="course"></app-course-card>
+          </ng-container>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="w-full h-full flex flex-col p-5 gap-10 overflow-y-scroll">
-    <div *ngIf="myAssignments.length === 0"> No Assignments available </div>
-    <app-assignments-list *ngIf="myAssignments.length > 0" [assignments]="myAssignments"></app-assignments-list>
-  </div>
+    <div class="w-full min-h-full h-max flex flex-col p-5 gap-10">
+      <div *ngIf="myAssignments.length === 0"> No Assignments available </div>
+      <app-assignments-list *ngIf="myAssignments.length > 0" [assignments]="myAssignments"></app-assignments-list>
+    </div>
   </div>
 </app-sidebar-page-wrapper>
