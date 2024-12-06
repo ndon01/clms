@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {AssignmentsModule} from "@modules/assignments/assignments.module";
 import {ButtonDirective} from "primeng/button";
 import {DialogModule} from "primeng/dialog";
 import {PrimeTemplate} from "primeng/api";
@@ -18,7 +17,6 @@ export interface QuestionEditModalConfigData {
   selector: 'app-question-edit-modal',
   standalone: true,
   imports: [
-    AssignmentsModule,
     ButtonDirective,
     DialogModule,
     PrimeTemplate,
