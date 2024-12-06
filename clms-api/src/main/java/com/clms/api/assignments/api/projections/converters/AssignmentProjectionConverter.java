@@ -20,7 +20,7 @@ public class AssignmentProjectionConverter implements GenericConverter<Assignmen
                     .description(from.getDescription())
                     .dueDate(from.getDueDate())
                     .startDate(from.getStartDate())
-                    .questions(from.getQuestions().stream().map(assignmentQuestionProjectionConverter::convert).toList())
+                    .questions(from.getQuestions() != null ?  from.getQuestions().stream().map(assignmentQuestionProjectionConverter::convert).toList() : null)
                     .timeLimitMinutes(from.getTimeLimitMinutes())
                     .maxAttempts(from.getMaxAttempts())
                     .build();

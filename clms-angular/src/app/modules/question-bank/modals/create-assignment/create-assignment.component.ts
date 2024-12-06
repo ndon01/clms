@@ -41,9 +41,7 @@ export interface SelectCoursesDialogData{
   standalone: true
 })
 export class CreateAssignmentComponent {
-  courses: CourseProjection[] = []; // Input list of categories
   multiple = false; // Whether multiple categories can be selected
-  selectedCourses: CourseSelectionOutput= null// Selected categories
 
   newAssignment: AssignmentProjection = {
     name: '',
@@ -55,7 +53,6 @@ export class CreateAssignmentComponent {
     // Load the categories and settings from config if provided
     if (config.data) {
       this.multiple = config.data.multiple || false;
-      this.courses = config.data.courses|| [];
     }
   }
 
@@ -63,10 +60,10 @@ export class CreateAssignmentComponent {
 
   // Confirm and emit selected categories, then close the dialog
   confirmSelection() {
-    if (!this.selectedCourses || !this.newAssignment) {
+    if (!this.newAssignment) {
       this.ref.close();
     }
-    this.ref.close({selectedCourses: this.selectedCourses,newAssignment:this.newAssignment});
+    this.ref.close({newAssignment:this.newAssignment});
   }
 
   // Close the dialog without any selection

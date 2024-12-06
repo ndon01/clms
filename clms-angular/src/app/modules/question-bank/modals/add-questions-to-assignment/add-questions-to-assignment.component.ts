@@ -58,7 +58,7 @@ export class AddQuestionsToAssignmentComponent {
   courses: CourseProjection[] = []; // Input list of categories
   multiple = false; // Whether multiple categories can be selected
   selectedCourse: MyCourseSelectionOutput= null; // Selected categories
-  selectedAssignments: AssignmentSelectionOutput = null;// Selected categories
+  selectedAssignments: AssignmentSelectionOutput = null;
   assignmentCourse: CourseProjection | null = null;
   newAssignment: AssignmentProjection = {
     name: '',
@@ -66,6 +66,7 @@ export class AddQuestionsToAssignmentComponent {
     startDate: new Date().toDateString(),
     dueDate: new Date().toDateString()
   };
+  possibleAssignments: AssignmentProjection[] = [];
   constructor(public ref: DynamicDialogRef,
               public http: HttpClient,
               public config: DynamicDialogConfig<SelectCoursesDialogData>,
@@ -115,7 +116,19 @@ export class AddQuestionsToAssignmentComponent {
       header: 'Create Assignment',
       width: '70%',
     }).onClose.subscribe((result) => {
-      console.log(result);
+      if(Array.isArray(this.selectedCourse) || !result || !this.selectedCourse || !this.selectedCourse?.id){
+        console.log("No result");
+        return
+      }
+      this.newAssignment = result.newAssignment;
+
+      this.http.post<AssignmentProjection>(`/api/courses/${this.selectedCourse.id}/assignments/create`, this.newAssignment).subscribe(
+        newAssignment => {
+          let clone = structuredClone(this.possibleAssignments);
+          clone.push(newAssignment);
+          this.possibleAssignments = clone;
+          this.selectedAssignments = newAssignment;
+      });
     });
   }
 }
