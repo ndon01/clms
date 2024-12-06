@@ -162,7 +162,7 @@ export class QuestionBankDashboardComponent implements OnInit {
   protected readonly JSON = JSON;
 
 
-  editQuestion(question: QuestionBankQuestionProjection) {
+  editQuestion(question: QuestionBankQuestionProjection){
     const ref = this.dialogService.open(QuestionEditModalComponent, {
       header: "Edit Question",
       width: '50vw',
