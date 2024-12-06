@@ -1,0 +1,28 @@
+# Ignore build directories
+.angular
+clms-angular/node_modules
+clms-angular/dist
+clms-angular/target
+clms-angular/.angular
+
+
+clms-mobile
+
+docker/localstack/data
+
+# Ignore version control
+.git
+.idea
+.github
+.mvn
+.run
+.vscode
+.gitignore
+
+# Ignore IDE/project files
+*.log
+*.tmp
+.DS_Store
+
+# Ignore operating system files
+Thumbs.db

@@ -1,6 +1,8 @@
 package com.clms.api.filestorage;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
+@Configuration
 @RequiredArgsConstructor
 public class FileStorageService {
 
@@ -25,6 +27,7 @@ public class FileStorageService {
     private final FileMetadataRepository fileMetadataRepository;
     private final S3Client s3Client;
 
+    @Value("${clms.s3.default-bucket-name:clms}")
     private final String defaultBucketName = "clms";
     private final String defaultLocation = "files";
 
