@@ -13,6 +13,7 @@ public class AssignmentQuestionAnswerProjectionConverter implements GenericConve
                 .id(from.getId())
                 .order(from.getOrder())
                 .text(from.getText())
+                .isCorrect(from.isCorrect())
                 .build();
     }
 }
