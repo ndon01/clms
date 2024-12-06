@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  clms-api:
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+  clms-database:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_DB=clms
+    ports:
+      - "5001:5432"
+    volumes:
+      - clms-database-volume:/var/lib/postgresql/data
+  localstack:
+    build:
+        context: ./docker/localstack
+        dockerfile: Dockerfile
+    ports:
+      - "4566:4566"            # LocalStack Gateway
+      - "4510-4559:4510-4559"  # external services port range
+    environment:
+      - DEBUG=${DEBUG:-0}
+      - USE_SSL=0
+      - AWS_CBOR_DISABLE=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOSTNAME=localstack
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-east-1
+    volumes:
+      - clms-localstack-volume:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+volumes:
+  clms-database-volume:
+  clms-localstack-volume:
+  clm-api-volume:

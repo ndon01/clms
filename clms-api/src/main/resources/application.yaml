@@ -33,7 +33,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: ${SPRING_JACKSON_SERIALIZATION_FAIL_ON_EMPTY_BEANS:false}
-
 springdoc:
   api-docs:
     enabled: ${SPRINGDOC_API_DOCS_ENABLED:true}
@@ -43,6 +42,8 @@ springdoc:
     path: ${SPRINGDOC_SWAGGER_UI_PATH:/swagger-ui.html}
 
 clms:
+  s3:
+    default-bucket-name: ${CLMS_S3_DEFAULT_BUCKET_NAME:clms}
   admin-user:
     enabled: ${CLMS_ADMIN_USER_ENABLED:false}
     username: ${CLMS_ADMIN_USER_USERNAME:admin}
