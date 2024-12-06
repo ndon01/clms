@@ -12,7 +12,10 @@
       [course]="assignmentCourse"
       [multiple]="false"
       [selectedAssignments]="selectedAssignments"
-      (selectedAssignmentsChange)="selectedAssignments = $event"/>
+      (selectedAssignmentsChange)="selectedAssignments = $event"
+      [assignments]="possibleAssignments"
+      (assignmentsChange)="possibleAssignments = $event"
+    />
 
     <!-- "or" text -->
     <span class="absolute left-1/2 transform -translate-x-1/2 text-gray-500">or</span>

@@ -31,7 +31,8 @@ export type AssignmentSelectionOutput = AssignmentDetailsProjection[] | Assignme
 })
 export class AssignmentSelection implements OnInit,OnChanges{
   @Input () course: CourseProjection | null= null;
-  assignments:AssignmentDetailsProjection[] = []; // Input list of categories
+  @Input() assignments:AssignmentDetailsProjection[] = []; // Input list of categories
+  @Output() assignmentsChange = new EventEmitter<AssignmentDetailsProjection[]>(); // Output list of categories
   @Input() multiple = false; // Whether multiple categories can be selected
   @Input() selectedAssignments : AssignmentSelectionOutput = null; // Selected categories
   @Output() selectedAssignmentsChange= new EventEmitter<AssignmentSelectionOutput>();
@@ -47,9 +48,10 @@ export class AssignmentSelection implements OnInit,OnChanges{
   }
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes)
-    if (changes["course"]!= null) {
+    if (changes["course"]!= null && !changes["course"].isFirstChange()){
       this.fetchAssignments();
-  }}
+    }
+  }
 
   fetchAssignments(){
     if (this.course == null || this.course.id == null ) {
@@ -64,6 +66,7 @@ export class AssignmentSelection implements OnInit,OnChanges{
     ).subscribe(
       (response) => {
         this.assignments = response;
+        this.assignmentsChange.emit(this.assignments);
       });
   }
 }

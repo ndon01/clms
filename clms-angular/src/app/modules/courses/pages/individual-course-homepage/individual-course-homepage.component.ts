@@ -62,6 +62,10 @@ export class IndividualCourseHomepageComponent implements OnInit {
     this.http.get<OverallProgressDTO>("http://localhost:8080/api/assignments/attempts/client/getOverallProgress").subscribe(
       overallProgress => {
         this.overallProgress = overallProgress;
+        if (this.overallProgress.overallPercentage == null){
+          this.overallProgress.overallPercentage = 0;
+        }
+        this.overallProgress.overallPercentage = Math.round(this.overallProgress.overallPercentage);
       }
     );
   }

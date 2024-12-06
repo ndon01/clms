@@ -3,6 +3,8 @@ package com.clms.api.courses;
 import com.clms.api.assignments.api.entity.Assignment;
 import com.clms.api.assignments.api.entity.AssignmentQuestion;
 import com.clms.api.assignments.api.projections.AssignmentDetailsProjection;
+import com.clms.api.assignments.api.projections.AssignmentProjection;
+import com.clms.api.assignments.api.projections.converters.AssignmentProjectionConverter;
 import com.clms.api.assignments.api.repository.AssignmentRepository;
 import com.clms.api.courses.api.Course;
 import com.clms.api.courses.members.*;
@@ -177,8 +179,9 @@ public class CourseController {
         return ResponseEntity.ok(assignments);
     }
 
+    private final AssignmentProjectionConverter assignmentProjectionConverter;
     @PostMapping("/{courseId}/assignments/create")
-    public ResponseEntity<?> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment) {
+    public ResponseEntity<AssignmentProjection> createAssignment(@PathVariable int courseId, @RequestBody Assignment assignment) {
         Course currentCourse = courseRepository.findById(courseId).orElse(null);
         if (currentCourse == null) {
             return ResponseEntity.status(400).build();
@@ -192,7 +195,7 @@ public class CourseController {
 
 
         assignmentRepository.saveAndFlush(assignment);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(assignmentProjectionConverter.convert(assignment));
     }
     @PostMapping("{courseId}/assignments/updateAssignment")
     public ResponseEntity<?> updateAssignmentWithQuestions(@PathVariable int courseId,@RequestBody UpdateAssignmentQuestionsDto updateAssignmentQuestionsDto){

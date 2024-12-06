@@ -25,29 +25,15 @@
 
   <!-- Buttons at the bottom -->
   <div class="flex justify-end mt-4 gap-4">
-    <ng-container *ngIf="multiple && Array.isArray(selectedCourses); else singleSelect">
-      <button
-        pButton
-        type="button"
-        label="{{selectedCourses.length <= 1 ? 'Select Course' : 'Select Courses'}}{{selectedCourses.length > 1 ? ' (' + selectedCourses.length + ')' : ''}}"
-        icon="pi pi-check"
-        (click)="confirmSelection()"
-        [disabled]="selectedCourses.length == 0"
-      >
-      </button>
-    </ng-container>
-    <ng-template #singleSelect>
       <button
         pButton
         type="button"
         label="Create Assignment"
         icon="pi pi-check"
         (click)="confirmSelection()"
-        [disabled]="!selectedCourses"
+        [disabled]= "!newAssignment.name || !newAssignment.description "
       >
       </button>
-    </ng-template>
-
     <button
       pButton
       type="button"
