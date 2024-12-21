@@ -105,7 +105,7 @@ public class CourseCategoryPerformanceCalculationService {
                     if (performance.frequency == 0) {
                         timestampedCategoryPerformanceDto.setPerformanceScore(0);
                     } else {
-                        timestampedCategoryPerformanceDto.setPerformanceScore(performance.correctOccurrences.doubleValue() / performance.frequency.doubleValue());
+                        timestampedCategoryPerformanceDto.setPerformanceScore((performance.correctOccurrences.doubleValue() / performance.frequency.doubleValue()) * 100);
                     }
                     categoryPerformance.add(timestampedCategoryPerformanceDto);
                 });
