@@ -20,7 +20,6 @@ public interface AssignmentAttemptRepository extends JpaRepository<AssignmentAtt
     List<AssignmentAttempt> findByUser(User user);
     List<AssignmentAttempt> findAssignmentAttemptsByUserAndAssignment(User user, Assignment assignment);
     List<AssignmentAttempt> findAllByAssignment(Assignment assignment);
-
     List<AssignmentAttempt> findAssignmentAttemptsByStatus(AssignmentAttemptStatus status);
 
 }

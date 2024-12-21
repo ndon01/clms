@@ -22,6 +22,7 @@
     "@angular/router": "^18.1.3",
     "@ng-icons/bootstrap-icons": "^29.2.2",
     "@ng-icons/core": "^29.2.2",
+    "chart.js": "^4.4.7",
     "date-fns": "^4.1.0",
     "ngx-quill": "^26.0.8",
     "ngx-quill-upload": "^2.0.0",
